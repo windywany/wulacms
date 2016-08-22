@@ -1,0 +1,72 @@
+/* Icon */
+.icon, .icon-notice, .icon-site { display:inline-block;margin-right:6px;background-image:url("img/icon/icon.png");background-color:transparent;background-repeat:no-repeat;overflow:hidden;vertical-align:-2px;_vertical-align:-1px; }
+.icon-notice { background-image:url("img/icon/notice.png"); }
+.icon-info { width:14px;height:14px;background-position:0 -34px; }
+.icon-info-l { width:32px;height:32px;background-position:0 0; }
+.icon-alert { width:14px;height:14px;background-position:-15px -34px; }
+.icon-alert-l { width:32px;height:32px;background-position:-33px 0; }
+.icon-error { width:14px;height:14px;background-position:-30px -34px; }
+.icon-error-l { width:32px;height:32px;background-position:-66px 0; }
+.icon-success { width:14px;height:14px;background-position:-45px -34px; }
+.icon-success-l { width:32px;height:32px;background-position:-99px 0; }
+.icon-what { width:14px;height:14px;margin:0 6px;background-position:-60px -34px;cursor:pointer; }
+.icon-what-l { width:32px;height:32px;margin:0 6px;background-position:-132px 0; }
+.icon-forbid { width:14px;height:14px;background-position:-76px -34px; }
+.icon-forbid-l { width:32px;height:32px;background-position:-165px 0; }
+.icon-wait { width:14px;height:14px;background-position:-91px -34px; }
+.icon-wait-l { width:32px;height:32px;background-position:-198px 0; }
+
+.icon-loading { width:16px;height:16px;background-image:url("img/ajax-loader-16x16.gif");vertical-align:-3px; }
+.icon-loading-l { width:32px;height:32px;background-image:url("img/icon/ajax-loader.gif");vertical-align:-10px; }
+.icon-question { width:12px;height:12px;vertical-align:-1px;_vertical-align:0; }
+.icon-mobile { width:48px;height:48px;background-position:0 -58px; }
+.icon-email { width:48px;height:48px;background-position:-48px -58px; }
+.icon-arrow-right { width:5px;height:8px;background-position:0 -106px;vertical-align:0; }
+.icon-verify { width:40px;height:28px;background-position:-32px -26px;vertical-align:-9px; }
+.icon-unverify { width:40px;height:28px;background-position:-72px -26px;vertical-align:-9px; }
+
+/* Form */
+table.form { width:100%; }
+.form td .form-error { display:block;float:left;margin-left:4px;border:1px solid #ffe1b9;padding:0 10px;line-height:32px;background-color:#fffaae; }
+.form td .form-info { margin-left: 0px; }
+.form td .form-success { border:none !important;background:none !important; }
+.form .fm-split { margin:18px 0 0;color:#7c7c7c; }
+.form .fm-field-wrap:after{content:"\0020";display:block;height:0;clear:both;overflow:hidden;}
+.form .fm-field-wrap { position:relative;*zoom:1 }
+.form .fm-field-extra { margin-top:6px; }
+.fm-relative { position:relative; }
+.fm-label { padding-right:8px;text-align:right; }
+.fm-label label { line-height:31px;font-size:14px;color:#4c4c4c; }
+.fm-label .noempty { margin-right:4px;color:#f00; }
+.fm-label-extra { float:right; }
+.fm-input-split { float:left;line-height:31px;margin:0 6px; }
+.fm-text, .fm-textarea { padding:6px;border:1px solid #ccc;line-height:17px;font-size:12px;color:#595959;background:#fff;vertical-align:middle; }
+.fm-text:hover, .fm-textarea:hover { border:1px solid #a6a6a6; }
+.fm-text:focus, .fm-textarea:focus {
+	border:1px solid #07f;
+	-webkit-box-shadow:0 0 5px #8cddff;-moz-box-shadow:0 0 5px #8cddff;-ms-box-shadow:0 0 5px #8cddff;-o-box-shadow:0 0 5px #8cddff;box-shadow:0 0 5px #8cddff;
+}
+.fm-text::-webkit-input-placeholder{color:#aaa;}
+.fm-text:-moz-placeholder{color:#aaa;}
+.fm-checkbox, .fm-radio { vertical-align:-3px\9; }
+.fm-checkcode { float:left;width:48px !important; }
+.fm-checkcode-img { float:left;height:31px;margin:0 6px;cursor:pointer; }
+.fm-checkcode-update { float:left;line-height:31px; }
+.fm-haserror { border:1px solid #f00 !important;color:#FF5243; }
+.fm-validator-result { display:none;clear:both;padding:6px 0 0 20px;line-height:17px;word-break:break-all; }
+.fm-validator-result .icon-notice { margin-left:-20px; }
+.fm-validator-success { display:block; }
+.fm-validator-failure { display:block;color:#FF5243;background:#fff; }
+
+/* Password Strength */
+.pstrength-container { padding-top:6px;width:300px;clear:both;overflow:hidden; }
+.pstrength-bar { height:14px;line-height:14px; }
+.pstrength-bar div { float:left;width:99px;margin-right:1px;text-align:center;color:#fff;background:#ffd099; }
+.pstrength-weak .pstrength-bar-weak,
+.pstrength-middle .pstrength-bar-weak,
+.pstrength-strong .pstrength-bar-weak,
+.pstrength-middle .pstrength-bar-middle,
+.pstrength-strong .pstrength-bar-middle,
+.pstrength-strong .pstrength-bar-strong { background:#f60; }
+
+.fm-text-286 { width: 286px;}

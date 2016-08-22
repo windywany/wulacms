@@ -1,0 +1,246 @@
+.label {
+	font-size: 12px;
+}
+
+.txtl {
+	text-align: left !important;
+}
+
+.txtr {
+	text-align: right !important;
+}
+
+.txtc {
+	text-align: center !important;
+}
+
+.panel-footer {
+	padding: 3px 10px;
+}
+
+/**
+ * nui css 
+ */
+#nuiOverlay {
+	background: #fff;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: fixed;
+	display: none
+}
+
+#nuiWaitIdentifier {
+	position: fixed;
+	display: none;
+	background: #fff;
+	color:#333;
+}
+
+#nuiWaitIdentifier .panel-body {
+	background: url(images/loading.gif) no-repeat 5px 50%;
+	padding: 5px 5px 5px 45px;
+	line-height: 32px;
+}
+/**
+ * dialog
+ */
+.nui-dialog {
+	position: fixed;
+	display: none;
+	margin: 0;
+	min-width: 260px;
+}
+
+.nui-title h6 {
+	font-size: 14px;
+	line-height: 21px;
+	margin: 0
+}
+
+.nui-dialog .panel-footer .btn {
+	margin: 0 5px;
+}
+/**
+ * table widget
+ */
+.table>thead>tr>th,.table>tbody>tr>th,.table>tfoot>tr>th,.table>thead>tr>td,.table>tbody>tr>td,.table>tfoot>tr>td
+	{
+	vertical-align: middle;
+}
+
+.table>tbody>tr.nui-selected>td {
+	
+}
+
+.table>tbody>tr.nui-selected:hover>td {
+	
+}
+
+.nui-grid .table {
+	margin: 0;
+}
+
+.nui-grid .table>thead>tr>th {
+	border-bottom: 0 none;
+}
+
+.nui-grid .nui-gridbody {
+	border-top: 1px solid #DDDDDD;
+}
+
+.nui-grid .table>tbody:first-child>tr:first-child>td {
+	border-top: 0 none;
+}
+
+.nui-gridheader {
+	background-color: #EEEEEE;
+	background-image: -moz-linear-gradient(center top, #F2F2F2 0px, #FAFAFA 100%);
+}
+
+form[data-widget=nuiSearchForm] section,form[data-widget=nuiSearchForm].row
+	{
+	margin: 5px 0;
+}
+
+form[data-widget=nuiSearchForm] fieldset {
+	padding: 5px 10px;
+}
+
+form[data-widget=nuiSearchForm] .form-group {
+	margin-bottom: 5px;
+}
+
+.panel>.panel-body+.nui-grid {
+	border-top: 1px solid #DDDDDD;
+}
+
+.table th .sorthd {
+	position: relative;
+	cursor: pointer;
+}
+
+.sorthd .asc,.sorthd .desc,.sorthd .sort {
+	background: url(images/arrow.gif) no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+	display: block;
+	height: 10px;
+	position: absolute;
+	right: 0;
+	top: 4px;
+	width: 8px;
+}
+
+.sorthd .desc {
+	background-image: url(images/arrow_down.gif);
+}
+
+.sorthd .asc {
+	background-image: url(images/arrow_up.gif);
+}
+
+div[data-widget=nuiStick].nui-stick {
+	position: fixed;
+	z-index: 1029;
+	left: 0;
+	right: 0;
+}
+
+div[data-widget=nuiPager] .pagination {
+	margin: 0;
+	float: right;
+}
+
+div[data-widget=nuiPager].left .pagination {
+	float: left;
+}
+
+div[data-widget=nuiPager] .pagination-tip {
+	float: left;
+	padding: 5px 0;
+	margin-left: 10px;
+}
+
+span.tt-folder,span.tt-leaf {
+	font-size: 11px;
+	cursor: pointer;
+	margin-right: 3px;
+	color: #666;
+}
+
+div.ipt-error span.glyphicon-warning-sign {
+	color: #A94442;
+}
+
+input.ipt-error,select.ipt-error {
+	background-image: url(images/invalid_line.gif);
+	background-position: 0 100%;
+	background-repeat: repeat-x;
+}
+
+*[data-widget=nuiAjaxUploader].uploading {
+	background-image: url(images/loading14.gif);
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+}
+
+.item-removable {
+	margin-top: -2px;
+}
+
+.removable {
+	padding: 6px 15px 5px 3px;
+	margin: 5px;
+	position: relative;
+	float: left;
+	display: block;
+}
+
+.removable .close {
+	position: absolute;
+	top: 2px;
+	right: 3px;
+}
+
+.m-ajax-uploador .up-file {
+	text-align: center;
+	float: left;
+	margin: 5px;
+	padding: 5px;
+	width: 240px;
+	border: 1px solid #ccc;
+	position: relative;
+}
+
+.m-ajax-uploador .add-btn {
+	cursor: pointer;
+	background: transparent url(images/madd.png) no-repeat 50% 50%;
+	width: 100px;
+	height: 100px;
+}
+
+.m-ajax-uploador .up-file .img-wrap {
+	max-height: 180px;
+}
+
+.m-ajax-uploador .img-wrap img {
+	max-width: 240px;
+	max-height: 180px;
+}
+
+.m-ajax-uploador .up-file .close {
+	position: absolute;
+	top: 0;
+	right: 2px;
+	color: red;
+}
+
+.m-ajax-uploador .up-file .progress {
+	margin: 0
+}
+
+.m-ajax-uploador .up-file label.input {
+	margin: 2px 0 1px;
+}
+.icon-arrow-left:before{content:"\e091"}
+.icon-arrow-right:before{content:"\e092"}

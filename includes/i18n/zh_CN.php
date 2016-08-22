@@ -1,0 +1,24 @@
+<?php
+$lang = I18n::getLanguage ();
+$lang ['Please enter a valid datetime.'] = '请输入一个合法的日期时间.';
+$lang ['Please enter a valid date.'] = '请输入一个合法的日期.';
+$lang ['Please enter a valid IP.'] = '请输入一个合法的IP地址.';
+$lang ['Please enter a valid URL.'] = '请输入一个合法的URL.';
+$lang ['Please enter a valid email address.'] = '请输入一个合法的邮件地址.';
+$lang ['Please enter a value with a valid extension.'] = '请输入一个正确的值.';
+$lang ['error callback'] = '错误的验证回调函数.';
+$lang ['Please enter a value between %s and %s characters long.'] = '请输入一个长度介于%s和%s之间的内容.';
+$lang ['Please enter no more than %s characters.'] = '请输入一个长度小于%s的内容.';
+$lang ['Please enter at least %s characters.'] = '请输入一个长度至少是%s的内容.';
+$lang ['Please enter a value between %s and %s.'] = '请输入一个值介于%s与%s之间的数.';
+$lang ['Please enter a value less than or equal to %s.'] = '请输入一个小于等于%s的数.';
+$lang ['Please enter a value less than %s.'] = '请输入一个小于%s的数';
+$lang ['Please enter a value greater than or equal to %s.'] = '请输入一个大于等于%s的数.';
+$lang ['Please enter a value greater than %s.'] = '请输入一个大于%s的数.';
+$lang ['Please enter a value less than or equal to %s.'] = '请输入一个值小于等于%s的数.';
+$lang ['Please enter a value greater than or equal to %s.'] = '请输入一个值大于等于%s的数.';
+$lang ['Please enter only digits.'] = '请输入一个数值.';
+$lang ['Please enter a valid number.'] = '请输入一个有效的数字.';
+$lang ['Please enter the different value.'] = '请输入一个不同的值.';
+$lang ['Please enter the same value again.'] = '请再次输入相同的值.';
+$lang ['This field is required.'] = '请输入一个值.';

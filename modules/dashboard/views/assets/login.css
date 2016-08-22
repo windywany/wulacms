@@ -1,0 +1,123 @@
+.account-bg {
+  background: #e6e6e6;
+}
+.account-bg .navbar{
+  background: #222;
+  min-height:52px;
+  margin-bottom:0;
+  border:none;
+}
+.account-bg .navbar-brand{
+  height:52px;
+  padding:0;
+}
+.account-header-divider {
+  margin-top: 0;
+  border-top: 10px solid #3b3b3b;
+  border-bottom: none;
+}
+.account-wrapper {
+  position: relative;
+  width: 90%;
+  padding: 15px 0;
+  margin: 0 auto;
+  text-align: center;
+}
+.account-wrapper .row > div {
+  margin-bottom: 1em;
+}
+.account-logo {
+  position: relative;
+  margin: 0 auto 25px;
+  z-index: 100;
+  width: 100px;
+  height: 100px;
+  background-color: #16a085;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.account-logo::after {
+  content: '';
+  display: inline-block;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid transparent;
+  border-top-color: #16a085;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -10px;
+}
+.account-form {
+  padding: 0;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  text-align: left;
+}
+.account-form .placeholder-hidden {
+  display: none;
+}
+.account-form .form-control {
+  height: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 1.25em;
+}
+.account-body {
+  position: relative;
+  padding: 15px 30px 10px;
+  margin-bottom: 1em;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.125);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.125);
+}
+.account-body-title {
+  margin-bottom: 10px;
+  line-height: 1.5em;
+}
+.account-body-subtitle {
+  color: #777;
+  line-height: 1.5em;
+}
+.account-footer {
+  padding: 0 25px;
+  margin-top: 1.5em;
+}
+.account-or-social {
+  display: block;
+  margin-top: 1em;
+}
+@media (min-width: 768px) {
+  .account-wrapper {
+    width: 450px;
+    padding: 30px 0;
+  }
+  .account-wrapper .row > div {
+    margin-bottom: 0;
+  }
+  .account-body .account-form {
+    padding: 0 25px;
+    text-align: left;
+  }
+  .account-or-social {
+    margin-top: 2em;
+  }
+  .navbar {
+    height: 52px;
+  }
+  .navbar .navbar-nav > li > a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .navbar-profile-label {
+    display: none;
+  }
+}

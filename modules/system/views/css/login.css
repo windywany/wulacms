@@ -1,0 +1,62 @@
+html,body {
+	background-color: #142849;
+	background-image: radial-gradient(circle, #165387, #142849);
+	background-repeat: no-repeat;
+}
+
+#login-wrap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 380px;
+	height: 200px;
+	margin: -150px 0 0 -190px;
+}
+
+#login-wrap .title {
+	background: transparent url(../images/login.png) no-repeat 0 50%;
+	padding-left: 30px;
+}
+
+#login-wrap .title h1 {
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 40px;
+	margin: 10px 0;
+}
+
+.rows {
+	margin-top: 5px;
+}
+
+.well {
+	margin-bottom: 5px;
+}
+
+img#captcha-img {
+	width: 95px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.info {
+	text-align: right;
+	color: #999;
+}
+
+.alert {
+	margin-bottom: 5px;
+	padding: 5px 15px 5px 30px;
+	background-image: url(../images/user_error.png);
+	background-repeat: no-repeat;
+	background-position: 5px 50%;
+}
+
+#eMsg {
+	display: none;
+}
+
+#eMsgdiv .form-error {
+	padding: 0;
+	margin: 0;
+}
