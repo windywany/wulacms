@@ -17,7 +17,7 @@
 		</FilesMatch>
 	</Directory>
 	<Directory "your_wulacms_webroot_dir/bin">
-		<FilesMatch ".*\.(php[s345]?|tpl|log|inc|sh)$">
+		<FilesMatch ".*\.(php[s345]?|tpl|log|inc|sh|py)$">
 		    Order allow,deny
 		    Deny from all
 		</FilesMatch>
@@ -58,7 +58,7 @@
 			</FilesMatch>
 		</Directory>
 		<Directory "your_wulacms_webroot_dir/bin">
-			<FilesMatch ".*\.(php[s345]?|tpl|log|inc|sh)$">
+			<FilesMatch ".*\.(php[s345]?|tpl|log|inc|sh|py)$">
 			    Order allow,deny
 			    Deny from all
 			</FilesMatch>
@@ -104,7 +104,7 @@
                 rewrite ^(.*)$ index.php last;
             }
         }
-        location ~ /(uploads|modules|appdata|includes|assets|bin)/.+\.(php[s345]?|tpl|inc|log|sh)$ {
+        location ~ /(uploads|modules|appdata|includes|assets|bin)/.+\.(php[s345]?|tpl|inc|log|sh|py)$ {
                 return 404;
         }
         error_page  404              /404.html;

@@ -7,7 +7,7 @@ flush ();
 echo "\tapply appid: ", $appid, " into bootrap.php\n";
 flush ();
 $content = file_get_contents ( WEB_ROOT . 'bootstrap.php' );
-$content = str_replace ( "basename ( WEB_ROOT )", "'A$appid')", $content );
+$content = str_replace ( "basename ( WEB_ROOT )", "'A$appid'", $content );
 file_put_contents ( WEB_ROOT . 'bootstrap.php', $content );
 echo "\tChanging the permission of  appdata\n";
 flush ();
