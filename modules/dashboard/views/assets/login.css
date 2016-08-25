@@ -1,0 +1,148 @@
+html, body {
+    background: #293e53;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden
+}
+
+.banner {
+    background: #f9f9f9;
+    height: 240px;
+    position: relative;
+    padding: 20px;
+    height: 40%;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.banner > .logo {
+    background: url(logo.svg) no-repeat 50% 50%;
+    -webkit-background-size: contain;
+    background-size: contain;
+    text-align: center;
+    line-height: 100px;
+    font-size: 48px;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+    display: inline-block;
+    width: 100%;
+    max-width: 450px;
+    height: 170px;
+    min-height: 72px;
+}
+
+.banner:after {
+    content: " ";
+    display: block;
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+    border: 30px solid transparent;
+    border-width: 20px 30px;
+    border-top-color: #f9f9f9;
+    position: absolute;
+    bottom: -39px;
+    left: 50%;
+    margin-left: -30px;
+}
+
+.main {
+    animation: mymove 3s;
+    -webkit-animation: mymove 3s;
+}
+
+@keyframes mymove {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+}
+.form-group {
+    padding-left: 0;
+}
+.form-control {
+    border-right: 0;
+}
+
+/* .main{padding: 0 0 0 15px;} */
+.main > .container > .sign-in.form-inline {
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+.for-btn {
+    text-align: right;
+}
+.main > .container > .sign-in.form-inline .form-title {
+    font-size: 1.2em;
+    line-height: 1.5em;
+    color: #f9f9f9;
+}
+.main > .container > .sign-in.form-inline .reset-password {
+    display: inline-block;
+}
+.form-group .input-group {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.reset-password {
+    margin-top: 20px !important;
+}
+.glyphicon-lock a {
+    color: #999;
+    text-decoration: none;
+}
+.log-btn button {
+    width: 100%;
+}
+.log-btn a {
+    width: 100%;
+}
+
+/* #code{display:none;} */
+.hid {
+    display: none !important;
+}
+.code-group span {
+    color: #fff;
+    margin-left: 8px;
+    cursor: pointer;
+}
+#code-img {
+    height: 30px;
+    cursor: pointer;
+    width: 80px;
+    border-radius: 4px;
+}
+@media screen and (min-width:760px) {
+    .banner {
+        padding: 60px 20px;
+    }
+    
+    .code-row {
+        margin-bottom: 10px;
+    }
+    
+    .log-btn {
+        padding-left: 0;
+    }
+    
+    #code-img {
+        height: 34px;
+        width: 100px;
+    }
+}

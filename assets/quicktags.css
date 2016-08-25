@@ -1,0 +1,63 @@
+.quicktags {
+	margin: 0px;
+	pading: 0px;
+	border-color: #CCCCCC #CCCCCC #DFDFDF;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.quicktags-toolbar {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #CCCCCC;
+	min-height: 30px;
+	padding: 2px 8px 0;
+	background-color: #E9E9E9;
+	background-image: -moz-linear-gradient(center bottom, #DDDDDD, #E9E9E9);
+}
+
+.quicktags-toolbar input {
+	background-color: #EEEEEE;
+	background-image: -moz-linear-gradient(center bottom, #E3E3E3, #FFFFFF);
+	border: 1px solid #C3C3C3;
+	border-radius: 3px 3px 3px 3px;
+	color: #464646;
+	display: inline-block;
+	
+	margin: 2px 1px 4px;
+	min-width: 26px;
+	padding: 2px 4px;
+}
+
+.quicktags-toolbar input:hover {
+	background: #ddd;
+	border-color: #aaa;
+}
+
+.quicktags-toolbar input[value="b"] {
+	font-weight: bold;
+}
+
+.quicktags-toolbar input[value="i"] {
+	font-style: italic;
+}
+
+.quicktags-toolbar input[value="link"] {
+	text-decoration: underline;
+}
+
+.quicktags-toolbar input[value="del"] {
+	text-decoration: line-through;
+}
+
+.quicktags-editor {
+	-moz-box-sizing: border-box;
+	border: 0 none;
+	font-family: Consolas, Monaco, monospace;
+	line-height: 150%;
+	outline: medium none;
+	padding: 10px;
+	resize: vertical;
+	width: 99.9%;
+	margin: 1px;
+}

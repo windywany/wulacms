@@ -1,0 +1,24 @@
+<?php
+$lang = I18n::getLanguage ();
+$lang ['Please enter a valid datetime.'] = 'Please enter a valid datetime.';
+$lang ['Please enter a valid date.'] = 'Please enter a valid date.';
+$lang ['Please enter a valid IP.'] = 'Please enter a valid IP.';
+$lang ['Please enter a valid URL.'] = 'Please enter a valid URL.';
+$lang ['Please enter a valid email address.'] = 'Please enter a valid email address.';
+$lang ['Please enter a value with a valid extension.'] = 'Please enter a value with a valid extension.';
+$lang ['error callback'] = 'error callback';
+$lang ['Please enter a value between %s and %s characters long.'] = 'Please enter a value between %s and %s characters long.';
+$lang ['Please enter no more than %s characters.'] = 'Please enter no more than %s characters.';
+$lang ['Please enter at least %s characters.'] = 'Please enter at least %s characters.';
+$lang ['Please enter a value between %s and %s.'] = 'Please enter a value between %s and %s.';
+$lang ['Please enter a value less than or equal to %s.'] = 'Please enter a value less than or equal to %s.';
+$lang ['Please enter a value less than %s.'] = 'Please enter a value less than %s.';
+$lang ['Please enter a value greater than or equal to %s.'] = 'Please enter a value greater than or equal to %s.';
+$lang ['Please enter a value greater than %s.'] = 'Please enter a value greater than %s.';
+$lang ['Please enter a value less than or equal to %s.'] = 'Please enter a value less than or equal to %s.';
+$lang ['Please enter a value greater than or equal to %s.'] = 'Please enter a value greater than or equal to %s.';
+$lang ['Please enter only digits.'] = 'Please enter only digits.';
+$lang ['Please enter a valid number.'] = 'Please enter a valid number.';
+$lang ['Please enter the different value.'] = 'Please enter the different value.';
+$lang ['Please enter the same value again.'] = 'Please enter the same value again.';
+$lang ['This field is required.'] = 'This field is required.';

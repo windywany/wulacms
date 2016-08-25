@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /includes
+Disallow: /install 
+Disallow: /appdata
+Disallow: /modules
+Disallow: /themes
+Disallow: /assets
+Disallow: /cron.php
+Disallow: /install.php
+Disallow: /index.php
