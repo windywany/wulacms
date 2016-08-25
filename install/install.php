@@ -196,7 +196,7 @@ if($step == 'welcome'){
 </div>
 
 <?php }else if($step == 'setup'){
-	$data = sess_get('install_setup_data',array());
+	$data = sess_get('install_setup_data',array('clean_url'=>true,'gzip'=>extension_loaded ( "zlib" )));
 	?>	
 <form class="form-horizontal" role="form" id="setupForm">	
 	<div class="form-group">
@@ -260,7 +260,7 @@ if($step == 'welcome'){
 		<label for="dashboardURL" class="col-sm-3 control-label">管理后台地址</label>
 		<div class="col-sm-7">
 			<input type="text" class="form-control" id="urlm" name="urlm" placeholder="管理后台地址" value="<?php echo $data['urlm']?>"/>
-			<span class="help-block">不填写时使用默认值dashboard，为了安全强烈建议修改一个不常用值。</span>		
+			<span class="help-block">不填写时使用默认值backend，为了安全强烈建议修改一个不常用值。</span>		
 		</div>
 	</div>
 </form>
@@ -278,7 +278,7 @@ if(extension_loaded('pdo_mysql')){
 if(extension_loaded('pdo_pgsql')){
 	$drivers['PostgreSQL'] = 'PostgreSQL';
 }
-$data = sess_get('install_database_data',array());
+$data = sess_get('install_database_data',array('host'=>'localhost'));
 ?>
 <form class="form-horizontal" role="form" id="databaseForm" name="InstallForm">
 	<div class="form-group">
@@ -411,7 +411,7 @@ $data = sess_get('install_database_data',array());
 		$msg   = sess_get('msg','');		
 		$site_home = '../';
 		$setup = sess_get('install_setup_data',array());
-		$admin_url = $site_home.(empty($setup['urlm'])?'dashboard/':$setup['urlm']);
+		$admin_url = $site_home.(empty($setup['urlm'])?'backend/':$setup['urlm']);
 		if($error !== true):
 	?>
 <div class="alert alert-danger">
