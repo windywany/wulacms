@@ -443,8 +443,8 @@ $data = sess_get('install_database_data',array());
 		$form = new SetupForm();
 		$formData = $form->valid();	
 		if($formData){
-			$formData['gzip'] = rqst('gzip',false);
-			$formData['clean_url'] = rqst('clean_url',false);
+			$formData['gzip'] = rqst('gzip',true);
+			$formData['clean_url'] = rqst('clean_url',true);
 		}	
 	}else if($op == 'database'){
 		$form = new DatabaseForm();		
@@ -476,8 +476,8 @@ $data = sess_get('install_database_data',array());
 	echo json_encode($data);
 } else if($step == 'process'){
 	$op = rqst('op');
-	$setup = sess_get('install_setup_data',array());
-	$db = sess_get('install_database_data',array());
+	$setup = sess_get('install_setup_data',array('clean_url'=>true,'gzip'=>true));
+	$db = sess_get('install_database_data',array('host'=>'localhost'));
 	$progres  = new KissgoInstaller($op,$setup,$db);
 	$progres  = $progres->install();
 	echo json_encode($progres);
