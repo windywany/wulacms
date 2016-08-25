@@ -15,7 +15,7 @@ class MsiteInstaller extends AppInstaller {
 		return 'http://www.crudq.com';
 	}
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDependences() {
 		$dependences ['cms'] = '[1.0.0,)';

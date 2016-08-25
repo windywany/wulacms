@@ -171,21 +171,13 @@ function template($tpl, $data = array(), $headers = array('Content-Type'=>'text/
 	$template_func_file = THEME_PATH . THEME_DIR . DS . $theme . DS . 'template.php';
 	if (is_file ( $template_func_file )) {
 		include_once $template_func_file;
-		$func = 'prepare_template_data';
-		if (function_exists ( $func )) {
-			call_user_func_array ( $func, array (&$data ) );
-		}
-		$func = 'prepare_' . $tplname . '_template_data';
-		if (function_exists ( $func )) {
-			call_user_func_array ( $func, array (&$data ) );
-		}
 		$func = $theme.'_template_data';
 		if (function_exists ( $func )) {
-			call_user_func_array ( $func, array (&$data ) );
+			$func($data);
 		}
 		$func = $theme.'_' . $tplname . '_template_data';
 		if (function_exists ( $func )) {
-			call_user_func_array ( $func, array (&$data ) );
+			$func($data);
 		}
 	}
 	$data ['_current_template'] = $tplfile;
@@ -493,45 +485,6 @@ function smarty_modifiercompiler_status($status, $compiler) {
 	return $output;
 }
 
-/**
- * Smarty paging modifier plugin.
- *
- * <code>
- * {url|paging:total:limit:paging_arg:num_per_page}
- * </code>
- *
- *
- * Type: modifier<br>
- * Name: paging<br>
- * Purpose: 输出分页
- *
- * @param Smarty $compiler
- * @return string with compiled code
- */
-function smarty_modifiercompiler_paging($value, $compiler) {
-	if (count ( $value ) < 2) {
-		trigger_error ( 'error usage of paging', E_USER_WARNING );
-		return "'error usage of paging'";
-	}
-	$total = $value [0]; // 总数
-	if (isset ( $value [1] )) {
-		$limit = $value [1]; // 每页显示的条数
-	} else {
-		$limit = 10; // 默认显示10
-	}
-	if (isset ( $value [2] )) {
-		$param = $value [2]; // 分类参数
-	} else {
-		$param = "'start'";
-	}
-	if (isset ( $value [3] )) {
-		$pno = $value [3]; // 分类参数
-	} else {
-		$pno = 4;
-	}
-	$output = "paging($total,$limit,null,$param,$pno,null)";
-	return $output;
-}
 function smarty_modifiercompiler_random($ary, $compiler) {
 	if (count ( $ary ) < 1) {
 		trigger_error ( 'error usage of random', E_USER_WARNING );

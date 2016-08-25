@@ -58,6 +58,15 @@
 												<input type="radio" value="1" name="menu_on_top" {if $menu_on_top}checked="checked"{/if} id="menu_on_top_1"><i></i>是</label>
 										</div>
 									</section>
+									<section class="col col-3">
+										<label class="label">固定菜单</label>
+										<div class="inline-group">
+											<label class="radio">
+												<input type="radio" value="0" name="menu_fixed" {if !$menu_fixed}checked="checked"{/if} id="menu_fixed_0"/><i></i>否</label>
+											<label class="radio">
+												<input type="radio" value="1" name="menu_fixed" {if $menu_fixed}checked="checked"{/if} id="menu_fixed_1"><i></i>是</label>
+										</div>
+									</section>
 								</div>
 								<section>
 									<label class="label">账户(不可修改)</label>

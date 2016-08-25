@@ -214,7 +214,7 @@ class RtCache {
 				$cid = $settings ['id'];
 				RtCache::$PRE = 'kis_cache_@';
 			} else {
-				RtCache::$PRE = md5 ( WEB_ROOT ) . '_';
+				RtCache::$PRE = APP_NAME . '@';
 			}
 			if (isset ( $cid )) {
 				if (function_exists ( 'apc_store' )) {

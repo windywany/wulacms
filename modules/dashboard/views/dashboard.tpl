@@ -49,7 +49,7 @@
 		<div class="alert alert-info fade in">
 			<i class="fa-fw fa fa-info"></i>
 			<strong>程序信息:</strong><br/>
-			<p> 设计开发: 喜羊羊</p>
+			<p> 设计开发: 喜羊羊 QQ:2022196399, 邮箱: <a href="mailto:windywany@163.com">windywany@163.com</a></p>
 			<p> 功能需求: 猴哥,喜羊羊</p>
 			<p> 程序版本: {$KISS_VERSION} {$KISS_RELEASE_VER}, BUILD:{$KISS_BUILD_ID}, 内核版本:{$kernelVer}, 界面版本:{$cpVer}</p>
 		</div>

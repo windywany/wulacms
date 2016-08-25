@@ -12,10 +12,10 @@ class CommentInstaller extends AppInstaller {
 		return '为页面提供评论功能.当不指定页面在时即为系统留言.';
 	}
 	public function getWebsite() {
-		return 'http://www.kissgo.org/plugins/comments';
+		return 'http://www.wulacms.com/plugins/comments';
 	}
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDependences() {
 		$d ['system'] = '[2.1.0,)';

@@ -6,12 +6,12 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
  * 管理员模板安装器.
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  *        
  */
 class CmsInstaller extends AppInstaller {
 	public function getAuthor() {
-		return 'Guangfeng Ning';
+		return 'Leo Ning';
 	}
 	public function getDscription() {
 		return '内容管理系统，提供内容管理功能.';
@@ -24,7 +24,7 @@ class CmsInstaller extends AppInstaller {
 		return $dependences;
 	}
 	public function getWebsite() {
-		return 'http://www.kissgo.org/';
+		return 'http://www.wulacms.com/';
 	}
 	public function getVersionLists() {
 		$lists ['0.0.1'] = '2014060600001';

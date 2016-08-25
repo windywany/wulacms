@@ -208,6 +208,8 @@ if ($_kissgo_processing_installation != true) {
 	if (isset ( $_GET ['_url'] )) {
 		define ( 'REQUEST_URL', Request::xss_clean ( $_GET ['_url'] ) );
 		unset ( $_GET ['_url'] );
+	} else if (isset ( $_SERVER ['REQUEST_URI'] )) {
+		define ( 'REQUEST_URL', explode ( '?', $_SERVER ['REQUEST_URI'] ) [0] );
 	}
 	// you can do somthing to improve your application performance in APPDATA_PATH/cache.php file.
 	// but in this file, you just can use little functionality Kissgo provided.

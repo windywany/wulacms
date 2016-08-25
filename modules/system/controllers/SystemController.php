@@ -3,7 +3,7 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
  * 系统登录模块.
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  *        
  */
 class SystemController extends Controller {

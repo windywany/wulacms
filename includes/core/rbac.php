@@ -4,7 +4,7 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
  * Passport.
  * kissgo framework that keep it simple and stupid, go go go ~~
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  * @package core
  */
 class Passport implements Serializable, ArrayAccess {

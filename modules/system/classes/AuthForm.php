@@ -2,7 +2,7 @@
 
 /**
  * Login Form.
- * @author Guangfeng Ning
+ * @author Leo Ning
  *
  */
 class AuthForm extends AbstractForm {

@@ -1,7 +1,7 @@
 <?php
 class RestInstaller extends AppInstaller {
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDscription() {
 		return 'RESTful WEB Service 服务端与客户端库.';
@@ -10,7 +10,7 @@ class RestInstaller extends AppInstaller {
 		return 'RESTful服务';
 	}
 	public function getWebsite() {
-		return 'http://www.kissgo.org/';
+		return 'http://www.wulacms.com/';
 	}
 	public function getVersionLists() {
 		$v ['0.0.1'] = '20140730001';

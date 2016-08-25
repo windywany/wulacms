@@ -233,7 +233,7 @@ class KissGoSetting implements ArrayAccess, IteratorAggregate {
 /**
  * 集群配置.
  *
- * @author 宁广丰.
+ * @author Leo Ning.
  *
  */
 class KissGoClusterSetting extends KissGoSetting {

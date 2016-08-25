@@ -2,7 +2,7 @@
 /**
  * 管理员界面控制器.
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  */
 class DashboardController extends Controller {
 	/**
@@ -13,9 +13,14 @@ class DashboardController extends Controller {
 	public function index() {
 		if ($this->user->isLogin ()) {
 			$data = array ('passport' => $this->user );
-			$data ['cp_theme'] = $this->user->getAttr ( 'theme', '0' );
+			$data ['cp_theme'] = $this->user->getAttr ( 'theme', '2' );
 			$data ['cp_theme'] = 'smart-style-' . $data ['cp_theme'];
-			$data ['menu_on_top'] = $this->user->getAttr ( 'menu_on_top', 0 );
+			$data ['menu_on_top'] = $this->user->getAttr ( 'menu_on_top', 1 );
+			if ($data ['menu_on_top']) {
+				$data ['menu_fixed'] = $this->user->getAttr ( 'menu_fixed', 1 );
+			}else{
+				$data ['menu_fixed'] = 0;
+			}
 			$data = apply_filter ( 'on_init_layout_data', $data );
 			$layoutManager = new AdminLayoutManager ();
 			fire ( 'do_admin_layout', $layoutManager );
@@ -41,9 +46,9 @@ class DashboardController extends Controller {
 	/**
 	 * check user login.
 	 *
-	 * @param string $username
-	 * @param string $passwd
-	 * @param string $captcha
+	 * @param string $username        	
+	 * @param string $passwd        	
+	 * @param string $captcha        	
 	 * @return SmartyView
 	 */
 	public function index_post($username, $passwd, $captcha = '') {
@@ -169,9 +174,9 @@ class DashboardController extends Controller {
 			$gd = gd_info ();
 			$data ['gdInfo'] = $gd ['GD Version'];
 			$data ['sessionManager'] = ini_get ( 'session.save_handler' ) . '&nbsp;[' . ini_get ( 'session.save_path' ) . ']';
-			$data ['devMod'] = bcfg ( 'develop_mode' )?'开启':'关闭';
-			$logs = array (DEBUG_INFO => 'INFO',DEBUG_WARN => 'WARN',DEBUG_DEBUG => 'DEBUG',DEBUG_ERROR => 'ERROR',DEBUG_OFF=>'OFF' );
-			$data ['logLevel'] = $logs[DEBUG];
+			$data ['devMod'] = bcfg ( 'develop_mode' ) ? '开启' : '关闭';
+			$logs = array (DEBUG_INFO => 'INFO',DEBUG_WARN => 'WARN',DEBUG_DEBUG => 'DEBUG',DEBUG_ERROR => 'ERROR',DEBUG_OFF => 'OFF' );
+			$data ['logLevel'] = $logs [DEBUG];
 			return view ( 'dashboard.tpl', $data );
 		} else {
 			Response::redirect ( tourl ( 'dashboard' ) );

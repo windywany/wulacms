@@ -2,7 +2,7 @@
 
 /**
  * base class for forms.
- * @author Guangfeng Ning
+ * @author Leo Ning
  *
  */
 abstract class AbstractForm implements ArrayAccess {

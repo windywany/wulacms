@@ -14,7 +14,7 @@ class BaidutoolkitInstaller extends AppInstaller {
 		return 'http://www.kisscms.org/plugin/baidutoolkit';
 	}
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	/**
 	 *

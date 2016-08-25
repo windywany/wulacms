@@ -23,7 +23,6 @@ bind ( 'on_init_dashboard_ui', 'hook_for_cms_init_dashboard_ui@hooks/do_admin_la
 bind ( 'on_init_rest_server', '&CmsRestService' );
 bind ( 'dashboard_sparks_bar', 'dashboard_right_bar_page@hooks/cms_hooks' );
 bind ( 'render_dashboard_panel', 'render_dashboard_panel_of_cms@hooks/cms_hooks' );
-bind ( 'init_template_smarty_engine', 'hook_for_cms_init_smarty_engine@hooks/cms_hooks' );
 bind ( 'build_page_common_query', 'build_page_common_query_of_cms', 10, 2 );
 register_cts_provider ( 'pages', array ('cms_pages_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '页面调用标签', '用于调用文章.', true );
 register_cts_provider ( 'chunk', array ('cms_chunk_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '碎片调用标签', '用于碎片调用.', true );

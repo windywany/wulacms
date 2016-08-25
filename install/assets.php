@@ -190,6 +190,8 @@ class KissgoInstaller {
 					$urlm = $this->setup ['urlm'];
 					if (! empty ( $urlm ) && $urlm != 'dashboard') {
 						$appdata ['urlmapping'] = $urlm;
+					}else{
+						$appdata ['urlmapping'] = 'backend';
 					}
 				}
 				$sql = dbinsert ( $appdata )->into ( '{apps}' )->usedb ( $dialect );

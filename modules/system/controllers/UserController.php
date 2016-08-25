@@ -6,7 +6,7 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
  * 用户账户管理器.
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  */
 class UserController extends Controller {
 	protected $checkUser = true;
@@ -95,7 +95,7 @@ class UserController extends Controller {
 		if (empty ( $user )) {
 			return NuiAjaxView::error ( '用户不存在.' );
 		} else {
-			$user ['themes'] = array ('0' => '默认','1' => 'Dark Elegance','2' => 'Ultra Light','3' => 'Google Skin','4' => 'PixelSmash','5' => 'Glass' );
+			$user ['themes'] = array ('0' => '默认','1' => 'Dark Elegance','2' => 'Ultra Light','4' => 'PixelSmash' );
 			$metas = dbselect ( 'meta_name,meta_value' )->from ( '{user_meta}' )->where ( array ('user_id' => $id ) )->toArray ( 'meta_value', 'meta_name' );
 			if ($metas) {
 				$user = array_merge ( $user, $metas );
@@ -126,9 +126,12 @@ class UserController extends Controller {
 				UserProfileForm::saveUserMeta ( $user_id, 'theme', $theme );
 				$mot = rqst ( 'menu_on_top', 0 );
 				UserProfileForm::saveUserMeta ( $user_id, 'menu_on_top', $mot );
+				$mf = rqst ( 'menu_fixed', 0 );
+				UserProfileForm::saveUserMeta ( $user_id, 'menu_fixed', $mf );
 				$this->user->setUserName ( $user ['nickname'] );
 				$this->user->setAttr ( 'theme', $theme );
 				$this->user->setAttr ( 'menu_on_top', $mot );
+				$this->user->setAttr('menu_fixed', $mf);
 				$this->user->save ();
 				return NuiAjaxView::redirect ( '个人设置保存成功.', tourl ( 'dashboard' ) );
 			} else {

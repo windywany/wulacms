@@ -1,17 +1,6 @@
 <?php
 defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
- *
- * @param Smarty $smarty        	
- * @return Smarty
- */
-function hook_for_cms_init_smarty_engine($smarty) {
-	// load ctss smarty tag
-	class_exists ( 'Smarty_Internal_Compile_Ctss' );
-	class_exists ( 'Smarty_Internal_Compile_Ctsplit' );
-	return $smarty;
-}
-/**
  * 加载页面HOOK.
  *
  * @param unknown $page        	

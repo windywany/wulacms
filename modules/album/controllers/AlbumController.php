@@ -1,7 +1,7 @@
 <?php
 /**
  * 相册控制器.
- * @author 宁广丰.
+ * @author Leo Ning.
  *
  */
 class AlbumController extends Controller {

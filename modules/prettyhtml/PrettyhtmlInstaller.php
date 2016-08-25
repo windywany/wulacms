@@ -11,10 +11,10 @@ class PrettyhtmlInstaller extends AppInstaller {
 		return '为编辑器提供格式化HTML美化插件.';
 	}
 	public function getWebsite() {
-		return 'http://www.kisscms.cn/plugins/prettyhtml';
+		return 'http://www.wulacms.com/plugins/prettyhtml';
 	}
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDependences() {
 		$d ['dashboard'] = '[2.1.0,)';

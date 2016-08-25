@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="renderer" content="webkit">
-<title>管理后台 - {'site_name'|cfg} - Powered by KissCMS!({$KISS_VERSION} {$KISS_RELEASE_VER})</title>
+<title>管理后台 - {'site_name'|cfg} - Powered by wulacms ({$KISS_VERSION} {$KISS_RELEASE_VER})</title>
 <meta content="kisscms" name="description"/>
 <meta content="ninGf" name="author"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
@@ -29,11 +29,11 @@
 <link href="{'favicon.ico'|base}" rel="icon" type="image/x-icon"/>
 </head>
 
-<body class="{$cp_theme}{if $menu_on_top} menu-on-top{/if}" data-validateURL="{$validateURL}">
+<body class="{$cp_theme}{if $menu_on_top} menu-on-top {if $menu_fixed}fixed-header fixed-ribbon fixed-navigation{/if}{/if}" data-validateURL="{$validateURL}">
 
 	<header id="header">	
 	<div id="logo-group">		
-		<span id="logo"><img alt="KissCms" src="{'img/logo.png'|assets}"></span>		
+		<span id="logo"><img alt="wulacms" src="{'assets/logo.svg'|here}"></span>		
 	</div>
 	<!-- pulled right: nav area --> 
 	<div class="pull-right">			 
@@ -136,58 +136,10 @@
 			<ol class="breadcrumb"></ol>			
 		</div>
 		<div id="content"></div>
-		<div class="layoutp demo">
-			<span id="layoutp-setting">
-				<i class="fa fa-cog txt-color-blueDark"></i>
-			</span> 
-			<form>
-				<legend class="no-padding margin-bottom-10">布局设置</legend>
-				<section>
-					<label>
-						<input name="subscription" id="smart-fixed-nav" type="checkbox" class="checkbox style-0"/>
-						<span>固定头部</span>
-					</label>
-					<label>
-						<input type="checkbox" name="terms" id="smart-fixed-ribbon" class="checkbox style-0">
-						<span>固定导航条</span>
-					</label>
-					<label>
-						<input type="checkbox" name="terms" id="smart-fixed-navigation" class="checkbox style-0">
-						<span>固定导航菜单</span>
-					</label>
-					<label><input type="checkbox" class="checkbox style-0" id="smart-topmenu"><span>菜单<b>置顶</b></span></label>
-				</section>										
-				<h6 class="margin-top-10 semi-bold margin-bottom-5">皮肤</h6>
-				<section id="smart-styles">
-					<a href="javascript:void(0);" id="smart-style-0" 
-						data-skinlogo="{'img/logo.png'|assets}" class="btn btn-block btn-xs txt-color-white margin-right-5" style="background-color:#4E463F;">
-						<i class="fa fa-check fa-fw" id="skin-checked"></i>默认</a>
-					<a href="javascript:void(0);" id="smart-style-1" 
-						data-skinlogo="{'img/logo-white.png'|assets}" class="btn btn-block btn-xs txt-color-white" 
-						style="background:#3A4558;">Dark Elegance</a>
-					<a href="javascript:void(0);" id="smart-style-2" 
-						data-skinlogo="{'img/logo-blue.png'|assets}" class="btn btn-xs btn-block txt-color-darken margin-top-5" style="background:#fff;">Ultra Light</a>
-					<a href="javascript:void(0);" id="smart-style-3" 
-						data-skinlogo="{'img/logo-pale.png'|assets}" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#f78c40">Google Skin</a>
-					<a href="javascript:void(0);" id="smart-style-4" 
-					data-skinlogo="{'img/logo-pale.png'|assets}" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#bbc0cf">PixelSmash</a>
-					<a href="javascript:void(0);" id="smart-style-5" 
-						data-skinlogo="{'img/logo-pale.png'|assets}" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:rgb(153,179,204,0.2);border:1px solid rgb(121,161,221,0.8);color:#172730 !important">Glass</a>
-				</section>
-				<br/>
-				<section class="margin-top-10">						
-					<span id="reset-smart-widget-style" 
-						class="btn btn-xs btn-block btn-primary"
-						data-reset-msg="你确定要重置组件样式吗?">
-						<i class="fa fa-refresh"></i> 重置小部件
-					</span>
-				</section>
-			</form>
-		</div>
 	</div>
 	<div class="page-footer">
 		<div class="row">
-			<div class="col-xs-12 col-sm-6"><span class="txt-color-white">KissCms {$KISS_VERSION} {$KISS_RELEASE_VER} <span class="hidden-xs"> - Powered by <a href="#">KissGO!</a> </span> &copy; 2014 - {'Y'|date}</span></div>
+			<div class="col-xs-12 col-sm-6"><span class="txt-color-white">wualacms {$KISS_VERSION} {$KISS_RELEASE_VER} <span class="hidden-xs"> - Powered by <a href="http://www.wulacms.com">wulacms!</a> </span> &copy; 2014 - {'Y'|date}</span></div>
 		</div>
 	</div>
 	<!-- END MAIN PANEL -->	
@@ -235,7 +187,8 @@
 	<script type="text/javascript" src="{'assets/cp.js'|here}"></script>
 	{/combinate}
 	{'on_load_dashboard_js'|fire}
-	<script type="text/javascript">	
+	<script type="text/javascript">
+	{minify type="js"}	
 		window.KissCms = { 'AppURL':'{$AppURL}','SiteURL':'{$SiteURL}' };
 	    $.sound_path = "{'sound'|assets}/";
 	    window.KissCms.assetsURL = "{''|assets}";
@@ -253,6 +206,7 @@
 	    	$('#search-form-submitter').click();
 			return false;
 		}
+	{/minify}
 	</script>
 </body>
 </html>

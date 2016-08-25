@@ -25,9 +25,9 @@ if (! interface_exists ( 'SessionHandlerInterface' )) {
 @ini_set ( 'session.use_cookies', 1 );
 /**
  * 得到session名.
- * 
+ *
  * @return mixed
  */
 function get_session_name() {
-	return apply_filter ( 'get_session_name', md5 ( WEB_ROOT ) );
+	return apply_filter ( 'get_session_name', APP_NAME . '_SID' );
 }

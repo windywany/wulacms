@@ -85,7 +85,6 @@ function get_system_support_langs() {
  * @param Smarty $smarty        	
  */
 function init_global_smarty_engine($smarty) {
-	class_exists ( 'Smarty_Internal_Compile_Ican' );
 	$router = Router::getRouter ();
 	$args = $router->getRequestArgs ();
 	$smarty->assign ( 'ARGS', $args, true );

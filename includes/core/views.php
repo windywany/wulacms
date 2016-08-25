@@ -11,7 +11,7 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
  * 可将自身绘制成html片断的类.
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  *        
  */
 interface Renderable {
@@ -25,7 +25,7 @@ interface Renderable {
 /**
  * 支持布局的页面.
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  *        
  */
 interface ILayoutedPage {
@@ -41,7 +41,7 @@ interface ILayoutedPage {
 /**
  * 默认的布局模板页.
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  *        
  */
 abstract class DefaultLayoutedPage implements ILayoutedPage {
@@ -93,7 +93,7 @@ abstract class DefaultLayoutedPage implements ILayoutedPage {
  *
  * 用于定义模板的绘制和头部输出.
  *
- * @author Guangfeng Ning <windywany@gmail.com> 2010-11-14 12:25
+ * @author Leo Ning <windywany@gmail.com> 2010-11-14 12:25
  * @version 1.0
  * @since 1.0
  * @package view
@@ -267,7 +267,7 @@ abstract class View implements ArrayAccess, Renderable {
  *
  * 通过json_encode函数输出
  *
- * @author Guangfeng Ning <windywany@gmail.com> 2010-11-14 12:25
+ * @author Leo Ning <windywany@gmail.com> 2010-11-14 12:25
  * @version 1.0
  * @since 1.0
  * @package view
@@ -300,7 +300,7 @@ class JsonView extends View {
  *
  * 使用PHP 语法定义的HTML视图
  *
- * @author Guangfeng Ning <windywany@gmail.com> 2010-11-14 12:25
+ * @author Leo Ning <windywany@gmail.com> 2010-11-14 12:25
  * @version 1.0
  * @since 1.0
  * @package view
@@ -335,7 +335,7 @@ class HtmlView extends View {
  *
  * 使用PHP 语法定义的HTML视图
  *
- * @author Guangfeng Ning <windywany@gmail.com> 2010-11-14 12:25
+ * @author Leo Ning <windywany@gmail.com> 2010-11-14 12:25
  * @version 1.0
  * @since 1.0
  * @package view

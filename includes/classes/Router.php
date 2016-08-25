@@ -102,7 +102,7 @@ class Router {
 	/**
 	 * app name to url.
 	 *
-	 * @param string $url
+	 * @param string $url        	
 	 */
 	public static function urlf($url, $base = true, $root = true) {
 		static $base_url = false, $dapp = false;
@@ -194,6 +194,7 @@ class Router {
 		if (empty ( $do ) || preg_match ( '#.+\.(s?html?|xml|jsp|json)$#', $do )) {
 			return $this->dispatchPage ( $do, $dispath );
 		}
+		
 		$controllers = explode ( '/', $do );
 		$pms = array ();
 		$len = count ( $controllers );
@@ -226,11 +227,22 @@ class Router {
 		if (! isset ( $__kissgo_apps [$module] )) {
 			return $this->dispatchPage ( $do, $dispath );
 		}
-		$action = strtolower ( $action );
-		$app = $this->findApp ( $module, $action, $pms );
 		
+		$app = RtCache::get ( 'app@' . md5($do), true );
+		if (! $app) {
+			$action = strtolower ( $action );
+			$app = $this->findApp ( $module, $action, $pms );
+			if ($app) {
+				list ( $controllerClz, $action, $pms ) = $app;
+				RtCache::add ( 'app@' . md5($do), $app, true );
+			}
+		} else {
+			list ( $controllerClz, $action, $pms, $f ) = $app;
+			include $f;
+			unset ( $f );
+			define ( 'APPDIR', MODULES_PATH . $module . DS );
+		}
 		if ($app) {
-			list ( $controllerClz, $action, $pms ) = $app;
 			try {
 				$res = Response::getInstance ();
 				$req = Request::getInstance ( true );
@@ -258,7 +270,7 @@ class Router {
 						$this->dispatch ( $do );
 						Response::respond ( 404 );
 					}
-					call_user_func_array ( array ($clz,'preRun' ), array ($action ) );
+					$clz->preRun ( $action );
 					$args = array ();
 					if ($params) {
 						$idx = 0;
@@ -276,7 +288,7 @@ class Router {
 						$view->setRelatedPath ( $module . '/views/' );
 					}
 					// postRun可以返回一个新的View用来代替之前的view.
-					$postView = call_user_func_array ( array ($clz,'postRun' ), array (&$view ) );
+					$postView = $clz->postRun ( $view );
 					if ($postView) {
 						$view = $postView;
 					}
@@ -316,14 +328,22 @@ class Router {
 			foreach ( $files as $file ) {
 				list ( $controller_file, $controllerClz, $action ) = $file;
 				if (is_file ( $controller_file )) {
-					
 					include $controller_file;
 					if (class_exists ( $controllerClz ) && is_subclass_of2 ( $controllerClz, 'Controller' )) {
 						if ($action == 'index' && count ( $params ) > 0) {
 							$action = array_shift ( $params );
 						}
 						define ( 'APPDIR', MODULES_PATH . $module . DS );
-						return array ($controllerClz,$action,$params );
+						return array ($controllerClz,$action,$params,$controller_file );
+					} else {
+						$controllerClz = $module . '\controllers\\' . $controllerClz;
+						if (class_exists ( $controllerClz ) && is_subclass_of2 ( $controllerClz, 'Controller' )) {
+							if ($action == 'index' && count ( $params ) > 0) {
+								$action = array_shift ( $params );
+							}
+							define ( 'APPDIR', MODULES_PATH . $module . DS );
+							return array ($controllerClz,$action,$params,$controller_file );
+						}
 					}
 				}
 			}
@@ -334,7 +354,13 @@ class Router {
 				include $controller_file;
 				if (class_exists ( $controllerClz ) && is_subclass_of2 ( $controllerClz, 'Controller' )) {
 					define ( 'APPDIR', MODULES_PATH . $module . DS );
-					return array ($controllerClz,$action,$params );
+					return array ($controllerClz,$action,$params,$controller_file );
+				} else {
+					$controllerClz = $module . '\controllers\\' . $controllerClz;
+					if (class_exists ( $controllerClz ) && is_subclass_of2 ( $controllerClz, 'Controller' )) {
+						define ( 'APPDIR', MODULES_PATH . $module . DS );
+						return array ($controllerClz,$action,$params,$controller_file );
+					}
 				}
 			}
 		}

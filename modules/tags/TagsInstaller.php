@@ -15,7 +15,7 @@ class TagsInstaller extends AppInstaller {
 		return 'http://www.kisscms.org/plugins/tags';
 	}
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDependences() {
 		$d ['cms'] = '[1.5.1,0)';

@@ -1,7 +1,7 @@
 <?php
 class MemcachedInstaller extends AppInstaller {
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDscription() {
 		return '基于memcached的缓存系统，提供系统缓存功能.需要安装memcache(d)扩展。';
@@ -10,7 +10,7 @@ class MemcachedInstaller extends AppInstaller {
 		return 'memcached缓存';
 	}
 	public function getWebsite() {
-		return 'http://www.kisscms.cn/plugins/memcache';
+		return 'http://www.wulacms.com/plugins/memcache';
 	}
 	public function getVersionLists() {
 		$v = array ('0.0.1' => '20140730001' );

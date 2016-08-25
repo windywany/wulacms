@@ -1,7 +1,7 @@
 <?php
 class PassportInstaller extends AppInstaller {
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDscription() {
 		return '提供登录、用户注册、用户激活、找回密码、实名认证，用户管理等功能.';
@@ -10,7 +10,7 @@ class PassportInstaller extends AppInstaller {
 		return '通行证';
 	}
 	public function getWebsite() {
-		return 'http://www.kissgo.org/';
+		return 'http://www.wulacms.com/';
 	}
 	public function getDependences() {
 		$dependences ['media'] = '[0.0.1,)';

@@ -16,7 +16,7 @@ if(file_exists($lock_file)){
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>		
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<title>KissGO!安装向导</title>
+		<title>wulacms安装向导</title>
 	</head>
 	<body><p>另一个安装进程正在进行，请稍后 ...</p><p>如果你是网站管理员，你可以删除<?php echo $lock_file?>文件，然后重新开始安装.</p></body>
 </html>
@@ -36,7 +36,7 @@ if($step == 'welcome'){
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>		
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<title>KissGO!安装向导</title>
+		<title>wulacms安装向导</title>
 		<link href="../favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 		<link href="../favicon.ico" rel="icon" type="image/x-icon"/>
 		<link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css"/>
@@ -58,9 +58,9 @@ if($step == 'welcome'){
 	<body role="document" data-siteurl="<?php echo BASE_URL ?>" data-code="<?php echo $time?>">
 		<div class="jumbotron subhead">
 		  <div class="container">
-		    <h1>KissGO!安装向导</h1>
-		    <p class="lead">欢迎使用开源的KissGO!做为您的建站工具和二次开发平台,更多信息请访问<a href="http://www.kissgo.org/">KissGO!</a>官方网站.</p>
-		    <p class="lead">本向导将引导您完成KissGO!的安装.</p>
+		    <h1>wulacms安装向导</h1>
+		    <p class="lead">欢迎使用开源的wulacms做为您的建站工具和二次开发平台,更多信息请访问<a href="http://www.wulacms.com/">wulacms</a>官方网站.</p>
+		    <p class="lead">本向导将引导您完成wulacms的安装.</p>
 		  </div>
 		</div>
 		<div class="container">
@@ -108,7 +108,7 @@ if($step == 'welcome'){
 <div class="panel panel-default">
   <div class="panel-heading">推荐PHP配置</div>
   <div class="panel-body">
-         为了保证KissGO!可以良好地运行，推荐如下PHP设置。不过，即使您的设置和推荐的并不完全一样，KissGO! 也可以正常工作。
+         为了保证wulacms可以良好地运行，推荐如下PHP设置。不过，即使您的设置和推荐的并不完全一样，wulacms 也可以正常工作。
   </div>
   <table class="table table-striped">
   	<thead>
@@ -324,14 +324,14 @@ $data = sess_get('install_database_data',array());
 		<label for="dbname" class="col-sm-3 control-label">数据库名 <em class="text-danger">*</em></label>
 		<div class="col-sm-7">
 			<input type="text" class="form-control" id="dbname" name="dbname" placeholder="数据库" value="<?php echo $data['dbname']?>"/>
-			<span class="help-block">KissGO!将被安装到这个数据库。 </span>		
+			<span class="help-block">wulacms将被安装到这个数据库。 </span>		
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="prefix" class="col-sm-3 control-label">表前缀</label>
 		<div class="col-sm-7">
 			<input type="text" class="form-control" id="prefix" name="prefix" placeholder="表前缀"  value="<?php echo $data['prefix']?>"/>
-			<span class="help-block">使用表前缀可将在一个数据库中安装多个KissGO!系统。 </span>		
+			<span class="help-block">使用表前缀可将在一个数据库中安装多个wulacms系统。 </span>		
 		</div>
 	</div>
 </form>
@@ -467,9 +467,9 @@ $data = sess_get('install_database_data',array());
 			$data['msg'] = DatabaseDialect::$lastErrorMassge;
 		}else{
 			$ver = $dialect->getAttribute(PDO::ATTR_SERVER_VERSION);
-			if(version_compare('5.6.5', $ver,'>')){
+			if(version_compare('5.6.20', $ver,'>')){
 				$data['success'] = false;
-				$data['msg'] = '你的数据库版本为'.$ver.',本程序要求数据库的最低版本为5.6.5.';
+				$data['msg'] = '你的数据库版本为'.$ver.',本程序要求数据库的最低版本为5.6.20.';
 			}
 		}
 	}

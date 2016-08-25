@@ -1056,85 +1056,6 @@ function log_error($message, $file = '') {
 	$trace = debug_backtrace ();
 	log_message ( $message, $trace, DEBUG_ERROR, $trace, $file );
 }
-
-/**
- * 分页.
- *
- * @param int $total
- *        	记录总数
- * @param int $limit
- *        	每页记录数,默认为15
- * @param int $cur
- *        	当前是第几页,默认从URL获取
- * @param string $param
- *        	分页参数,默认为start
- * @param int $pp
- *        	每页显示几条页数导航,默认为10
- * @param string $url
- *        	分页链接,不需要添加参数
- * @return string 分页HTML片断
- */
-function paging($total, $limit = 15, $cur = null, $param = 'start', $pp = 10, $url = null) {
-	$req = Request::getInstance ();
-	$cur != null or $cur = $req->get ( $param, 1 );
-	if (empty ( $url )) {
-		$url = Request::getUri ();
-	}
-	$limit = empty ( $limit ) ? 10 : $limit;
-	$total = intval ( $total );
-	$tp = ceil ( $total / $limit ); // 一共有多少页
-	$qs = preg_replace ( '/[&\?]?' . $param . '=\d*/', '', $url );
-	$qs .= (strpos ( $qs, '?' ) === false ? '?' : '&') . $param . '=';
-	$url = $qs;
-	$pager [] = '<ul>';
-	$pager [] = sprintf ( '<li><a>共%s条记录,每页%d条记录,', $total, $limit );
-	$_cp = $cur * $limit;
-	$_cp = $_cp > $total ? $total : $_cp;
-	if ($_cp > 0) {
-		$pager [] = sprintf ( '第%s~%s条记录</a></li>', ($cur - 1) * $limit + 1, $_cp );
-	} else {
-		$pager [] = '</a></li>';
-	}
-	if ($tp > 1) {
-		if ($cur == 1) { // 当前在第一页
-			$pager [] = '<li><a>首</a></li><li><a>上</a></li>';
-		} else {
-			$pager [] = sprintf ( '<li><a title="第一页" href="%s">首</a></li><li><a title="上一页" href="%s">上</a></li>', $url . '1', $url . ($cur - 1) );
-		}
-		// 向前后各多少页
-		$sp = $pp % 2 == 0 ? $pp / 2 : ($pp - 1) / 2;
-		if ($cur <= $sp) {
-			$start = 1;
-			$end = $pp;
-			$end = $end > $tp ? $tp : $end;
-		} else {
-			$start = $cur - $sp;
-			$end = $cur + $sp;
-			if ($pp % 2 == 0) {
-				$end -= 1;
-			}
-			if ($end >= $tp) {
-				$start -= ($end - $tp);
-				$start > 0 or $start = 1;
-				$end = $tp;
-			}
-		}
-		for($i = $start; $i <= $end; $i ++) {
-			if ($i == $cur) {
-				$pager [] = sprintf ( '<li class="active"><a>%d</a></li>', $i );
-			} else {
-				$pager [] = sprintf ( '<li><a href="%s" title="第%d页">%d</a></li>', $url . $i, $i, $i );
-			}
-		}
-		if ($cur == $tp) {
-			$pager [] = '<li><a>下</a></li><li><a>尾</a></li>';
-		} else {
-			$pager [] = sprintf ( '<li><a title="下一页" href="%s">下</a></li><li><a title="最后一页" href="%s">尾</a></li>', $url . ($cur + 1), $url . $tp );
-		}
-	}
-	$pager [] = '</ul>';
-	return implode ( "", $pager );
-}
 /**
  * 生成带参数的页面url.
  *
@@ -1392,6 +1313,21 @@ function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
 		}
 	} else {
 		return $keyc . str_replace ( '=', '', base64_encode ( $result ) );
+	}
+}
+
+function minify_resources($content,$type){
+	static $cm = false;
+	if (! bcfg ( 'enabled@mem' )) {
+		return $content;
+	}
+	if($type == 'js'){
+		return JSMin::minify ( $content );
+	}else{
+		if($cm === false){
+			$cm = new CSSmin();
+		}
+		return $cm->run ( $content );
 	}
 }
 /**

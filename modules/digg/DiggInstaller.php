@@ -19,7 +19,7 @@ class DiggInstaller extends AppInstaller {
 		return 'http://www.kisscms.org/plugins/digg/';
 	}
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDependences() {
 		$d ['cms'] = '[1.5.1,)';

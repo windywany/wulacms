@@ -6,7 +6,7 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
  * 网站页面管理器.
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  */
 class PageController extends Controller {
 	private $status;

@@ -11,7 +11,7 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
  */
 class SystemInstaller extends AppInstaller {
 	public function getAuthor() {
-		return 'Guangfeng Ning';
+		return 'Leo Ning';
 	}
 	public function getDscription() {
 		return '运行时环境.';
@@ -20,7 +20,7 @@ class SystemInstaller extends AppInstaller {
 		return '核心应用';
 	}
 	public function getWebsite() {
-		return 'http://www.kissgo.org/';
+		return 'http://www.wulacms.com/';
 	}
 	public function getVersionLists() {
 		$versions ['0.0.1'] = '2014081300000';
@@ -52,6 +52,7 @@ class SystemInstaller extends AppInstaller {
 		$versions ['3.1.2'] = '2016030900025'; // ajax controller 更改
 		$versions ['3.1.3'] = '2016031400026'; // catalog 表 增加sub，parents字段
 		$versions ['3.1.4'] = '2016032300027'; // 更新catalog 表中的sub，parents字段
+		$versions ['3.2.0'] = '2016082500028'; // controller支持命名空间
 		return $versions;
 	}
 	public function upgradeTo2014081300003($dialect) {

@@ -15,10 +15,10 @@ class AlbumInstaller extends AppInstaller {
 		return '为系统提供相册功能';
 	}
 	public function getWebsite() {
-		return 'http://www.kisscms.cn/plugins/album';
+		return 'http://www.wulacms.com/plugins/album';
 	}
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDependences() {
 		return array ('cms' => '[3.0.0,)' );

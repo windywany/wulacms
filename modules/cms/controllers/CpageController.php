@@ -2,7 +2,7 @@
 /**
  * 自定义页面控制器.
  * 
- * @author Guangfeng Ning.
+ * @author Leo Ning.
  */
 class CpageController extends Controller {
 	private $status;

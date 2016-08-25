@@ -1,7 +1,7 @@
 <?php
 class MediaInstaller extends AppInstaller {
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDscription() {
 		return '提供多媒体文件的管理功能，如上传，浏览等.';
@@ -10,7 +10,7 @@ class MediaInstaller extends AppInstaller {
 		return '媒体库';
 	}
 	public function getWebsite() {
-		return 'http://www.kissgo.org/';
+		return 'http://www.wulacms.com/';
 	}
 	public function getDependences() {
 		$dependences ['rest'] = '[0.0.1,)';
@@ -30,9 +30,9 @@ class MediaInstaller extends AppInstaller {
 	}
 	public function upgradeTo20141217002($dialect) {
 		$types = apply_filter ( 'get_media_types', array () );
-		dbupdate ( '{media}' )->set ( array ('type' => 'unknown' ) )->exec ();
+		dbupdate ( '{media}' )->setDialect($dialect)->set ( array ('type' => 'unknown' ) )->exec ();
 		foreach ( $types as $type => $v ) {
-			dbupdate ( '{media}' )->set ( array ('type' => $v [0] ) )->where ( array ('ext' => $type ) )->exec ();
+			dbupdate ( '{media}' )->setDialect($dialect)->set ( array ('type' => $v [0] ) )->where ( array ('ext' => $type ) )->exec ();
 		}
 		return true;
 	}

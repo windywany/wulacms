@@ -14,7 +14,7 @@ class LocoyInstaller extends AppInstaller {
 		return 'http://www.kisscms.org/plugins/locoy/';
 	}
 	public function getAuthor() {
-		return '宁广丰';
+		return 'Leo Ning';
 	}
 	public function getDependences() {
 		$d ['system'] = '[1.5.2,0';

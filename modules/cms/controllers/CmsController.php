@@ -6,7 +6,7 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
  * 管理员界面控制器.
  *
- * @author Guangfeng Ning <windywany@gmail.com>
+ * @author Leo Ning <windywany@gmail.com>
  */
 class CmsController extends Controller {
 	protected $checkUser = true;

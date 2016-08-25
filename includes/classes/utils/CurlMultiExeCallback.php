@@ -2,7 +2,7 @@
 /**
  * 多Channel调用回调接口.
  * 
- * @author 宁广丰.
+ * @author Leo Ning.
  *
  */
 interface CurlMultiExeCallback {
