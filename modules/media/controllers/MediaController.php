@@ -112,8 +112,12 @@ class MediaController extends Controller {
 			die ( '{"jsonrpc" : "2.0", "error" : {"code": 200, "message": "无权上传文件."}, "id" : "id"}' );
 		}
 		$targetDir = TMP_PATH . "plupload";
-		if (! file_exists ( $targetDir )) {
-			mkdir ( $targetDir, 0755 );
+		if (! is_dir ( $targetDir )) {
+			mkdir ( $targetDir, 0755, true );
+		}
+		if (! is_dir ( $targetDir )) {
+			status_header ( 422 );
+			die ( '{"jsonrpc" : "2.0", "error" : {"code": 200, "message": "临时目录不存在，无法上传."}, "id" : "id"}' );
 		}
 		$cleanupTargetDir = true;
 		$maxFileAge = 1080000;
