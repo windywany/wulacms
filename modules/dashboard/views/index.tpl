@@ -104,7 +104,7 @@
 				</a>				
 			</span>
 			<ul class="dropdown-menu">
-				{$layoutManager->renderLink('user')}				
+				{$layoutManager->renderLink('user')}
 			</ul>
 		</div>
 		<!-- end user info -->
@@ -112,11 +112,11 @@
 			<ul>
 				<li>
 					<a href="{'dashboard/cp'|app:0}" title="控制面板">
-						<i class="fa fa-lg fa-fw fa-home"></i>
-						<span class="menu-item-parent">开始</span>
+						<i class="fa fa-lg fa-fw {if $isOffline}fa-cog fa-spin txt-color-red{else}fa-home{/if}"></i>
+						<span class="menu-item-parent">{if $isOffline}维护{else}开始{/if}</span>
 					</a>
 				</li>
-				{$layoutManager->renderNaviMenu()}				
+				{$layoutManager->renderNaviMenu()}
 			</ul>
 		</nav>
 		<span class="minifyme" data-action="minifyMenu">

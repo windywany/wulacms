@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 hidden-xs hidden-sm">
 		<h1 class="txt-color-blueDark">
-			<i class="fa-fw fa fa-notice"></i> 公告管理
-			<span>&gt; 发布公司</span>			
+			<i class="fa-fw fa fa-volume-up"></i> 公告管理
+			<span>&gt; 发布公告</span>			
 		</h1>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">

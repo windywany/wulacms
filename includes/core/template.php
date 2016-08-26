@@ -6,8 +6,8 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
  * 注册一个数据源.
  *
- * @param string $name.
- * @param string $provider.
+ * @param string $name.        	
+ * @param string $provider.        	
  * @param string $desc
  *        	描述.
  * @param string $title
@@ -24,8 +24,8 @@ function register_cts_provider($name, $provider, $title = false, $desc = '', $re
 /**
  * 从数据源取数据.
  *
- * @param string $name
- * @param array $args
+ * @param string $name        	
+ * @param array $args        	
  * @return CtsData
  */
 function get_data_from_cts_provider($name, $args, $tplvars) {
@@ -33,23 +33,15 @@ function get_data_from_cts_provider($name, $args, $tplvars) {
 	$data = null;
 	if ($providers && isset ( $providers [$name] )) {
 		$provider = $providers [$name];
-		if (isset ( $provider [4] ) && $provider [4] && function_exists ( 'rest_remote_provider' ) && bcfg ( 'enable_remote_data' )) {
-			$args ['datasource'] = $name;
-			$args ['host'] = cfg ( 'remote_data_url' );
-			$args ['group'] = uniqid ();
-			$rdata = rest_remote_provider ( $args, array () );
-			$data = new CtsData ( $rdata->toArray (), $rdata->getCountTotal () );
-		} else {
-			$provider = $provider [0];
-			if (is_callable ( $provider )) {
-				$data = call_user_func_array ( $provider, array ($args,$tplvars ) );
-			} else if (is_array ( $provider )) {
-				list ( $cb, $file ) = $provider;
-				if (file_exists ( $file )) {
-					@include_once $file;
-					if (is_callable ( $cb )) {
-						$data = call_user_func_array ( $cb, array ($args,$tplvars ) );
-					}
+		$provider = $provider [0];
+		if (is_callable ( $provider )) {
+			$data = call_user_func_array ( $provider, array ($args,$tplvars ) );
+		} else if (is_array ( $provider )) {
+			list ( $cb, $file ) = $provider;
+			if (file_exists ( $file )) {
+				@include_once $file;
+				if (is_callable ( $cb )) {
+					$data = call_user_func_array ( $cb, array ($args,$tplvars ) );
 				}
 			}
 		}
@@ -81,7 +73,7 @@ function get_theme_resource_uri($args) {
 /**
  * 取相应的模板文件.
  *
- * @param string $tpl
+ * @param string $tpl        	
  * @return string
  */
 function get_prefer_tpl($tpl) {
@@ -117,7 +109,7 @@ function tpl_exists($tpl) {
 		array_unshift ( $dirs, THEME_PATH . THEME_DIR . DS . $theme . DS );
 	}
 	foreach ( $dirs as $dir ) {
-		if (file_exists( $dir . $tpl )) {
+		if (file_exists ( $dir . $tpl )) {
 			return true;
 		}
 	}
@@ -151,8 +143,8 @@ function merge_args($args, $default) {
  *
  * @param
  *        	$tpl
- * @param array $data
- * @param array $headers
+ * @param array $data        	
+ * @param array $headers        	
  * @global filter:get_custome_tplfile
  * @return ThemeView
  */
@@ -171,13 +163,13 @@ function template($tpl, $data = array(), $headers = array('Content-Type'=>'text/
 	$template_func_file = THEME_PATH . THEME_DIR . DS . $theme . DS . 'template.php';
 	if (is_file ( $template_func_file )) {
 		include_once $template_func_file;
-		$func = $theme.'_template_data';
+		$func = $theme . '_template_data';
 		if (function_exists ( $func )) {
-			$func($data);
+			$func ( $data );
 		}
-		$func = $theme.'_' . $tplname . '_template_data';
+		$func = $theme . '_' . $tplname . '_template_data';
 		if (function_exists ( $func )) {
-			$func($data);
+			$func ( $data );
 		}
 	}
 	$data ['_current_template'] = $tplfile;
@@ -193,9 +185,9 @@ function template($tpl, $data = array(), $headers = array('Content-Type'=>'text/
 /**
  * the views in modules.
  *
- * @param string $tpl
- * @param array $data
- * @param array $headers
+ * @param string $tpl        	
+ * @param array $data        	
+ * @param array $headers        	
  * @return SmartyView
  */
 function view($tpl, $data = array(), $headers = array('Content-Type'=>'text/html')) {
@@ -206,7 +198,7 @@ function view($tpl, $data = array(), $headers = array('Content-Type'=>'text/html
  *
  * @param string $tpl
  *        	模板文件.
- * @param array $data
+ * @param array $data        	
  * @return SmartyView
  */
 function layout_view($tpl, $data = array()) {
@@ -235,7 +227,7 @@ function smarty_parse_args($args) {
 /**
  * 将smarty传过来的参数转换为可eval的字符串.
  *
- * @param array $args
+ * @param array $args        	
  * @return string
  */
 function smarty_argstr($args) {
@@ -269,7 +261,7 @@ function smarty_argstr($args) {
  * @staticvar string WEBROOT的LINUX表示.
  * @param array $params
  *        	参数
- * @param Smarty $compiler
+ * @param Smarty $compiler        	
  * @return string with compiled code
  */
 function smarty_modifiercompiler_here($params, $compiler) {
@@ -309,7 +301,7 @@ function smarty_modifiercompiler_sqlcnt($params, $compiler) {
  * Name: static<br>
  * Purpose: 取静态资源的URL
  *
- * @param Smarty $compiler
+ * @param Smarty $compiler        	
  * @return string with compiled code
  */
 function smarty_modifiercompiler_assets($params, $compiler) {
@@ -347,7 +339,7 @@ function smarty_modifiercompiler_theme($params, $compiler) {
  * Name: url<br>
  * Purpose: 生成url,并添加或删除相应的参数
  *
- * @param Smarty $compiler
+ * @param Smarty $compiler        	
  * @return string with compiled code
  */
 function smarty_modifiercompiler_url($params, $compiler) {
@@ -418,7 +410,7 @@ function smarty_modifiercompiler_timeread($params, $compiler) {
  * Name: fire<br>
  * Purpose: 调用系统触发器
  *
- * @param Smarty $compiler
+ * @param Smarty $compiler        	
  * @return string with compiled code
  */
 function smarty_modifiercompiler_fire($hook, $compiler) {
@@ -430,8 +422,8 @@ function smarty_modifiercompiler_fire($hook, $compiler) {
 /**
  * 格式化金额格式.
  *
- * @param unknown $hook
- * @param unknown $compiler
+ * @param unknown $hook        	
+ * @param unknown $compiler        	
  * @return string
  */
 function smarty_modifiercompiler_menoy_format($hook, $compiler) {
@@ -453,7 +445,7 @@ function smarty_modifiercompiler_menoy_format($hook, $compiler) {
  * Name: checked<br>
  * Purpose: 根据值输出checked="checked"
  *
- * @param Smarty $compiler
+ * @param Smarty $compiler        	
  * @return string with compiled code
  */
 function smarty_modifiercompiler_checked($value, $compiler) {
@@ -471,7 +463,7 @@ function smarty_modifiercompiler_checked($value, $compiler) {
  * Name: status<br>
  * Purpose: 将值做为LIST中的KEY输出LIST对应的值
  *
- * @param Smarty $compiler
+ * @param Smarty $compiler        	
  * @return string with compiled code
  */
 function smarty_modifiercompiler_status($status, $compiler) {
@@ -484,7 +476,6 @@ function smarty_modifiercompiler_status($status, $compiler) {
 	$output = "$status_str" . "[$key]";
 	return $output;
 }
-
 function smarty_modifiercompiler_random($ary, $compiler) {
 	if (count ( $ary ) < 1) {
 		trigger_error ( 'error usage of random', E_USER_WARNING );
@@ -505,7 +496,7 @@ function smarty_modifiercompiler_random($ary, $compiler) {
  * Name: ts<br>
  * Purpose: 翻译
  *
- * @param Smarty $compiler
+ * @param Smarty $compiler        	
  * @return string with compiled code
  */
 function smarty_modifiercompiler_ts($ary, $compiler) {
@@ -534,7 +525,7 @@ function smarty_modifiercompiler_ts($ary, $compiler) {
  * Name: cfg<br>
  * Purpose: 读取配置信息
  *
- * @param Smarty $compiler
+ * @param Smarty $compiler        	
  * @return string with compiled code
  */
 function smarty_modifiercompiler_cfg($ary, $compiler) {
@@ -563,7 +554,7 @@ function smarty_modifiercompiler_cfg($ary, $compiler) {
  * Purpose: 为URL添加或删除参数
  *
  * @see build_page_url()
- * @param Smarty $compiler
+ * @param Smarty $compiler        	
  * @return string with compiled code
  */
 function smarty_modifiercompiler_params($ary, $compiler) {

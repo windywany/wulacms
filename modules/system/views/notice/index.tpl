@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 hidden-xs hidden-sm">
 		<h1 class="txt-color-blueDark">
-			<i class="fa fa-fw fa-notice-md"></i> 通知管理			
+			<i class="fa fa-fw fa-volume-up"></i> 公告管理			
 		</h1>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">

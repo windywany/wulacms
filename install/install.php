@@ -196,7 +196,7 @@ if($step == 'welcome'){
 </div>
 
 <?php }else if($step == 'setup'){
-	$data = sess_get('install_setup_data',array('clean_url'=>true,'gzip'=>extension_loaded ( "zlib" )));
+	$data = sess_get('install_setup_data',array('site_name'=>'我的乌拉小站','clean_url'=>true,'gzip'=>extension_loaded ( "zlib" )));
 	?>	
 <form class="form-horizontal" role="form" id="setupForm">	
 	<div class="form-group">

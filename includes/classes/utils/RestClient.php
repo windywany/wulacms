@@ -144,8 +144,15 @@ class RestClient {
 	public function post($api, $params = array(), $timeout = null, $execute = true) {
 		$this->prepare ( $params, $api );
 		curl_setopt ( $this->curl, CURLOPT_URL, $this->url );
+		if (class_exists ( 'CURLFile' )) {
+			curl_setopt ( $this->curl, CURLOPT_SAFE_UPLOAD, true );
+			$this->preparePostData ( $params );
+		} else if (defined ( 'CURLOPT_SAFE_UPLOAD' )) {
+			curl_setopt ( $this->curl, CURLOPT_SAFE_UPLOAD, false );
+		}
 		curl_setopt ( $this->curl, CURLOPT_POST, true );
 		curl_setopt ( $this->curl, CURLOPT_POSTFIELDS, $params );
+		
 		if (is_numeric ( $timeout )) {
 			$this->timeout = $timeout;
 			curl_setopt ( $this->curl, CURLOPT_TIMEOUT, $timeout );
@@ -224,7 +231,7 @@ class RestClient {
 	private static function sortArgs(&$args) {
 		ksort ( $args );
 		foreach ( $args as $key => $val ) {
-			if (is_string ( $val ) && $val {0} == '@' && file_exists ( trim ( substr ( $val, 1 ), '"' ) )) {
+			if (is_string ( $val ) && $val {0} == '@' && file_exists ( realpath ( trim ( substr ( $val, 1 ), '"' ) ) )) {
 				unset ( $args [$key] );
 				continue;
 			}
@@ -232,6 +239,15 @@ class RestClient {
 				ksort ( $val );
 				$args [$key] = $val;
 				RestClient::sortArgs ( $val );
+			}
+		}
+	}
+	private function preparePostData(&$data) {
+		foreach ( $data as $key => $val ) {
+			if (is_string ( $val ) && $val {0} == '@' && file_exists ( trim ( substr ( $val, 1 ), '"' ) )) {
+				$data [$key] = new CURLFile ( realpath ( trim ( substr ( $val, 1 ), '"' ) ) );
+			} else if (is_array ( $val )) {
+				$data [$key] = $this->preparePostData ( $val );
 			}
 		}
 	}

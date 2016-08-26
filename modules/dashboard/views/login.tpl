@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-    <title>登录 - {'site_name'|cfg} - Powered by wulacms! - {$KISS_VERSION} {$KISS_RELEASE_VER}</title>
+    <title>亲~，欢迎回来！ - {'site_name'|cfg} - Powered by wulacms! - {$KISS_VERSION} {$KISS_RELEASE_VER}</title>
     {combinate type="css"}
     <link href="{'bootstrap/css/bootstrap.min.css'|assets}" media="screen" rel="stylesheet" type="text/css" />
     <link href="{'bootstrap/css/smartadmin-production.css'|assets}" media="screen" rel="stylesheet" type="text/css" />

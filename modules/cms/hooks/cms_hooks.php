@@ -8,17 +8,6 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
  * @return Ambigous <CmsPage, NULL, Ambigous, unknown, multitype:>
  */
 function cms_get_page_data($page, $url) {
-	if ($page == null && bcfg ( 'enable_remote_data' )) {
-		$appKey = cfg ( 'appkey@rest' );
-		$appSecret = cfg ( 'appsecret@rest' );
-		$remote_url = cfg ( 'remote_data_url' );
-		$client = new RestClient ( $remote_url, $appKey, $appSecret, '1' );
-		$data = $client->get ( 'cms.page', array ('url' => $url ) );
-		if ($data ['error'] == 0) {
-			$page = new CmsPage ( array (), false );
-			$page->setFields ( $data ['page'] );
-		}
-	}
 	if ($page == null) {
 		// 普通页
 		$page = CmsPage::load ( $url, true );
@@ -120,7 +109,7 @@ function dashboard_right_bar_page($html) {
 	return $html;
 }
 function render_dashboard_panel_of_cms($html) {
-	if (bcfg ( 'enable_report@cms' ) && icando ( 'm:cms' )) {
+	if (bcfg ( 'enable_report@cms', true ) && icando ( 'm:cms' )) {
 		$data = array ();
 		$days = array ();
 		$today = date ( 'Y-m-d' ) . ' 12:00:00';
