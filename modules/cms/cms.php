@@ -16,7 +16,7 @@ bind ( 'get_acl_resource', 'filter_for_cms_acl_resource@hooks/get_acl_resource' 
 bind ( 'before_save_page', 'hook_for_before_save_page_page@hooks/cms_hooks' );
 bind ( 'crontab', 'hook_for_crontab_page@hooks/cms_hooks', 1 );
 bind ( 'on_render_navi_btns', 'hook_for_on_render_navi_btns_page@hooks/do_admin_layout' );
-if (bcfg ( 'enable_short@cms' )) {
+if (bcfg ( 'enable_short@cms', true )) {
 	bind ( 'on_render_dashboard_shortcut', 'hook_for_render_dashboard_shortcut_cms@hooks/do_admin_layout' );
 }
 bind ( 'on_init_dashboard_ui', 'hook_for_cms_init_dashboard_ui@hooks/do_admin_layout' );

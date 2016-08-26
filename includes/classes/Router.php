@@ -107,7 +107,7 @@ class Router {
 	public static function urlf($url, $base = true, $root = true) {
 		static $base_url = false, $dapp = false;
 		if (! $base_url) {
-			$base_url = rtrim ( cfg ( 'site_url', DETECTED_ABS_URL ), '/' );
+			$base_url = rtrim ( cfg ( 'cms_url@cms', DETECTED_ABS_URL ), '/' );
 			if (! defined ( 'CLEAN_URL' ) || ! CLEAN_URL) {
 				$base_url .= '/index.php';
 			}
@@ -184,6 +184,7 @@ class Router {
 	 */
 	public function route($do = '', $dispath = true) {
 		global $__kissgo_apps;
+		$this->checkOffline ();
 		if (empty ( $do )) {
 			if (defined ( 'REQUEST_URL' )) {
 				$do = trim ( REQUEST_URL, '/' );
@@ -228,13 +229,13 @@ class Router {
 			return $this->dispatchPage ( $do, $dispath );
 		}
 		
-		$app = RtCache::get ( 'app@' . md5($do), true );
+		$app = RtCache::get ( 'app@' . md5 ( $do ), true );
 		if (! $app) {
 			$action = strtolower ( $action );
 			$app = $this->findApp ( $module, $action, $pms );
 			if ($app) {
 				list ( $controllerClz, $action, $pms ) = $app;
-				RtCache::add ( 'app@' . md5($do), $app, true );
+				RtCache::add ( 'app@' . md5 ( $do ), $app, true );
 			}
 		} else {
 			list ( $controllerClz, $action, $pms, $f ) = $app;
@@ -589,6 +590,32 @@ class Router {
 						$this->current_url = '';
 						Response::respond ( 404, $origin_url );
 					}
+				}
+			}
+		}
+	}
+	private function checkOffline() {
+		$offline = bcfg ( 'isOffline1', false );
+		if ($offline) {
+			$allow = false;
+			$ips = cfg ( 'allowIps1' );
+			if ($ips) {
+				$ips = explode ( "\n", $ips );
+				$ip = Request::getIp ();
+				if ($ip) {
+					$allow = in_array ( $ip, $ips );
+				}
+			}
+			if (! $allow) {
+				$req = Request::getInstance ( true );
+				$req->startSession ();
+				$u = whoami ();
+				if (! $u->isLogin () || $u->getUid () != 1) {
+					$return ['error'] = '1024';
+					$return ['message'] = cfg ( 'offlineMsg1', '系统正在维护，请耐心等待...' );
+					$view = template ( 'offline.tpl', $return );
+					echo $view->render ();
+					exit ();
 				}
 			}
 		}

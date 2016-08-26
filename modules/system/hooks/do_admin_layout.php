@@ -3,7 +3,7 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
  * 注册导航菜单.
  *
- * @param AdminLayoutManager $layout
+ * @param AdminLayoutManager $layout        	
  */
 function hook_for_do_admin_layout_system($layout) {
 	if (icando ( 'r:report' )) {
@@ -27,45 +27,6 @@ function hook_for_do_admin_layout_system($layout) {
 		$sysMenu = new AdminNaviMenu ( 'system', '系统', 'fa-gears' );
 		
 		$sysMenu->addSubmenu ( array ('syslog','系统日志','fa-book',tourl ( 'system/syslog', false ) ), 'r:system/log', 0 );
-		if (icando ( 'm:plugin' )) {
-			// 插件菜单
-			$pluginMenu = new AdminNaviMenu ( 'plugin', '插件', 'fa-puzzle-piece' );
-			$apps = AppInstaller::getApps ();
-			$cnt = 0;
-			foreach ( $apps as $app ) {
-				if ($app ['upgradable']) {
-					$cnt ++;
-				}
-			}
-			$tip = '';
-			if ($cnt > 0) {
-				$pluginMenu->setTipCount ( $cnt );
-				$tip = '<span class="badge inbox-badge bg-color-red pull-right">' . $cnt . '</span>';
-			}
-			$pluginMenu->addSubmenu ( array ('iplugins','已安装' . $tip,'fa-check-circle-o',tourl ( 'system/plugin/installed', false ) ), 'm:plugin', 0 );
-			$pluginMenu->addSubmenu ( array ('uplugins','未安装','fa-circle-o',tourl ( 'system/plugin/uninstalled', false ) ), 'm:plugin', 1 );
-			$sysMenu->addItem ( $pluginMenu, 'm:plugin', 99995 );
-		}
-		if (icando ( 'm:system/catalog' )) {
-			$catelogMenu = new AdminNaviMenu ( 'catalog_menu', '数据', 'fa-database' );
-			$catelogMenu->addSubmenu ( array ('cata_type_m','数据项','fa-list-ul',tourl ( 'system/catatype/', false ) ), false, 1 );
-			$catelogTypes = apply_filter ( 'get_catalog_types', array (), false );
-			if ($catelogTypes) {
-				$catalogListMenu = new AdminNaviMenu ( 'catalist_menu', '自定义数据', 'fa-sitemap' );
-				$catelogMenu->addItem ( $catalogListMenu, false, 2 );
-				$i = 0;
-				foreach ( $catelogTypes as $key => $val ) {
-					$type = $key;
-					$name = $val ['name'];
-					if (isset ( $val ['nav'] ) && $val ['nav'] === false) {
-						continue;
-					}
-					$url = tourl ( 'system/catalog/' . $type, false );
-					$catalogListMenu->addSubmenu ( array ($type . '_catelog',$name,'',$url ), 'r:system/catalog/' . $type, $i ++ );
-				}
-			}
-			$sysMenu->addItem ( $catelogMenu, 'm:system/catalog', 99996 );
-		}
 		
 		$settingMenu = new AdminNaviMenu ( 'preferences', '系统设置', 'fa-cog' );
 		$settingMenu->addSubmenu ( array ('baseSettting','通用设置','fa-cog',tourl ( 'system/preference', false ) ), 'gm:system/preference', 0 );
@@ -79,9 +40,51 @@ function hook_for_do_admin_layout_system($layout) {
 		$sysMenu->addItem ( $cacheMenu, 'cc:system', 99999 );
 		
 		$sysMenu->addSubmenu ( array ('sysnotice','系统公告','fa-volume-up',tourl ( 'system/notice', false ) ), 'cron:system', 199998 );
-		$sysMenu->addSubmenu ( array ('rest_cronjob','运行定时任务','fa-refresh',tourl ( 'system/restcron' ),'',array ('target' => 'ajax','data-confirm' => '你真的要手动运行定时任务吗?' ) ), 'cron:system', 199999 );
+		$sysMenu->addSubmenu ( array ('rest_cronjob','运行任务','fa-refresh',tourl ( 'system/restcron' ),'',array ('target' => 'ajax','data-confirm' => '你真的要手动运行定时任务吗?' ) ), 'cron:system', 199999 );
 		
 		$layout->addNaviMenu ( $sysMenu, 1000000 );
+	}
+	if (icando ( 'm:system/catalog' )) {
+		$catelogMenu = new AdminNaviMenu ( 'catalog_menu', '数据', 'fa-database' );
+		$catelogMenu->addSubmenu ( array ('cata_type_m','数据项','fa-list-ul',tourl ( 'system/catatype/', false ) ), false, 1 );
+		$catelogTypes = apply_filter ( 'get_catalog_types', array (), false );
+		if ($catelogTypes) {
+			$catalogListMenu = new AdminNaviMenu ( 'catalist_menu', '自定义数据', 'fa-sitemap' );
+			$catelogMenu->addItem ( $catalogListMenu, false, 2 );
+			$i = 0;
+			foreach ( $catelogTypes as $key => $val ) {
+				$type = $key;
+				$name = $val ['name'];
+				if (isset ( $val ['nav'] ) && $val ['nav'] === false) {
+					continue;
+				}
+				$url = tourl ( 'system/catalog/' . $type, false );
+				$catalogListMenu->addSubmenu ( array ($type . '_catelog',$name,'',$url ), 'r:system/catalog/' . $type, $i ++ );
+			}
+		}
+		$layout->addNaviMenu ( $catelogMenu, 999998 );
+	}
+	if (icando ( 'm:plugin' )) {
+		// 插件菜单
+		$pluginMenu = new AdminNaviMenu ( 'plugin', '模块', 'fa-puzzle-piece' );
+		$apps = AppInstaller::getApps ( true, 'upgrade' );
+		$cnt = 0;
+		foreach ( $apps as $app ) {
+			if ($app ['upgradable']) {
+				$cnt ++;
+			}
+		}
+		$tip = '';
+		if ($cnt > 0) {
+			$pluginMenu->setTipCount ( $cnt );
+			$tip = '<span class="badge inbox-badge bg-color-green pull-right">' . $cnt . '</span>';
+		}
+		$pluginMenu->addSubmenu ( array ('iplugins','已安装','fa-check-circle-o',tourl ( 'system/plugin/installed', false ) ), 'm:plugin', 0 );
+		if ($cnt > 0) {
+			$pluginMenu->addSubmenu ( array ('pplugins','可升级' . $tip,'fa-cloud-upload txt-color-green',tourl ( 'system/plugin/installed', false ).'?status=upgrade' ), 'm:plugin', 1 );
+		}
+		$pluginMenu->addSubmenu ( array ('uplugins','未安装','fa-circle-o',tourl ( 'system/plugin/uninstalled', false ) ), 'm:plugin', 2 );
+		$layout->addNaviMenu ( $pluginMenu, 999999 );
 	}
 	if (icando ( 'm:recycle' )) {
 		$trashMenu = new AdminNaviMenu ( 'recycle_menu', '回收站', 'fa-trash-o', tourl ( 'system/recycle', false ) );

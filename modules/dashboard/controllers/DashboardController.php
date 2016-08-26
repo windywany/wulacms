@@ -5,6 +5,19 @@
  * @author Leo Ning <windywany@gmail.com>
  */
 class DashboardController extends Controller {
+	public function preRun($method) {
+		$dhost = cfg ( 'site_url' );
+		if ($dhost) {
+			$dhost = parse_url ( $dhost, PHP_URL_HOST );
+			if ($dhost) {
+				$host = REAL_HTTP_HOST;
+				if ($dhost != $host) {
+					Response::respond ( 404 );
+				}
+			}
+		}
+		parent::preRun ( $method );
+	}
 	/**
 	 * 管理后台首页.
 	 *
@@ -18,10 +31,11 @@ class DashboardController extends Controller {
 			$data ['menu_on_top'] = $this->user->getAttr ( 'menu_on_top', 1 );
 			if ($data ['menu_on_top']) {
 				$data ['menu_fixed'] = $this->user->getAttr ( 'menu_fixed', 1 );
-			}else{
+			} else {
 				$data ['menu_fixed'] = 0;
 			}
 			$data = apply_filter ( 'on_init_layout_data', $data );
+			$data['isOffline'] = bcfg('isOffline1');
 			$layoutManager = new AdminLayoutManager ();
 			fire ( 'do_admin_layout', $layoutManager );
 			$data ['layoutManager'] = $layoutManager;

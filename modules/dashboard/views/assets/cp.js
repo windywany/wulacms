@@ -1034,7 +1034,7 @@ function checkURL() {
 		}
 		// change page title from global var
 		if(title){
-			document.title = title + ' - '+ ($.siteName?$.siteName:'KissCms Dashboard');
+			document.title = title + ' - '+ ($.siteName?$.siteName:'乌拉CMS');
 		}
 		loadURL(url + location.search, container);
 	} else {
@@ -1178,7 +1178,7 @@ function drawBreadCrumb(opt_breadCrumbs) {
 						$.trim($(this).clone().children(".badge").remove()
 								.end().text()))), --b
 						|| (document.title = bread_crumb.find("li:last-child")
-								.text() + ' - '+ ($.siteName?$.siteName:'KissCms Dashboard'))
+								.text() + ' - '+ ($.siteName?$.siteName:'乌拉CMS'))
 			});	
 	if (opt_breadCrumbs != undefined) {
 		$.each(opt_breadCrumbs, function(index, value) {

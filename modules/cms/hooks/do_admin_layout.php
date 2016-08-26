@@ -8,7 +8,7 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 function hook_for_do_admin_layout_admin($layout) {
 	// 网站菜单
 	if (icando ( 'm:cms' )) {
-		$menu = new AdminNaviMenu ( 'site', '网站', 'fa-globe' );
+		$menu = new AdminNaviMenu ( 'site', 'CMS', 'fa-globe' );
 		
 		if (icando ( 'r:cms/channel' ) || icando ( 'r:cms/catalog' )) {
 			$catelogMenu = new AdminNaviMenu ( 'catelog_menu', '分类', 'fa-sitemap' );
