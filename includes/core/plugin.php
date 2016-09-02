@@ -85,12 +85,12 @@ function bind($hook, $hook_func, $priority = 10, $accepted_args = 1) {
 	}
 	
 	$idx = __rt_hook_unique_id ( $hook, $hook_func, $priority );
-	
-	$__ksg_rtk_hooks [$hook] [$priority] [$idx] = array ('func' => $hook_func,'accepted_args' => $accepted_args,'file' => $file );
-	
-	unset ( $__ksg_sorted_hooks [$hook] );
-	
-	return true;
+	if($idx){
+		$__ksg_rtk_hooks [$hook] [$priority] [$idx] = array ('func' => $hook_func,'accepted_args' => $accepted_args,'file' => $file );
+		unset ( $__ksg_sorted_hooks [$hook] );
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -390,30 +390,13 @@ function __rt_call_all_hook($args) {
  * @return string bool ID for usage as array key or false if $priority === false and $function is an object reference, and it does not already have a uniqe id.
  */
 function __rt_hook_unique_id($hook_name, $function, $priority) {
-	global $__ksg_rtk_hooks;
-	static $filter_id_count = 0;
-	
 	if (is_string ( $function )) {
 		return $function;
+	} else if($function instanceof Closure){
+		return spl_object_hash($function);
 	} else if (is_object ( $function [0] )) {
 		// Object Class Calling
-		if (function_exists ( 'spl_object_hash' )) {
-			return spl_object_hash ( $function [0] ) . $function [1];
-		} else {
-			$obj_idx = get_class ( $function [0] ) . $function [1];
-			if (! isset ( $function [0]->wp_filter_id )) {
-				if (false === $priority) {
-					return false;
-				}
-				$obj_idx .= isset ( $__ksg_rtk_hooks [$hook_name] [$priority] ) ? count ( ( array ) $__ksg_rtk_hooks [$hook_name] [$priority] ) : $filter_id_count;
-				$function [0]->wp_filter_id = $filter_id_count;
-				++ $filter_id_count;
-			} else {
-				$obj_idx .= $function [0]->wp_filter_id;
-			}
-			
-			return $obj_idx;
-		}
+		return spl_object_hash ( $function [0] ) . $function [1];
 	} else if (is_string ( $function [0] )) {
 		// Static Calling
 		return $function [0] . $function [1];

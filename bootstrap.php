@@ -208,7 +208,7 @@ if ($_kissgo_processing_installation != true) {
 	}
 	//load extensions
 	$extensions = RtCache::get ( 'ext_list' );
-	if (! $extensions) {
+	if (! $extensions && is_dir(EXTENSIONS_PATH)) {
 		$hd = opendir ( EXTENSIONS_PATH );
 		if ($hd) {
 			while ( ($f = readdir ( $hd )) != false ) {
