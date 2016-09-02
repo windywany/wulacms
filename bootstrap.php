@@ -18,10 +18,12 @@ defined ( 'APPDATA_PATH' ) or define ( 'APPDATA_PATH', APP_PATH . APPDATA_DIR . 
 defined ( 'TMP_PATH' ) or define ( 'TMP_PATH', APPDATA_PATH . 'tmp' . DS );
 
 defined ( 'MODULE_DIR' ) or define ( 'MODULE_DIR', 'modules' );
+defined ( 'EXTENSION_DIR' ) or define ( 'EXTENSION_DIR', 'extensions' );
 defined ( 'THEME_DIR' ) or define ( 'THEME_DIR', 'themes' );
 defined ( 'MISC_DIR' ) or define ( 'MISC_DIR', 'assets' );
 
 define ( 'MODULES_PATH', WEBAPP_PATH . MODULE_DIR . DS );
+define ( 'EXTENSIONS_PATH', WEBAPP_PATH . EXTENSION_DIR . DS );
 define ( 'THEME_PATH', WEBAPP_PATH );
 define ( 'INCLUDES', WEB_ROOT . 'includes' . DS );
 define ( 'KISSGO', INCLUDES . 'core' . DS );
@@ -165,7 +167,7 @@ if ($_kissgo_processing_installation != true) {
 			while ( ($f = readdir ( $hd )) != false ) {
 				if (is_dir ( MODULES_PATH . $f ) && $f != '.' && $f != '..') {
 					$app = MODULES_PATH . $f . DS . $f . '.php';
-					if (file_exists ( $app )) {
+					if (is_file ( $app )) {
 						$modules [$f] = $app;
 					}
 					$fp = MODULES_PATH . $f . DS . 'classes';
@@ -204,7 +206,31 @@ if ($_kissgo_processing_installation != true) {
 		$__kissgo_apps = $apps;
 		unset ( $apps );
 	}
-	unset ( $modules, $exports, $m, $fp, $app, $e, $hd, $f, $settings, $CRUDQ_HTTP_HOST, $_h );
+	//load extensions
+	$extensions = RtCache::get ( 'ext_list' );
+	if (! $extensions && is_dir(EXTENSIONS_PATH)) {
+		$hd = opendir ( EXTENSIONS_PATH );
+		if ($hd) {
+			while ( ($f = readdir ( $hd )) != false ) {
+				if (is_dir ( EXTENSIONS_PATH . $f ) && $f != '.' && $f != '..') {
+					$app = EXTENSIONS_PATH . $f . DS . $f . '.php';
+					if (is_file( $app )) {
+						$extensions [$f] = $app;
+					}
+				}
+			}
+			@closedir ( $hd );
+			if (DEBUG > DEBUG_DEBUG) {
+				RtCache::add ( 'ext_list', $extensions );
+			}
+		}
+	}
+	if ($extensions) {
+		foreach ( $extensions as $f => $m ) {
+			include $m;
+		}
+	}
+	unset ( $modules, $exports, $extensions, $m, $fp, $app, $e, $hd, $f, $settings, $CRUDQ_HTTP_HOST, $_h );
 	if (isset ( $_GET ['_url'] )) {
 		define ( 'REQUEST_URL', Request::xss_clean ( $_GET ['_url'] ) );
 		unset ( $_GET ['_url'] );

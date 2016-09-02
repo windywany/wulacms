@@ -72,24 +72,24 @@ $tables ['1.0.0'] [] = "ALTER TABLE `{prefix}member` ADD `recommend_code` VARCHA
 $tables ['1.0.0'] [] = "CREATE INDEX `IDX_M_ICODE` ON `{prefix}member` (`invite_code`)";
 $tables ['1.0.0'] [] = "CREATE INDEX `IDX_R_ICODE` ON `{prefix}member` (`recommend_code`)";
 
-$tables ['1.5.0'] [] = "ALTER TABLE `{prefix}member` ADD `oauth_id` BIGINT unsigned NOT NULL DEFAULT 0 COMMENT '第三方登录记录编号' AFTER `invite_mid`";
-
 $tables ['1.5.0'] [] = "CREATE TABLE `{prefix}passport_oauth` (
   `id` BIGINT unsigned NOT NULL AUTO_INCREMENT,
   `create_time` int unsigned NOT NULL,
-  `app` varchar(100) NOT NULL COMMENT '第三方平台标识',
-  `app_id` varchar(100) NOT NULL COMMENT '授权用户的ID',
-  `app_nick` varchar(256) NOT NULL COMMENT '第三方平台上的昵称',
+  `app` varchar(16) NOT NULL COMMENT '第三方平台标识',
+  `openid` varchar(48) NOT NULL COMMENT '授权用户的ID',
+  `nickname` varchar(256) NOT NULL COMMENT '第三方平台上的昵称',
   `token` varchar(256) NOT NULL COMMENT '第三方平台提供的ACCESS TOKEN',
+  `mid` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '绑定到会员ID，未绑定时为0',
   `token_secret` varchar(256) COMMENT '访问第三方平台可能要用到的密码',
   `avilable` tinyint(1) NOT NULL DEFAULT 1 COMMENT '登录授权是否有效',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UDX_APPID` (`app` ASC, `openid` ASC),
+  INDEX `MID` (`mid` ASC)	
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '第三方登录授权记录.'";
 
 $tables ['1.5.0'] [] = "CREATE TABLE `{prefix}passport_oauth_data` (
   `oauth_id` BIGINT unsigned NOT NULL COMMENT '登录记录值',
   `name` varchar(20) NOT NULL COMMENT '变量名',
-  `create_time` int unsigned NOT NULL,
   `val` text NOT NULL COMMENT '值',
   PRIMARY KEY (`oauth_id`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '可以从第三方取到的值'";
