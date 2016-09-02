@@ -6,8 +6,8 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 /**
  * output cache header.
  *
- * @param string $last_modify
- * @param number $expire
+ * @param string $last_modify        	
+ * @param number $expire        	
  */
 function out_cache_header($last_modify = null, $expire = 7200, $etag = null) {
 	$last_modify = $last_modify == null ? time () : $last_modify;
@@ -22,7 +22,7 @@ function out_cache_header($last_modify = null, $expire = 7200, $etag = null) {
 /**
  * use mapping to resolve the app url.
  *
- * @param string $url
+ * @param string $url        	
  * @return string
  */
 function tourl($url, $base = true, $root = true) {
@@ -31,9 +31,9 @@ function tourl($url, $base = true, $root = true) {
 /**
  * 加载模块文章.
  *
- * @param string $module
- * @param mixed $files
- * @param bool $return
+ * @param string $module        	
+ * @param mixed $files        	
+ * @param bool $return        	
  */
 function ksg_include($module, $files, $return = false) {
 	global $__ksg_module_path;
@@ -70,13 +70,20 @@ function _kissgo_class_loader($clz) {
 	}
 	if (strpos ( $clz, '\\' ) > 0) {
 		// support namespace.
-		$clz_file = MODULES_PATH . str_replace ( '\\', DS, $clz ) . '.php';
+		$clzn = str_replace ( '\\', DS, $clz ) . '.php';
+		$clz_file = EXTENSIONS_PATH . $clzn;
 		if (is_file ( $clz_file )) {
 			RtCache::add ( $key, $clz_file, true );
 			include $clz_file;
 			return;
 		}
-		$clz_file = INCLUDES . str_replace ( '\\', DS, $clz ) . '.php';
+		$clz_file = MODULES_PATH . $clzn;
+		if (is_file ( $clz_file )) {
+			RtCache::add ( $key, $clz_file, true );
+			include $clz_file;
+			return;
+		}
+		$clz_file = INCLUDES . $clzn;
 		if (is_file ( $clz_file )) {
 			RtCache::add ( $key, $clz_file, true );
 			include $clz_file;
@@ -92,7 +99,7 @@ function _kissgo_class_loader($clz) {
 		}
 	}
 	$clz_file = apply_filter ( 'auto_load_class', '', $clz );
-	if ($clz_file && file_exists ( $clz_file )) {
+	if ($clz_file && is_file ( $clz_file )) {
 		RtCache::add ( $key, $clz_file, true );
 		include $clz_file;
 	}
@@ -101,7 +108,7 @@ function _kissgo_class_loader($clz) {
  *
  * @param string $name
  *        	preference group and name
- * @param mixed $default
+ * @param mixed $default        	
  */
 function cfg($name, $default = '', $reset = false) {
 	global $_kissgo_processing_installation, $__ksg_rtk_hooks;
@@ -191,8 +198,8 @@ function set_cfg($name, $value, $group) {
 /**
  * 取布尔值类型的变量。
  *
- * @param string $name
- * @param string $default
+ * @param string $name        	
+ * @param string $default        	
  * @return boolean
  */
 function bcfg($name, $default = false) {
@@ -208,7 +215,7 @@ function icfg($name, $default = 0) {
 /**
  * 根据规则生成URL.
  *
- * @param string $pattern
+ * @param string $pattern        	
  * @param array $data
  *        	array('aid','tid','trid','model','create_time','name','path','page')
  * @return string
@@ -263,8 +270,8 @@ function parse_page_url($pattern, $data) {
 /**
  * 得到关键词列表.
  *
- * @param array $keywords
- * @param string $string
+ * @param array $keywords        	
+ * @param string $string        	
  * @return array
  */
 function get_keywords($keywords, $string = '', $count = null, $dict = null) {
@@ -308,7 +315,7 @@ function get_keywords($keywords, $string = '', $count = null, $dict = null) {
 /**
  * 将以'，',' ','　','-',';','；','－'分隔的字符串转换成以逗号分隔的字符.
  *
- * @param string $string
+ * @param string $string        	
  * @return string
  */
 function pure_comman_string($string) {
@@ -320,8 +327,8 @@ function pure_comman_string($string) {
 /**
  * 判断$tag是否在A标签中或是某个标签的属性.
  *
- * @param string $content
- * @param string $tag
+ * @param string $content        	
+ * @param string $tag        	
  * @return bool
  */
 function in_atag($content, $tag) {
@@ -351,7 +358,7 @@ function in_atag($content, $tag) {
 /**
  * covert the charset of filename to UTF-8.
  *
- * @param string $filename
+ * @param string $filename        	
  * @return string
  */
 function thefilename($filename) {
@@ -364,8 +371,8 @@ function thefilename($filename) {
 /**
  * reimplements is_subclass_of function.
  *
- * @param mixed $object
- * @param string $class_name
+ * @param mixed $object        	
+ * @param string $class_name        	
  * @return boolean
  */
 function is_subclass_of2($object, $class_name) {
@@ -417,10 +424,10 @@ function sendmail($to, $subject, $message, $attachments = array(), $type = 'html
  * Set HTTP status header.
  *
  * @since 1.0
- *
+ *       
  * @param int $header
  *        	HTTP status code
- *
+ *        	
  */
 function status_header($header) {
 	$text = get_status_header_desc ( $header );
@@ -445,7 +452,7 @@ function status_header($header) {
  * Retrieve the description for the HTTP status.
  *
  * @since 1.0
- *
+ *       
  * @param int $code
  *        	HTTP status code.
  * @return string Empty string if not found, or description if found.
@@ -484,7 +491,7 @@ function get_status_header_desc($code) {
  * not restricted to paths and offers no specific path support.
  *
  * @uses untrailingslashit() Unslashes string if it was slashed already.
- *
+ *      
  * @param string $string
  *        	What to add the trailing slash to.
  * @return string String with trailing slash added.
@@ -518,7 +525,7 @@ function untrailingslashit($string) {
  * and end of filename.
  *
  * @since 2.1.0
- *
+ *       
  * @param string $filename
  *        	The filename to be sanitized
  * @return string The sanitized filename
@@ -574,8 +581,8 @@ function sanitize_file_name($filename) {
  * The callback must accept two parameters, the first one is the directory and
  * the second is the filename. The callback must be a function.
  *
- * @param string $dir
- * @param string $filename
+ * @param string $dir        	
+ * @param string $filename        	
  * @param string $unique_filename_callback
  *        	Function name, must be a function.
  * @return string New filename, if given wasn't unique.
@@ -655,7 +662,7 @@ function find_files($dir = '.', $pattern = '', $excludes = array(), $recursive =
 /**
  * 删除目录.
  *
- * @param string $dir
+ * @param string $dir        	
  * @return bool
  */
 function rmdirs($dir, $keep = true) {
@@ -682,7 +689,7 @@ function rmdirs($dir, $keep = true) {
 /**
  * 只保留URL中部分参数.
  *
- * @param string $url
+ * @param string $url        	
  * @param array $include
  *        	要保留的参数
  * @return string
@@ -747,8 +754,8 @@ function sess_get($name, $default = "") {
 /**
  * 从SESSION中删除变量$name,并将该变量值返回.
  *
- * @param string $name
- * @param string $default
+ * @param string $name        	
+ * @param string $default        	
  * @return mixed
  */
 function sess_del($name, $default = '') {
@@ -825,7 +832,7 @@ function safe_ids2($ids, $sp = ',') {
 /**
  * 可读的size.
  *
- * @param int $size
+ * @param int $size        	
  * @return string
  */
 function readable_size($size) {
@@ -869,8 +876,8 @@ function readable_date($sec, $text = array('s'=>'秒','m'=>'分','h'=>'小时','
 /**
  * 合并$base与$arr.
  *
- * @param mixed $base
- * @param array $arr
+ * @param mixed $base        	
+ * @param array $arr        	
  * @return array 如果$base为空或$base不是一个array则直接返回$arr,反之返回array_merge($base,$arr)
  */
 function array_merge2($base, $arr) {
@@ -894,7 +901,7 @@ function get_query_string() {
 /**
  * 输入安全URL.
  *
- * @param string $url
+ * @param string $url        	
  * @return string
  */
 function safe_url($node, $inherit = false) {
@@ -989,8 +996,8 @@ function mobile_url($page) {
 /**
  * 生成栏目URL.
  *
- * @param array $page
- * @param string $inherit
+ * @param array $page        	
+ * @param string $inherit        	
  * @return string
  */
 function channel_url($page, $inherit = false) {
@@ -1020,7 +1027,7 @@ function channel_url($page, $inherit = false) {
 /**
  * 记录debug信息.
  *
- * @param string $message
+ * @param string $message        	
  */
 function log_debug($message, $file = '') {
 	$trace = debug_backtrace ();
@@ -1030,7 +1037,7 @@ function log_debug($message, $file = '') {
 /**
  * 记录info信息.
  *
- * @param string $message
+ * @param string $message        	
  */
 function log_info($message, $file = '') {
 	$trace = debug_backtrace ();
@@ -1040,7 +1047,7 @@ function log_info($message, $file = '') {
 /**
  * 记录warn信息.
  *
- * @param string $message
+ * @param string $message        	
  */
 function log_warn($message, $file = '') {
 	$trace = debug_backtrace ();
@@ -1050,7 +1057,7 @@ function log_warn($message, $file = '') {
 /**
  * 记录error信息.
  *
- * @param string $message
+ * @param string $message        	
  */
 function log_error($message, $file = '') {
 	$trace = debug_backtrace ();
@@ -1059,8 +1066,8 @@ function log_error($message, $file = '') {
 /**
  * 生成带参数的页面url.
  *
- * @param string $url.
- * @param array $args.
+ * @param string $url.        	
+ * @param array $args.        	
  * @return string
  */
 function build_page_url($url, $args) {
@@ -1099,7 +1106,7 @@ function url_append_args($url, $args) {
 /**
  * 生成html标签属性.
  *
- * @param array $properties
+ * @param array $properties        	
  * @return string
  */
 function html_tag_properties($properties) {
@@ -1173,10 +1180,10 @@ function get_theme() {
 /**
  * log.
  *
- * @param string $message
- * @param array $trace_info
- * @param int $level
- * @param string $origin
+ * @param string $message        	
+ * @param array $trace_info        	
+ * @param int $level        	
+ * @param string $origin        	
  */
 function log_message($message, $trace_info, $level, $origin = null, $file = '') {
 	static $fb = false;
@@ -1222,8 +1229,8 @@ function log_message($message, $trace_info, $level, $origin = null, $file = '') 
 /**
  * 生成随机字符串.
  *
- * @param int $len
- * @param string $chars
+ * @param int $len        	
+ * @param string $chars        	
  * @return string
  */
 function rand_str($len = 8, $chars = "a-z,0-9,$,_,!,@,#,=,~,$,%,^,&,*,(,),+,?,:,{,},[,],A-Z") {
@@ -1315,17 +1322,16 @@ function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
 		return $keyc . str_replace ( '=', '', base64_encode ( $result ) );
 	}
 }
-
-function minify_resources($content,$type){
+function minify_resources($content, $type) {
 	static $cm = false;
 	if (! bcfg ( 'enabled@mem' )) {
 		return $content;
 	}
-	if($type == 'js'){
+	if ($type == 'js') {
 		return JSMin::minify ( $content );
-	}else{
-		if($cm === false){
-			$cm = new CSSmin();
+	} else {
+		if ($cm === false) {
+			$cm = new CSSmin ();
 		}
 		return $cm->run ( $content );
 	}
@@ -1333,7 +1339,7 @@ function minify_resources($content,$type){
 /**
  * 合并资源(JS or CSS).
  *
- * @param string $content
+ * @param string $content        	
  * @return string
  */
 function combinate_resources($content, $type) {
@@ -1387,7 +1393,7 @@ function combinate_resources($content, $type) {
 /**
  * 将关键词转换成数据库可以识别的格式.
  *
- * @param string $keywords
+ * @param string $keywords        	
  * @return string
  */
 function convert_search_keywords($keywords) {
@@ -1400,8 +1406,8 @@ function convert_search_keywords($keywords) {
  *
  * @param string $filename
  *        	原始文件名.
- * @param int $w
- * @param int $h
+ * @param int $w        	
+ * @param int $h        	
  * @return string
  */
 function get_thumbnail_filename($filename, $w, $h) {
@@ -1416,9 +1422,9 @@ function get_thumbnail_filename($filename, $w, $h) {
 /**
  * 缩略图全路径.
  *
- * @param string $src
- * @param int $w
- * @param int $h
+ * @param string $src        	
+ * @param int $w        	
+ * @param int $h        	
  * @return string 全路径.
  */
 function the_thumbnail_src($src, $w, $h) {
@@ -1432,7 +1438,7 @@ function the_thumbnail_src($src, $w, $h) {
 /**
  * 多媒体文件的全路径.
  *
- * @param string $src
+ * @param string $src        	
  * @return string 全路径.
  */
 function the_media_src($src) {
@@ -1442,12 +1448,12 @@ function the_media_src($src) {
 	}
 	if ($img_s_url === false) {
 		$img_s_url = trailingslashit ( cfg ( 'media_url@media', BASE_URL ) );
-		$img_s_url = explode(',', $img_s_url);
+		$img_s_url = explode ( ',', $img_s_url );
 	}
-	if(count($img_s_url) > 1){
-		return $img_s_url[array_rand($img_s_url)] . $src;
-	}else{
-		return $img_s_url[0] . $src;
+	if (count ( $img_s_url ) > 1) {
+		return $img_s_url [array_rand ( $img_s_url )] . $src;
+	} else {
+		return $img_s_url [0] . $src;
 	}
 }
 /**
@@ -1521,7 +1527,7 @@ function nary($array = array()) {
 /**
  * 从数据$ary取数据并把它从原数组中删除.
  *
- * @param array $ary
+ * @param array $ary        	
  * @return array
  * @since 1.0.3
  */
@@ -1683,10 +1689,10 @@ function zipit($zipFileName, $path) {
 /**
  * 从$str中截取$str1与$str2之间的字符串.
  *
- * @param string $str
- * @param string $str1
- * @param string $str2
- * @param boolean $include_str1
+ * @param string $str        	
+ * @param string $str1        	
+ * @param string $str2        	
+ * @param boolean $include_str1        	
  */
 function inner_str($str, $str1, $str2, $include_str1 = true) {
 	if (! $str || ! $str1 || ! $str2) {
