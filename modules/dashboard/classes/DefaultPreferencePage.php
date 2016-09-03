@@ -11,18 +11,18 @@ abstract class DefaultPreferencePage extends Controller {
 			Response::respond ( 404 );
 		}
 		$data ['crules'] = '{}';
-		
-		$form = $this->getForm ( $_g );
+		$pg = $this->getPreferenceGroup ( $_g );
+		$values = dbselect ( 'name,value' )->from ( '{preferences}' )->where ( array ('preference_group' => $pg ) )->toArray ( 'value', 'name' );
+		$values = apply_filter ( 'on_load_preference_' . $pg, $values );
+		$form = $this->getForm ( $_g, $values );
 		$data ['_g'] = $_g;
 		$data ['rules'] = $form->rules ();
 		$data ['form'] = $form;
-		$data ['formName'] = $form->getName();
+		$data ['formName'] = $form->getName ();
 		$data ['title'] = $this->getTitle ();
 		$data ['p_url'] = $this->getCurrentURL ();
 		$data ['scripts'] = $form->getScripts ();
 		$data ['cfields'] = array ();
-		$pg = $this->getPreferenceGroup ( $_g );
-		$values = dbselect ( 'name,value' )->from ( '{preferences}' )->where ( array ('preference_group' => $pg ) )->toArray ( 'value', 'name' );
 		$data ['customEnabled'] = $this->supportCustomField ();
 		if ($data ['customEnabled']) {
 			$cform = new CustomCfgFieldForm ();
@@ -51,7 +51,7 @@ abstract class DefaultPreferencePage extends Controller {
 		$tpl = $this->getTemplate ( $_g );
 		return view ( $tpl, $data );
 	}
-	public function index_post($_g = 'base') {
+	public function index_post($_g = 'base', $_hp = '') {
 		if (! $this->icando ( $this->user )) {
 			Response::showErrorMsg ( '你无权进行' . $this->getTitle () );
 		}
@@ -107,8 +107,7 @@ abstract class DefaultPreferencePage extends Controller {
 			if ($datas) {
 				dbinsert ( $datas, true )->into ( '{preferences}' )->exec ();
 			}
-			
-			$rtn = apply_filter ( 'on_preference_' . $pg . '_saved', NuiAjaxView::refresh ( "设置已保存." ), $cfgs );
+			$rtn = apply_filter ( 'on_preference_' . $pg . '_saved', NuiAjaxView::refresh ( $_hp ? $_hp : '设置已保存.' ), $cfgs );
 			RtCache::delete ( 'system_preferences' );
 			cfg ( '', '', true );
 			return $rtn;
@@ -132,6 +131,6 @@ abstract class DefaultPreferencePage extends Controller {
 		return false;
 	}
 	abstract protected function getPreferenceGroup($type);
-	abstract protected function getForm($type);
+	abstract protected function getForm($type, $data = array());
 	abstract protected function getCurrentURL();
 }

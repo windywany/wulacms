@@ -52,12 +52,12 @@ class Request implements ArrayAccess {
 	 *
 	 * @return string session id or "" for the session did not start.
 	 */
-	public function startSession() {
+	public function startSession($sid = null) {
 		if (self::$SESSION_STARTED) {
 			return session_id ();
 		}
 		self::$SESSION_STARTED = true;
-		$this->start_session ();
+		$this->start_session ( $sid );
 		return session_id ();
 	}
 	/**
@@ -333,7 +333,7 @@ class Request implements ArrayAccess {
 	/**
 	 * start the session
 	 */
-	private function start_session() {
+	private function start_session( $sid ) {
 		$__ksg_session_handler = apply_filter ( 'get_session_handler', null );
 		if ($__ksg_session_handler instanceof SessionHandlerInterface) {
 			if (version_compare ( '5.4', phpversion (), '>=' )) {
@@ -352,16 +352,20 @@ class Request implements ArrayAccess {
 			@session_save_path ( $session_path );
 		}
 		$session_name = get_session_name ();
-		$session_id = isset ( $_COOKIE [$session_name] ) ? $_COOKIE [$session_name] : null;
-		if (empty ( $session_id ) && isset ( $_REQUEST [$session_name] )) {
-			$session_id = $_REQUEST [$session_name];
-		}
-		@session_name ( $session_name );
-		if (! empty ( $session_id )) {
-			@session_id ( $session_id );
-		}
-		@session_start ();
-	}
+		if ($sid) {
+            $session_id = $sid;
+        } else {
+            $session_id = isset ( $_REQUEST [$session_name] ) ? $_REQUEST [$session_name] : null;
+            if (empty ( $session_id ) && isset ( $_REQUEST [$session_name] )) {
+                $session_id = $_REQUEST [$session_name];
+            }
+        }
+        @session_name ( $session_name );
+        if (! empty ( $session_id )) {
+            @session_id ( $session_id );
+        }
+        @session_start ();
+    }
 }
 
 /**

@@ -2,7 +2,7 @@
 class CpreferenceController extends DefaultPreferencePage {
 	protected $checkUser = true;
 	protected $acls = array ('index' => 'gm:system/preference','index_post' => 'gm:system/preference' );
-	protected function getForm($type) {
+	protected function getForm($type, $data = array()) {
 		return new GlobalCustomPreferenceForm ();
 	}
 	protected function getCurrentURL() {

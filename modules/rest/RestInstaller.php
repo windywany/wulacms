@@ -4,7 +4,7 @@ class RestInstaller extends AppInstaller {
 		return 'Leo Ning';
 	}
 	public function getDscription() {
-		return 'RESTful WEB Service 服务端与客户端库.';
+		return 'RESTful WEB Service 服务端与客户端库.验证码获取/rest/captcha/{$sid}/<gif|png>/wxh';
 	}
 	public function getName() {
 		return 'RESTful服务';

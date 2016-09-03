@@ -50,7 +50,8 @@
                           <form name="{$formName}"                          		
                           		data-widget="nuiValidate" action="{$p_url}" 
                           		method="post" id="{$formName}-form" class="smart-form" target="ajax">
-                          		<input type="hidden" name="_g" value="{$_g}"/>                      	
+                          		<input type="hidden" name="_g" value="{$_g}"/> 
+                          		<input type="hidden" name="_hp" id="_hidden_tip"/>                      	
 							<fieldset>							
 								{$widgets|render}
 							</fieldset>
@@ -76,8 +77,8 @@
 	{/foreach}
 {/if}
 <script type="text/javascript">
-    var customDelURL = "{'system/preference/delf'|app}{$customEnabled}/";
-    var customEditURL = "{'system/preference/custom'|app}{$customEnabled}/";
+    var customDelURL = "{'system/preference'|app}delf{$customEnabled}/";
+    var customEditURL = "{'system/preference'|app}custom{$customEnabled}/";
 	nUI.validateRules['{$formName}'] = {$rules};	
 	nUI.validateRules['CustomCfgFieldForm'] = {$crules};
 	var cfields = {$cfields};

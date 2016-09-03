@@ -43,7 +43,7 @@ class RestServer {
 		}
 		$api = $api ? $api : $args ['api'];
 		$ver = isset ( $args ['ver'] ) ? $args ['ver'] : $ver;
-		
+		$ver = intval($ver).'.0';
 		if (! isset ( $this->apis [$method] [$api] ) || ! isset ( $this->apis [$method] [$api] [$ver] )) {
 			return array ('error' => '104','message' => __ ( 'Unkown API: %s, (version: %s)', $api, $ver ) );
 		}
@@ -68,6 +68,7 @@ class RestServer {
 	 * @return callable
 	 */
 	public function getHandler($api, $ver, $method) {
+	    $ver = intval($ver).'.0';
 		if (isset ( $this->apis [$method] [$api] [$ver] )) {
 			return $this->apis [$method] [$api] [$ver];
 		}
@@ -83,6 +84,7 @@ class RestServer {
 	 * @return RestServer
 	 */
 	public function register($api, $ver, $handler, $method = 'get') {
+	    $ver = intval($ver).'.0';
 		$this->apis [$method] [$api] [$ver] = $handler;
 		$this->exports [$api] = $ver;
 		return $this;

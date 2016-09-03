@@ -1645,6 +1645,12 @@ function timediff($time) {
 		return _ ( $it . '月前' );
 	}
 }
+
+if ( !function_exists('_') ) {
+	function _($string) {
+		return $string;
+	}
+}
 /**
  * 将目录$path压缩到$zipFileName.
  *

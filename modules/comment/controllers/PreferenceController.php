@@ -5,7 +5,7 @@ class PreferenceController extends DefaultPreferencePage {
 	protected function getCurrentURL() {
 		return tourl ( 'comment/preference' );
 	}
-	protected function getForm($type) {
+	protected function getForm($type, $data = array()) {
 		return new CommentPreferenceForm ();
 	}
 	protected function getPreferenceGroup($type) {
