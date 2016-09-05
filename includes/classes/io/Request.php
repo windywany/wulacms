@@ -333,7 +333,7 @@ class Request implements ArrayAccess {
 	/**
 	 * start the session
 	 */
-	private function start_session( $sid ) {
+	private function start_session( $sid = null ) {
 		$__ksg_session_handler = apply_filter ( 'get_session_handler', null );
 		if ($__ksg_session_handler instanceof SessionHandlerInterface) {
 			if (version_compare ( '5.4', phpversion (), '>=' )) {

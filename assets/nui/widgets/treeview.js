@@ -81,8 +81,7 @@
 		if(this.treeView.hasClass('select2-dropdown-open')){
 			this.close();
 		}else{
-			var value = this.treeviewElm.val();
-			
+			var value = this.treeviewElm.val();			
 			this.showMask();
 			this.treeView.addClass('select2-dropdown-open select2-container-active');
 			this.treeC = $(treeContainer).appendTo($('body'));

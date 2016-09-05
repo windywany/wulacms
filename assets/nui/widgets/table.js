@@ -17,6 +17,7 @@
         this.hideHead = table.attr('data-hh') == 'true' ? true : false;
         this.autoExpend = table.attr('data-expend') == 'true' ? true : false;
         this.autoLoad = table.attr('data-auto') == 'true' ? true : false;
+        this.noHover = table.attr('data-no-hover') == 'true'?true:false;
         this.blockUI  = table.attr('data-blockui') === 'false'? false : true;
         this.currentTreeNode = null;
         if (this.isTree) {
@@ -24,7 +25,11 @@
             this.folderCloseIcon = table.attr('data-folderIcon2') || 'glyphicon glyphicon-plus';
             this.leafIcon = table.attr('data-leafIcon') || '';
         }
-        table.addClass('table table-hover');
+        if(this.noHover){
+        	table.addClass('table');
+        }else{
+        	table.addClass('table table-hover');
+        }
         if (!this.isTree) {
             table.addClass('table-striped');
         }
@@ -369,7 +374,7 @@
             node.after(tree.find('[parent="' + treeid + '"]'));
             node.data('childrenMoved',true);
         }
-        var ml = (subLevel * 16)+'px';
+        var ml = (subLevel * 10)+'px';
         tree.find('[parent="' + treeid + '"]').each(function(i, n) {            
             var $this = $(n), h = $this.find('td:first span.tt-folder');            
             $this.data('ttLevel',subLevel);            
