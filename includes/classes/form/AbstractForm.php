@@ -73,27 +73,27 @@ abstract class AbstractForm implements ArrayAccess {
 	/**
 	 * 准备可输出的组件列表.
 	 *
-	 * @param array $widgets
+	 * @param array $widgets        	
 	 * @return array
 	 */
 	public static function prepareWidgets($widgets) {
 		$widgets_groups = array ();
 		foreach ( $widgets as $w ) {
-			if(isset($w['tab_acc']) && preg_match('#^(tab|acc):(.+)$#', $w['tab_acc'],$m)){
-				$type = $m[1];
-				$g = $type.'_'.$m[2];
-				if($type == 'tab'){
+			if (isset ( $w ['tab_acc'] ) && preg_match ( '#^(tab|acc):(.+)$#', $w ['tab_acc'], $m )) {
+				$type = $m [1];
+				$g = $type . '_' . $m [2];
+				if ($type == 'tab') {
 					if (! isset ( $widgets_groups [$g] )) {
-						$widgets_groups [$g] = new TabFormWidget($g);
+						$widgets_groups [$g] = new TabFormWidget ( $g );
 					}
-					$widgets_groups [$g]->addWidget($w);
-				}else{
+					$widgets_groups [$g]->addWidget ( $w );
+				} else {
 					if (! isset ( $widgets_groups [$g] )) {
-						$widgets_groups [$g] = new AccFormWidget($g);
+						$widgets_groups [$g] = new AccFormWidget ( $g );
 					}
-					$widgets_groups [$g]->addWidget($w);
+					$widgets_groups [$g]->addWidget ( $w );
 				}
-			}else if (isset ( $w ['group'] ) && !empty($w['group'])) {
+			} else if (isset ( $w ['group'] ) && ! empty ( $w ['group'] )) {
 				$g = 'g_' . $w ['group'];
 				if (! isset ( $widgets_groups [$g] )) {
 					$widgets_groups [$g] = new GroupColWidget ();
@@ -111,7 +111,7 @@ abstract class AbstractForm implements ArrayAccess {
 	/**
 	 * get the Filed
 	 *
-	 * @param string $name
+	 * @param string $name        	
 	 * @return FormField
 	 */
 	public function getField($name) {
@@ -123,8 +123,8 @@ abstract class AbstractForm implements ArrayAccess {
 	/**
 	 * 添加一个字段.
 	 *
-	 * @param string $name
-	 * @param array $field
+	 * @param string $name        	
+	 * @param array $field        	
 	 */
 	public function addField($name, $field) {
 		$this->offsetSet ( $name, $field );
@@ -140,7 +140,7 @@ abstract class AbstractForm implements ArrayAccess {
 	/**
 	 * 构建这个表单的所有字段.
 	 *
-	 * @param array $data
+	 * @param array $data        	
 	 * @return array
 	 */
 	public function buildWidgets($data = array()) {
@@ -243,8 +243,8 @@ abstract class AbstractForm implements ArrayAccess {
 	/**
 	 * 验证指定的字段.
 	 *
-	 * @param string $field
-	 * @param array $data
+	 * @param string $field        	
+	 * @param array $data        	
 	 * @return boolean
 	 */
 	public function validateField($field, $data = array()) {
@@ -272,8 +272,8 @@ abstract class AbstractForm implements ArrayAccess {
 	/**
 	 * 取绑定的值.
 	 *
-	 * @param string $name
-	 * @param mixed $initData
+	 * @param string $name        	
+	 * @param mixed $initData        	
 	 */
 	public function getBindData($name, $initData = null) {
 		$data = array ();
@@ -337,8 +337,8 @@ abstract class AbstractForm implements ArrayAccess {
 	/**
 	 * 初始化表单字段.
 	 *
-	 * @param array $data
-	 * @param boolean $value_set
+	 * @param array $data        	
+	 * @param boolean $value_set        	
 	 */
 	protected function init_form_fields($data, $value_set) {
 	}
