@@ -3,8 +3,9 @@ Disallow: /includes
 Disallow: /install 
 Disallow: /appdata
 Disallow: /modules
+Disallow: /vendor
+Disallow: /extensions
 Disallow: /themes
 Disallow: /assets
-Disallow: /cron.php
-Disallow: /install.php
+Disallow: /bootstrap.php
 Disallow: /index.php
