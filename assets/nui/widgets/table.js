@@ -21,9 +21,10 @@
         this.blockUI  = table.attr('data-blockui') === 'false'? false : true;
         this.currentTreeNode = null;
         if (this.isTree) {
-            this.folderOpenIcon = table.attr('data-folderIcon1') || 'glyphicon glyphicon-minus';
-            this.folderCloseIcon = table.attr('data-folderIcon2') || 'glyphicon glyphicon-plus';
+            this.folderOpenIcon = table.attr('data-folderIcon1') || 'fa fa-minus-circle fa-lg';
+            this.folderCloseIcon = table.attr('data-folderIcon2') || 'fa fa-plus-circle fa-lg';
             this.leafIcon = table.attr('data-leafIcon') || '';
+            this.blockUI = false;
         }
         if(this.noHover){
         	table.addClass('table');
@@ -225,7 +226,15 @@
             });
         }
     };
-
+    nuiTable.prototype.reloadCNode = function() {
+    	var me = this;
+    	if (me.currentTreeNode != null) {
+    		me.currentTreeNode.data('loaded',false);
+    		clearSubNode(me.currentTreeNode,me);
+    		me.currentTreeNode.find('td:first-child span.tt-folder').removeClass(me.folderOpenIcon).addClass(me.folderCloseIcon);
+    		me.reload();
+        }   
+    };
     nuiTable.prototype.doPage = function(cp, limit, reload,ct) {
         this.data.cp = cp;
         this.currentTreeNode = null;
@@ -300,6 +309,7 @@
                 name : '_tid',
                 value : me.currentTreeNode.attr('rel')
             });
+            me.currentTreeNode.find('.tt-folder').addClass('fa-spin');
         }
         if(this.keep){
         	nuiTableDataCache[this.keep] = this.data;
@@ -320,6 +330,7 @@
                         me.initTree(html);
                         me.currentTreeNode.after(html);
                         me.currentTreeNode.data('loaded', true);
+                        me.currentTreeNode.find('.tt-folder').removeClass('fa-spin');
                         expendNode(me.currentTreeNode,me);
                     } else {
                         me.table.find('tbody').remove();
@@ -390,8 +401,17 @@
         var tree = table.table;
         tree.find('[parent="' + treeid + '"]').each(function(i, n) {
             var $this = $(n);
-            $this.css('display', 'none');
             collapseNode($this, table);
+            $this.css('display', 'none');
         });
-    };    
+    };   
+    var clearSubNode = function (node,table){
+    	var treeid = node.attr('rel');
+        var tree = table.table;
+        tree.find('[parent="' + treeid + '"]').each(function(i, n) {
+            var $this = $(n);
+            clearSubNode($this, table);
+            $this.css('display', 'none').remove();
+        });
+    }
 })(window.nUI, jQuery);

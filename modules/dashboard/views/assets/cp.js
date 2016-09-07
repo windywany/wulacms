@@ -1244,14 +1244,14 @@ function getParam(name) {
 function tableHeightSize() {	
 	if ($('body').hasClass('menu-on-top')) {
 		var menuHeight = 68;
-		var tableHeight = ($(window).height() - 224) - menuHeight;
+		var tableHeight = ($(window).height() - 180) - menuHeight;
 		if (tableHeight < (320 - menuHeight)) {
 			$('.table-wrap').css('height', (320 - menuHeight) + 'px');
 		} else {
 			$('.table-wrap').css('height', tableHeight + 'px');
 		}
 	} else {
-		var tableHeight = $(window).height() - 224;
+		var tableHeight = $(window).height() - 180;
 		if (tableHeight < 320) {
 			$('.table-wrap').css('height', 320 + 'px');
 		} else {

@@ -48,11 +48,13 @@
 					id="plugin-table"
 					data-widget="nuiTable"
 					data-auto="true"
+					data-tree="true"
 					data-source="{'system/plugin/data'|app}?installed={$installed}&status={$status}">
 					<thead>
 						<tr>									
-							<th width="400">插件名</th>							
-							<th width="80">安装版本</th>							
+							<th width="150">插件名</th>
+							<th width="150">ID</th>							
+							<th width="200">安装版本</th>							
 							<th class="hidden-xs hidden-sm">描述</th>
 							<th width="140"></th>							
 						</tr>

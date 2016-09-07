@@ -1,9 +1,10 @@
-# Zend Studio
+# Zend Studio & VSCode
 .settings
 .buildpath
 .project
 .idea
 *.log
+.vscode
 dummy.php
 # wulacms
 appdata/logs/*

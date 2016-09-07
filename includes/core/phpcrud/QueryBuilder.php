@@ -38,9 +38,6 @@ abstract class QueryBuilder implements Countable {
 		$this->limit = null;
 		$this->group = null;
 		$this->order = null;
-		$this->error = false;
-		$this->errorSQL = null;
-		$this->errorValues = null;
 	}
 	public function into($table) {
 		return $this;
@@ -201,6 +198,7 @@ abstract class QueryBuilder implements Countable {
 	 */
 	public function exec($checkNum = false) {
 		$cnt = $this->count ();
+		DatabaseDialect::$lastErrorMassge = $this->error;
 		$this->close ();
 		if ($cnt === false) {
 			return false;

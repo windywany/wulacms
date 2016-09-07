@@ -11,10 +11,10 @@ class BbsHooks {
         if (! icando ( 'm:bbs' )) {
             return;
         }
-        $menu = new \AdminNaviMenu ( 'bbs', '论坛', 'fa-comments txt-color-green' );
+        $menu = new \AdminNaviMenu ( 'bbs', 'BBS', 'fa-comments' );
         
         if (icando ( 'r:bbs/forum' )) {
-            $menu->addSubmenu ( array ('bbs_forum','版块','fa-sitemap',tourl ( 'bbs/forum', false ) ), false, 1 );
+            $menu->addSubmenu ( array ('bbs_forum','论坛版块','fa-sitemap',tourl ( 'bbs/forum', false ) ), false, 1 );
         }
         
         $layout->addNaviMenu ( $menu, 1 );
@@ -71,7 +71,7 @@ class BbsHooks {
             $btns .= '<div class="btn-header transparent pull-right">
     			<span>
     				<a href="#' . tourl ( 'bbs/forum', false ) . '" title="论坛版块">
-    					<i class="fa fa-fw fa-comments txt-color-green"></i>
+    					<i class="fa fa-fw fa-comments"></i>
     				</a>
     			</span>
     		</div>';

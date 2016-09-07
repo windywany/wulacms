@@ -45,14 +45,13 @@ class SmartyView extends View {
 		$devMod = bcfg ( 'develop_mode' );
 		if (is_file ( $tpl )) {
 			$this->__smarty = new Smarty ();
-			$this->__smarty->addPluginsDir ( INCLUDES . 'vendors/smarty/user_plugins' );
 			$this->__smarty->template_dir = MODULES_PATH; // 模板目录
 			$tpl = str_replace ( DS, '/', $this->tpl );
 			$tpl = explode ( '/', $tpl );
 			array_pop ( $tpl );
 			$sub = implode ( DS, $tpl );
-			$this->__smarty->compile_dir = TMP_PATH . '#tpls_c' . DS . $sub; // 模板编译目录
-			$this->__smarty->cache_dir = TMP_PATH . '#tpls_cache' . DS . $sub; // 模板缓存目录
+			$this->__smarty->compile_dir = TMP_PATH . 'tpls_c' . DS . $sub; // 模板编译目录
+			$this->__smarty->cache_dir = TMP_PATH . 'tpls_cache' . DS . $sub; // 模板缓存目录
 			$this->__smarty = apply_filter ( 'init_smarty_engine', $this->__smarty );
 			$this->__smarty = apply_filter ( 'init_view_smarty_engine', $this->__smarty );
 			$this->__smarty->compile_check = true;

@@ -1,26 +1,11 @@
 <?php
-class AutoCompleteWidget implements IFieldWidget, IFieldWidgetDataProvidor {
+class TagAutoWidget implements IFieldWidget, IFieldWidgetDataProvidor {
 	private $options;
-	public static function get_custom_field_widgets($widgets) {
-		$widgets->register ( new AutoCompleteWidget () );
-		$widgets->register ( new TplFieldWidget () );
-		$widgets->register ( new TreeViewWidget () );
-		$widgets->register ( new TagAutoWidget () );
-	}
-	/**
-	 *
-	 * @param Query $where        	
-	 * @return unknown
-	 */
-	public static function on_init_autocomplete_condition_user($where) {
-		$where->where ( array ('ATABLE.deleted' => 0 ), true );
-		return $where;
-	}
 	public function getType() {
-		return 'auto';
+		return 'autotag';
 	}
 	public function getName() {
-		return '自动完成';
+		return '自动标签';
 	}
 	public function render($definition, $cls = '') {
 		$url = tourl ( 'system/ajax/autocomplete' );
@@ -56,6 +41,9 @@ class AutoCompleteWidget implements IFieldWidget, IFieldWidgetDataProvidor {
 			return '<label class="input" for="' . $id . '">
 											<input type="hidden"
 											data-widget="nuiCombox"
+											multiple="true"
+											data-tagMode="true"
+											data-allowClear="true"
 											style="width:100%"
 											data-source="' . $url . '"
 											name="' . $name . '" id="' . $id . '" value="' . $definition ['value'] . '"' . $readonly . $disabled . $placeholder . '/>
@@ -98,3 +86,4 @@ class AutoCompleteWidget implements IFieldWidget, IFieldWidgetDataProvidor {
 		$this->options = $options;
 	}
 }
+

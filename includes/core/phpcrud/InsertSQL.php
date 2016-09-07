@@ -4,11 +4,11 @@ class InsertSQL extends QueryBuilder implements ArrayAccess, IteratorAggregate {
 	private $datas;
 	private $batch;
 	private $ids = array ();
-	private $keyField = null;	
+	private $keyField = null;
 	public function __construct($datas, $batch = false) {
 		parent::__construct ();
 		$this->datas = $datas;
-		$this->batch = $batch;		
+		$this->batch = $batch;
 	}
 	/**
 	 * specify the auto increment key then
@@ -45,10 +45,10 @@ class InsertSQL extends QueryBuilder implements ArrayAccess, IteratorAggregate {
 			$this->error = 'no data to insert!';
 			return false;
 		}
-		$this->checkDialect ();	
+		$this->checkDialect ();
 		$values = new BindValues ();
-		$ids = array_keys($this->datas);
-		$data = $this->batch ? $this->datas [$ids[0]] : $this->datas;
+		$ids = array_keys ( $this->datas );
+		$data = $this->batch ? $this->datas [$ids [0]] : $this->datas;
 		$into = $this->prepareFrom ( array (array ($this->intoTable,null ) ) );
 		$sql = $this->dialect->getInsertSQL ( $into [0] [0], $data, $values );
 		if ($sql) {
@@ -66,7 +66,7 @@ class InsertSQL extends QueryBuilder implements ArrayAccess, IteratorAggregate {
 							}
 						}
 						$rst = $statement->execute ();
-						QueryBuilder::addSqlCount();
+						QueryBuilder::addSqlCount ();
 						if ($rst) {
 							$this->ids [$idx] = $this->dialect->lastInsertId ( $this->keyField );
 						} else {
@@ -91,8 +91,8 @@ class InsertSQL extends QueryBuilder implements ArrayAccess, IteratorAggregate {
 						return 1;
 					}
 				}
-				if($statement){
-					$statement->closeCursor();
+				if ($statement) {
+					$statement->closeCursor ();
 					$statement = null;
 				}
 			} catch ( PDOException $e ) {
@@ -106,7 +106,7 @@ class InsertSQL extends QueryBuilder implements ArrayAccess, IteratorAggregate {
 			$this->errorValues = $values->__toString ();
 		}
 		if ($this->error) {
-			log_error ( $this->error . ' [' . $this->errorSQL . ']' );
+			log_error ( $this->error ."\nSQL:" . $this->errorSQL . "\nVALUE:".$this->errorSQL, 'sql' );
 		}
 		return false;
 	}

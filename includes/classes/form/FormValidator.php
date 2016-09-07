@@ -71,10 +71,12 @@ class FormValidator {
 								$url .= '?' . http_build_query ( $args );
 							}
 						}
-						$this->form->setCallbackArgs ( $func, $args );
+						if ($args && method_exists ( $this->form, 'setCallbackArgs' )) {
+							$this->form->setCallbackArgs ( $func, $args );
+						}
 						$exp ['option'] = $url;
 					}
-
+				
 				case 'accept' :
 				case 'notEqual' :
 					$rs [$m] = $exp ['option'];
@@ -87,7 +89,7 @@ class FormValidator {
 				case 'ge' :
 				case 'lt' :
 				case 'le' :
-					$rs [$m] = intval($exp ['option']);
+					$rs [$m] = intval ( $exp ['option'] );
 					break;
 				case 'pattern' :
 				case 'regexp' :
@@ -128,6 +130,9 @@ class FormValidator {
 		foreach ( $rules as $rule => $option ) {
 			$valid = true;
 			$valid_m = 'v_' . $rule;
+			if (isset ( $option ['form'] )) {
+				$scope = $option ['form'];
+			}
 			if (method_exists ( $this, $valid_m )) {
 				$valid = $this->$valid_m ( $value, $option ['option'], $data, $scope, $option ['message'] );
 			} else if (isset ( self::$extra_methods [$rule] )) {
