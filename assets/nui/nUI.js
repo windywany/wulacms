@@ -472,8 +472,6 @@
 	exports.showButtons = nUI.showButtons = function(opts,elem){
 		opts.owner = elem;
 		var target = opts.target?elem.find(opts.target):elem;
-		
-		
 		if(target.find('.nui-pop-toolbar').length > 0){
 			var btng = target.find('.nui-pop-toolbar').eq(0);
 		}else{
@@ -496,6 +494,7 @@
     				});
     			}
     		}
+    		btng.applyNUI();
     		if(opts.target){
     			target.append(btng);
     		}else{

@@ -4,7 +4,7 @@
 {/block}
 {block toolbar}
 	{if $canAdd}
-		<a href="{'bbs/forum/add'|app}" target="tag" data-tag="#forum-editor" class="btn btn-success">
+		<a href="{'bbs/forum/add'|app}" target="tag" data-tag="#forum-editor" data-blockUI="false" class="btn btn-success">
 			<i class="fa fa-w fa-plus"></i> 添加
 		</a>
 	{/if}
@@ -12,7 +12,7 @@
 {block widget}
 	<div class="col-sm-3">
 		<div class="panel panel-default">
-			<div class="panel-body" style="min-height: 400px">
+			<div class="panel-body" style="min-height: 500px">
 				<table
 					class="inbox-table"
 					id="forum-table"
@@ -34,11 +34,31 @@
 	<div class="col-sm-9" id="forum-editor">
 		<p class="lead">请从左侧选择一个版块进行操作.</p>
 	</div>
+    <input type="hidden" id="forum_id" name="forum_id"/>
 {/block}
 {block js}
 <script type="text/javascript">
+    var optButtons = { target:'td.forumname',buttons:[] };
+    optButtons.buttons.push({
+        'html':'<a href="{'bbs/forum/edit'|app}$#forum_id$" data-blockUI="false" target="tag" data-tag="#forum-editor" class="txt-color-blue"><i class="fa fa-pencil fa-lg"></a>'
+    });
+
+    optButtons.buttons.push({
+        'html':'<a href="{'bbs/forum/add'|app}$#forum_id$" data-blockUI="false" target="tag" data-tag="#forum-editor" class="txt-color-green"><i class="fa fa-plus fa-lg"></a>'
+    });
+
+    optButtons.buttons.push({
+        'html':'<a href="{'bbs/forum/del'|app}$#forum_id$" target="ajax" data-confirm="你真的要删除这个版块吗?" class="txt-color-red"><i class="fa fa-trash-o fa-lg"></a>'
+    });
+    $('#forum-table').on('mouseover','tbody tr',function () {
+        $('#forum_id').val($(this).attr('rel'));
+        nUI.showButtons(optButtons,$(this));
+    }).on('mouseout','tbody tr',function () {
+        nUI.hideButtons(optButtons);
+    });
+
 	nUI.ajaxCallbacks.reloadForumTree = function(args){
-		//$('#forum-table').data('treeObj').reloadNode();
+		$('#forum-table').data('tableObj').reloadNode(args.upid);
 		console.log(args);
 		$('#id').val(args.id);
 	}

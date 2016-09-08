@@ -21,21 +21,16 @@ class ForumController extends \Controller {
 	}
 	public function data($_tid = 0) {
 		$_tid = intval ( $_tid );
-		if ($_tid > 0) {
-			$model = new BbsForumsModel ();
-			$data ['items'] = $model->getTreeData ( $_tid );
-		} else {
-			$data ['items'] = [ ];
-		}
+		$model = new BbsForumsModel ();
+		$data ['items'] = $model->getTreeData ( $_tid );
 		return view ( 'forum/data.tpl', $data );
 	}
 	public function add($upid = 0) {
 		$form = new BbsForumForm ();
 		$model = $form->getModel ();
 		if ($upid) {
-			$data = $model->get ( $upid );
-			$data ['upid'] = $upid . ':' . $data ['name'];
-			unset ( $data ['name'], $data ['title'], $data ['keywords'], $data ['description'], $data ['id'] );
+			$data = $model->get ( $upid,'tpl,thread_tpl,allow_html,allow_markdown,allow_bbscode,allow_q,allow_v,allow_n,allow_anonymous,cost' );
+			$data ['upid'] = $upid;
 			foreach ( $this->allows_flag as $a ) {
 				if ($data [$a]) {
 					$data ['allows'] [] = $a;
@@ -44,20 +39,42 @@ class ForumController extends \Controller {
 		} else {
 			$data ['allows'] = [ 'allow_markdown','allow_bbscode','allow_n' ];
 		}
+		$data['oupid'] = $upid;
 		$data ['rules'] = $form->rules ();
 		$data ['formName'] = $form->getName ();
 		$data ['widgets'] = new \DefaultFormRender ( $form->buildWidgets ( $data ) );
 		return view ( 'forum/form.tpl', $data );
 	}
 	public function edit($id) {
+		$id = (int)$id;
+		if(empty($id)){
+			\Response::respond(404);
+		}
+		$forum = new BbsForumsModel();
+		$data = $forum->get($id);
+		if(!$data){
+			\Response::respond(404);
+		}
+		foreach ( $this->allows_flag as $a ) {
+			if ($data [$a]) {
+				$data ['allows'] [] = $a;
+			}
+		}
+		$data['oupid'] = $data['upid'];
+		$form =new BbsForumForm($data);
+		$data['rules'] = $form->rules();
+		$data['formName'] = $form->getName();
+		$data['widgets'] = new \DefaultFormRender($form->buildWidgets($data));
+		return view('forum/form.tpl',$data);
 	}
 	public function del($id) {
 	}
-	public function save() {
+	public function save($oupid='') {
 		$form = new BbsForumForm ();
 		$forum = $form->getModel ();
 		$data = $form->valid ();
 		if ($data) {
+			$oupid = $oupid?intval($oupid):0;
 			$allows = $data ['allows'] ? $data ['allows'] : [ ];
 			unset ( $data ['allows'] );
 			$data ['update_time'] = time ();
@@ -84,7 +101,13 @@ class ForumController extends \Controller {
 				$id = $rst;
 			}
 			if ($rst) {
-				return \NuiAjaxView::callback ( 'reloadForumTree', [ 'id' => $id,'upid' => $data ['upid'] ], '版块信息已保存.' );
+				$reloadIds = $data['upid'];
+				if(!$data['upid'] || !$oupid){
+					$reloadIds = 0;
+				}else if($data['upid'] != $oupid){
+					$reloadIds.=','.$oupid;
+				}
+				return \NuiAjaxView::callback ( 'reloadForumTree', [ 'id' => $id,'upid' => $reloadIds], '版块信息已保存.' );
 			} else {
 				$errors = $forum->getErrors ();
 				if (is_array ( $errors )) {

@@ -226,14 +226,26 @@
             });
         }
     };
-    nuiTable.prototype.reloadCNode = function() {
+    nuiTable.prototype.reloadNode = function(ids) {
     	var me = this;
-    	if (me.currentTreeNode != null) {
-    		me.currentTreeNode.data('loaded',false);
-    		clearSubNode(me.currentTreeNode,me);
-    		me.currentTreeNode.find('td:first-child span.tt-folder').removeClass(me.folderOpenIcon).addClass(me.folderCloseIcon);
-    		me.reload();
-        }   
+		if(ids){
+			ids = ids.split(',');
+			$.each(ids,function(i,e){
+				me.currentTreeNode = me.table.find('tr[rel='+e+']').eq(0);
+				if(me.currentTreeNode && me.currentTreeNode.data('loaded')){
+					var icon = me.currentTreeNode.find('td:first-child span.tt-folder');
+					me.currentTreeNode.data('loaded', false);
+					if(icon.hasClass(me.folderOpenIcon)) {
+						clearSubNode(me.currentTreeNode, me);
+						me.currentTreeNode.find('td:first-child span.tt-folder').removeClass(me.folderOpenIcon).addClass(me.folderCloseIcon);
+						me.reload()
+					}
+				}
+			});
+		}else{
+			me.currentTreeNode = null;
+			this.reload();
+		}
     };
     nuiTable.prototype.doPage = function(cp, limit, reload,ct) {
         this.data.cp = cp;
@@ -330,7 +342,7 @@
                         me.initTree(html);
                         me.currentTreeNode.after(html);
                         me.currentTreeNode.data('loaded', true);
-                        me.currentTreeNode.find('.tt-folder').removeClass('fa-spin');
+                        me.currentTreeNode.find('.tt-folder').removeClass('fa-spin '+me.folderCloseIcon).addClass(me.folderOpenIcon);
                         expendNode(me.currentTreeNode,me);
                     } else {
                         me.table.find('tbody').remove();

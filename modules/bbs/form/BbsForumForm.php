@@ -18,6 +18,16 @@ class BbsForumForm extends \db\model\ModelForm {
 	public function checkSlug($v, $data, $msg) {
 		return true;
 	}
+
+	protected function init_form_fields($data, $value_set) {
+		if($data['id']){
+			$this->getField('upid')->setOptions([
+				'defaults'=>'{"table":"bbs_forums","cid":"'.$data['id'].'"}'
+			]);
+		}
+	}
+
+
 	/**
 	 *
 	 * {@inheritdoc}

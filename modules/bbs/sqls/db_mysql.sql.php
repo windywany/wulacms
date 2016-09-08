@@ -3,28 +3,6 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 
 $tables = array ();
 
-$tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}bbs_member_rank` (
-    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(32) NULL COMMENT '会员等名称',
-    `level` SMALLINT(8) UNSIGNED NOT NULL COMMENT '会员等级,值越大等级越高',
-    `coins` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '所需金币（积分）',
-    `rank` VARCHAR(64) NOT NULL COMMENT '等级称号',
-    `note` VARCHAR(256) NULL COMMENT '说明',
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `UDX_LEVEL` (`level` ASC),
-    UNIQUE INDEX `UDX_RANK` (`rank` ASC)
-)  ENGINE=INNODB COMMENT='会员等级'";
-
-$tables ['1.0.0'] [] = "INSERT INTO `{prefix}bbs_member_rank` (`id`, `name`, `level`, `coins`, `rank`, `note`) VALUES (1, '普通会员', 1, 0, '普通会员', '普通会员')";
-
-$tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `bbs_member_ranks` (
-    `mid` INT UNSIGNED NOT NULL COMMENT '会员编号',
-    `rank_id` INT UNSIGNED NOT NULL COMMENT '等级',
-    `update_time` INT UNSIGNED NOT NULL COMMENT '取得时间',
-    PRIMARY KEY (`mid`),
-    INDEX `FDX_RANK` (`rank_id` ASC)
-)  ENGINE=INNODB COMMENT='会员等级记录表'";
-
 $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}bbs_forums` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `create_time` INT UNSIGNED NOT NULL COMMENT '创建时间',

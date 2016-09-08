@@ -2,7 +2,8 @@
 	<div class="panel-body no-padding">
 	   <form name="{$formName}"                          		
 	   		data-widget="nuiValidate" action="{'bbs/forum/save'|app}" 
-	   		method="post" id="{$formName}-form" target="ajax" class="smart-form">   		              	
+	   		method="post" id="{$formName}-form" target="ajax" class="smart-form">
+           <input type="hidden" id="oupid" name="oupid" value="{$oupid}"/>
 			<fieldset>							
 				{$widgets|render}
 			</fieldset>
