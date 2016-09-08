@@ -54,16 +54,19 @@ class KissgoInstaller {
 		$checked ['JSON'] = array ('required' => '有','checked' => $pass ? '有' : '无','pass' => $pass );
 		$pass = extension_loaded ( 'mbstring' );
 		$checked ['MB String'] = array ('required' => '有','checked' => $pass ? '有' : '无','pass' => $pass );
-		
-		$pass = extension_loaded ( 'apc' );
+
+		$pass = extension_loaded ( 'curl' );
+		$checked ['curl'] = array ('required' => '有','checked' => $pass ? '有' : '无','pass' => $pass );
+
+		$pass = extension_loaded ( 'apc' ) || extension_loaded ( 'apcu' );
 		$checked ['apcu'] = array ('required' => '可选','checked' => $pass ? '有' : '无','pass' => $pass );
 		
 		$pass = extension_loaded ( 'memcache' ) || extension_loaded ( 'memcached' );
 		$checked ['memcache(d)'] = array ('required' => '可选','checked' => $pass ? '有' : '无','pass' => $pass );
-		
-		$pass = extension_loaded ( 'curl' );
-		$checked ['cURL'] = array ('required' => '可选','checked' => $pass ? '有' : '无','pass' => $pass );
-		
+
+		$pass = extension_loaded ( 'redis' ) ;
+		$checked ['redis'] = array ('required' => '可选','checked' => $pass ? '有' : '无','pass' => $pass );
+
 		$pass = extension_loaded ( 'scws' );
 		$checked ['scws'] = array ('required' => '可选','checked' => $pass ? '有' : '无','pass' => $pass );
 	}

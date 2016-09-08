@@ -26,7 +26,7 @@ class DashboardController extends Controller {
 	public function index() {
 		if ($this->user->isLogin ()) {
 			$data = array ('passport' => $this->user );
-			$data ['cp_theme'] = $this->user->getAttr ( 'theme', '2' );
+			$data ['cp_theme'] = $this->user->getAttr ( 'theme', '4' );
 			$data ['cp_theme'] = 'smart-style-' . $data ['cp_theme'];
 			$data ['menu_on_top'] = $this->user->getAttr ( 'menu_on_top', 0 );
 			if ($data ['menu_on_top']) {

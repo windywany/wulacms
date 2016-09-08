@@ -101,8 +101,7 @@ class AutoCompleteWidget implements IFieldWidget, IFieldWidgetDataProvidor {
 		$this->options = $options;
 	}
 	private function getValues($v,$table,$idx,$text){
-		$vs = explode(',',$v);
-		$vs = safe_ids2($vs);
+		$vs = safe_ids2($v);
 		$items = dbselect($idx,$text)->from('{'.$table.'}')->where([$idx.' IN'=>$vs])->toArray();
 		$values=[];
 		foreach ($items as $item) {

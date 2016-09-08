@@ -190,7 +190,7 @@ abstract class Model {
 		}
 		$rst = $this->update ( $data, $con );
 		if ($rst && $cb instanceof \Closure) {
-			$cb ( $con );
+			$cb ( $con,$this );
 		}
 		return $rst;
 	}
@@ -226,7 +226,7 @@ abstract class Model {
 			return false;
 		}
 		if ($cb && $cb instanceof \Closure) {
-			$data = $cb ( $data, $con );
+			$data = $cb ( $data, $con,$this );
 		}
 		if ($this->rules) {
 			$rst = $this->validate1 ( $data, $this->rules );
@@ -262,7 +262,7 @@ abstract class Model {
 			$data = $d;
 		}
 		if ($cb && $cb instanceof \Closure) {
-			$data = $cb ( $data );
+			$data = $cb ( $data,$this );
 		}
 		if ($this->rules) {
 			$rst = $this->validate ( $data, $this->rules );

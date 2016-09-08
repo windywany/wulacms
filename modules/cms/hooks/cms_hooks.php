@@ -16,7 +16,7 @@ function cms_get_page_data($page, $url) {
 		}
 		// 模板页
 		$page = CmsPage::loadTplPage ( $url );
-		if (! $page) {
+		if ($page) {
 			return $page;
 		}
 		// 搜索

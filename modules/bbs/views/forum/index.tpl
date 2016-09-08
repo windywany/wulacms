@@ -59,8 +59,9 @@
 
 	nUI.ajaxCallbacks.reloadForumTree = function(args){
 		$('#forum-table').data('tableObj').reloadNode(args.upid);
-		console.log(args);
-		$('#id').val(args.id);
+        if(args.id>0) {
+            $('#id').val(args.id);
+        }
 	}
 </script>
 {/block}

@@ -62,11 +62,11 @@
             this.table.on('click', 'tbody tr > td:first-child span.tt-folder', function() {
                 var h = $(this), node = me.currentTreeNode = h.parent().parent();
                 if (node.attr('data-parent') == 'true') {
-                    if (h.hasClass(me.folderOpenIcon)) {
-                        h.removeClass(me.folderOpenIcon).addClass(me.folderCloseIcon);
+                    if (h.hasClass('node-open')) {
+                        h.removeClass(me.folderOpenIcon).removeClass('node-open').addClass(me.folderCloseIcon);
                         collapseNode(node, me);
                     } else {
-                        h.removeClass(me.folderCloseIcon).addClass(me.folderOpenIcon);
+                        h.removeClass(me.folderCloseIcon).addClass('node-open').addClass(me.folderOpenIcon);
                         if (node.data('loaded')) {
                             expendNode(node, me);
                         } else {
@@ -229,21 +229,25 @@
     nuiTable.prototype.reloadNode = function(ids) {
     	var me = this;
 		if(ids){
+			ids = ''+ids;
 			ids = ids.split(',');
 			$.each(ids,function(i,e){
 				me.currentTreeNode = me.table.find('tr[rel='+e+']').eq(0);
 				if(me.currentTreeNode && me.currentTreeNode.data('loaded')){
 					var icon = me.currentTreeNode.find('td:first-child span.tt-folder');
 					me.currentTreeNode.data('loaded', false);
-					if(icon.hasClass(me.folderOpenIcon)) {
+					if(icon.hasClass('node-open')) {
 						clearSubNode(me.currentTreeNode, me);
-						me.currentTreeNode.find('td:first-child span.tt-folder').removeClass(me.folderOpenIcon).addClass(me.folderCloseIcon);
+						me.currentTreeNode.find('td:first-child span.tt-folder').removeClass(me.folderOpenIcon).removeClass('node-open').addClass(me.folderCloseIcon);
 						me.reload()
 					}
 				}
 			});
 		}else{
-			me.currentTreeNode = null;
+			if(me.currentTreeNode){
+				me.currentTreeNode.data('loaded',false);
+				me.currentTreeNode = null;
+			}
 			this.reload();
 		}
     };
@@ -342,7 +346,7 @@
                         me.initTree(html);
                         me.currentTreeNode.after(html);
                         me.currentTreeNode.data('loaded', true);
-                        me.currentTreeNode.find('.tt-folder').removeClass('fa-spin '+me.folderCloseIcon).addClass(me.folderOpenIcon);
+                        me.currentTreeNode.find('.tt-folder').removeClass('fa-spin '+me.folderCloseIcon).addClass(me.folderOpenIcon+' node-open');
                         expendNode(me.currentTreeNode,me);
                     } else {
                         me.table.find('tbody').remove();
@@ -403,7 +407,7 @@
             $this.data('ttLevel',subLevel);            
             $this.find('td:first span.tt-line').css({'margin-left':ml});
             $this.css({'display':'table-row'});
-            if (h.hasClass(table.folderOpenIcon)) {
+            if (h.hasClass('node-open')) {
                 expendNode($this, table);
             }
         });
