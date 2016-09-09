@@ -59,12 +59,6 @@ class BbsHooks {
         return $types;
     }
 
-    public static function get_cms_url_handlers($handlers) {
-        $handlers ['forum'] = new ForumUrlHandler ();
-        $handlers ['thread'] = new ThreadUrlHandler ();
-        return $handlers;
-    }
-
     public static function on_render_navi_btns($btns) {
         if (icando ( 'r:bbs/forum' )) {
             $btns .= '<div class="btn-header transparent pull-right">
