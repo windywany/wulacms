@@ -92,7 +92,7 @@ class CatatypeController extends \Controller {
 		if ($_ct) {
 			$total = $types->count ( 'id' );
 		}
-		$data ['items'] = $types;
+		$data ['items'] = $types->toArray();
 		$data ['total'] = $total;
 		$data ['canAdd'] = icando ( 'ct:system/catalog' );
 		$data ['canEdit'] = icando ( 'ut:system/catalog' );

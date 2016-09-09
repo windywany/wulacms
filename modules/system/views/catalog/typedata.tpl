@@ -31,8 +31,8 @@
 			{if $search}未找到{else}还未定义{/if}数据项.
 			{if $canAdd}
 			你可立即
-			<a href="#{'system/catatype/add'|app:0}">定义一个数据项</a>	
-			{/if}				
+			<a href="#{'system/catatype/add'|app:0}">定义一个数据项</a>
+			{/if}
 		</td>
 	</tr>
 	{/foreach}	

@@ -23,6 +23,7 @@ abstract class ModelForm extends \AbstractForm {
 			return $model;
 		}
 		trigger_error ( 'invalide model', E_USER_ERROR );
+		return null;
 	}
 	/**
 	 * 创建模型实例.

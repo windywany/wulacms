@@ -13,7 +13,7 @@ function hook_for_do_admin_layout_rest($layout) {
 	if (icando ( 'm:system/preference' )) {
 		$sysMenu = $layout->getNaviMenu ( 'system' );
 		$settingMenu = $sysMenu->getItem ( 'preferences' );
-		$settingMenu->addSubmenu ( array ('restapps','应用中心设置','fa-cog',tourl ( 'rest/preference', false ) ), 'rest:system/preference' );
+		$settingMenu->addSubmenu ( array ('restapps','接入设置','fa-cog',tourl ( 'rest/preference', false ) ), 'rest:system/preference' );
 	}
 }
 function hook_for_activity_types_rest($types) {

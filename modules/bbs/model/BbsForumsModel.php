@@ -48,23 +48,24 @@ class BbsForumsModel extends Model {
 		return $rst;
 	}
 
-	public function update($data, $con = null, $cb = null) {
+	/**
+	 * 数据中包括版主信息的更新.
+	 *
+	 * @param $data 版块数据.
+	 * @param $con  更新条件.
+	 *
+	 * @return bool
+	 */
+	public function updateForumWithMasters($data,$con){
 		$this->setMasters($data);
 
-		return parent::update($data, $con, $cb);
+		return $this->update($data,$con);
 	}
-
 	public function create($data, $cb = null) {
 		$this->setMasters($data);
 
 		return parent::create($data, $cb);
 	}
-
-	public static function on_destroy_bbs_forums($ids) {
-		$model = new BbsForumsModel();
-		$model->delete(['id IN' => $ids]);
-	}
-
 	private function setMasters(&$data) {
 		$masters = [];
 		if (isset($data['master1'])) {

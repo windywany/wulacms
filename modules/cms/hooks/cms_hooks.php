@@ -43,7 +43,6 @@ function hook_for_recycle_type_cms($types) {
 	$types ['Model Field'] = __ ( '模型字段' );
 	$types ['Block Field'] = __ ( '区块字段' );
 	$types ['Catalog'] = __ ( '内容分类' );
-	$types ['Channel'] = __ ( '栏目' );
 	return $types;
 }
 /**

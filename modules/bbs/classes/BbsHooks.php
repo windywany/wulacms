@@ -56,7 +56,6 @@ class BbsHooks {
     }
 
     public static function get_recycle_content_type($types) {
-        $types ['Forum'] = '论坛版块';
         return $types;
     }
 

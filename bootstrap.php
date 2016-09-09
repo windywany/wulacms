@@ -189,7 +189,7 @@ if ($_kissgo_processing_installation != true) {
 	if ($modules) {
 		$apps = RtCache::get ( 'apps_installation' );
 		if (! $apps) {
-			$apps = dbselect ( 'urlmapping,app' )->from ( '{apps}' )->where ( array ('status' => 1 ) )->toArray ( 'urlmapping', 'app' );
+			$apps = dbselect ( 'urlmapping,app' )->from ( '{apps}' )->where ( array ('status' => 1 ) )->asc('app')->toArray ( 'urlmapping', 'app' );
 			if (DEBUG > DEBUG_DEBUG) {
 				RtCache::add ( 'apps_installation', $apps );
 			}

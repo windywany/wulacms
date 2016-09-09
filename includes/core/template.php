@@ -13,13 +13,17 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
  * @param string $title
  *        	显示名称.
  */
-function register_cts_provider($name, $provider, $title = false, $desc = '', $remote = false) {
+function register_cts_provider($name, $provider, $title = false, $desc = '') {
 	static $providers = false;
 	if (! $providers) {
 		$providers = KissGoSetting::getSetting ( 'cts_providers' );
 	}
-	$con_func = 'get_condition_for_' . $name;
-	$providers [$name] = array ($provider,$title,$desc,$con_func,$remote );
+	if($provider instanceof \cms\classes\CtsDataProvider){
+		$con_func = array($provider,'getConditions');
+	}else{
+		$con_func = 'get_condition_for_' . $name;
+	}
+	$providers [$name] = array ($provider,$title,$desc,$con_func);
 }
 /**
  * 从数据源取数据.
@@ -34,7 +38,9 @@ function get_data_from_cts_provider($name, $args, $tplvars) {
 	if ($providers && isset ( $providers [$name] )) {
 		$provider = $providers [$name];
 		$provider = $provider [0];
-		if (is_callable ( $provider )) {
+		if($provider instanceof \cms\classes\CtsDataProvider){
+			$data = $provider->getList($args,$tplvars);
+		}else if (is_callable ( $provider )) {
 			$data = call_user_func_array ( $provider, array ($args,$tplvars ) );
 		} else if (is_array ( $provider )) {
 			list ( $cb, $file ) = $provider;

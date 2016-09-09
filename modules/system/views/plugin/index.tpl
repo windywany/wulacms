@@ -30,19 +30,14 @@
 				<form data-widget="nuiSearchForm" data-for="#plugin-table" class="smart-form">
 				  		<fieldset>	
 				  			<div class="row">
-				  				<section class="col col-6">
+				  				<section class="col col-sm-12">
 				  					<label class="input">
-										<i class="icon-prepend fa fa-filter"></i>
-										<input type="text" placeholder="插件名" name="plname"/>
+										<i class="icon-append fa fa-search"></i>
+										<input type="text" placeholder="搜索一个插件" name="plname"/>
 									</label>
 				  				</section>  				
-				  				<section class="col col-1">
-									<button class="btn btn-sm btn-primary" type="submit">
-										<i class="fa fa-search"></i> 搜索
-									</button>
-								</section>
 							</div>
-						</fieldset>	
+						</fieldset>
 				  	</form>
 				<table 
 					id="plugin-table"

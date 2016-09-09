@@ -30,7 +30,7 @@ function hook_for_do_admin_layout_system($layout) {
 		
 		$settingMenu = new AdminNaviMenu ( 'preferences', '系统设置', 'fa-cog' );
 		$settingMenu->addSubmenu ( array ('baseSettting','通用设置','fa-cog',tourl ( 'system/preference', false ) ), 'gm:system/preference', 0 );
-		$settingMenu->addSubmenu ( array ('customSettting','自定义全局设置','fa-cog',tourl ( 'system/cpreference', false ) ), 'gm:system/preference', 1 );
+		$settingMenu->addSubmenu ( array ('customSettting','全局设置','fa-cog',tourl ( 'system/cpreference', false ) ), 'gm:system/preference', 1 );
 		
 		$sysMenu->addItem ( $settingMenu, 'm:system/preference', 99998 );
 		
@@ -62,7 +62,7 @@ function hook_for_do_admin_layout_system($layout) {
 				$catalogListMenu->addSubmenu ( array ($type . '_catelog',$name,'',$url ), 'r:system/catalog/' . $type, $i ++ );
 			}
 		}
-		$layout->addNaviMenu ( $catelogMenu, 999998 );
+		$layout->addNaviMenu ( $catelogMenu, 99990 );
 	}
 	if (icando ( 'm:plugin' )) {
 		// 插件菜单

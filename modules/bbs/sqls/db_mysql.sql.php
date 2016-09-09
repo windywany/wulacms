@@ -31,6 +31,8 @@ $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}bbs_forums` (
     `tpl` VARCHAR(128) NULL DEFAULT 'forum.tpl' COMMENT '模板',
     `thread_tpl` VARCHAR(128) NULL DEFAULT 'thread.tpl' COMMENT '帖子模板',
     `slug` VARCHAR(64) NOT NULL COMMENT 'URL助记',
+    `url` VARCHAR(1024) NULL COMMENT 'URL',
+    `url_key` VARCHAR(32) NULL COMMENT 'MD5 OF URL',
     `keywords` VARCHAR(128) NULL COMMENT '关键词',
     `description` VARCHAR(256) NULL COMMENT '描述',
     `masters` TEXT NULL COMMENT '版主，JSON格式[{mid,name,master}]',
@@ -38,6 +40,7 @@ $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}bbs_forums` (
     INDEX `FDX_UPID` (`upid` ASC),
     INDEX `FDX_RANK_ID` (`rank_id` ASC),
     INDEX `UDX_SLUG` (`slug` ASC),
+    INDEX `IDX_URLKEY` (`url_key` ASC),
     UNIQUE KEY `UDX_REFID` (`refid`) 
 )  ENGINE=INNODB COMMENT='论坛版块'";
 
@@ -86,6 +89,8 @@ $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}bbs_threads` (
     `allow_post` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '允许回复',
     `topic` VARCHAR(64) NULL COMMENT '话题',
     `subject` VARCHAR(256) NOT NULL COMMENT '帖子主题',
+    `url` VARCHAR(1024) NULL COMMENT 'URL',
+    `url_key` VARCHAR(32) NULL COMMENT 'MD5 OF URL',
     `flag0` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '标志0',
     `flag1` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '标志1',
     `flag2` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '标志2',
@@ -106,6 +111,7 @@ $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}bbs_threads` (
     INDEX `FK_MID` (`mid` ASC),
     INDEX `FK_FORUM_ID` (`forum_id` ASC),
     INDEX `FK_TYPE` (`type` ASC),
+    INDEX `IDX_URLKEY` (`url_key` ASC),
     FULLTEXT INDEX `FDX_SEARCH_TAG` ( `search_tags` ASC )
 )  ENGINE=INNODB COMMENT='论坛帖子'";
 

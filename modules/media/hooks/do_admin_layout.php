@@ -16,7 +16,7 @@ function hook_for_do_admin_layout_media($layout) {
 	if (icando ( 'm:system/preference' )) {
 		$sysMenu = $layout->getNaviMenu ( 'system' );
 		$settingMenu = $sysMenu->getItem ( 'preferences' );
-		$settingMenu->addSubmenu ( array ('cmsmedia','多媒体设置','fa-cog',tourl ( 'media/preference', false ) ), 'media:system/preference' );
+		$settingMenu->addSubmenu ( array ('cmsmedia','媒体设置','fa-cog',tourl ( 'media/preference', false ) ), 'media:system/preference' );
 	}
 }
 function hook_for_activity_types_media($types) {

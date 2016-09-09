@@ -123,7 +123,7 @@ function hook_for_do_admin_layout_admin($layout) {
 	if (icando ( 'm:system/preference' )) {
 		$sysMenu = $layout->getNaviMenu ( 'system' );
 		$settingMenu = $sysMenu->getItem ( 'preferences' );
-		$settingMenu->addSubmenu ( array ('cmsSettting','内容管理设置','fa-cog',tourl ( 'cms/preference', false ) ), 'cms:system/preference' );
+		$settingMenu->addSubmenu ( array ('cmsSettting','CMS设置','fa-cog',tourl ( 'cms/preference', false ) ), 'cms:system/preference' );
 	}
 }
 function hook_for_on_render_navi_btns_page($btns) {

@@ -95,11 +95,9 @@ class ForumController extends \Controller {
 			} else {
 				$upid = 0;
 			}
-			$rst = $forum->recycle(['id' => $id], $this->user->getUid(), function ($con, $model) {
-				$recycle = new \DefaultRecycle($con['id'], 'Forum', 'bbs_forums', 'ID:{id};版块:{name}');
-				\RecycleHelper::recycle($recycle);
-			});
+			$rst = $forum->delete(['id' => $id]);
 			if ($rst) {
+				//TODO: update its parent's sub_forums.
 				return \NuiAjaxView::callback('reloadForumTree', ['id' => 0, 'upid' => $upid], '版块已经放入回收站.');
 			} else {
 				return \NuiAjaxView::error('无法删除版块');
@@ -129,7 +127,7 @@ class ForumController extends \Controller {
 			}
 			if ($data ['id']) {
 				$id  = $data ['id'];
-				$rst = $forum->update($data);
+				$rst = $forum->updateForumWithMasters($data);
 			} else {
 				unset ($data ['id']);
 				$data ['create_time'] = $data ['update_time'];
