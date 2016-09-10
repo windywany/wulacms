@@ -11,6 +11,8 @@ $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}bbs_forums` (
     `update_uid` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改用户',
     `deleted` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
     `upid` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级版块',
+    `parents` text NULL COMMENT '下级栏目编号列表',
+    `subforums` text NULL COMMENT '下级栏目编号列表',
     `refid` varchar(32) NOT NULL COMMENT '模板引用ID',
     `rank_id` INT UNSIGNED NOT NULL COMMENT '最低发帖等级',
     `cost` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '发贴需要花费',
