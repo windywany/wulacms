@@ -9,7 +9,7 @@ class ChannelController extends Controller {
 	protected $acls = array ('index' => 'r:cms/channel','add' => 'c:cms/channel','edit' => 'u:cms/channel','save' => 'id|u:cms/channel;c:cms/channel','updateurl' => 'cu:cms/channel','updateurl_post' => 'cu:cms/channel' );
 	public function index($type = 0) {
 		$data = array ();
-		$type = $this->prepareData ( $data, $type );
+		$this->prepareData ( $data, $type );
 		$data ['canAddChannel'] = icando ( 'c:cms/channel' );
 		$data ['canDeleteChannel'] = icando ( 'd:cms/channel' );
 		$data ['canEditChannel'] = icando ( 'u:cms/channel' );
@@ -91,24 +91,26 @@ class ChannelController extends Controller {
 		if (empty ( $id )) {
 			Response::showErrorMsg ( '栏目不存在', 404 );
 		}
-		$subs = dbselect ()->from ( '{cms_channel}' )->where ( array ('id' => $id ) )->get ( 'subchannels' );
-		if (empty ( $subs )) {
+
+		$channel = dbselect ('upid')->from ( '{cms_channel}' )->where ( array ('id' => $id ) )->get ();
+		if (empty ( $channel)) {
 			Response::showErrorMsg ( '栏目不存在', 404 );
 		}
-		$subs = explode ( ',', $subs );
-		if (dbselect ()->from ( '{cms_page} AS CP' )->join ( '{cms_channel} AS CH', 'CP.channel = CH.refid' )->where ( array ('CP.hidden' => 0,'CH.id IN' => $subs ) )->exist ( 'CP.id' )) {
+
+		if(dbselect()->from('{cms_channel}')->where(array('upid'=>$id))->exist('id')){
+			return NuiAjaxView::error('请先删除它的子栏目与文章');
+		}
+
+		if (dbselect ()->from ( '{cms_page} AS CP' )->join ( '{cms_channel} AS CH', 'CP.channel = CH.refid' )->where ( array ('CP.hidden' => 0,'CH.id' => $id ) )->exist ( 'CP.id' )) {
 			return NuiAjaxView::error ( '此栏目或其子栏目下有页面存在,无法删除!请先删除这些内容.' );
 		}
-		$data ['deleted'] = 1;
-		$data ['update_time'] = time ();
-		$data ['update_uid'] = $this->user->getUid ();
-		if (dbupdate ( '{cms_channel}' )->set ( $data )->where ( array ('id IN' => $subs ) )->exec ()) {
-			$recycle = new DefaultRecycle ( $subs, 'Channel', 'cms_channel', 'ID:{id};栏目名:{name}' );
-			RecycleHelper::recycle ( $recycle );
-			return NuiAjaxView::ok ( '栏目及其子栏目已经删除', 'click', '#refresh' );
-		} else {
-			return NuiAjaxView::error ( '数据库操作失败.' );
+		$upid = $channel['upid'];
+		dbdelete()->from('{cms_channel}')->where(array('id'=>$id))->exec();
+		fire('on_destroy_cms_channel',[$id]);
+		if($upid){
+			//TODO: update its parent's subchannels.
 		}
+		return NuiAjaxView::refresh('栏目已经删除');
 	}
 	/**
 	 * 排序.

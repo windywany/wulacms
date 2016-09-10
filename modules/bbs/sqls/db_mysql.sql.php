@@ -149,6 +149,7 @@ $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}bbs_posts` (
     `search_tags` TEXT NULL COMMENT '全文索引',
     `replyto` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '回复@编号',
     `accept` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '问题贴采纳的答案',
+    `reward` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '采纳奖励',
     `up` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '顶',
     `down` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '踩',
     `search_tag` TEXT NULL,
