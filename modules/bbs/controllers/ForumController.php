@@ -32,8 +32,8 @@ class ForumController extends \Controller {
 	}
 
 	public function add($upid = 0) {
-		$form  = new BbsForumForm ();
-		$model = $form->getModel();
+		$model  =  new BbsForumsModel();
+		$form = $model->getForm();
 		if ($upid) {
 			$data         = $model->get($upid, 'tpl,thread_tpl,allow_html,allow_markdown,allow_bbscode,allow_q,allow_v,allow_n,allow_anonymous,cost');
 			$data['upid'] = $upid;
@@ -46,6 +46,7 @@ class ForumController extends \Controller {
 			$data ['allows'] = ['allow_markdown', 'allow_bbscode', 'allow_n'];
 		}
 		$data['oupid']     = 0;
+		$data['type']       = '1';
 		$data ['rules']    = $form->rules();
 		$data ['formName'] = $form->getName();
 		$data ['widgets']  = new \DefaultFormRender ($form->buildWidgets($data));
@@ -106,8 +107,8 @@ class ForumController extends \Controller {
 	}
 
 	public function save($oupid = '') {
-		$form  = new BbsForumForm ();
-		$forum = $form->getModel();
+		$forum = new BbsForumsModel();
+		$form  = $forum->getForm();
 		$data  = $form->valid();
 		if ($data) {
 			$oupid  = $oupid ? intval($oupid) : 0;
@@ -119,12 +120,26 @@ class ForumController extends \Controller {
 			if (empty ($data ['slug'])) {
 				$data ['slug'] = \Pinyin::c($data ['name']);
 			}
+			if(empty($data['thread_url_pattern'])){
+				$data['thread_url_pattern']='{path}/thread-{tid}.html';
+			}
+			if(empty($data['url'])){
+				$data['url'] = '{path}/index.html';
+			}
+			$data['url_key'] = md5($data['url']);
 			if (empty ($data ['upid'])) {
 				$data ['upid'] = 0;
+			}
+			if ($data ['upid']) {
+				$path = dbselect ( 'path' )->from ( '{bbs_forums}' )->where ( array ('id' => $data['upid'] ) )->get ( 'path' );
+				$data['path'] = trim($path.'/'.$data['slug'],'/');
+			}else{
+				$data['path'] = trim($data['slug']);
 			}
 			foreach ($this->allows_flag as $a) {
 				$data [ $a ] = in_array($a, $allows);
 			}
+			$isNew                = false;
 			if ($data ['id']) {
 				$id  = $data ['id'];
 				$rst = $forum->updateForumWithMasters($data);
@@ -135,16 +150,28 @@ class ForumController extends \Controller {
 				$data ['rank_id']     = 0;
 				$rst                  = $forum->create($data);
 				$id                   = $rst;
+				$isNew                = true;
 			}
 			if ($rst) {
 				$reloadIds = $data['upid'];
+				$url = $forum->updateForumUrl($data['url'],$id);
+				if(!$url){
+					$forum->delete($id);
+					return \NuiAjaxView::validate($form->getName(), '版块URL重复请重新设置版块URL规则', ['url'=>'版块URL重复请']);
+				}
+				if($isNew){
+					$forum->update(['subforums'=>$id,'id'=>$id]);
+				}
+				if($oupid != $data['upid']){
+					$forum->updateForumRelations($oupid,$id);
+				}
 				if (!$data['upid']) {
 					$reloadIds = 0;
 				} else if ($oupid && $data['upid'] != $oupid) {
 					$reloadIds .= ',' . $oupid;
 				}
 
-				return \NuiAjaxView::callback('reloadForumTree', ['id' => $id, 'upid' => $reloadIds], '版块信息已保存.');
+				return \NuiAjaxView::callback('reloadForumTree', ['id' => $id, 'upid' => $reloadIds,'url'=>$url], '版块信息已保存.');
 			} else {
 				$errors = $forum->getErrors();
 				if (is_array($errors)) {

@@ -4,7 +4,7 @@ class SmsInstaller extends AppInstaller {
 		return 'http://www.wulacms.com/plugins/sms';
 	}
 	public function getName() {
-		return 'sms';
+		return '短信网关';
 	}
 	public function getAuthor() {
 		return 'Leo Ning';

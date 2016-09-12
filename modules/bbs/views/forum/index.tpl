@@ -36,8 +36,9 @@
 	</div>
     <input type="hidden" id="forum_id" name="forum_id"/>
 {/block}
-{block js}
+{block name="js" nocache}
 <script type="text/javascript">
+    {minify type="js"}
     var optButtons = { target:'td.forumname',buttons:[] };
     optButtons.buttons.push({
         'html':'<a href="{'bbs/forum/edit'|app}$#forum_id$" data-blockUI="false" target="tag" data-tag="#forum-editor" class="txt-color-blue"><i class="fa fa-pencil fa-lg"></a>'
@@ -61,7 +62,9 @@
 		$('#forum-table').data('tableObj').reloadNode(args.upid);
         if(args.id>0) {
             $('#id').val(args.id);
+            $('#url').val(args.url);
         }
 	}
+	{/minify}
 </script>
 {/block}

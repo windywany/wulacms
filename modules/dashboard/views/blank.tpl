@@ -12,5 +12,5 @@
 	<div class="row">
 	{block widget}{/block}
 	</div>
-	{block js}{/block}
+	{block name="js" nocache}{/block}
 </section>

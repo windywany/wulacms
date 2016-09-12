@@ -16,5 +16,5 @@
 			</div>
 		</article>
 	</div>
-	{block js}{/block}
+	{block name="js" nocache}{/block}
 </section>

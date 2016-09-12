@@ -39,9 +39,21 @@ abstract class QueryBuilder implements Countable {
 		$this->group = null;
 		$this->order = null;
 	}
+
+	/**
+	 * @param string $table
+	 *
+	 * @return QueryBuilder
+	 */
 	public function into($table) {
 		return $this;
 	}
+
+	/**
+	 * @param mixed $table
+	 *
+	 * @return QueryBuilder
+	 */
 	public function from($table) {
 		$tables = func_get_args ();
 		foreach ( $tables as $table ) {
@@ -49,12 +61,27 @@ abstract class QueryBuilder implements Countable {
 		}
 		return $this;
 	}
+
+	/**
+	 * @param string       $table
+	 * @param string       $on
+	 * @param string $type
+	 *
+	 * @return QueryBuilder
+	 */
 	public function join($table, $on, $type = QueryBuilder::LEFT) {
 		$table = self::parseAs ( $table );
 		$join = array ($table [0],$on,$type . ' JOIN ',$table [1] );
 		$this->joins [] = $join;
 		return $this;
 	}
+
+	/**
+	 * @param null $con
+	 * @param bool $append
+	 *
+	 * @return QueryBuilder
+	 */
 	public function where($con = null, $append = true) {
 		if (is_array ( $con ) && ! empty ( $con )) {
 			$con = new Condition ( $con );
@@ -71,26 +98,56 @@ abstract class QueryBuilder implements Countable {
 	public function getCondition() {
 		return $this->where;
 	}
+
+	/**
+	 * @param $having
+	 *
+	 * @return QueryBuilder
+	 */
 	public function having($having) {
 		if (! empty ( $having )) {
 			$this->having [] = $having;
 		}
 		return $this;
 	}
+
+	/**
+	 * @param $fields
+	 *
+	 * @return QueryBuilder
+	 */
 	public function groupBy($fields) {
 		if (! empty ( $fields )) {
 			$this->group [] = $fields;
 		}
 		return $this;
 	}
+
+	/**
+	 * @param $field
+	 *
+	 * @return QueryBuilder
+	 */
 	public function asc($field) {
 		$this->order [] = array ($field,'ASC' );
 		return $this;
 	}
+
+	/**
+	 * @param $field
+	 *
+	 * @return QueryBuilder
+	 */
 	public function desc($field) {
 		$this->order [] = array ($field,'DESC' );
 		return $this;
 	}
+
+	/**
+	 * @param string $rand
+	 *
+	 * @return QueryBuilder
+	 */
 	public function rand($rand = 'RAND') {
 		$this->order [] = array (imv ( $rand ),'()' );
 		return $this;
@@ -112,6 +169,13 @@ abstract class QueryBuilder implements Countable {
 		}
 		return $this;
 	}
+
+	/**
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return QueryBuilder
+	 */
 	public function limit($start, $limit) {
 		$start = intval ( $start );
 		$limit = intval ( $limit );
@@ -124,6 +188,12 @@ abstract class QueryBuilder implements Countable {
 		$this->limit = array ($start,$limit );
 		return $this;
 	}
+
+	/**
+	 * @param $alias
+	 *
+	 * @return QueryBuilder
+	 */
 	public function alias($alias) {
 		$this->alias = $alias;
 		return $this;
@@ -131,10 +201,22 @@ abstract class QueryBuilder implements Countable {
 	public function getAlias() {
 		return $this->alias;
 	}
+
+	/**
+	 * @param $database
+	 *
+	 * @return QueryBuilder
+	 */
 	public function usedb($database) {
 		$this->dbconf = $database;
 		return $this;
 	}
+
+	/**
+	 * @param $dialect
+	 *
+	 * @return QueryBuilder
+	 */
 	public function setDialect($dialect) {
 		if ($dialect) {
 			$this->dialect = $dialect;
@@ -216,6 +298,9 @@ abstract class QueryBuilder implements Countable {
 		} else {
 			return true;
 		}
+	}
+	public function toArray($var = null, $key = null, $rows = array()){
+		return array();
 	}
 	public static function addSqlCount() {
 		self::$sqlCount ++;

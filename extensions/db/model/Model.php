@@ -161,6 +161,9 @@ abstract class Model {
 	 */
 	public function delete($con) {
 		$rst = false;
+		if(is_int($con)){
+			$con[$this->primaryKeys[0]] = $con;
+		}
 		if (! $con) {
 			$sql = dbdelete ()->from ( $this->table )->setDialect ( $this->dialect )->where ( $con );
 			$rst = $sql->exec ();

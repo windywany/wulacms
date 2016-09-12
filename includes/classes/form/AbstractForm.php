@@ -5,7 +5,7 @@
  * @author Leo Ning
  *
  */
-abstract class AbstractForm implements ArrayAccess {
+abstract class AbstractForm implements ArrayAccess,IteratorAggregate  {
 	protected $__form_fields = array ();
 	protected $__form_data = array ();
 	protected $__form_init_data = array ();
@@ -334,6 +334,11 @@ abstract class AbstractForm implements ArrayAccess {
 		unset ( $this->__form_fields [$offset] );
 		$this->initValidateRules ( true );
 	}
+	public function getIterator() {
+		return new ArrayIterator($this->__form_fields);
+	}
+
+
 	/**
 	 * 初始化表单字段.
 	 *

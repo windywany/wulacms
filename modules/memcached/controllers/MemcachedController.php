@@ -60,8 +60,8 @@ class MemcachedController extends Controller {
 		$refresh = false;
 		if ($type == 'all') {
 			RtCache::clear ();
-			rmdirs ( TMP_PATH . '#themes_c' );
-			rmdirs ( TMP_PATH . '#tpls_c' );
+			rmdirs ( TMP_PATH . 'themes_c' );
+			rmdirs ( TMP_PATH . 'tpls_c' );
 			rmdirs ( TMP_PATH . 'cache' );
 			fire ( 'on_clear_tpl_cache' );
 			$settings ['cache_prefix'] = $prefix;
