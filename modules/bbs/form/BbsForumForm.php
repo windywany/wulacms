@@ -25,7 +25,7 @@ class BbsForumForm extends \AbstractForm {
 	private $master1  = ['label'=>'版主','placeholder'=>'请选择版主','group' => '4','col' => 6,'widget'=>'auto','defaults'=>'member,mid,nickname,r:bbs/forum'];
 	private $master2  = ['label'=>'副版主','placeholder'=>'请选择副版主','group' => '4','col' => 3,'widget'=>'auto','defaults'=>'member,mid,nickname,r:bbs/forum'];
 	private $master3  = ['label'=>'副版主','placeholder'=>'请选择副版主','group' => '4','col' => 3,'widget'=>'auto','defaults'=>'member,mid,nickname,r:bbs/forum'];
-	private $allows = [ 'label' => '','widget' => 'checkbox','defaults' => [ 'allow_markdown' => '允许MD代码','allow_q' => '允许问题帖','allow_v' => '允许投票帖','allow_n' => '允许普通帖','allow_anonymous' => '允许匿名' ] ];
+	private $allows = [ 'label' => '','widget' => 'checkbox','defaults' => [ 'allow_markdown' => '允许MD代码','allow_anonymous' => '允许匿名','allow_bbscode'=>'允许BBS代码' ] ];
 	private $_sp  = [];
 
 	private $title  = ['label'=>'页面标题'];

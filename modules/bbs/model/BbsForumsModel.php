@@ -8,6 +8,11 @@ use db\model\FormModel;
 class BbsForumsModel extends FormModel {
 	private $forumUrlReplacement = ['{path}', '{slug}', '{fid}'];
 
+	protected function config() {
+		$this->setValidateRule('last_thread',['regexp(/^0|[1-9]\d*$/)'=>'最后帖子ID不合法']);
+		$this->setValidateRule('last_post',['regexp(/^0|[1-9]\d*$/)'=>'最后回复ID不合法']);
+	}
+
 	public function parseForumURL($pattern, $id) {
 		if (strpos($pattern, '}') > 0) {
 			$data = $this->get($id, 'path,slug');
@@ -92,7 +97,9 @@ class BbsForumsModel extends FormModel {
 		if (empty($data['thread_expire'])) {
 			$data['thread_expire'] = 0;
 		}
-
+		if(!isset($data['title'])||empty($data['title'])){
+			$data['title'] = $data['name'];
+		}
 		return parent::create($data, $cb);
 	}
 

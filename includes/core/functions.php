@@ -282,7 +282,7 @@ function get_keywords($keywords, $string = '', $count = null, $dict = null) {
 		$scws = scws_new ();
 		$scws->set_charset ( 'utf8' );
 		$attr = null;
-		if ($dict && file_exists ( $dict )) {
+		if ($dict && is_file( $dict )) {
 			@$scws->set_dict ( $dict );
 			$attr = 'nk';
 			$scws->set_multi ( SCWS_MULTI_NONE );

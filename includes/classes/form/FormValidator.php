@@ -150,6 +150,9 @@ class FormValidator {
 	
 	// 必填项目
 	protected function v_required($value, $exp, $data, $scope, $message) {
+		if($value instanceof ImmutableValue){
+			return true;
+		}
 		if ($exp) {
 			$expx = explode ( ':', $exp );
 			$exp = array_shift ( $expx );
@@ -448,7 +451,9 @@ class FormValidator {
 		if ($this->emp ( $value )) {
 			return true;
 		}
-		
+		if($value instanceof ImmutableValue){
+			return true;
+		}
 		if (@preg_match ( $exp, $value )) {
 			return true;
 		} else {

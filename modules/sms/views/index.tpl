@@ -9,6 +9,13 @@
             <fieldset>
                 <div class="row">
                     <section class="col col-md-2">
+                        <label for="" class="select">
+                            <select name="vendor" placeholder="请选择短信通道">
+                                {html_options options=$vendors}
+                            </select><i></i>
+                        </label>
+                    </section>
+                    <section class="col col-md-2">
                         <label class="input">
                             <input type="text" placeholder="手机号码" name="phone"/>
                         </label>
@@ -16,10 +23,14 @@
 
                     <section class="col col-2">
                         <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                            <input type="text" name="time" placeholder="发送时间" data-range-to="log-to-date" data-widget="nuiDatepicker" id="log-from-date">
+                            <input type="text" name="time" placeholder="从..." data-range-to="log-to-date" data-widget="nuiDatepicker" id="log-from-date">
                         </label>
                     </section>
-
+                    <section class="col col-2">
+                        <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                            <input type="text" name="time1" placeholder="到..." data-range-from="log-from-date" data-widget="nuiDatepicker" id="log-to-date">
+                        </label>
+                    </section>
                     <section class="col col-2">
                         <button class="btn btn-sm btn-primary" type="submit">
                             <i class="fa fa-search"></i> 搜索
@@ -33,14 +44,15 @@
     <table id="sms-log-table"
             data-widget="nuiTable"
             data-auto="true"
+            data-sort="create_time,d"
             data-source="{'sms/data'|app}">
         <thead>
         <tr>
-            <td>发送时间</td>
-            <td>手机号码</td>
-            <td>供应商</td>
+            <td width="150" data-sort="create_time,d">发送时间</td>
+            <td width="150">手机号码</td>
+            <td width="150">供应商</td>
             <td>内容</td>
-            <td>状态</td>
+            <td width="100" data-sort="status,d">状态</td>
         </tr>
         </thead>
     </table>

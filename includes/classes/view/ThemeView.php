@@ -20,26 +20,23 @@ class ThemeView extends View {
 		$devMod = bcfg ( 'develop_mode' );
 		if (is_file ( $tpl )) {
 			$this->__smarty = new Smarty ();
-			$this->__smarty->template_dir = $basedir; // 模板目录
+			$this->__smarty->setTemplateDir($basedir);
 			$tpl = str_replace ( DS, '/', $this->tpl );
 			$tpl = explode ( '/', $tpl );
 			array_pop ( $tpl );
 			$sub = implode ( DS, $tpl );
-			$this->__smarty->compile_dir = TMP_PATH . 'themes_c' . DS . $sub; // 模板编译目录
-			$this->__smarty->cache_dir = TMP_PATH . 'themes_cache' . DS . $sub; // 模板缓存目录
+			$this->__smarty->setCompileDir(TMP_PATH . 'themes_c' . DS . $sub);
+			$this->__smarty->setCacheDir(TMP_PATH . 'themes_cache' . DS . $sub);
 			$this->__smarty = apply_filter ( 'init_smarty_engine', $this->__smarty );
 			$this->__smarty = apply_filter ( 'init_template_smarty_engine', $this->__smarty );
-			if (bcfg ( 'develop_mode' )) {
+			if ($devMod) {
 				$this->__smarty->compile_check = true;
-				$this->__smarty->force_compile = true;
+				$this->__smarty->caching = false;
 			} else {
 				$this->__smarty->compile_check = false;
 			}
 			$this->__smarty->_dir_perms = 0755;
 			$this->__smarty->error_reporting = KS_ERROR_REPORT_LEVEL;
-			if ($devMod) {
-				$this->__smarty->caching = false;
-			}
 		} else {
 			if ($devMod) {
 				die ( 'The view template ' . $tpl . ' is not found' );
@@ -55,8 +52,10 @@ class ThemeView extends View {
 		$this->__smarty->assign ( $data );
 		$this->__smarty->assign ( '_css_files', $this->sytles );
 		$this->__smarty->assign ( '_js_files', $this->scripts );
-		$this->__smarty->assign ( '_SessionID', session_id () );
-		$this->__smarty->assign ( '_SessionName', get_session_name () );
+		if(Request::$SESSION_STARTED){
+			$this->__smarty->assign ( '_SessionID', session_id () );
+			$this->__smarty->assign ( '_SessionName', get_session_name () );
+		}
 		$this->__smarty->assign ( '_current_template_file', $this->tpl );
 		$content = $this->__smarty->fetch ( $this->tpl );
 		if (! empty ( $content )) {

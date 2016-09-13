@@ -45,24 +45,21 @@ class SmartyView extends View {
 		$devMod = bcfg ( 'develop_mode' );
 		if (is_file ( $tpl )) {
 			$this->__smarty = new Smarty ();
-			$this->__smarty->template_dir = MODULES_PATH; // 模板目录
+			$this->__smarty->setTemplateDir(MODULES_PATH);
 			$tpl = str_replace ( DS, '/', $this->tpl );
 			$tpl = explode ( '/', $tpl );
 			array_pop ( $tpl );
 			$sub = implode ( DS, $tpl );
-			$this->__smarty->compile_dir = TMP_PATH . 'tpls_c' . DS . $sub; // 模板编译目录
-			$this->__smarty->cache_dir = TMP_PATH . 'tpls_cache' . DS . $sub; // 模板缓存目录
+			$this->__smarty->setCompileDir(TMP_PATH . 'tpls_c' . DS . $sub);
+			$this->__smarty->setCacheDir(TMP_PATH . 'tpls_cache' . DS . $sub);
 			$this->__smarty = apply_filter ( 'init_smarty_engine', $this->__smarty );
 			$this->__smarty = apply_filter ( 'init_view_smarty_engine', $this->__smarty );
 			$this->__smarty->compile_check = true;
 			$this->__smarty->_dir_perms = 0755;
-			if (bcfg ( 'develop_mode' )) {
-				$this->__smarty->compile_check = true;
+			if ( $devMod ){
+				$this->__smarty->caching = false;
 			} else {
 				$this->__smarty->compile_check = false;
-			}
-			if ($devMod) {
-				$this->__smarty->caching = false;
 			}
 			$this->__smarty->error_reporting = KS_ERROR_REPORT_LEVEL;
 		} else {
@@ -76,8 +73,10 @@ class SmartyView extends View {
 		$this->__smarty->assign ( $this->data ); // 变量
 		$this->__smarty->assign ( '_css_files', $this->sytles );
 		$this->__smarty->assign ( '_js_files', $this->scripts );
-		$this->__smarty->assign ( '_SessionName', get_session_name () );
-		$this->__smarty->assign ( '_SessionID', session_id () );
+		if(Request::$SESSION_STARTED){
+			$this->__smarty->assign ( '_SessionName', get_session_name () );
+			$this->__smarty->assign ( '_SessionID', session_id () );
+		}
 		$this->__smarty->assign ( '_current_template_file', $this->tpl );
 		return $this->__smarty->fetch ( $this->tpl );
 	}

@@ -299,6 +299,9 @@ abstract class QueryBuilder implements Countable {
 			return true;
 		}
 	}
+	public function get($index = 0, $field = null) {
+		return null;
+	}
 	public function toArray($var = null, $key = null, $rows = array()){
 		return array();
 	}

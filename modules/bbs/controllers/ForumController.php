@@ -12,13 +12,12 @@ use bbs\model\BbsThreadsModel;
  * @checkUser
  */
 class ForumController extends \Controller {
-	private   $allows_flag = ['allow_markdown', 'allow_q', 'allow_v', 'allow_n', 'allow_anonymous'];
+	private   $allows_flag = ['allow_markdown','allow_bbscode', 'allow_anonymous'];
 	protected $acls        = ['*' => 'r:bbs/forum', 'save' => 'id|u:bbs/forum;c:bbs/forum', 'del' => 'd:bbs/forum'];
 
 	public function index() {
 		$model            = new BbsForumsModel ();
 		$data ['items']   = $model->getTreeData(0, 1000);
-		$data ['cnt']     = $model->count(['deleted' => 0]);
 		$data ['search']  = false;
 		$data ['canAdd']  = icando('c:bbs/forum');
 		$data ['canDel']  = icando('d:bbs/forum');
@@ -44,7 +43,7 @@ class ForumController extends \Controller {
 		$model  =  new BbsForumsModel();
 		$form = $model->getForm();
 		if ($upid) {
-			$data         = $model->get($upid, 'tpl,thread_tpl,allow_html,allow_markdown,allow_bbscode,allow_q,allow_v,allow_n,allow_anonymous,cost');
+			$data         = $model->get($upid, 'tpl,thread_tpl,allow_html,allow_markdown,allow_bbscode,allow_anonymous,cost');
 			$data['upid'] = $upid;
 			foreach ($this->allows_flag as $a) {
 				if ($data [ $a ]) {
@@ -52,7 +51,7 @@ class ForumController extends \Controller {
 				}
 			}
 		} else {
-			$data ['allows'] = ['allow_markdown', 'allow_bbscode', 'allow_n'];
+			$data ['allows'] = ['allow_markdown', 'allow_bbscode'];
 		}
 		$data['oupid']     = 0;
 		$data['type']       = '1';
@@ -149,7 +148,7 @@ class ForumController extends \Controller {
 				$data['path'] = trim($data['slug']);
 			}
 			foreach ($this->allows_flag as $a) {
-				$data [ $a ] = in_array($a, $allows);
+				$data [ $a ] = in_array($a, $allows)?1:0;
 			}
 			$isNew                = false;
 			if ($data ['id']) {

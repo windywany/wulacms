@@ -21,7 +21,7 @@ class Request implements ArrayAccess {
 	private $quotes_gpc;
 	private static $INSTANCE = null;
 	private static $UUID = false;
-	private static $SESSION_STARTED = false;
+	public static $SESSION_STARTED = false;
 	public static $_GET = array ();
 	public static $_POST = array ();
 	private function __construct($xss_clean = true) {
@@ -191,7 +191,7 @@ class Request implements ArrayAccess {
 		} elseif (! empty ( $_SERVER ["REMOTE_ADDR"] )) {
 			$cip = $_SERVER ["REMOTE_ADDR"];
 		} else {
-			$cip = "";
+			$cip = "0.0.0.0";
 		}
 		return $cip;
 	}

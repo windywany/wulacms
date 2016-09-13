@@ -218,6 +218,9 @@ abstract class Model {
 			}
 			$data = $d;
 		}
+		if($con && !is_array($con)){
+			$con = [$this->primaryKeys[0]=>$con];
+		}
 		if (! $con) {
 			$con = $this->getWhere ( $data );
 			if (count ( $con ) != count ( $this->primaryKeys )) {
