@@ -6,10 +6,14 @@ use bbs\model\BbsForumsModel;
 use bbs\form\BbsForumForm;
 use bbs\model\BbsThreadsModel;
 
+/**
+ * Class ForumController
+ * @package bbs\controllers
+ * @checkUser
+ */
 class ForumController extends \Controller {
 	private   $allows_flag = ['allow_markdown', 'allow_q', 'allow_v', 'allow_n', 'allow_anonymous'];
-	protected $acls        = ['*' => 'r:bbs/forum', 'save' => 'id|u:bbs/forum;c:bbs/forum', 'add' => 'c:bbs/forum', 'del' => 'd:bbs/forum', 'csort' => 'u:cms/page'];
-	protected $checkUser   = true;
+	protected $acls        = ['*' => 'r:bbs/forum', 'save' => 'id|u:bbs/forum;c:bbs/forum', 'del' => 'd:bbs/forum'];
 
 	public function index() {
 		$model            = new BbsForumsModel ();
@@ -31,6 +35,11 @@ class ForumController extends \Controller {
 		return view('forum/data.tpl', $data);
 	}
 
+	/**
+	 * @param int $upid
+	 * @acl c:bbs/forum
+	 * @return \SmartyView
+	 */
 	public function add($upid = 0) {
 		$model  =  new BbsForumsModel();
 		$form = $model->getForm();
@@ -98,8 +107,11 @@ class ForumController extends \Controller {
 			}
 			$rst = $forum->delete(['id' => $id]);
 			if ($rst) {
-				//TODO: update its parent's sub_forums.
-				return \NuiAjaxView::callback('reloadForumTree', ['id' => 0, 'upid' => $upid], '版块已经放入回收站.');
+				if($upid){
+					//更新它上级版块的子版块信息
+					$forum->updateForumSubIds($upid);
+				}
+				return \NuiAjaxView::callback('reloadForumTree', ['id' => 0, 'upid' => $upid], '版块已经删除.');
 			} else {
 				return \NuiAjaxView::error('无法删除版块');
 			}

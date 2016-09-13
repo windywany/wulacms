@@ -9,27 +9,51 @@ abstract class Controller {
 	protected $request;
 	protected $response;
 	protected $user;
-	protected $acls = false;
+	protected $acls = [];
 	protected $checkUser = false;
+	/**
+	 * @var \Notoj\ReflectionClass
+	 */
+	 public $reflection = null;
 	/**
 	 * construct.
 	 *
 	 * @param Request $req
 	 * @param Response $res
-	 * @param string $method
-	 * @param string $http_method
 	 */
 	public function __construct($req, $res) {
 		$this->request = $req;
 		$this->response = $res;
+		if(ANNOTATION_SUPPORT){
+			$this->reflection= new Notoj\ReflectionClass($this);
+			$this->annotations= $this->reflection->getAnnotations();
+			if($this->annotations->has('checkUser')){
+				$checkUser = $this->annotations->get('checkUser');
+				$args = $checkUser[0]->getArgs();
+				if(count($args) > 0) {
+					$args = $args[0];
+				}else{
+					$args = null;
+				}
+				if($args){
+					$this->checkUser = ['dashboard','admin'];
+					if(isset($args['url'])){
+						$this->checkUser[0] = $args['url'];
+					}
+					if(isset($args['type'])){
+						$this->checkUser[1] = $args['type'];
+					}
+				}else{
+					$this->checkUser = true;
+				}
+			}
+		}
 	}
 	/**
 	 * 检测用户登录,如果未登录将跳转到登录页面.
 	 *
 	 * @param string $url
 	 *        	未登录时跳转的地址.
-	 * @param string $type
-	 *        	用户类型.
 	 */
 	protected function checkLogin($url = 'dashboard') {
 		if (! $this->user->isLogin ()) {
@@ -51,6 +75,19 @@ abstract class Controller {
 	 *        	要执行的方法.
 	 */
 	public function preRun($method) {
+		if($this->reflection ){
+			$md = $this->reflection->getMethod($method);
+			$anno = $md->getAnnotations();
+			$checkUser = $anno->get('checkUser');
+			if($checkUser && $checkUser[0]){
+				$checkUser = $checkUser[0]->getArg(0);
+				if($checkUser == 'false'|| $checkUser == '0'){
+					return;
+				}
+			}
+		}else{
+			$anno = null;
+		}
 		if ($this->checkUser) {
 			// 检验用户登录和用户类型.
 			if (is_array ( $this->checkUser )) {
@@ -73,7 +110,7 @@ abstract class Controller {
 		} else if ($this->checkUser === false) {
 			$this->user = whoami ( 'admin' );
 		}
-		$this->_check_acls ( $method );
+		$this->_check_acls ( $method,$anno );
 	}
 	/**
 	 * 在运行之后执行的方法。
@@ -84,16 +121,27 @@ abstract class Controller {
 	 * @return SmartyView 如果替换$view可以直接返回一个SmartyView实例.
 	 */
 	public function postRun(&$view) {
-		return null;
+		return $view;
 	}
 	/**
 	 * 权限检测.
 	 *
-	 * @param unknown $method
+	 * @param string $method
+	 * @param \Notoj\Annotation\Annotation $anno
 	 */
-	protected function _check_acls($method) {
+	protected function _check_acls($method,$anno=null) {
+		if($anno && !isset ( $this->acls [$method] )){
+			if($anno->has('acl')){
+				$acl = $anno->get('acl');
+				if($acl[0]){
+					$acl = $acl[0]->getArg(0);
+					if($acl){
+						$this->acls[$method] = $acl;
+					}
+				}
+			}
+		}
 		if (is_array ( $this->acls ) && ! empty ( $this->acls )) {
-			$acls = $this->acls;
 			// 找到对应方法的ACL规则
 			$acl = isset ( $this->acls [$method] ) ? $this->acls [$method] : (isset ( $this->acls ['*'] ) ? $this->acls ['*'] : false);
 			if ($acl) {

@@ -143,7 +143,8 @@ abstract class Model {
 	/**
 	 * 查询.
 	 *
-	 * @param string $fields
+	 * @param string $fields 字段.
+	 * @param string $alias SQL别名.
 	 *        	字段.
 	 * @return \Query 查询SQL实例.
 	 */
@@ -164,7 +165,7 @@ abstract class Model {
 		if(is_int($con)){
 			$con[$this->primaryKeys[0]] = $con;
 		}
-		if (! $con) {
+		if ($con) {
 			$sql = dbdelete ()->from ( $this->table )->setDialect ( $this->dialect )->where ( $con );
 			$rst = $sql->exec ();
 			$this->checkSQL ( $sql );
@@ -176,7 +177,7 @@ abstract class Model {
 	 *
 	 * @param array $con
 	 *        	条件.
-	 * @param number $uid
+	 * @param int $uid
 	 *        	如果大于0，则表中必须包括update_time和update_uid字段.
 	 * @param \Closure $cb
 	 *        	回调.

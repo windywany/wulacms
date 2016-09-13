@@ -151,7 +151,25 @@ class BbsForumsModel extends FormModel {
 			dbupdate('{bbs_forums}')->set(array('parents' => $parents))->where(array('id' => $nid))->exec();
 		}
 	}
-
+	public function updateForumSubIds($id){
+		// 取所有组数据
+		$forums = dbselect ( 'upid,id' )->from ( '{bbs_forums}' )->toArray ();
+		// 遍历树形数据
+		$iterator = new \TreeIterator ( $forums, 0, 'id', 'upid' );
+		$nodes = array ();
+		// 取当前栏目
+		$node = $iterator->getNode ( $id );
+		// 取当前栏目的上级栏目
+		$node->getParents ( $nodes );
+		unset ( $nodes ['0'], $nodes [0] );
+		// 更新它们的subchannels
+		foreach ( $nodes as $nid => $nde ) {
+			$ids = implode ( ',', $nde->getSubIds () );
+			dbupdate ( '{bbs_forums}' )->set ( array ('subforums' => $ids ) )->where ( array ('id' => $nid ) )->exec ();
+		}
+		$ids = $node->getSubIds();
+		dbupdate ( '{bbs_forums}' )->set ( array ('subforums' =>implode(',',$ids) ) )->where ( array ('id' => $id ) )->exec ();
+	}
 	private function setMasters(&$data) {
 		$masters = [];
 		if (isset($data['master1'])) {

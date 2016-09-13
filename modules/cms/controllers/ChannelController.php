@@ -92,7 +92,7 @@ class ChannelController extends Controller {
 			Response::showErrorMsg ( '栏目不存在', 404 );
 		}
 
-		$channel = dbselect ('upid')->from ( '{cms_channel}' )->where ( array ('id' => $id ) )->get ();
+		$channel = dbselect ('upid,is_topic_channel')->from ( '{cms_channel}' )->where ( array ('id' => $id ) )->get ();
 		if (empty ( $channel)) {
 			Response::showErrorMsg ( '栏目不存在', 404 );
 		}
@@ -108,7 +108,23 @@ class ChannelController extends Controller {
 		dbdelete()->from('{cms_channel}')->where(array('id'=>$id))->exec();
 		fire('on_destroy_cms_channel',[$id]);
 		if($upid){
-			//TODO: update its parent's subchannels.
+			// 取所有组数据
+			$channels = dbselect ( 'upid,id' )->from ( '{cms_channel}' )->where ( array ('is_topic_channel' => $channel ['is_topic_channel'] ) )->toArray ();
+			// 遍历树形数据
+			$iterator = new TreeIterator ( $channels, 0, 'id', 'upid' );
+			$nodes = array ();
+			// 取当前栏目
+			$node = $iterator->getNode ( $upid );
+			// 取当前栏目的上级栏目
+			$node->getParents ( $nodes );
+			unset ( $nodes ['0'], $nodes [0] );
+			// 更新它们的subchannels
+			foreach ( $nodes as $nid => $node ) {
+				$ids = implode ( ',', $node->getSubIds () );
+				dbupdate ( '{cms_channel}' )->set ( array ('subchannels' => $ids ) )->where ( array ('id' => $nid ) )->exec ();
+			}
+			$ids = $node->getSubIds();
+			dbupdate ( '{cms_channel}' )->set ( array ('subchannels' =>implode(',',$ids) ) )->where ( array ('id' => $upid ) )->exec ();
 		}
 		return NuiAjaxView::refresh('栏目已经删除');
 	}

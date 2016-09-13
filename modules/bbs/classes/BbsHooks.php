@@ -65,8 +65,21 @@ class BbsHooks {
     public static function get_recycle_content_type($types) {
         return $types;
     }
+	public static function on_render_dashboard_shortcut($shortcut){
+		$ss = [];
+		if(icando('r:bbs/forum')){
+			$ss [] = '<li>
+				<a class="jarvismetro-tile big-cubes bg-color-magenta" href="#' . tourl ( 'bbs/forum', false ) . '">
+					<span class="iconbox">
+						<i class="fa fa-comments fa-5x"></i> <span class="text-center">论坛版块</span>
+					</span>
+				</a>
+			</li>';
+		}
 
-    public static function on_render_navi_btns($btns) {
+		return $shortcut.implode('',$ss);
+	}
+	public static function on_render_navi_btns($btns) {
         if (icando ( 'r:bbs/forum' )) {
             $btns .= '<div class="btn-header transparent pull-right">
     			<span>

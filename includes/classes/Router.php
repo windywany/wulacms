@@ -56,7 +56,10 @@ class Router {
 	/**
 	 * app name to url.
 	 *
-	 * @param string $url        	
+	 * @param string $url
+	 * @param  bool $base
+	 * @param  bool $root
+	 * @return string url
 	 */
 	public static function url($url, $base = true, $root = true) {
 		static $base_url = false, $dapp = false;
@@ -102,7 +105,10 @@ class Router {
 	/**
 	 * app name to url.
 	 *
-	 * @param string $url        	
+	 * @param string $url
+	 * @param bool $base
+	 * @param bool $root
+	 * @return string url
 	 */
 	public static function urlf($url, $base = true, $root = true) {
 		static $base_url = false, $dapp = false;
@@ -160,7 +166,7 @@ class Router {
 	/**
 	 * 取当前页面数据.
 	 *
-	 * @return multitype:
+	 * @return array
 	 */
 	public function getCurrentPage() {
 		$mobi_domain = cfg ( 'mobi_domain' );
@@ -181,6 +187,9 @@ class Router {
 	 * 分发页面请求.
 	 *
 	 * 直接输出页面HTML.
+	 * @param string $do
+	 * @param bool $dispath
+	 * @return
 	 */
 	public function route($do = '', $dispath = true) {
 		global $__kissgo_apps;
@@ -264,7 +273,11 @@ class Router {
 					$action = $action . '_' . $rm;
 				}
 				if (method_exists ( $clz, $action )) {
-					$ref = new ReflectionObject ( $clz );
+					if(ANNOTATION_SUPPORT){
+						$ref = $clz->reflection;
+					}else {
+						$ref = new ReflectionObject ($clz);
+					}
 					$method = $ref->getMethod ( $action );
 					$params = $method->getParameters ();
 					if (count ( $params ) < count ( $pms )) {
@@ -284,7 +297,8 @@ class Router {
 						}
 					}
 					$this->dispacthing_url = $do;
-					$view = call_user_func_array ( array ($clz,$action ), $args );
+					$view = $method->invokeArgs($clz,$args);
+					//$view = call_user_func_array ( array ($clz,$action ), $args );
 					if ($view instanceof SmartyView) {
 						$view->setRelatedPath ( $module . '/views/' );
 					}

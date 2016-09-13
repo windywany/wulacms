@@ -49,7 +49,7 @@
     });
 
     optButtons.buttons.push({
-        'html':'<a href="{'bbs/forum/del'|app}$#forum_id$" target="ajax" data-confirm="你真的要删除这个版块吗?" class="txt-color-red"><i class="fa fa-trash-o fa-lg"></a>'
+        'html':'<a href="{'bbs/forum/del'|app}$#forum_id$" target="ajax" data-confirm="版块删除后将无法恢复,你确定要删除这个版块吗?" class="txt-color-red"><i class="fa fa-trash-o fa-lg"></a>'
     });
     $('#forum-table').on('mouseover','tbody tr',function () {
         $('#forum_id').val($(this).attr('rel'));
