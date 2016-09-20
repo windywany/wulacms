@@ -23,14 +23,21 @@ class RegCodeTemplate extends SMSTemplate {
      */
     public function getArgs() {
         if (! $this->code) {
-            $this->code = rand_str ( 6, '0-9' );
-            $_SESSION ['reg_verify_code'] = $this->code;
-            $_SESSION ['reg_verify_expire'] = time () + 1800;
+        	if($this->testMode){
+        	    $this->code = '123456';
+	        }else {
+		        $this->code = rand_str(6, '0-9');
+	        }
         }
         return [ 'code' => $this->code ];
     }
 
-    public function getName() {
+	public function onSuccess() {
+		$_SESSION ['reg_verify_code'] = $this->code;
+		$_SESSION ['reg_verify_expire'] = time () + 1800;
+	}
+
+	public function getName() {
         return '注册验证码';
     }
 
@@ -38,7 +45,7 @@ class RegCodeTemplate extends SMSTemplate {
         $code1 = sess_get ( 'reg_verify_code' );
         $time1 = sess_get ( 'reg_verify_expire', 0 );
         if ($time1 > time ()) {
-            return $code && $code1 && strtolower ( $code1 ) == strtolower ( $code );
+            return $code && strtolower ( $code1 ) == strtolower ( $code );
         } else {
             sess_del ( 'reg_verify_expire' );
             sess_del ( 'reg_verify_code' );

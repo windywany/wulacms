@@ -15,6 +15,7 @@ abstract class SMSTemplate {
 
     protected $content = null;
 
+	protected $testMode = false;
     /**
      * 模板名称.
      *
@@ -25,9 +26,30 @@ abstract class SMSTemplate {
     /**
      * 短信模板,模板中变量使用{}包起来.
      *
-     * @return 获取短信模板.
+     * @return SMSTemplate 获取短信模板.
      */
     public abstract function getTemplate();
+
+	/**
+	 * 发送成功时触发.
+	 */
+	public function onSuccess(){
+
+	}
+
+	/**
+	 * 发送失败.
+	 */
+    public function onFailure(){
+
+    }
+
+	/**
+	 * @param boolean $testMode
+	 */
+	public function setTestMode($testMode) {
+		$this->testMode = $testMode;
+	}
 
     /**
      * 获取此模板的参数.
@@ -88,6 +110,9 @@ abstract class SMSTemplate {
         $s = [ ];
         $r = [ ];
         $args = $this->getArgs ();
+	    if($args === false){
+	    	return false;
+	    }
         foreach ( $args as $k => $v ) {
             $s [] = '{' . $k . '}';
             $r [] = $v;

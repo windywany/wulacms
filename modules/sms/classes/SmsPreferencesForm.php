@@ -7,6 +7,8 @@ class SmsPreferencesForm extends \AbstractForm {
 
     private $captcha_enabled = array ('group' => 1,'col' => 3,'label' => '启用验证码','widget' => 'radio','defaults' => "0=停用\n1=启用",'default' => 0 );
 
+	private $test_mode = array ('group' => 1,'col' => 3,'label' => '测试模式','widget' => 'radio','defaults' => "0=停用\n1=启用",'default' => 1,'note'=>'用于测试业务逻辑' );
+
     private $vendor = array ('group' => 1,'col' => 3,'label' => '通道提供商','widget' => 'select','rules' => [ 'required(sms_enabled_1:checked)' => '请选择短信通道提供商' ] );
 
     /**
