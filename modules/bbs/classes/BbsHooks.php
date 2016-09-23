@@ -18,9 +18,9 @@ class BbsHooks {
         }
 	    if (icando ( 'r:bbs/thread' )) {
 	    	$tm = new \AdminNaviMenu('bbs_thread','帖子管理','fa-comments');
-		    $tm->addSubmenu ( array ('bbs_thread_n','一般帖','fa-comments',tourl ( 'bbs/thread/n', false ) ), false, 1 );
-		    $tm->addSubmenu ( array ('bbs_thread_a','问答帖','fa-comments',tourl ( 'bbs/thread/a', false ) ), false, 2 );
-		    $tm->addSubmenu ( array ('bbs_thread_q','投票帖','fa-comments',tourl ( 'bbs/thread/q', false ) ), false, 3 );
+		    $tm->addSubmenu ( array ('bbs_thread_n','一般帖','fa-comments',tourl ( 'bbs/thread/', false ) ), false, 1 );
+		    $tm->addSubmenu ( array ('bbs_thread_a','问答帖','fa-comments',tourl ( 'bbs/thread/qa', false ) ), false, 2 );
+		    $tm->addSubmenu ( array ('bbs_thread_q','投票帖','fa-comments',tourl ( 'bbs/thread/vote', false ) ), false, 3 );
 
 		    $menu->addItem($tm,false,2);
 	    }

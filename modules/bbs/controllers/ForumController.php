@@ -12,13 +12,12 @@ use bbs\model\BbsThreadsModel;
  * @checkUser
  */
 class ForumController extends \Controller {
-	private   $allows_flag = ['allow_markdown','allow_bbscode', 'allow_anonymous'];
+	private   $allows_flag = ['allow_markdown', 'allow_bbscode', 'allow_anonymous'];
 	protected $acls        = ['*' => 'r:bbs/forum', 'save' => 'id|u:bbs/forum;c:bbs/forum', 'del' => 'd:bbs/forum'];
 
 	public function index() {
 		$model            = new BbsForumsModel ();
 		$data ['items']   = $model->getTreeData(0, 1000);
-		$data ['search']  = false;
 		$data ['canAdd']  = icando('c:bbs/forum');
 		$data ['canDel']  = icando('d:bbs/forum');
 		$data ['canEdit'] = icando('u:bbs/forum');
@@ -26,22 +25,28 @@ class ForumController extends \Controller {
 		return view('forum/index.tpl', $data);
 	}
 
-	public function data($_tid = 0) {
-		$_tid           = intval($_tid);
-		$model          = new BbsForumsModel ();
-		$data ['items'] = $model->getTreeData($_tid);
+	public function data($_tid = 0, $forum = '') {
+		$_tid  = intval($_tid);
+		$model = new BbsForumsModel ();
+		if ($forum) {
+			$data['search'] = 'true';
+			$data ['items'] = $model->select()->where(['name LIKE' => '%' . $forum . '%'])->asc('sort')->toArray();
+		} else {
+			$data ['items'] = $model->getTreeData($_tid, 1000);
+		}
 
 		return view('forum/data.tpl', $data);
 	}
 
 	/**
 	 * @param int $upid
+	 *
 	 * @acl c:bbs/forum
 	 * @return \SmartyView
 	 */
 	public function add($upid = 0) {
-		$model  =  new BbsForumsModel();
-		$form = $model->getForm();
+		$model = new BbsForumsModel();
+		$form  = $model->getForm();
 		if ($upid) {
 			$data         = $model->get($upid, 'tpl,thread_tpl,allow_html,allow_markdown,allow_bbscode,allow_anonymous,cost');
 			$data['upid'] = $upid;
@@ -54,7 +59,7 @@ class ForumController extends \Controller {
 			$data ['allows'] = ['allow_markdown', 'allow_bbscode'];
 		}
 		$data['oupid']     = 0;
-		$data['type']       = '1';
+		$data['type']      = '1';
 		$data ['rules']    = $form->rules();
 		$data ['formName'] = $form->getName();
 		$data ['widgets']  = new \DefaultFormRender ($form->buildWidgets($data));
@@ -106,10 +111,11 @@ class ForumController extends \Controller {
 			}
 			$rst = $forum->delete(['id' => $id]);
 			if ($rst) {
-				if($upid){
+				if ($upid) {
 					//更新它上级版块的子版块信息
 					$forum->updateForumSubIds($upid);
 				}
+
 				return \NuiAjaxView::callback('reloadForumTree', ['id' => 0, 'upid' => $upid], '版块已经删除.');
 			} else {
 				return \NuiAjaxView::error('无法删除版块');
@@ -131,10 +137,10 @@ class ForumController extends \Controller {
 			if (empty ($data ['slug'])) {
 				$data ['slug'] = \Pinyin::c($data ['name']);
 			}
-			if(empty($data['thread_url_pattern'])){
-				$data['thread_url_pattern']='{path}/thread-{tid}.html';
+			if (empty($data['thread_url_pattern'])) {
+				$data['thread_url_pattern'] = '{path}/thread-{tid}.html';
 			}
-			if(empty($data['url'])){
+			if (empty($data['url'])) {
 				$data['url'] = '{path}/index.html';
 			}
 			$data['url_key'] = md5($data['url']);
@@ -142,15 +148,15 @@ class ForumController extends \Controller {
 				$data ['upid'] = 0;
 			}
 			if ($data ['upid']) {
-				$path = dbselect ( 'path' )->from ( '{bbs_forums}' )->where ( array ('id' => $data['upid'] ) )->get ( 'path' );
-				$data['path'] = trim($path.'/'.$data['slug'],'/');
-			}else{
+				$path         = dbselect('path')->from('{bbs_forums}')->where(array('id' => $data['upid']))->get('path');
+				$data['path'] = trim($path . '/' . $data['slug'], '/');
+			} else {
 				$data['path'] = trim($data['slug']);
 			}
 			foreach ($this->allows_flag as $a) {
-				$data [ $a ] = in_array($a, $allows)?1:0;
+				$data [ $a ] = in_array($a, $allows) ? 1 : 0;
 			}
-			$isNew                = false;
+			$isNew = false;
 			if ($data ['id']) {
 				$id  = $data ['id'];
 				$rst = $forum->updateForumWithMasters($data);
@@ -165,16 +171,17 @@ class ForumController extends \Controller {
 			}
 			if ($rst) {
 				$reloadIds = $data['upid'];
-				$url = $forum->updateForumUrl($data['url'],$id);
-				if(!$url){
+				$url       = $forum->updateForumUrl($data['url'], $id);
+				if (!$url) {
 					$forum->delete($id);
-					return \NuiAjaxView::validate($form->getName(), '版块URL重复请重新设置版块URL规则', ['url'=>'版块URL重复请']);
+
+					return \NuiAjaxView::validate($form->getName(), '版块URL重复请重新设置版块URL规则', ['url' => '版块URL重复请']);
 				}
-				if($isNew){
-					$forum->update(['subforums'=>$id,'id'=>$id]);
+				if ($isNew) {
+					$forum->update(['subforums' => $id, 'id' => $id]);
 				}
-				if($oupid != $data['upid']){
-					$forum->updateForumRelations($oupid,$id);
+				if ($oupid != $data['upid']) {
+					$forum->updateForumRelations($oupid, $id);
 				}
 				if (!$data['upid']) {
 					$reloadIds = 0;
@@ -182,7 +189,7 @@ class ForumController extends \Controller {
 					$reloadIds .= ',' . $oupid;
 				}
 
-				return \NuiAjaxView::callback('reloadForumTree', ['id' => $id, 'upid' => $reloadIds,'url'=>$url], '版块信息已保存.');
+				return \NuiAjaxView::callback('reloadForumTree', ['id' => $id, 'upid' => $reloadIds, 'url' => $url], '版块信息已保存.');
 			} else {
 				$errors = $forum->getErrors();
 				if (is_array($errors)) {

@@ -8,7 +8,7 @@
 	<tr>		
 		<td>
 			{if $canAdd}
-				<a href="{'bbs/forum/add'|app}" target="tag" data-tag="#forum-editor" class="btn btn-link">立即新增一个版块.</a>
+				<a href="#{'cms/channel/add'|app:0}" class="btn btn-link">立即新增一个.</a>
 			{else}
 				暂无版块
 			{/if}

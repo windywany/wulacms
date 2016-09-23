@@ -6,7 +6,9 @@
  */
 
 namespace bbs\controllers;
+
 use bbs\model\BbsForumsModel;
+
 /**
  * Class ThreadController
  * @package bbs\controllers
@@ -16,19 +18,45 @@ class ThreadController extends \Controller {
 	protected $acls = ['*' => 'r:bbs/thread'];
 
 	/**
-	 * @param string $type
 	 *
 	 * @return \View 视图.
 	 */
-	public function index($type = 'n') {
+	public function index() {
 		$data ['canDel'] = icando('d:bbs/thread');
-		$data ['type']   = $type;
-		$model            = new BbsForumsModel ();
-		$data ['items']   = $model->getTreeData(0, 1000);
-		$data ['search']  = false;
+		$model           = new BbsForumsModel ();
+		$data ['items']  = $model->getTreeData(0, 1000);
+		$data ['search'] = false;
+
 		return view('thread/index.tpl', $data);
 	}
-	public function data(){
+
+	public function data() {
+		$data = [];
+
+		return view('thread/data.tpl', $data);
+	}
+
+	public function qa() {
+		$data ['canDel'] = icando('d:bbs/thread');
+		$model           = new BbsForumsModel ();
+		$data ['items']  = $model->getTreeData(0, 1000);
+
+		return view('thread/index.tpl', $data);
+	}
+
+	public function qa_data() {
+
+	}
+
+	public function vote() {
+		$data ['canDel'] = icando('d:bbs/thread');
+		$model           = new BbsForumsModel ();
+		$data ['items']  = $model->getTreeData(0, 1000);
+
+		return view('thread/index.tpl', $data);
+	}
+
+	public function vote_data() {
 
 	}
 }

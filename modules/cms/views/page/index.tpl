@@ -51,8 +51,28 @@
 	</div>
 </div>
 <section id="widget-grid">	
-	<div class="row">		
-		<article class="col-sm-12">
+	<div class="row">
+        <article class="col col-sm-3 col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-body" style="min-height: 500px">
+                    <table  class="inbox-table"
+                            id="forum-thread-table"
+                            data-widget="nuiTable"
+                            data-tree="true"
+                            data-hh="true"
+                            data-no-hover="true"
+                            data-source="{'bbs/forum/data'|app}">
+                        <thead>
+                        <tr>
+                            <th>版块</th>
+                        </tr>
+                        </thead>
+                        {include '../channel/treedata.tpl' is_root=1}
+                    </table>
+                </div>
+            </div>
+        </article>
+		<article class="col col-sm-9 col-md-10">
 			<div class="panel panel-default">
 				<div class="panel-body no-padding">			  
 				  	<form data-widget="nuiSearchForm" data-for="#page-table" class="smart-form">

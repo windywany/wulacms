@@ -86,6 +86,7 @@ class DashboardController extends Controller {
 					$where ['username'] = $formData ['username'];
 					$id = 'username';
 				}
+				$where ['deleted'] = 0;
 				$user = dbselect ( '*' )->from ( '{user}' )->where ( $where );
 				if (count ( $user ) == 0 || $user [0] ['passwd'] != md5 ( $formData ['passwd'] ) || $user [0] [$id] != $formData ['username']) {
 					$data ['errorMsg'] = __ ( '@auth:Invalide User Name or Password.' );

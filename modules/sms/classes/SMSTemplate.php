@@ -72,7 +72,7 @@ abstract class SMSTemplate {
     /**
      * 设置业务参数.
      *
-     * @param array $args 参数.
+     * @param array $params 参数.
      */
     public function setParams($params) {
         $this->params = $params;

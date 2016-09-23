@@ -225,7 +225,7 @@ class UserController extends Controller {
 		$rows->where ( $where );
 		$total = '';
 		if ($_ct) {
-			$total = $rows->count ( 'user_id' );
+			$total = $rows->count ( 'U.user_id' );
 		}
 		$data = array ('total' => $total,'rows' => $rows );
 		$data ['canEditUser'] = icando ( 'u:account/user' );
