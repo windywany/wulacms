@@ -1,60 +1,75 @@
 <?php
+
 class SaveQuery extends QueryBuilder {
 	private $intoTable;
 	private $condition;
 	private $data;
 	private $idf = null;
+
 	public function __construct($data, $where = false, $idf = 'id') {
-		parent::__construct ();
+		parent::__construct();
 		$this->condition = $where;
-		$this->data = $data;
+		$this->data      = $data;
 		if ($idf) {
 			$this->idf = $idf;
 		}
 	}
+
 	public function into($table) {
 		$this->intoTable = $table;
+
 		return $this;
 	}
+
 	public function count() {
-		$rst = $this->save ();
+		$rst = $this->save();
 		if ($rst) {
 			return 1;
 		}
+
 		return 0;
 	}
+
+	public function exec($checkNum = false) {
+		return $this->save();
+	}
+
 	public function save() {
-		if (empty ( $this->intoTable )) {
+		if (empty ($this->intoTable)) {
 			$this->error = 'no table specified!';
+
 			return false;
 		}
-		if (empty ( $this->data )) {
+		if (empty ($this->data)) {
 			$this->error = 'no data!';
+
 			return false;
 		}
-		$id = empty ( $this->idf ) ? '*' : $this->idf;
-		$insert = true;
-		$dialect = $this->getDialect ();
-		if (empty ( $this->data [$id] )) {
-			unset ( $this->data [$id] );
+		$id      = empty ($this->idf) ? '*' : $this->idf;
+		$insert  = true;
+		$dialect = $this->getDialect();
+		if (empty ($this->data [ $id ])) {
+			unset ($this->data [ $id ]);
 		}
 		if ($this->condition) {
-			$insert = ! dbselect ()->setDialect ( $dialect )->from ( $this->intoTable )->where ( $this->condition )->exist ( $id );
-		} else if ($this->data [$id]) {
-			$this->condition [$id] = $this->data [$id];
-			$insert = false;
+			$insert = !dbselect()->setDialect($dialect)->from($this->intoTable)->where($this->condition)->exist($id);
+		} else if ($this->data [ $id ]) {
+			$this->condition [ $id ] = $this->data [ $id ];
+			$insert                  = false;
 		}
 		if ($insert) {
-			$ids = dbinsert ( $this->data )->setDialect ( $dialect )->into ( $this->intoTable )->exec ();
+			$ids = dbinsert($this->data)->setDialect($dialect)->into($this->intoTable)->exec();
 			if ($ids) {
-				if ($this->idf && ! empty ( $ids [0] )) {
-					$this->data [$this->idf] = $ids [0];
+				if ($this->idf && !empty ($ids [0])) {
+					$this->data [ $this->idf ] = $ids [0];
 				}
+
 				return $this->data;
 			}
-		} else if (dbupdate ( $this->intoTable )->setDialect ( $dialect )->set ( $this->data )->where ( $this->condition )->exec ()) {
+		} else if (dbupdate($this->intoTable)->setDialect($dialect)->set($this->data)->where($this->condition)->exec()) {
 			return $this->data;
 		}
+
 		return false;
 	}
 }

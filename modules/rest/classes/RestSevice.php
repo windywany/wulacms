@@ -39,24 +39,6 @@ class RestSevice {
         }
     }
 
-    public function rest_get_provider_data($param, $key, $secret) {
-        if (isset ( $param ['datasource'] ) && ! empty ( $param ['datasource'] )) {
-            $p = $param ['datasource'];
-            unset ( $param ['datasource'] );
-            $data = get_data_from_cts_provider ( $p, $param, array () );
-            $rst = $data->toArray ();
-            if ($rst && isset ( $param ['safe_url'] ) && $param ['safe_url'] == 'true' && isset ( $rst [0] ['url'] )) {
-                foreach ( $rst as $i => $r ) {
-                    $rst [$i] ['url'] = safe_url ( $r );
-                }
-            }
-            $rtn = array ('error' => 0,'data' => $rst,'countTotal' => $data->getCountTotal () );
-        } else {
-            $rtn = array ('error' => 1,'message' => '未定义数据源' );
-        }
-        return $rtn;
-    }
-
     /**
      * 当前可以提供的服务.
      *

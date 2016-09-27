@@ -64,13 +64,15 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		if (! empty ( $this->fields ['content'] )) {
 			$this->fields ['origion_content'] = $this->fields ['content'];
 			$router = Router::getRouter ();
+			$cp = $ocp = $router->getCurrentPageNo ();
+			if($cp == PHP_INT_MAX){
+				$pagination = false;
+			}
 			if (isset ( $this->fields ['total_pages'] )) {
 				// 插件已经计算出页数
 				$total = $this->fields ['total_pages'];
-				$cp = $router->getCurrentPageNo ();
 				$pages [$cp] = $this->fields ['content'];
 			} else {
-				$router = Router::getRouter ();
 				if ($pagination) {
 					if (strpos ( $this->fields ['content'], '#p#副标题#e#' ) > 0) {
 						$pages = explode ( '#p#副标题#e#', $this->fields ['content'] );
@@ -78,7 +80,6 @@ class CmsPage implements ArrayAccess, ICtsPage {
 						$pages = explode ( '[page]', $this->fields ['content'] );
 					}
 					$total = count ( $pages );
-					$cp = $router->getCurrentPageNo ();
 				} else {
 					if (strpos ( $this->fields ['content'], '#p#副标题#e#' ) > 0) {
 						$pages [0] = str_replace ( '#p#副标题#e#', '', $this->fields ['content'] );
@@ -95,12 +96,13 @@ class CmsPage implements ArrayAccess, ICtsPage {
 					$cp = 0;
 				}
 			}
+			//启用列表功能
 			if (! isset ( $pages [$cp] ) && $this->fields ['is_list_model']) {
 				$pages [$cp] = $this->fields ['content'];
 			}
 			if (isset ( $pages [$cp] )) {
 				$content = $pages [$cp];
-				if ($pagination) {
+				if ($pagination || $ocp == PHP_INT_MAX) {
 					$content = CmsPage::trimPtag ( $content );
 					$content = apply_filter ( 'alter_article_content', $content );
 					$default_img_follow = cfg ( 'img_follow@cms' );
@@ -133,13 +135,11 @@ class CmsPage implements ArrayAccess, ICtsPage {
 					if ($this->fields ['img_pagination'] && $this->fields ['next_page_url'] && $this->fields ['next_page_url'] != '#') {
 						$content = preg_replace ( '/(<img[^>]+?>)/ims', '<a href="' . $this->fields ['next_page_url'] . '" title="点击进入下一页">\1</a>', $content );
 					}
+					$content = TagForm::applyTags ( $content );
 				}
 				$this->fields ['content'] = $content;
 			} else {
 				Response::respond ( 404 );
-			}
-			if ($pagination) {
-				$this->fields ['content'] = TagForm::applyTags ( $this->fields ['content'] );
 			}
 			$this->fields ['content'] = CmsPage::applyMediaURL ( $this->fields ['content'] );
 			$this->fields ['content'] = preg_replace ( '#<p>\s*<br\s*/?>\s*</p>#i', '', $this->fields ['content'] );
@@ -167,7 +167,6 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		$channel->join ( '{cms_model} AS CM', 'CH.default_model = CM.refid' );
 		$channel = $channel->where ( array ('CH.deleted' => 0,'CH.refid' => $this->fields ['channel'] ) )->get ();
 		if ($channel) {
-			$suffix = '.' . cfg ( 'default_suffix@cms', 'html' );
 			$this->fields ['channel_index_url'] = $channel ['url'];
 			$this->fields ['channel_list_url'] = $channel ['list_page_url'];
 			$this->fields ['channel_name'] = $channel ['name'];
