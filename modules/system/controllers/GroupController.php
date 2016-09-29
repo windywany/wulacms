@@ -11,11 +11,6 @@ defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
 class GroupController extends Controller {
 	protected $checkUser = true;
 	protected $acls = array ('data' => 'r:account/usergroup','index' => 'r:account/usergroup','add' => 'c:account/usergroup','edit' => 'u:account/usergroup','save' => 'group_id|u:account/usergroup;c:account/usergroup','del' => 'd:account/usergroup' );
-	/**
-	 * 首页.
-	 *
-	 * @return SmartyView
-	 */
 	public function index($type = 'admin') {
 		$group = dbselect ( '*' )->from ( '{user_group}' )->where ( array ('type' => $type ) )->asc ( 'type' );
 		$data ['groups'] = $group;

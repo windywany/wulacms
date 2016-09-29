@@ -68,22 +68,41 @@
 									</label>
 								</section>			
 								</div>		
-								<div class="row">
-									<section class="col col-8">
+								<section class="row">
+									<section class="col col-4">
 										<label class="label">组名</label>
 										<label class="input">									
-										<input type="text" name="group_name" 
-											id="group_name" value="{$group_name}"/>
+										<input type="text" name="group_name" id="group_name" value="{$group_name}"/>
 										</label>
 									</section>
+
 									<section class="col col-4">
 										<label class="label">ID</label>
 										<label class="input">
-										<input type="text" name="group_refid" 
-											id="group_refid" value="{$group_refid}" />
+										<input type="text" name="group_refid" d="group_refid" value="{$group_refid}" />
 										</label>
 									</section>
-								</div>								
+								</section>
+                                <section class="row">
+                                    <section class="col col-4">
+                                        <label class="label">等级名</label>
+                                        <label class="input">
+                                            <input type="text" name="rank" id="rank" value="{$rank}"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-4">
+                                        <label class="label">等级</label>
+                                        <label class="input">
+                                            <input type="text" name="level" id="level" value="{$level}"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-4">
+                                        <label class="label">限值</label>
+                                        <label class="input">
+                                            <input type="text" name="coins" id="coins" value="{$coins}"/>
+                                        </label>
+                                    </section>
+                                </section>
 								<section>
 									<label class="label">备注</label>
 									<label class="textarea">

@@ -12,7 +12,7 @@ class SmsHookImpl {
 		if (icando ( 'm:system/preference' )) {
 			$sysMenu = $layout->getNaviMenu ( 'system' );
 			$settingMenu = $sysMenu->getItem ( 'preferences' );
-			$settingMenu->addSubmenu ( array ('smspreference','短信通道设置','fa-paper-plane-o',tourl ( 'sms/preference', false ) ), 'sms:system/preference' );
+			$settingMenu->addSubmenu ( array ('smspreference','短信设置','fa-paper-plane-o',tourl ( 'sms/preference', false ) ), 'sms:system/preference' );
 		}
 	}
 	/**

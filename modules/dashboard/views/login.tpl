@@ -48,21 +48,25 @@
                 </div>
                 {/if}
                 <div class="row">
-                    <div class="form-group col-md-5 col-sm-5 col-xs-12 ">
+                    <div class="form-group col-sm-1 hidden-xs text-align-center" style="padding-top: 3px;">
+                        <i class="fa fa-user fa-2x txt-color-white"></i>
+                    </div>
+                    <div class="form-group col-sm-5 col-xs-12 ">
                         <label for="username" class="sr-only">username</label>
                         <div class="input-group username ">
                             <input class="form-control" tabindex="2" placeholder="用户名(或邮箱)" type="text" name="username" id="username" value="{$username}" />
                         </div>
                     </div>
-                    <div class="form-group col-md-5 col-sm-5 col-xs-12">
+                    <div class="form-group col-sm-4 col-xs-12">
                         <label for="passwd" class="sr-only">password</label>
                         <div class="input-group password">
                             <input type="password" class="form-control" placeholder="密码" name="passwd" id="passwd" tabindex="3">
                         </div>
                     </div>
 
-                    <div class="col-xs-12 col-md-2 col-sm-2 log-btn">
-                        <button type="submit" class="btn btn-primary" id="log" tabindex="4">登录</button>
+                    <div class="form-group col-xs-12 col-md-2 col-sm-2 log-btn">
+                        <button type="submit" class="btn btn-primary" id="log" tabindex="4">
+                            <i class="fa fa-key"></i> 登录</button>
                     </div>
                 </div>
                 <div class="row">

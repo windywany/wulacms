@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 hidden-xs hidden-sm">
 		<h1 class="txt-color-blueDark">
-			<i class="fa fa-fw fa-user"></i> {$memberTypeTitle}		
+			<i class="fa fa-fw fa-user"></i> 会员通行证
 		</h1>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
@@ -67,7 +67,6 @@
 												<li><a rel="email" href="javascript:void(0);">邮件</a></li>
 												<li><a rel="phone" href="javascript:void(0);">手机</a></li>
 												{if $enable_invation}
-												<li><a rel="invite_mid" href="javascript:void(0);">邀请人</a></li>
 												<li><a rel="invite_code" href="javascript:void(0);">邀请码</a></li>
 												{/if}
 											</ul>
@@ -75,18 +74,6 @@
 										<input type="text" placeholder="请输入关键词" class="form-control" name="keyword"/>
 									</div>									
 								</section>	
-								{if $type}
-								<input type="hidden" name="M_type" value="{$type}"/>
-								{else}													
-								<section class="col col-2">
-									<label class="select">
-										<select name="M_type">
-											{html_options options=$types}
-										</select>
-										<i></i>
-									</label>
-								</section>
-								{/if}
 				  				<section class="col col-2">
 									<label class="select">
 										<select name="M_group_id">
@@ -103,17 +90,6 @@
 										<i></i>
 									</label>
 								</section>	
-								{if $enable_auth}						
-								<section class="col col-2">
-									<label class="select">
-										<select name="M_auth_status">
-											{html_options options=$auth_status}
-										</select>
-										<i></i>
-									</label>
-								</section>
-								{/if}
-											  				
 								<section class="col col-1">
 									<button class="btn btn-sm btn-primary" type="submit">
 										<i class="fa fa-search"></i> 搜索
@@ -137,14 +113,10 @@
 							<th width="30"><input type="checkbox" class="grp"/></th>
 							<th width="70" data-sort="M.mid,d">ID</th>				
 							<th width="220" data-sort="M.username,d">账户</th>							
-							<th width="120" data-sort="M.group_id,d">组</th>
+							<th width="120" data-sort="M.group_id,d">组(等级)</th>
 							<th>角色</th>
-							<th width="100" data-sort="M.type,d">类型</th>
 							<th width="150" data-sort="M.phone,d">联系方式</th>
-							<th data-sort="M.registered,d">注册日期</th>
-							{if $enable_auth}
-							<th width="80" data-sort="M.auth_status,d">认证</th>
-							{/if}
+							<th width="100" data-sort="M.registered,d">注册日期</th>
 							<th width="80" data-sort="M.status,d">状态</th>
 							<th width="70" class="text-center"></th>
 						</tr>

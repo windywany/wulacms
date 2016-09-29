@@ -53,7 +53,7 @@ class PageController extends Controller {
 										<label class="checkbox">
 											<input type="checkbox" name="flag_j">
 											<i></i>跳转[j]</label>
-									</div>','col' => 6 );
+									</div>','col' => 10 );
 		
 		$fields ['_abc1'] = array ('widget' => 'htmltag','defaults' => '<button class="btn btn-sm btn-primary" type="submit">
 										<i class="fa fa-search"></i> <span>搜索</span>

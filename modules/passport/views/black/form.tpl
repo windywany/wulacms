@@ -1,8 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 hidden-xs hidden-sm">
 		<h1 class="txt-color-blueDark">
-			<i class="fa-fw fa fa-user"></i> NICKNAME黑名单管理
-			<span>&gt; {if $mid}编辑{else}新增{/if}</span>			
+			<i class="fa-fw fa fa-user"></i> 昵称黑名单
 		</h1>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
@@ -38,7 +37,7 @@
 						<li class="active">
 							<a href="#base-member-info" data-toggle="tab">
 								<i class="fa fa-user"></i> 
-								<span class="hidden-mobile hidden-tablet">基本信息</span>
+								<span class="hidden-mobile hidden-tablet">昵称黑名单</span>
 							</a>
 						</li>						
 					</ul>                    

@@ -15,7 +15,6 @@ class PreferenceController extends Controller {
 	public function preRun($method) {
 		parent::preRun ( $method );
 		$this->bGroups ['core'] = $this->defaultGroup;
-		$this->bGroups ['corepst'] = array ('name' => '通行证接入','icon' => 'fa-cog','form' => 'PassportClientPreferenceForm' );
 		$this->bGroups ['smtp'] = array ('name' => '邮箱设置','icon' => 'fa-cog','form' => 'MailSettingForm' );
 		$this->bGroups = apply_filter ( 'get_preference_group', $this->bGroups );
 	}

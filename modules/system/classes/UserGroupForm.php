@@ -11,6 +11,9 @@ class UserGroupForm extends AbstractForm {
 	private $group_refid = array ('rules' => array ('required' => 'ID不能为空.','callback(@checkRefId,group_id)' => 'ID已经存在.' ) );
 	private $type = array ('rules' => array ('required' => '请选择账户组类型.','callback(@checkType)' => '类型不存在.' ) );
 	private $note;
+	private $level = array('rules'=>array('regexp(/^(0|[1-9]\d*)$/)'=>'只能是数字'));
+	private $rank  = array();
+	private $coins = array('rules'=>array('regexp(/^(0|[1-9]\d*)$/)'=>'只能是数字'));
 	/**
 	 * 检测ID是否重复.
 	 *

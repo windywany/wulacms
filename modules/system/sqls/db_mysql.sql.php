@@ -219,3 +219,6 @@ $tables ['3.1.3'] [] = "ALTER TABLE `{prefix}catalog`
 ADD COLUMN `parents`  varchar(500) NULL AFTER `type`,
 ADD COLUMN `sub`  varchar(500) NULL AFTER `parents`";
 
+$tables['3.3.0'][] = "ALTER TABLE `{prefix}user_group` ADD `level` SMALLINT(8) UNSIGNED DEFAULT 0 COMMENT '会员等级,值越大等级越高' AFTER `type`,
+  ADD `coins` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所需金币（积分）' AFTER `level`,
+  ADD `rank` VARCHAR(64) NULL COMMENT '等级称号' AFTER `coins`";

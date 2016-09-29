@@ -4,30 +4,9 @@
  *
  * @author ngf
  */
-class PassportController extends AbstractPassportController {
-	protected $checkUser = null;
-	public function preRun($method) {
-		if (! bcfg ( 'allow_remote@passport' ) && $method != 'logout' && $method != 'login' && $method != 'um') {
-			$type = cfg ( 'type@passport', 'vip' );
-			$this->user = whoami ( $type );
-			if ($this->user->isLogin ()) {
-				if ($type == 'admin') {
-					Response::redirect ( tourl ( 'dashboard' ) );
-				} else {
-					$callback = cfg ( 'redirect_url@passport', DETECTED_ABS_URL );
-					Response::redirect ( $callback );
-				}
-			}
-		}
-		$this->setTheme ( false );
-	}
-	/**
-	 * 登录页.
-	 *
-	 * @param unknown $from
-	 * @param unknown $appid
-	 * @return SmartyView
-	 */
+class PassportController extends Controller {
+
+
 	public function index($from = '', $appid = '', $um = '') {
 		if (bcfg ( 'connect_to@passport' )) {
 			// 接入通行证服务器.

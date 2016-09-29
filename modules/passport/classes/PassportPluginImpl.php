@@ -12,25 +12,28 @@ class PassportPluginImpl {
 	 * @param AdminLayoutManager $layout
 	 */
 	public static function do_admin_layout($layout) {
-		if (icando('m:account/member')) {
+		if (icando('m:account') && icando('m:account/member')) {
 			$acc  = $layout->getNaviMenu('account');
-			$menu = new AdminNaviMenu ('memlist', '通行证', 'fa-user', tourl('passport/members', false));
+			$menu = new AdminNaviMenu ('memlist', '会员管理', 'fa-user', tourl('passport/members', false));
+
+			$menub = new AdminNaviMenu ('vip-group', '会员分组', 'fa-user', tourl('system/group/vip', false));
+			$menu->addItem($menub, false, 1);
+
+			$menub = new AdminNaviMenu ('vip-role', '会员角色', 'fa-user', tourl('system/role/vip', false));
+			$menu->addItem($menub, false, 2);
+
+			$menub = new AdminNaviMenu ('memblacklist', '昵称黑名单', 'fa-user txt-color-red', tourl('passport/black', false));
+			$menu->addItem($menub, false, 3);
+
+			$menub = new AdminNaviMenu ('vip-login', '通行证', 'fa-key', tourl('passport/users', false));
+			$menu->addItem($menub, false, 4);
+
 			$acc->addItem($menu, false);
 		}
 		if (icando('m:system/preference')) {
 			$sysMenu     = $layout->getNaviMenu('system');
 			$settingMenu = $sysMenu->getItem('preferences');
 			$settingMenu->addSubmenu(array('syspassport', '通行证设置', 'fa-cog', tourl('passport/preference', false)), 'pst:system/preference');
-		}
-		if (icando('m:account/member')) {
-			$acc  = $layout->getNaviMenu('account');
-			$menu = new AdminNaviMenu ('memblacklist', '昵称黑名单', 'fa-user', tourl('passport/black', false));
-			$acc->addItem($menu, false);
-		}
-		if (icando('rank:account/member')) {
-			$acc  = $layout->getNaviMenu('account');
-			$menu = new AdminNaviMenu ('rankset', '等级设置', 'fa-user', tourl('passport/level', false));
-			$acc->addItem($menu, false);
 		}
 	}
 
@@ -50,11 +53,6 @@ class PassportPluginImpl {
 	 * @return RestServer
 	 */
 	public static function on_init_rest_server($server) {
-		if (bcfg('allow_remote@passport')) {
-			$server->registerClass(new MemberRestService (), '1', 'passport.member');
-			$server->registerClass(new PassportRestService (), '1', 'passport.admin');
-			$server->registerClass(new UserGroupRestService (), '1', 'usergroup');
-		}
 		return $server;
 	}
 
@@ -64,18 +62,11 @@ class PassportPluginImpl {
 	 * @return mixed
 	 */
 	public static function get_acl_resource($manager) {
-		if ('vip' == cfg('type@passport')) {
-			$acl = $manager->getResource('account/member', '会员管理');
-			$acl->addOperate('r', '会员管理', '', true);
-			$acl->addOperate('u', '编辑会员');
-			$acl->addOperate('d', '删除会员');
-			$acl->addOperate('a', '审核会员');
-			// 等级管理
-			$acl = $manager->getResource('account/level', '会员等级');
-			$acl->addOperate('r', '查看等级', '', true);
-			$acl->addOperate('c', '编辑等级');
-			$acl->addOperate('d', '删除等级');
-		}
+		$acl = $manager->getResource('account/member', '会员管理');
+		$acl->addOperate('r', '会员管理', '', true);
+		$acl->addOperate('u', '编辑会员');
+		$acl->addOperate('d', '删除会员');
+		$acl->addOperate('a', '审核会员');
 		// 系统配置
 		$acl = $manager->getResource('system/preference', '系统配置');
 		$acl->addOperate('pst', '通行证设置');
@@ -88,7 +79,6 @@ class PassportPluginImpl {
 
 		return $apps;
 	}
-
 
 	public static function get_user_group_types($types) {
 		$types ['vip'] = '通行证';

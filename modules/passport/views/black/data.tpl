@@ -11,13 +11,10 @@
 		</td>		
 		<td>{$row.create_time|date_format:'Y-m-d H:i'}</td>
 		<td class="text-right">		
-				{if $canEditMember}
-					<a href="#{'passport/black/add'|app:0}{$row.id}" class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i></a>
-				{/if}
 				{if $canDelMember}
 				<a href="{'passport/black/del'|app}{$row.id}" data-confirm="你真的要删除吗？ "  class="btn btn-danger btn-xs" target="ajax"><i class="glyphicon glyphicon-trash"></i> </a>
 				{/if}
-		</td>		
+		</td>
 	</tr>
 	{foreachelse}
 	<tr>

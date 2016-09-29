@@ -28,8 +28,13 @@
                      <ul class="nav nav-tabs pull-right in">
                      	{foreach $groups as $key => $g}
 						<li {if $key == $_g}class="active"{/if}>
-							<a href="{$p_url}?_g={$key}" target="tag" data-tag="#content">
-								<i class="fa fa-fw fa-cog"></i> 
+							<a href="#{$p_url}?_g={$key}">
+                                {if is_object($g)}
+                                    {$icon=$g->icon}
+                                {else}
+                                    {$icon=false}
+                                {/if}
+								<i class="fa {if $icon}{$icon}{else}fa-cog{/if}"></i>
 								<span class="hidden-mobile hidden-tablet">{$g}</span>
 							</a>
 						</li>
