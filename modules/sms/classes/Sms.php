@@ -18,7 +18,7 @@ class Sms {
 	 *
 	 * @return bool 发送成功返回true,反之返回false.
 	 */
-	public static function send($phone, $tid, $args = []) {
+	public static function send($phone, $tid, &$args = null) {
 		if (!bcfg('sms_enabled@sms')) {
 			return false;
 		}
@@ -51,8 +51,16 @@ class Sms {
 
 			return false;
 		}
-		$cfg ['tpl']   = cfg($tid . '_tpl@sms');
-		$cfg ['cnt']   = cfg($tid . '_cnt@sms', null);
+		$cfg ['tpl'] = cfg($tid . '_tpl@sms');
+		$cfg ['cnt'] = cfg($tid . '_cnt@sms', null);
+		$cfg ['exp'] = icfg($tid . '_exp@sms', 120);
+		$args['exp'] = $cfg['exp'];
+		$last_sent   = sess_get('sms_' . $tid . '_sent', 0);
+		if (($last_sent + $cfg['exp']) > time()) {
+			log_error('模板' . $tid . '发送太快', 'sms');
+
+			return false;
+		}
 		$tpl           = $templates [ $tid ];
 		$args['phone'] = $phone;
 		$testMode      = bcfg('test_mode@sms');
@@ -76,6 +84,7 @@ class Sms {
 		if ($rst) {
 			$data ['status'] = 1;
 			$tpl->onSuccess();
+			$_SESSION[ 'sms_' . $tid . '_sent' ] = time();
 		} else {
 			$data ['status'] = 0;
 			$data ['note']   = $v->getError();

@@ -4,7 +4,7 @@ class MemberModelForm extends AbstractForm {
 	private $mid            = array('rules' => array('regexp(/^[0-9]+$/)' => '非法的用户编号.'));
 	private $username       = array('rules' => array('required' => '请填写账户.', 'callback(@checkUsername,mid)' => '账户已经存在.'));
 	private $email          = array('rules' => array('email' => '邮箱地址格式不合法.', 'callback(@checkEmail,mid)' => '邮箱已经存在.'));
-	private $phone          = array('rules' => array('regexp(/^1[345678]\d{9}$/)' => '请填写正确的手机号', 'callback(@checkPhone,mid)' => '手机号已存在.'));
+	private $phone          = array('rules' => array('regexp(/^1[34578]\d{9}$/)' => '请填写正确的手机号', 'callback(@checkPhone,mid)' => '手机号已存在.'));
 	private $passwd         = array('rules' => array('required' => '请填写密码.', 'minlength(6)' => '密码最少要%s位.'));
 	private $passwd1        = array('rules' => array('equalTo(passwd)' => '二次输入的密码不一致.'));
 	private $group_id       = array('rules' => array('digits' => '非法的用户组.'));
@@ -156,6 +156,10 @@ class MemberModelForm extends AbstractForm {
 	}
 
 	public static function generatePwd($password, $salt) {
-		return md5($salt . $password);
+		if ($salt) {
+			return md5($salt . $password);
+		} else {
+			return md5($password);
+		}
 	}
 }

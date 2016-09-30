@@ -26,6 +26,7 @@ $tables ['0.0.2'] [] = "CREATE TABLE `{prefix}member` (
 	`avatar_big` VARCHAR(1024) NULL COMMENT '大头像',
 	`avatar_small` VARCHAR(1024) NULL COMMENT '小头像',
 	`salt` VARCHAR(64) NULL COMMENT 'salt',
+	`ip` VARCHAR(64) NULL COMMENT 'IP',
     PRIMARY KEY (`mid`),
 	INDEX `IDX_USERNAME` (`username` ASC),
 	INDEX `IDX_EMAIL` (`email` ASC),

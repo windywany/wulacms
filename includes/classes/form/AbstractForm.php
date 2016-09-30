@@ -14,6 +14,7 @@ abstract class AbstractForm implements ArrayAccess, IteratorAggregate {
 	protected $__form_rules         = null;
 	protected $__form_callback_args = array();
 	protected $__built_widgets      = false;
+	protected $__form_inited        = false;
 
 	public function __construct($data = array(), $init = true) {
 		if ($init) {
@@ -41,6 +42,7 @@ abstract class AbstractForm implements ArrayAccess, IteratorAggregate {
 			if ($data) {
 				$this->initValidateRules();
 			}
+			$this->__form_inited = true;
 		}
 	}
 
@@ -143,6 +145,13 @@ abstract class AbstractForm implements ArrayAccess, IteratorAggregate {
 	 */
 	public function addField($name, $field) {
 		$this->offsetSet($name, $field);
+	}
+
+	public function removeField($name) {
+		unset($this->__form_fields[ $name ]);
+		if ($this->__form_inited) {
+			$this->initValidateRules(true);
+		}
 	}
 
 	/**

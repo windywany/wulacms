@@ -6,5 +6,11 @@ namespace passport\classes;
  * @package passport\classes
  */
 interface IOAuthVendor {
+	function getID();
 
+	function getName();
+
+	function onLogin();
+
+	function getURL();
 }

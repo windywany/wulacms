@@ -111,11 +111,12 @@
 						<tr>
 							<th width="20"></th>
 							<th width="30"><input type="checkbox" class="grp"/></th>
-							<th width="70" data-sort="M.mid,d">ID</th>				
-							<th width="220" data-sort="M.username,d">账户</th>							
+							<th width="90" data-sort="M.mid,d">ID</th>
+							<th width="200" data-sort="M.username,d">账户</th>
 							<th width="120" data-sort="M.group_id,d">组(等级)</th>
-							<th>角色</th>
-							<th width="150" data-sort="M.phone,d">联系方式</th>
+                            <th width="180" data-sort="M.phone,d">邮箱</th>
+							<th width="150" data-sort="M.phone,d">手机</th>
+                            <th>角色</th>
 							<th width="100" data-sort="M.registered,d">注册日期</th>
 							<th width="80" data-sort="M.status,d">状态</th>
 							<th width="70" class="text-center"></th>

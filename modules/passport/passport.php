@@ -9,6 +9,7 @@ bind('on_init_autocomplete_condition_up_passport', '&PassportPluginImpl');
 bind('on_save_user_passport_vip', '&PassportPluginImpl', 1, 2);
 bind('get_sms_templates', '&\passport\classes\BindMobileSms');
 bind('get_sms_templates', '&\passport\classes\ResetPasswdSms');
+bind('get_sms_templates', '&passport\classes\RegCodeTemplate');
 
 /**
  * 取会员通行证.

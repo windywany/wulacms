@@ -28,7 +28,7 @@
                      <ul class="nav nav-tabs pull-right in">
                      	{foreach $groups as $key => $g}
 						<li {if $key == $_g}class="active"{/if}>
-							<a href="#{$p_url}?_g={$key}">
+							<a href="#{$gp_url}?_g={$key}">
                                 {if is_object($g)}
                                     {$icon=$g->icon}
                                 {else}

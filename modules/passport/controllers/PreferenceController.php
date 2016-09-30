@@ -8,7 +8,7 @@ class PreferenceController extends \DefaultPreferencePage {
 	protected $acls      = array('index' => 'pst:system/preference', 'index_post' => 'pst:system/preference');
 
 	protected function getCurrentURL() {
-		return tourl('passport/preference', false);
+		return 'passport/preference';
 	}
 
 	protected function getForm($type, $data = array()) {
@@ -53,7 +53,7 @@ class PreferenceController extends \DefaultPreferencePage {
 	}
 
 	protected function getGroups() {
-		$cnt    = new \PreferenceConfig('接入设置', 'passport', new ConnectSettingForm(), '');
+		$cnt    = new \PreferenceConfig('接入设置', 'passport', new ConnectSettingForm(), 'fa-link');
 		$groups = array('base' => '基本设置', '_cnt' => $cnt);
 		$groups = apply_filter('get_passport_setting_groups', $groups);
 

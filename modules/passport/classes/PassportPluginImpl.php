@@ -86,13 +86,6 @@ class PassportPluginImpl {
 		return $types;
 	}
 
-	public static function getOauthVendors() {
-		// 'name'=>'QQ','url'=>'',icon=>'';
-		$oauth_vendors = apply_filter('get_passport_oauth_venders', array());
-
-		return $oauth_vendors;
-	}
-
 	/**
 	 *
 	 * @param Query $query

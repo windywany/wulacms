@@ -1,15 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/9/29 0029
- * Time: 下午 8:14
- */
 
 namespace passport\models;
 
 use db\model\Model;
+use passport\models\param\SignInParam;
 
 class MemberOauthModel extends Model {
-
+	/**
+	 * 第三方登录.
+	 *
+	 * @param \passport\models\param\SignInParam $param
+	 *
+	 * @return array
+	 */
+	public function signIn(SignInParam $param) {
+		return array();
+	}
 }

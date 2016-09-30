@@ -18,7 +18,7 @@
 
 <section id="widget-grid">
 	<div class="row">
-		<article class="col-sm-12">
+		<article class="col-sm-12 col-md-10 col-lg-6">
 			<div class="jarviswidget"
                 id="wid-member-form-1"     
                 data-widget-colorbutton="false"
@@ -51,7 +51,7 @@
                           <div id="base-member-info" class="tab-pane active">
 							<fieldset>
                                 <div class="row">
-                                    <section class="col col-3">
+                                    <section class="col col-6">
                                         <label class="label">账户</label>
                                         <label class="input">
                                             <i class="icon-append fa fa-user"></i>
@@ -59,7 +59,7 @@
                                                    id="username" value="{$username}"/>
                                         </label>
                                     </section>
-                                    <section class="col col-3">
+                                    <section class="col col-6">
                                         <label class="label">昵称</label>
                                         <label class="input">
                                             <i class="icon-append fa fa-user"></i>
@@ -67,7 +67,9 @@
                                                    id="nickname" value="{$nickname}"/>
                                         </label>
                                     </section>
-                                    <section class="col col-3">
+                                </div>
+                                <div class="row">
+                                    <section class="col col-6">
                                         <label class="label">邮箱</label>
                                         <label class="input">
                                             <i class="icon-append fa fa-envelope-o"></i>
@@ -75,7 +77,7 @@
                                                    id="email" value="{$email}"/>
                                         </label>
                                     </section>
-                                    <section class="col col-3">
+                                    <section class="col col-6">
                                         <label class="label">手机</label>
                                         <label class="input">
                                             <i class="icon-append fa fa-envelope-o"></i>
@@ -85,14 +87,14 @@
                                 </div>
                                 {if $enable_invation}
                                     <div class="row">
-                                        <section class="col col-3">
+                                        <section class="col col-6">
                                             <label class="label">推荐码</label>
                                             <label class="input">
                                                 <input type="text" value="{$recommend_code}" id="recommend_code" name="recommend_code"/>
                                             </label>
                                             <div class="note">用于邀请其他会员注册</div>
                                         </section>
-                                        <section class="col col-3">
+                                        <section class="col col-6">
                                             <label class="label">邀请码</label>
                                             <label class="input">
                                                 <input type="text" name="invite_code"
@@ -103,7 +105,7 @@
                                     </div>
                                 {/if}
 								<div class="row">
-									<section class="col col-3">
+									<section class="col col-6">
 										<label class="label">会员组(等级)</label>
 										<label class="select">
 											<select name="group_id" id="group_id">

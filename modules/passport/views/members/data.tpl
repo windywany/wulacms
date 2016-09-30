@@ -13,11 +13,11 @@
 			{/if}{if $row.nickname}({$row.nickname}){/if}</strong>
 		</td>		
 		<td>{$row.group_name}</td>
-		<td>{$row.roles}</td>
+        <td>{if $row.email}<a href="mailto:{$row.email}">{$row.email}</a>{/if}</td>
 		<td>
-			{if $row.email}<a href="mailto:{$row.email}">{$row.email}</a><br/>{/if}
 			{if $row.phone}{$row.phone}{/if}
 		</td>
+        <td>{$row.roles}</td>
 		<td>
 			{$row.registered|date_format:'Y-m-d'}
 			{if $row.nickname1}
