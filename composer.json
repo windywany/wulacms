@@ -9,7 +9,6 @@
     "ext-curl" : "*",
     "ext-SPL" : "*",
     "smarty/smarty":"~3.1",
-	"crodas/Notoj":"~1.3",
     "phpmailer/phpmailer":"~5.2"
   },
   "license" : "MIT",
@@ -19,7 +18,6 @@
     "post-root-package-install" : [ "php bin/wula.php --init" ]
   },
   "type" : "project",
-  "minimum-stability":"dev",
   "config" : {
     "preferred-install" : "dist"
   },
