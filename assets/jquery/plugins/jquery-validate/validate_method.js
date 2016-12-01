@@ -47,3 +47,16 @@ jQuery.validator.addMethod("pattern", function(value, element, param) {
 	}
 	return param.test(value);
 }, "Invalid format.");
+
+jQuery.validator.addMethod('notEqualTo',function (value, element,param) {
+	var oe = $(param),val=undefined;
+	if(oe.length>0){
+		val = oe.val();
+	}else{
+		oe = $('[input name="'+param+'"]');
+		if(oe.length>0){
+			val = oe.val();
+		}
+	}
+	return val == undefined || val != value;
+},'Can not equal to %s');

@@ -19,11 +19,6 @@ function cms_get_page_data($page, $url) {
 		if ($page) {
 			return $page;
 		}
-		// 搜索
-		$urlx = CmsPageSearcher::parseURL ( $url, null, false );
-		if ($urlx->prefix) {
-			$page = CmsPage::load ( $urlx->prefix, true );
-		}
 	}
 	return $page;
 }

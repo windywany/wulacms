@@ -8,11 +8,12 @@ namespace db\model;
  */
 abstract class FormModel extends Model {
 	private $form = null;
-	public function __construct(&$data = null,$dialect = null) {
+
+	public function __construct(&$data = null, $dialect = null) {
 		parent::__construct($dialect);
 		$this->form = $this->createForm($data);
 		if ($this->form) {
-			if($data) {
+			if ($data) {
 				$data['formName'] = $this->form->getName();
 				$data['rules']    = $this->form->rules();
 			}

@@ -45,6 +45,7 @@
 					data-source="{'cms/channel/data'|app}{if $type}1{/if}"
 					{if !$type}
 					data-tree="true"
+                    data-expend="true"
 					{/if}>
 					<thead>
 						<tr>					
@@ -58,7 +59,7 @@
 					</thead>
 				</table>
 				<div class="panel-footer">
-					<div data-widget="nuiPager" data-for="#channel-table" data-limit="10"></div>
+					<div data-widget="nuiPager" data-for="#channel-table" data-limit="1000"></div>
 				</div>			
 			</div>
 		</article>

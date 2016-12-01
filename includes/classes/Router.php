@@ -67,13 +67,12 @@ class Router {
 	 * @return string url
 	 */
 	public static function url($url, $base = true, $root = true) {
-		static $base_url = false, $dapp = false;
+		static $base_url = false;
 		if (!$base_url) {
 			$base_url = rtrim(cfg('site_url', DETECTED_ABS_URL), '/');
 			if (!defined('CLEAN_URL') || !CLEAN_URL) {
 				$base_url .= '/index.php';
 			}
-			$dapp = cfg('default_app');
 		}
 		if (is_array($url)) {
 			if (count($url) > 1) {
@@ -87,12 +86,10 @@ class Router {
 		} else {
 			return $base ? $base_url : '';
 		}
-		if ($dapp != $app) {
-			if (isset (Router::$APP2URL [ $app ])) {
-				array_unshift($urls, Router::$APP2URL [ $app ]);
-			} else {
-				array_unshift($urls, $app);
-			}
+		if (isset (Router::$APP2URL [ $app ])) {
+			array_unshift($urls, Router::$APP2URL [ $app ]);
+		} else {
+			array_unshift($urls, $app);
 		}
 		if ($base) {
 			if ($base_url == '/') {
@@ -119,13 +116,12 @@ class Router {
 	 * @return string url
 	 */
 	public static function urlf($url, $base = true, $root = true) {
-		static $base_url = false, $dapp = false;
+		static $base_url = false;
 		if (!$base_url) {
 			$base_url = rtrim(cfg('cms_url@cms', DETECTED_ABS_URL), '/');
 			if (!defined('CLEAN_URL') || !CLEAN_URL) {
 				$base_url .= '/index.php';
 			}
-			$dapp = cfg('default_app');
 		}
 		if (is_array($url)) {
 			if (count($url) > 1) {
@@ -139,12 +135,10 @@ class Router {
 		} else {
 			return $base ? $base_url : '';
 		}
-		if ($dapp != $app) {
-			if (isset (Router::$APP2URL [ $app ])) {
-				array_unshift($urls, Router::$APP2URL [ $app ]);
-			} else {
-				array_unshift($urls, $app);
-			}
+		if (isset (Router::$APP2URL [ $app ])) {
+			array_unshift($urls, Router::$APP2URL [ $app ]);
+		} else {
+			array_unshift($urls, $app);
 		}
 		if ($base) {
 			if ($base_url == '/') {
@@ -411,6 +405,7 @@ class Router {
 	 * 将请求映射到页面（CMS管理）.
 	 *
 	 * @param string $url
+	 * @param bool   $dispatch
 	 */
 	private function dispatchPage($url, $dispatch = true) {
 		global $__kissgo_apps;
@@ -418,18 +413,25 @@ class Router {
 			$this->current_url = '';
 			Response::respond(404, $url);
 		}
+		$url              = apply_filter('before_parse_url', $url);
 		$origin_url       = $url;
 		$this->parsed_url = $parsed_url = $this->parseURL($url);
 		$res              = Response::getInstance();
-		$app              = cfg('default_app');
-		if ($dispatch && $app && (empty ($url) || $url == 'index.html')) {
-			$this->current_url = '';
-			if (isset ($__kissgo_apps [ $app ])) {
-				$do = isset (self::$APP2URL [ $app ]) ? self::$APP2URL [ $app ] : $app;
+		$siteURL          = cfg('site_url');
+		$app              = null;
+		if ($siteURL) {
+			$rhost = parse_url($siteURL, PHP_URL_HOST);
+			$app   = $rhost == REAL_HTTP_HOST ? cfg('default_app') : null;
+			if ($dispatch && $app && (empty ($url) || $url == 'index.html')) {
+				$this->current_url = '';
+				if (isset ($__kissgo_apps [ $app ])) {
+					$do = isset (self::$APP2URL [ $app ]) ? self::$APP2URL [ $app ] : $app;
+					$this->route($do, false);
 
-				return $this->route($do, false);
-			} else {
-				Response::respond(404);
+					return;
+				} else {
+					Response::respond(404);
+				}
 			}
 		}
 		$this->checkDomain($origin_url);
@@ -439,6 +441,7 @@ class Router {
 			$data ['title']       = cfg('site_title');
 			$data ['keywords']    = cfg('keywords');
 			$data ['description'] = cfg('description');
+			$data ['url']         = $parsed_url;
 			$data                 = apply_filter('on_render_homepage', $data);
 			if ($data) {
 				$this->current_page_data          = $data;
@@ -464,8 +467,9 @@ class Router {
 					$urlm = isset (self::$APP2URL [ $app ]) ? self::$APP2URL [ $app ] : $app;
 					$url  = $urlm . '/' . $origin_url;
 					$url  = $this->parseURL($url);
+					$this->route($url, false);
 
-					return $this->route($url, false);
+					return;
 				} else {
 					Response::respond(404);
 				}
@@ -488,7 +492,7 @@ class Router {
 	 * @param string $url
 	 * @param string $parsed_url
 	 */
-	public function dispatch($url = false, $parsed_url = false) {
+	public function dispatch($url = null, $parsed_url = null) {
 		if (!$url) {
 			$url = $this->dispacthing_url;
 		}
@@ -520,6 +524,7 @@ class Router {
 					$headers = array_merge($headers, $this->current_page_data ['http_headers']);
 				}
 				$this->current_page_data ['mf_page_data'] = $this->current_page_data;
+				$this->current_page_data['url']           = $parsed_url;
 				$res                                      = Response::getInstance();
 				$res->output(template($tpl, $this->current_page_data, $headers));
 				$res->close(false);

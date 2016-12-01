@@ -238,8 +238,10 @@ abstract class QueryBuilder implements Countable {
 	 * @return QueryBuilder
 	 */
 	public function setDialect($dialect) {
-		if ($dialect) {
+		if ($dialect instanceof DatabaseDialect) {
 			$this->dialect = $dialect;
+		} else {
+			$this->dialect = DatabaseDialect::getDialect($dialect);
 		}
 
 		return $this;

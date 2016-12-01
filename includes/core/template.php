@@ -27,27 +27,30 @@ function register_cts_provider($name, $provider, $title = false, $desc = '') {
 /**
  * 从数据源取数据.
  *
- * @param string $name
- * @param array  $args
+ * @param string          $name
+ * @param array           $args
+ * @param array           $tplvars
+ * @param DatabaseDialect $dialect
  *
  * @return CtsData
  */
-function get_data_from_cts_provider($name, $args, $tplvars) {
+function get_data_from_cts_provider($name, $args, $tplvars = [], $dialect = null) {
 	$providers = KissGoSetting::getSetting('cts_providers');
 	$data      = null;
 	if ($providers && isset ($providers [ $name ])) {
 		$provider = $providers [ $name ];
 		$provider = $provider [0];
 		if ($provider instanceof \cms\classes\CtsDataProvider) {
+			$provider->setDialect($dialect);
 			$data = $provider->getList($args, $tplvars);
 		} else if (is_callable($provider)) {
-			$data = call_user_func_array($provider, array($args, $tplvars));
+			$data = call_user_func_array($provider, array($args, $tplvars, $dialect));
 		} else if (is_array($provider)) {
 			list ($cb, $file) = $provider;
 			if (file_exists($file)) {
 				@include_once $file;
 				if (is_callable($cb)) {
-					$data = call_user_func_array($cb, array($args, $tplvars));
+					$data = call_user_func_array($cb, array($args, $tplvars, $dialect));
 				}
 			}
 		}
@@ -169,10 +172,10 @@ function merge_args($args, $default) {
  * @return ThemeView
  */
 function template($tpl, $data = array(), $headers = array('Content-Type' => 'text/html')) {
+	static $called_funcs = [];
 	$theme   = get_theme();
 	$tplname = str_replace(array('/', '.'), '_', basename($tpl, '.tpl'));
 	$_tpl    = THEME_DIR . DS . $theme . DS . $tpl;
-	$found   = false;
 	$_tpl    = apply_filter('get_custome_tplfile', $_tpl, $data);
 	if (is_file(THEME_PATH . $_tpl)) {
 		$tplfile = $_tpl;
@@ -183,13 +186,33 @@ function template($tpl, $data = array(), $headers = array('Content-Type' => 'tex
 	$template_func_file = THEME_PATH . THEME_DIR . DS . $theme . DS . 'template.php';
 	if (is_file($template_func_file)) {
 		include_once $template_func_file;
-		$func = $theme . '_template_data';
-		if (function_exists($func)) {
+		$func = $theme . '_' . $tplname . '_template_data';
+		if (function_exists($func) && !isset($called_funcs[ $func ])) {
+			$called_funcs[ $func ] = 1;
 			$func ($data);
 		}
-		$func = $theme . '_' . $tplname . '_template_data';
-		if (function_exists($func)) {
+
+		$func = $theme . '_template_data';
+		if (function_exists($func) && !isset($called_funcs[ $func ])) {
+			$called_funcs[ $func ] = 1;
 			$func ($data);
+		}
+	}
+	if ($theme != 'default') {
+		$template_func_file = THEME_PATH . THEME_DIR . DS . 'default' . DS . 'template.php';
+		if (is_file($template_func_file)) {
+			include_once $template_func_file;
+			$func = 'default_' . $tplname . '_template_data';
+			if (function_exists($func) && !isset($called_funcs[ $func ])) {
+				$called_funcs[ $func ] = 1;
+				$func ($data);
+			}
+
+			$func = 'default_template_data';
+			if (function_exists($func) && !isset($called_funcs[ $func ])) {
+				$called_funcs[ $func ] = 1;
+				$func ($data);
+			}
 		}
 	}
 	$data ['_current_template']   = $tplfile;

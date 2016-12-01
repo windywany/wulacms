@@ -52,7 +52,7 @@ class SaveQuery extends QueryBuilder {
 			unset ($this->data [ $id ]);
 		}
 		if ($this->condition) {
-			$insert = !dbselect()->setDialect($dialect)->from($this->intoTable)->where($this->condition)->exist($id);
+			$insert = !dbselect($id)->setDialect($dialect)->from($this->intoTable)->where($this->condition)->exist($id);
 		} else if ($this->data [ $id ]) {
 			$this->condition [ $id ] = $this->data [ $id ];
 			$insert                  = false;

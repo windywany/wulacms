@@ -23,6 +23,8 @@ class SendController extends \Controller {
 			$data['success'] = $rst;
 			if ($rst) {
 				$data['timeout'] = $args['exp'];
+			} else {
+				$data['errorMsg'] = $args['errorMsg'];
 			}
 		}
 

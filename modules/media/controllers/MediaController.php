@@ -296,7 +296,4 @@ class MediaController extends Controller {
 		}
 		die ( '{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "数据不完整."}, "id" : "id"}' );
 	}
-	private function uploadError($msg) {
-		return new JsonView ( array ('error' => 1,'message' => $msg ) );
-	}
 }

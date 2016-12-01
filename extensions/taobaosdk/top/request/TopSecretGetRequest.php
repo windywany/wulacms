@@ -3,10 +3,15 @@
  * TOP API: taobao.top.secret.get request
  * 
  * @author auto create
- * @since 1.0, 2016.04.06
+ * @since 1.0, 2016.08.19
  */
 class TopSecretGetRequest
 {
+	/** 
+	 * 自定义用户id
+	 **/
+	private $customerUserId;
+	
 	/** 
 	 * 伪随机数
 	 **/
@@ -19,6 +24,17 @@ class TopSecretGetRequest
 	
 	private $apiParas = array();
 	
+	public function setCustomerUserId($customerUserId)
+	{
+		$this->customerUserId = $customerUserId;
+		$this->apiParas["customer_user_id"] = $customerUserId;
+	}
+
+	public function getCustomerUserId()
+	{
+		return $this->customerUserId;
+	}
+
 	public function setRandomNum($randomNum)
 	{
 		$this->randomNum = $randomNum;

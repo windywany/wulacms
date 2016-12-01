@@ -3,12 +3,12 @@
  * TOP API: taobao.topats.result.get request
  * 
  * @author auto create
- * @since 1.0, 2014.04.11
+ * @since 1.0, 2016.10.12
  */
 class TopatsResultGetRequest
 {
 	/** 
-	 * 任务id号，创建任务时返回的task_id
+	 * 任务ID，创建任务时返回的task_id
 	 **/
 	private $taskId;
 	

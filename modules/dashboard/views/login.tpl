@@ -34,12 +34,15 @@
                 {/if}
                 {if $captcha}
                 <div class="row code-row">
-                    <div class="form-group col-md-5 col-sm-5 col-xs-6 ">
-                        <div class="input-group username ">
+                    <div class="form-group col-sm-1 hidden-xs text-align-center" style="padding-top: 3px;">
+                        <i class="fa fa-picture-o fa-2x txt-color-white"></i>
+                    </div>
+                    <div class="form-group col-sm-5 col-xs-6">
+                        <div class="input-group username">
                             <input class="form-control" tabindex="1" placeholder="验证码" type="text" name="captcha" id="captcha">
                         </div>
                     </div>
-                    <div class="form-group col-md-7 col-sm-7 col-xs-6">
+                    <div class="form-group col-sm-6 col-xs-6">
                         <div class="input-group code-group" id="code-btn">
                             <img id="code-img" src="{'system/captcha/png/100x34/14'|app}" />
                             <span id="cimg">换一张</span>
@@ -64,7 +67,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-xs-12 col-md-2 col-sm-2 log-btn">
+                    <div class="form-group col-xs-12 col-sm-2 log-btn">
                         <button type="submit" class="btn btn-primary" id="log" tabindex="4">
                             <i class="fa fa-key"></i> 登录</button>
                     </div>

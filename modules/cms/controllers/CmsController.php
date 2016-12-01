@@ -55,7 +55,7 @@ class CmsController extends Controller {
 					include_once $file;
 				}
 			}else if($f instanceof \cms\classes\CtsDataProvider){
-				$mapfunc = array($provider,'getFieldmap');
+				$mapfunc = array($f,'getFieldmap');
 				$varname = $f->getVarName();
 			}
 			$func = $con_func;

@@ -17,7 +17,7 @@ class ChannelForm extends AbstractForm {
 	private $basedir = array ('rules' => array ('regexp(/^[\/a-z_0-9]*[a-z0-9]$/i)' => '目录名格式不正确.' ) );
 	private $isfinal;
 	private $default_template = array ('rules' => array ('required' => '请填写文章页模板','regexp(/^[\/a-z_0-9]+\.tpl$/i)' => '文件名格式不正确.' ) );
-	private $default_url_pattern = array ('rules' => array ('required' => '请填写文章页命名规则','regexp(/^[\/\{\}a-z_0-9]+\.s?html$/i)' => '文件名格式不正确.' ) );
+	private $default_url_pattern = array ('rules' => array ('required' => '请填写文章页命名规则','regexp(/^[\{a-z0-9][\{\}a-z0-9_\/\-]*\.s?html?$/i)' => '文件名格式不正确.' ) );
 	private $index_page_tpl = array ('rules' => array ('required' => '请填写模板','regexp(/^[\/a-z_0-9]+\.tpl$/i)' => '文件名格式不正确.' ) );
 	private $page_name = array ('rules' => array ('required' => '请填写页面名称','regexp(/^[a-z_0-9\/\{\}]+\.s?html$/i)' => '文件名格式不正确.' ) );
 	private $list_page_tpl = array ('rules' => array ('required' => '请填写模板','regexp(/^[\/a-z_0-9]+\.tpl$/i)' => '文件名格式不正确.' ) );
