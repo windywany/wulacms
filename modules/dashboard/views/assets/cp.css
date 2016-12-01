@@ -107,3 +107,22 @@ td.proc-td{
 #superbox .nextprev{overflow:hidden;margin:0;}
 .smart-form .input-file .button{padding: 0 6px;}
 .smart-form .input-file a.button{ right:36px; background:transparent;}
+.inbox-side-bar {width:250px;}
+.inbox-body .table-wrap{margin-left:250px;}
+.inbox-space{width:235px;}
+.inbox-nav-bar .page-title{width:246px;}
+.inbox-table{border-top:none;border-left-color:transparent;border-left-color:transparent;}
+.inbox-table tr td {
+    border-right: none;
+    border-left: none;
+    line-height: 26px;
+    padding: 2px!important;
+}
+.inbox-table .inbox-table-icon {
+    padding-left: 0px!important;
+}
+.inbox-table.table tbody>tr>td {
+    border-color: #fff!important;
+}
+.inbox-table .checkbox,.inbox-table .radio{margin-top:-2px;margin-bottom:0}
+nav ul li.active>a:before {right:0;text-align:right}

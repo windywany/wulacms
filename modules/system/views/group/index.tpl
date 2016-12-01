@@ -18,22 +18,23 @@
 			<div class="panel panel-default">
 				<div class="panel-body no-padding">
 					<ul class="nav nav-tabs in" id="role-type-tab">
-						{foreach $types as $t=>$tname}					
+						{foreach $types as $t=>$tname}
 						<li {if $type==$t}class="active"{/if}>
 							<a href="#{'system/group'|app:0}{$t}" class="txt-color-blue"><i class="fa fa-group"></i> <span class="hidden-mobile hidden-tablet">{$tname}</span></a>
 						</li>
 						{/foreach}
 					</ul>
-				</div>
-				
-				<table 
+				<table
 					id="group-table"
 					data-widget="nuiTable" 
-					data-tree="true" style="margin-top:15px;">
+					data-tree="true">
 					<thead>
 						<tr>					
-							<th width="300">用户组名</th>						
-							<th width="80">ID</th>							
+							<th width="300">用户组名</th>
+							<th width="80">ID</th>
+                            <th width="100">等级</th>
+                            <th width="80">限值</th>
+                            <th width="180">等级名称</th>
 							<th class="hidden-xs hidden-sm">说明</th>
 							<th width="30"></th>
 						</tr>
@@ -46,7 +47,10 @@
 									{$group.group_name}
 								</a>							
 							</td>
-							<td>{$group.group_refid}</td>							
+							<td>{$group.group_refid}</td>
+                            <td>{$group.level}</td>
+                            <td>{$group.coins}</td>
+                            <td>{$group.rank}</td>
 							<td class="hidden-xs hidden-sm">{$group.note|escape}</td>
 							<td class="text-right">
 								{if $hasDusergroup}
@@ -57,9 +61,16 @@
 								{/if}
 							</td>
 						</tr>
+                        {foreachelse}
+                        <tr>
+                            <td colspan="7">
+                                无分组
+                            </td>
+                        </tr>
 						{/foreach}	
 					</tbody>
-				</table>			
+				</table>
+                </div>
 			</div>
 		</article>
 	</div>

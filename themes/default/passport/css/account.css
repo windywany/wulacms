@@ -1,0 +1,80 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+    /*background:url(../img/account_bg.png) top center no-repeat;*/
+    /*background-position:50% 20%;*/
+    /*background-size: cover;*/
+    background:#333;
+    overflow-y: hidden;
+}
+
+
+/*用户注册页面 --开始*/
+.text-input{float:left;position:relative;height:42px;border:1px solid #e2e2e2;line-height:42px;font-size:14px;padding-left:10px;z-index:2;background:none;_zoom:1}
+.input_300{width:288px}
+.input_190{width:178px}
+.input_140{width:128px}
+
+.input-placeholder{float:left;display:block;height:42px;margin-top:1px;line-height:42px;position:relative;z-index:1;font-size:14px;text-align:left;color:#c6c6c6;_zoom:1}
+.placeholder_300{margin-left:-288px}
+.placeholder_190{margin-left:-178px}
+.placeholder_140{margin-left:-128px}
+
+
+.account-btn{width:300px;height:44px;margin:0 auto 13px;border:0;padding:0;line-height:44px;text-align:center;font-size:18px;color:#fff;background:#06a3f9;cursor:pointer}
+.account-btn:hover{background:#079bec}
+.btn-orange{background:#fb8526}
+.btn-orange:hover{background:#f17d20}
+
+.account-main{display:none;position: absolute;z-index: 3}
+.account-logo{width:160px;height:35px;background:url(../img/logo_white.png) no-repeat;_background:url(../img/png8/logo_white.png) no-repeat}
+.account-logo a{display: block;width:100%;height:100%;line-height:35px;overflow: hidden;text-indent: 99999px}
+
+.account{position:relative;width:400px;height:auto;padding-bottom:12px;margin-top:20px;border:1px solid #e8e8e8;border-radius:2px;background:#fff;box-shadow:0 0 20px #666}
+.account .account-title{width:400px;height:40px;line-height:40px;font-size:16px;text-align:center;border-bottom:1px solid #f0f0f0;background:#f7f7f7}
+.account .message{height:20px;margin-top:20px;line-height:20px;text-indent:50px;color:#f5272e;overflow:hidden}
+.account .message span{display:block;height:20px;line-height:20px}
+.account .message span.valid{display:none;}
+.account ul{width:300px;height:auto;margin:10px auto 0;padding-bottom:10px}
+.account li{width:100%;margin-top:20px;overflow:hidden}
+.account li.no-margin{margin-top:0}
+.account li .account-captcha{float:left;width:150px;height:44px;margin-right:10px;line-height:44px;text-align:center;font-size:16px;color:#fff;background:#a0d468}
+.account li .account-captcha:hover{background:#95c85d}
+.account li .account-captcha-disabled{display:none;float:left;width:150px;height:44px;margin-right:10px;line-height:44px;text-align:center;font-size:16px;color:#fff;background:#bcbcbd;}
+.account li p{height:14px;margin-bottom:14px;line-height:14px}
+.account li p a{float:right;height:14px;line-height:14px;color:#666}
+.account li p .text-orange{color:#f60}
+.account li p a:hover{color:#fb8526}
+.account li p .text-orange:hover{color:#f36304}
+.account li img{float:left;width:100px;height:44px;margin-right:10px; cursor: pointer}
+
+.email-proving{margin-top:26px}
+.email-proving p{height:20px;line-height:20px;text-align:center;font-size:14px}
+.email-proving p span{color:#f60}
+.email-proving a{display:block;width:300px;height:44px;margin:16px auto 13px;line-height:44px;text-align:center;font-size:18px;color:#fff;background:#06a3f9}
+.email-proving a:hover{background:#079bec}
+
+.account dl{padding:0 0 5px 20px}
+.account dt{height:24px;line-height:24px;color:#666}
+.account dd{height:20px;line-height:20px;color:#999}
+
+.account-wrap{position:absolute;top:70px;left:474px;width:402px;height:0;margin:0 auto;background:#f1f1f1;z-index:5;_zoom:1;overflow:hidden}
+.qrcode-sign{width:400px;height:346px;margin:40px auto 0}
+.qrcode-sign p{height:30px;line-height:30px;text-align:center;font-size:20px}
+.qrcode-sign p span{font-size:16px}
+.qrcode-sign img{display:block;width:200px;height:200px;margin:24px auto 14px}
+.qrcode-sign a{position:absolute;right:1px;bottom:1px;display:block;width:40px;height:40px;background:url(../img/account_icon.png) -45px 0 no-repeat}
+
+.other-account{width:340px;height:83px;padding-top:5px;margin:0 auto;border-top:1px solid #ececec}
+.other-account p{height:32px;line-height:32px;margin-bottom:4px;text-align:center;color:#666}
+.other-account p a{display:inline-block;width:32px;height:32px;margin:0 6px;background:url(../img/share.png) 0 1px no-repeat;_background:url(../img/png8/share.png) 0 1px no-repeat}
+.other-account p a.qq{background-position:-39px 1px}
+.other-account p a.sina{background-position:-78px 1px}
+.other-account p a:hover{filter:alpha(opacity=60);opacity:0.6;-moz-opacity:0.6}
+.other-account .weixin-qrcode{position:absolute;right:1px;bottom:1px;display:block;width:40px;height:40px;background:url(../img/account_icon.png) 0 0 no-repeat}
+/*用户注册页面 --结束*/
+
+.account-bg{position: absolute;z-index: 1;top:0;left:0;overflow:hidden}
+.account-bg img{width:100%}
+/*底部版权*/
+.account-footer{position: absolute;z-index: 2;width:100%;bottom:10px;left:0;text-align:center;font-size:12px;color:#fff;height:20px;line-height:20px;}

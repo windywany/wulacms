@@ -189,7 +189,7 @@ if ($_kissgo_processing_installation != true) {
 	if ($modules) {
 		$apps = RtCache::get ( 'apps_installation' );
 		if (! $apps) {
-			$apps = dbselect ( 'urlmapping,app' )->from ( '{apps}' )->where ( array ('status' => 1 ) )->toArray ( 'urlmapping', 'app' );
+			$apps = dbselect ( 'urlmapping,app' )->from ( '{apps}' )->where ( array ('status' => 1 ) )->asc('app')->toArray ( 'urlmapping', 'app' );
 			if (DEBUG > DEBUG_DEBUG) {
 				RtCache::add ( 'apps_installation', $apps );
 			}
@@ -245,6 +245,14 @@ if ($_kissgo_processing_installation != true) {
 	}
 	// requst
 	$__rqst = false;
+	if(class_exists('\Notoj\Notoj')){
+		if(DEBUG > DEBUG_DEBUG) {
+			\Notoj\Notoj::enableCache(TMP_PATH . 'annotations.php');
+		}
+		define('ANNOTATION_SUPPORT',true);
+	}else{
+		define('ANNOTATION_SUPPORT',false);
+	}
 	// modules loaded
 	fire ( 'engine_initialized' );
 	if (defined ( 'R_UUID_ENABLED' ) && R_UUID_ENABLED) {

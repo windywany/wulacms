@@ -24,11 +24,11 @@ bind ( 'on_init_rest_server', '&CmsRestService' );
 bind ( 'dashboard_sparks_bar', 'dashboard_right_bar_page@hooks/cms_hooks' );
 bind ( 'render_dashboard_panel', 'render_dashboard_panel_of_cms@hooks/cms_hooks' );
 bind ( 'build_page_common_query', 'build_page_common_query_of_cms', 10, 2 );
-register_cts_provider ( 'pages', array ('cms_pages_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '页面调用标签', '用于调用文章.', true );
-register_cts_provider ( 'chunk', array ('cms_chunk_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '碎片调用标签', '用于碎片调用.', true );
-register_cts_provider ( 'block', array ('cms_block_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '区块调用标签', '用于区块调用.', true );
-register_cts_provider ( 'channel', array ('cms_channel_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '栏目调用标签', '用于栏目调用.', true );
-register_cts_provider ( 'menu', array ('cms_menu_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '导航调用标签', '用于导航菜单调用.', true );
+register_cts_provider ( 'pages', array ('cms_pages_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '页面调用标签', '用于调用文章.');
+register_cts_provider ( 'chunk', array ('cms_chunk_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '碎片调用标签', '用于碎片调用.');
+register_cts_provider ( 'block', array ('cms_block_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '区块调用标签', '用于区块调用.');
+register_cts_provider ( 'channel', array ('cms_channel_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '栏目调用标签', '用于栏目调用.');
+register_cts_provider ( 'menu', array ('cms_menu_provider',ksg_include ( 'cms', 'providers/cms_pages_provider.php', true ) ), '导航调用标签', '用于导航菜单调用.');
 /**
  * 取页面的模型处理器.
  *
@@ -80,7 +80,8 @@ function get_common_page_condition_fields($tip = '页面') {
 /**
  * 全局默认查询条件.
  *
- * @param array $con        	
+ * @param array $con
+ * @return array
  */
 function get_common_page_condition_where($con) {
 	$where = array ();
@@ -209,7 +210,7 @@ function parse_time_condition($field, $cstr, &$where) {
  * 取limit。
  *
  * @param array $con        	
- * @return multitype:number Ambigous <string, unknown>
+ * @return array
  */
 function get_common_page_limit($con) {
 	static $router = false;
@@ -226,6 +227,9 @@ function get_common_page_limit($con) {
 			$start = intval ( get_condition_value ( 'offset', $con ) );
 		} else {
 			$start = $router->getCurrentPageNo ();
+			if($start == PHP_INT_MAX){
+				$start = 0;
+			}
 		}
 		$limits = explode ( ',', $limitStr );
 		if (count ( $limits ) == 1) {
@@ -242,9 +246,11 @@ function get_common_page_limit($con) {
 /**
  * 取随机文章.
  *
- * @param unknown $model        	
- * @param unknown $limit        	
- * @return multitype:number multitype:
+ * @param string $model
+ * @param int    $limit
+ * @param array $con
+ *
+ * @return array
  */
 function get_random_pages($model, $limit, $con = array()) {
 	if ($model) {

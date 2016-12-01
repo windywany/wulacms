@@ -1,0 +1,457 @@
+﻿@charset "utf-8";
+/* CSS Document */
+/*公用 - 头部*/
+body{background:#f1f1f1}
+
+/*用户左侧信息 -开始*/
+.user-left{float:left;width:302px;margin-right:16px;height:auto;overflow:hidden}
+.user-right{float:left;width:682px;height:auto;overflow:hidden}
+.user-right-minHight{min-height:520px;_height:expression(this.scrollHeight<520?"520px":true)}
+
+.user-info{position:relative;width:300px;height:307px;border:1px solid #e8e8e8;border-bottom:0;border-radius:2px;background:#fff;overflow:hidden}
+.user-info img{width:140px;height:140px;margin:30px 80px 6px;border-radius:50%}
+.user-info a{position:absolute;top:10px;right:10px;display:block;width:58px;height:24px;border-radius:2px;color:#666;line-height:24px;text-align:center;border:1px solid #ececec}
+.user-info-name{width:290px;padding:0 5px;height:24px;margin-bottom:8px;line-height:24px;font-size:20px;text-align:center;overflow:hidden}
+.user-info-honor{width:240px;padding:0 30px;height:16px;margin-bottom:18px;overflow:hidden}
+.user-info-honor span{float:left;width:120px;height:16px;line-height:16px;text-align:center;color:#666;overflow:hidden}
+.user-info-honor i{font-style:normal;color:#f66248}
+.user-info a:hover{color:#fb8526}
+.user-info-award{width:208px;height:50px;padding-left:90px;text-align:center}
+.user-info-award li{float:left;width:48px;height:36px;padding-top:12px;margin-right:20px;border-radius:50%;border:1px solid #f39800;color:#f39800}
+.user-info-award li.user-info-green{border-color:#8fc31f;color:#8fc31f}
+.user-info-award li.user-info-blue{border-color:#19d0cc;color:#19d0cc}
+.user-info-award li.user-info-red{border-color:#f67660;color:#f67660}
+.user-info-award li p{width:40px;height:16px;margin:0 auto;line-height:16px;text-align:center;overflow:hidden}
+
+.user-info-rate{width:301px;height:70px;border:1px solid #e8e8e8;border-right:0;background:#fff}
+.user-info-rate li{float:left;width:150px;height:70px;border-right:1px solid #e8e8e8}
+.user-info-rate li a{float:left;display:block;width:150px;height:70px;cursor:pointer}
+.user-info-rate .user-info-fans,.user-info-rate .user-info-fans a{width:149px}
+.user-info-rate p{height:30px;margin-top:10px;line-height:30px;text-align:center;font-size:24px}
+.user-info-rate span{display:block;width:100%;height:20px;line-height:20px;text-align:center;color:#666}
+/*用户左侧信息 -结束*/
+
+/*app下载 -结束*/
+.user-app-download{width:280px;padding:0 0 20px 20px;margin-top:20px;border:1px solid #ececec;border-radius:2px;background:#fff}
+.user-app-download dt{width:100%;height:20px;line-height:20px;font-size:16px;margin:18px 0 20px}
+.user-app-download dd{width:100%;height:100px}
+.user-app-download dd span{float:left;margin-right:12px;width:100px;height:100px;background:url(../img/app_download_100_100.png?20160322) no-repeat}
+.user-app-download dd a{float:left;border-radius:40px;margin:5px 0;font-size:14px;width:148px;height:40px;line-height:40px;color:#fff;text-align:center;background:#4fc1e9}
+.user-app-download dd a.ios{background:#a0d468}
+.user-app-download dd a:hover{background-color:#40b3db;color:#fff}
+.user-app-download dd .ios:hover{background-color:#94ca5a}
+/*app下载 -结束*/
+
+/*最近访客 --开始*/
+.user-buddy-list{width:280px;padding:0 0 10px 20px;height:auto;margin-top:20px;border:1px solid #ececec;border-radius:2px;background:#fff}
+.user-buddy-list dt{height:32px;margin:12px 0 5px;line-height:32px;font-size:16px}
+.user-buddy-list dd{position:relative;width:100%;height:48px;padding:10px 0;overflow:hidden}
+.user-buddy-list img{float:left;width:48px;height:48px;border-radius:50%;margin-right:12px}
+.user-buddy-list p{float:left;width:136px;height:18px;line-height:18px;font-size:12px;color:#999;overflow:hidden}
+.user-buddy-list .username{height:26px;margin-top:2px;line-height:26px;font-size:14px;color:#333;overflow:hidden}
+.user-buddy-list p a{display:block;color:#333}
+.user-buddy-list a:hover{color:#fb8526}
+
+.user-buddy-list .relation-btn{position:absolute;top:22px;right:20px;color:#7cbcff}
+.user-buddy-list .relation-btn:hover{color:#fff}
+.user-buddy-list .relation-btn.hover{color:#b6b6b6}
+.user-buddy-list .relation-btn.hover:hover{color:#b6b6b6}
+
+.user-buddy-list .relation-btn-hover{position:absolute;top:22px;right:20px;color:#b6b6b6}
+.user-buddy-list .relation-btn-hover:hover{color:#b6b6b6}
+/*最近访客 --结束*/
+
+/*用户选项切换 --开始*/
+.user-info-tab{width:680px;height:80px;margin-bottom:20px;border:1px solid #e8e8e8;padding:19px 0 11px;border-radius:2px;background:#fff}
+.user-info-tab li{position:relative;float:left;width:135px;height:80px;border-right:1px solid #ddd;cursor:pointer}
+.user-info-tab li.user-tab-add{width:136px;border-right:0}
+.user-info-tab li i{display:block;width:50px;height:50px;margin:4px 43px 0 42px;background:url(../img/user.png) 3px -56px no-repeat;_background:url(../img/png8/user.png) 3px -56px no-repeat}
+.user-info-tab li .user-tab-hover{position:absolute;width:30px;height:16px;margin:11px 56px 0 55px;background-position:-136px 0}
+.user-info-tab li .user-tab-icon1{background-position:3px -56px}
+.user-info-tab li .user-tab-icon2{background-position:-46px -56px}
+.user-info-tab li .user-tab-icon3{background-position:-96px -56px}
+.user-info-tab li .user-tab-icon4{background-position:-148px -56px}
+.user-info-tab li .user-tab-icon5{background-position:-200px -56px}
+
+.user-info-tab li.hover .user-tab-icon1,.user-info-tab li a:hover .user-tab-icon1{background-position:3px -107px}
+.user-info-tab li.hover .user-tab-icon2,.user-info-tab li a:hover .user-tab-icon2{background-position:-46px -107px}
+.user-info-tab li.hover .user-tab-icon3,.user-info-tab li a:hover .user-tab-icon3{background-position:-96px -107px}
+.user-info-tab li.hover .user-tab-icon4,.user-info-tab li a:hover .user-tab-icon4{background-position:-148px -107px}
+.user-info-tab li.hover .user-tab-icon5,.user-info-tab li a:hover .user-tab-icon5{background-position:-200px -107px}
+.user-info-tab li span{display:block;width:100%;height:26px;line-height:26px;font-size:16px;color:#666;text-align:center}
+.user-info-tab li.hover{background-color:#fff}
+.user-info-tab li.hover span,.user-info-tab li a:hover span{color:#3b8de3}
+/*用户选项切换 --结束*/
+
+/*钓友动态为空，推荐钓友 --结束*/
+.user-fishing-recom{width:688px;overflow:hidden}
+.user-fishing-recom dt{height:32px;margin:11px 0;line-height:32px;font-size:16px}
+.user-fishing-recom dd{position:relative;float:left;width:316px;height:66px;margin:0 6px 9px 0;padding:15px 10px;border:1px solid #e8e8e8;border-radius:2px;background:#fff}
+.user-fishing-recom dd img{float:left;width:48px;height:48px;margin-top:6px;border-radius:50%;margin-right:12px}
+.user-fishing-recom dd .fishing-recom-name{float:left;width:100px;height:20px;line-height:20px;font-size:14px;color:#333;word-wrap:break-word;overflow:hidden}
+.user-fishing-recom dd .level{margin-bottom:-3px}
+.user-fishing-recom dd p{float:left;width:255px;height:24px;line-height:24px;color:#999}
+.user-fishing-recom dd p i{display:inline-block;width:40px;height:24px;font-style:normal;color:#7cbcff;margin-right:5px;vertical-align:bottom;overflow:hidden}
+.user-fishing-recom a:hover{color:#fb8526}
+.user-fishing-recom dd .relation-btn{position:absolute;bottom:10px;right:10px}
+.user-fishing-recom dd .relation-btn:hover{color:#fff}
+.user-fishing-recom dd .relation-btn.hover:hover{color:#b6b6b6}
+
+.user-fishing-recom dd .relation-btn-hover{position:absolute;bottom:10px;right:10px;color:#b6b6b6}
+.user-fishing-recom dd .relation-btn-hover:hover{color:#b6b6b6}
+/*钓友动态为空，推荐钓友 --结束*/
+
+/*我的帖子/收藏列表 --开始*/
+.user-article-none,.user-follow-none{width:680px;height:520px;border:1px solid #e8e8e8;border-radius:2px;background:#fff;line-height:200px;font-size:18px;color:#999;text-align:center}
+.user-follow-none{border-top:none}
+.user-dynamic-none{width:680px;height:164px;border:1px solid #e8e8e8;border-radius:2px;background:#fff;line-height:164px;font-size:18px;color:#999;text-align:center}
+
+.user-article{position:relative;width:680px;height:auto;padding-top:10px;margin-bottom:20px;border:1px solid #e8e8e8;border-radius:2px;background:#fff}
+.user-article-title{width:500px;height:24px;margin-top:6px;padding-left:20px;line-height:24px;font-size:18px;overflow:hidden}
+.user-article-title a{color:#333}
+.user-article-title a:hover{color:#fb8526}
+.user-article-score{width:660px;padding-left:20px;height:16px;margin-top:8px;line-height:16px}
+.user-article-score em{float:right;font-style:normal;height:16px;line-height:16px;margin-right:20px;color:#999}
+.user-article-content{width:600px;margin:8px 0;padding-left:20px;line-height:20px;font-size:14px;color:#666}
+.user-article-img{padding:4px 0 0 20px;overflow:hidden}
+.user-article-img li{float:left;width:150px;height:150px;margin:0 10px 10px 0}
+.user-article-img li img{width:150px;height:150px}
+.user-article-time{height:20px;padding-left:20px;line-height:20px;color:#999}
+.user-article-operate{width:680px;height:40px;margin-top:20px;border-top:1px solid #f0f0f0}
+.user-article-operate li{position:relative;float:left;width:169px;height:40px;z-index:1;_zoom:1}
+.user-article-operate li a{float:left;width:168px;height:40px;line-height:40px;color:#666;text-align:center}
+.user-article-operate li.hover a{color:#e6e6e6;background:#fff}
+.user-article-operate li i{float:left;width:0;height:20px;margin:10px 0;border-right:1px solid #e0e0e0}
+.user-article-operate li span{display:inline-block;margin-left:3px}
+
+.user-article-operate .share-wrap{display:none;position:absolute;top:-58px;left:0;width:140px;height:32px;padding:8px 14px;border:1px solid #ececec;background:#fff;z-index:3;_zoom:1;}
+.user-article-operate .share{position:relative;width:140px;height:32px;z-index:2;_zoom:1;}
+.user-article-operate .share a{float:left;width:32px;height:32px;line-height:32px;margin-right:4px;background:url(../img/share.png) 0 1px no-repeat;_background:url(../img/png8/share.png) 0 1px no-repeat}
+.user-article-operate .share .qq{background-position:-39px 1px}
+.user-article-operate .share .sina{background-position:-78px 1px}
+.user-article-operate .share .share_copy{background-position:-117px 1px;margin-right:0}
+.user-article-operate .share i{position:absolute;top:40px;left:64px;display:block;width:14px;height:10px;margin:0;border:0;background:url(../img/user.png) -170px -10px no-repeat;_background:url(../img/png8/user.png) -170px -10px no-repeat}
+.user-article-operate .share a:hover{filter:alpha(opacity=60);-moz-opacity:0.6;opacity:0.6}
+
+.user-article a:hover{color:#fb8526}
+.user-article-edit,.user-article-delete,.user-article-unfavorite{position:absolute;top:10px;right:80px;display:block;width:58px;height:22px;border:1px solid #ececec;border-radius:2px;line-height:22px;text-align:center;color:#7cbcff}
+.user-article-delete,.user-article-unfavorite{right:10px;color:#666}
+.user-article .user-article-unfavorite.hover{background:#ececec;color:#b6b6b6}
+.user-article-edit:hover{background:#7cbcff;border-color:#7cbcff;color:#fff !important}
+.user-article-delete{text-align:left}
+.user-article-delete a{display:block;width:58px;height:22px;color:#666;text-align:center}
+.user-article-delete a.hover{background:#ececec;color:#b6b6b6}
+.user-article-delete a.hover:hover{color:#b6b6b6}
+
+.article-delete-reason{display:none;position:absolute;top:43px;right:10px;width:148px;height:auto;padding:14px 10px 10px;border:1px solid #ececec;background:#fff;z-index:5;_zoom:1}
+.article-delete-reason i{position:relative;top:-22px;left:126px;display:block;width:14px;height:8px;background:url(../img/user.png) -170px 0 no-repeat;_background:url(../img/png8/user.png) -170px 0 no-repeat}
+.article-delete-reason label{display:block;width:148px;height:24px;line-height:24px;color:#666}
+.article-delete-reason label input{display:inline-block;vertical-align:text-bottom;margin-right:10px}
+.article-delete-reason .delete-reason-submit{display:block;width:90px;height:26px;margin:10px auto 2px;border:1px solid #e9e9e9;box-shadow:0 1px 2px #a8a8a8;line-height:26px;font-size:14px;color:#666;background:#f1f1f1}
+.article-delete-reason .delete-reason-submit:hover{background:#e4e2e2}
+/*我的帖子/收藏列表 --结束*/
+
+/*钓友动态 --开始*/
+.user-dynamic-article{width:680px;height:auto;margin-bottom:20px;border:1px solid #e8e8e8;border-radius:2px;background:#fff;overflow:hidden}
+.user-dynamic-person{width:660px;height:48px;padding:20px 0 0 20px;margin-right:20px;padding-left:20px}
+.user-dynamic-person img{float:left;width:48px;height:48px;margin-right:10px;border-radius:50%}
+.user-dynamic-person .user-dynamic-username{float:left;width:600px;height:24px;margin-bottom:2px;line-height:24px;color:#7cbcff} 
+.user-dynamic-person p{float:left;width:600px;height:16px;line-height:16px;color:#999;overflow:hidden} 
+.user-dynamic-person p span{float:left;height:16px;line-height:16px;margin-right:20px} 
+.user-dynamic-person p i{display:inline-block;width:16px;height:16px;background:url(../img/user.png) -134px -16px no-repeat;_background:url(../img/png8/user.png) -134px -16px no-repeat;vertical-align:bottom} 
+.user-dynamic-person p i.user-dynamic-address{background-position:-134px -34px}
+.user-dynamic-content{padding-left:58px}
+.user-dynamic-article a:hover{color:#fb8526}
+/*钓友动态 --结束*/
+
+/*我的点评 --开始*/
+.user-review-none{width:680px;height:520px;border:1px solid #e8e8e8;border-top:none;border-bottom-right-radius:2px;border-bottom-left-radius:2px;line-height:312px;font-size:18px;color:#999;text-align:center;background:#fff}
+
+.user-list-tab{width:680px;height:40px;border:1px solid #e8e8e8;border-bottom-color:#f0f0f0;border-top-right-radius:2px;border-top-left-radius:2px;font-size:16px;text-align:center;background:#f7f7f7}
+.user-list-tab li{float:left;width:150px;height:40px;line-height:40px}
+.user-list-tab li a{display:block}
+.user-list-tab li.hover{background:#fff;border-bottom:1px solid #fff;border-right:1px solid #f0f0f0}
+
+.user-article-hot{border-top:none}
+/*我的点评 --结束*/
+
+/*打分*/
+.score-box{display:inline-block;width:auto;height:16px;line-height:16px;font-size:12px;color:#ff9c00}
+.score-bg-box{float:left;width:68px;height:16px;margin-right:10px}
+.score-bg-box i{float:left;display:inline-block;width:100%;height:16px;background:url(../img/common.png) 0 -298px no-repeat;_background:url(../img/png8/common.png) 0 -298px no-repeat}
+.score-bg-box .score-red-bg{background-position:0 -281px;width:30%;margin-top:-16px}
+
+/*我添加的 --开始*/
+.user-article-element{position:relative;width:660px;height:142px;margin-top:10px;padding:0 0 9px 20px}
+.user-article-element img{float:left;width:190px;height:142px;margin-right:20px}
+.user-article-element p{width:440px;height:24px;line-height:24px;font-size:14px;color:#666;overflow:hidden}
+.user-article-element p span{display:inline-block;width:180px;height:24px;margin-right:10px;line-height:24px;overflow:hidden}
+.user-article-element .user-article-location{height:48px}
+.user-article-element .user-article-title{margin:0 0 7px;padding:7px 0 0;color:#333;font-size:18px}
+.user-article-element .score-box{margin-bottom:13px;color:#999}
+.user-article-element .score-box em{display:inline-block;margin-left:20px;font-style:normal;height:16px;line-height:16px;color:#666}
+.user-article-element .change-submission{position:absolute;top:0;right:17px;display:block;width:58px;height:22px;border:1px solid #ececec;border-radius:2px;line-height:22px;text-align:center;font-size:12px;color:#7cbcff}
+.user-article-element .change-submission:hover{background-color:#7cbcff;border-color:#7cbcff;color:#fff}
+
+.user-article-pass{width:660px;height:20px;margin-top:10px;padding:10px 0 10px 20px;border-top:1px solid #f0f0f0;line-height:20px;font-size:14px;color:#666}
+.user-article-pass i{display:inline-block;width:16px;height:16px;vertical-align:sub;background:url(../img/user.png) -189px 1px no-repeat;_background:url(../img/png8/user.png) -189px 1px no-repeat}
+.user-article-pass span{display:inline-block;margin:0 8px 0 4px;color:#87c148}
+.user-article-fail i{background-position:-207px 1px}
+.user-article-fail span{color:#f7554a}
+.user-article-audit i{background-position:-225px 1px}
+.user-article-audit span{color:#06a3f9}
+/*我添加的 --结束*/
+
+/*我的关注 我的粉丝 查找好友 --开始*/
+.user-follow-tab{width:456px;padding:0 112px;height:40px;text-align:center;border:1px solid #e8e8e8;border-top-left-radius:2px;border-top-right-radius:2px;background:#f7f7f7}
+.user-follow-tab li{float:left;width:150px;height:40px}
+.user-follow-tab li a{display:block;width:150px;height:40px;line-height:40px;font-size:16px;color:#333;border-right:1px solid #f7f7f7;border-left:1px solid #f7f7f7}
+.user-follow-tab li a.hover,.user-follow-tab li a:hover{background:#fff;border-color:#f0f0f0;border-bottom:1px solid #fff;color:#333}
+
+.user-follow-list{width:680px;min-height:520px;_height:expression(this.scrollHeight<520?"520px":true);border:1px solid #e8e8e8;border-top:none;border-bottom-left-radius:2px;border-bottom-right-radius:2px;background:#fff}
+.user-follow-list li{position:relative;width:100%;height:60px;padding:14px 0;border-bottom:1px solid #f0f0f0;overflow:hidden}
+.user-follow-list li:last-child{border-bottom:none}
+.user-follow-list li.user-follow-noborder{border-top:none}
+.user-follow-list li img{float:left;width:48px;height:48px;border-radius:50%;margin:6px 12px 6px 21px}
+.user-follow-list li p{float:left;width:300px;height:20px;line-height:20px;color:#999}
+.user-follow-list li p a{float:left;width:100px;height:20px;line-height:20px;font-size:14px;color:#333;overflow:hidden}
+.user-follow-list li p span{float:left;margin-right:10px;color:#999}
+.user-follow-list li p .level{margin-top:4px}
+.user-follow-list li p i{display:inline-block;margin-right:20px;font-style:normal;color:#7cbcff}
+.user-follow-list li p em{display:inline-block;width:16px;height:16px;margin-bottom:1px;background:url(../img/user.png) -134px -34px no-repeat;_background:url(../img/png8/user.png) -134px -34px no-repeat;vertical-align:bottom}
+.user-follow-list li a:hover{color:#fb8526}
+.user-follow-list li .user-follow-private{position:absolute;top:33px;right:90px;width:58px;height:22px;border-radius:2px;line-height:22px;text-align:center;border:1px solid #ececec;color:#666}
+.user-follow-list li .relation-btn{position:absolute;top:33px;right:20px}
+.user-follow-list li .relation-btn:hover{color:#fff}
+.user-follow-list li .relation-btn.hover:hover{border-color:#ececec;background:#ececec;color:#b6b6b6}
+.user-follow-list li .relation-btn-hover{position:absolute;top:33px;right:20px;color:#b6b6b6}
+.user-follow-list li .relation-btn-hover:hover{color:#b6b6b6}
+.user-follow-search{width:545px;height:40px;padding:62px 0 62px 135px;line-height:40px;text-align:center;border-left:1px solid #e8e8e8;border-right:1px solid #e8e8e8;border-top:none;background:#fff}
+.user-follow-search span{float:left;width:75px;height:40px;line-height:40px;font-size:16px}
+.user-follow-search form{float:left;width:350px;height:40px}
+.user-follow-search .user-follow-key{float:left;width:228px;height:38px;text-indent:7px;padding:0;margin-right:7px;line-height:38px;border:1px solid #ececec;font-size:12px;vertical-align:bottom}
+.user-follow-search .user-follow-submit{float:left;width:100px;height:40px;padding:0;border:0;line-height:40px;text-align:center;background:#3b8de3;font-size:16px;color:#fff;cursor:pointer}
+.user-follow-search .user-follow-submit:hover{background:#2e7ed2}
+/*我的关注 我的粉丝 查找好友 --结束*/
+
+/*Ta的关注 粉丝 --开始*/
+.user-left-nav{width:280px;height:auto;padding:0 10px;margin-bottom:-1px;border:1px solid #e8e8e8;border-radius:2px;background:#fff}
+.user-left-nav li{width:100%;height:26px;padding:19px 0;border-bottom:1px solid #eee;background:#fff}
+.user-left-nav li:last-child{border-bottom:none}
+.user-left-nav li a{display:block;width:100%;height:26px;color:#333;cursor:pointer}
+.user-left-nav li i{float:left;width:26px;height:26px;margin-right:10px;vertical-align:bottom;background:url(../img/user.png) -194px -24px no-repeat;_background:url(../img/png8/user.png) -194px -24px no-repeat}
+.user-left-nav li span{float:left;height:26px;margin-right:18px;line-height:26px;font-size:16px}
+.user-left-nav li em{float:left;font-style:normal;height:26px;line-height:26px;color:#fb8526}
+.user-left-nav li.hover a,.user-left-nav a:hover{color:#3b8de3}
+.user-left-nav li.hover i,.user-left-nav a:hover i{background-position:-159px -24px}
+
+.user-left-nav li .user-left-set{width:26px;height:26px;background-position:-123px -162px}
+.user-left-nav li.hover .user-left-set,.user-left-nav a:hover .user-left-set{background-position:-87px -162px}
+
+.user-left-nav li .user-left-news{width:25px;height:25px;background-position:-194px -162px}
+.user-left-nav li.hover .user-left-news,.user-left-nav a:hover .user-left-news{background-position:-159px -162px}
+
+.user-right-cue{width:680px;height:40px;line-height:40px;text-indent:20px;border:1px solid #e8e8e8;font-size:16px;border-bottom:none;border-top-left-radius:2px;border-top-right-radius:2px;background:#f7f7f7}
+.user-right-cue span{display:inline-block;height:40px;line-height:40px;font-size:12px;color:#fb8526}
+/*Ta的关注 粉丝 --结束*/
+
+/*会员主页 --开始*/
+.user-personal-info{width:100%;height:350px;background:#0b58aa url(../img/user_default_bg.jpg) center center no-repeat;overflow:hidden}
+.user-personal-img{position:relative;width:140px;height:140px;margin:60px auto 6px}
+.user-personal-img img{width:140px;height:140px;border-radius:50%}
+.user-personal-img i{position:absolute;bottom:-2px;right:-2px;display:block;width:36px;height:36px;border-radius:50%;background:url(../img/user.png) -1px -161px no-repeat;_background:url(../img/png8/user.png) -1px -161px no-repeat}
+.user-personal-img i.female{background-position:-43px -161px}
+
+.user-personal-name{height:32px;line-height:32px;text-align:center;font-size:20px;color:#fff;text-shadow:0 0 2px #666}
+.user-personal-level{height:20px;line-height:20px;margin-bottom:15px;text-align:center;color:#fff;text-shadow:0 0 2px #666}
+.user-personal-level span{display:inline-block;height:20px;line-height:20px;padding:0 28px}
+.user-personal-operate{height:36px;line-height:36px;text-align:center}
+.user-personal-operate a{display:inline-block;width:120px;height:36px;margin:0 10px;border-radius:2px; box-shadow:0 1px 0 #6e6e6e;line-height:36px;font-size:16px;color:#fff;background:#fb8526;text-align:center}
+.user-personal-operate .user-personal-letter{background:#f1f1f1;color:#666}
+.user-personal-operate a:hover{background:#e3741b;color:#fff}
+.user-personal-operate .user-personal-letter:hover{background:#dcd9d9;color:#666}
+
+.user-personal-operate .relation-btn{display:inline-block;width:120px;height:36px;line-height:36px;text-align:center;font-size:16px;color:#fff;border:none;overflow:visible}
+.user-personal-operate .relation-btn:hover{background:#e3741b;color:#fff}
+.user-personal-operate .relation-btn.hover{background:#fb8526;color:#fff}
+.user-personal-operate .relation-btn.hover:hover{border:none;background:#e3741b;color:#fff}
+.user-personal-operate .relation-btn-hover{display:inline-block;width:120px;height:36px;line-height:36px;text-align:center;font-size:16px;color:#fff;border:none;background:#e3741b;overflow:visible}
+.user-personal-operate .relation-btn-hover:hover{background:#e3741b;color:#fff}
+
+/*会员主页 --结束*/
+
+/*用户信息交流列表 --开始*/
+.user-chat-list{width:680px;min-height:520px;_height:expression(this.scrollHeight<520?"520px":true);border:1px solid #e8e8e8;border-top:none;border-bottom-left-radius:2px;border-bottom-right-radius:2px;background:#fff}
+.user-chat-list li{*float:left;width:660px;padding:20px 0 20px 20px;*padding-bottom:0;border-bottom:1px solid #f0f0f0}
+.user-chat-list .user-chat-nothing{width:680px;padding:150px 0 0;height:30px;margin:0;border:0;line-height:30px;text-align:center;font-size:18px;color:#999}
+.user-chat-img{float:left;width:48px;height:48px;margin-right:10px}
+.user-chat-img img{width:48px;height:48px;border-radius:50%}
+.user-chat-content{float:left;width:466px;height:auto}
+.user-chat-content p{line-height:22px;font-size:14px}
+.user-chat-content p a{width:auto;height:16px;line-height:16px;font-size:12px;color:#333}
+.user-chat-content p.reply-topic a{font-size:14px}
+.user-chat-content p.user-chat-info a{margin-right:20px}
+.user-chat-content p span{display:inline-block;margin-right:20px;font-size:12px;color:#999}
+.user-chat-content p .level{ margin-bottom:-2px}
+.user-chat-content p em{font-style:normal;color:#999}
+.user-chat-content p img{width:20px;height:20px;vertical-align:text-bottom}
+.user-chat-content .user-chat-info{line-height:16px;margin-bottom:13px}
+.user-chat-content .user-chat-info em{display:inline-block;margin-right:10px;font-size:12px;color:#333}
+.user-chat-content .user-chat-echo{position:relative;width:446px;line-height:18px;padding:10px;margin-top:18px;background:#f1f1f1;font-size:12px}
+.user-chat-content .user-chat-echo i{position:absolute;top:-7px;left:34px;display:block;width:0;height:0;line-height:0;color:#fff;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:7px solid #f1f1f1}
+.user-chat-op{float:left;position:relative;width:136px;height:auto}
+.user-chat-op a{display:block;width:90px;height:26px;margin:3px auto 0;line-height:26px;text-align:center;border:1px solid #e9e9e9;border-radius:2px;box-shadow:0 1px 0 #a8a8a8;background:#f1f1f1;font-size:14px;color:#666}
+.user-chat-op .unread-info{margin:0;border:none;border-radius:0;box-shadow:none;background:none;font-size:12px}
+.user-chat-op .unread-info,.user-chat-op span{display:block;width:100%;height:16px;margin-top:8px;line-height:16px;text-align:center;color:#f33030}
+.user-chat-list a:hover{color:#fb8526}
+.user-chat-op a:hover{background:#dedbdb;color:#666}
+.user-chat-op .unread-info:hover{ background:none;color:#fb8526}
+
+.user-chat-reply{display:none;position:absolute;width:228px;padding:10px;height:118px;border:1px solid #ececec;background:#fff;z-index:99;_zoom:1}
+.user-chat-reply i{position:absolute;top:-8px;left:196px;display:block;width:14px;height:10px;background:url(../img/user.png) -170px 0 no-repeat;_background:url(../img/png8/user.png) -170px 0 no-repeat}
+.user-chat-reply .user-chat-text{width:210px;padding:8px;height:62px;border:1px solid #ececec;overflow:hidden}
+.user-chat-reply .user-chat-submit{display:block;width:90px;height:26px;margin:8px auto 0;line-height:26px;text-align:center;border:1px solid #e9e9e9;border-radius:2px;box-shadow:0 1px 0 #a8a8a8;background:#f1f1f1;padding:0;font-size:14px;color:#666;cursor:pointer}
+.user-chat-reply .user-chat-submit:hover{background:#dedbdb}
+
+.user-interflow{width:680px;height:auto;border:1px solid #e8e8e8;border-radius:2px;background:#fff}
+.user-interflow dt{position:relative;width:100%;height:40px;line-height:40px;background:#f7f7f7;border-bottom:1px solid #f0f0f0;z-index:1;_zoom:1}
+.user-interflow dt p{float:left;width:480px;line-height:40px;padding-left:100px;font-size:16px;text-align:center}
+.user-interflow dt p span{color:#f60;margin:0 10px}
+.user-interflow dt a{float:left;width:100px;height:20px;margin-top:10px;line-height:20px;text-align:center;font-size:12px;color:#666}
+.user-interflow dt a.hover{color:#b6b6b6}
+.user-interflow dd{padding:30px 0 0}
+.user-interflow .user-interflow-more{position:relative;width:530px;height:32px;margin:0 75px 45px;border-bottom:1px solid #ddd}
+.user-interflow .user-interflow-more a{display:block;line-height:14px;text-align:center;color:#3b8de3}
+.user-interflow .user-interflow-more span{position:absolute;left:200px;bottom:-8px;display:block;width:130px;height:14px;line-height:14px;text-align:center;background:#fff;color:#999}
+.user-interflow li{width:100%;overflow:hidden}
+.user-interflow li span{display:block;width:100%;height:20px;color:#999;line-height:20px;padding:3px 0 16px;text-align:center}
+.user-interflow img{float:left;width:48px;height:48px;border-radius:50%;margin:0 16px 0 20px}
+.user-interflow .user-interflow-content{position:relative;float:left;width:325px;padding-bottom:22px;height:auto}
+.user-interflow .user-interflow-content i{position:absolute;top:5px;left:-10px;display:block;width:15px;height:12px;background:url(../img/user.png) 2px -200px no-repeat;_background:url(../img/png8/user.png) 2px -200px no-repeat}
+.user-interflow .user-interflow-content p{display:inline-block;padding:14px 20px;line-height:20px;background:#f1f1f1;border-radius:20px;font-size:14px}
+.user-interflow .user-interflow-content p .face-img{width:20px;height:20px;margin:0}
+.user-interflow .user-interflow-right img{float:right;margin:0 20px 0 16px}
+.user-interflow .user-interflow-right .user-interflow-content{float:right}
+.user-interflow .user-interflow-right .user-interflow-content p{float:right;background:#06a3f9;color:#fff}
+.user-interflow .user-interflow-right .user-interflow-content i{top:5px;left:321px;background-position:-18px -200px}
+.user-interflow a:hover{color:#fb8526}
+
+.interflow-report-reason{top:38px;right:10px}
+.interflow-report-reason i{left:126px}
+
+.user-interflow-reply{width:660px;height:110px;padding-left:20px;margin-top:18px;background:#f7f7f7}
+.user-interflow-reply span{display:block;height:32px;line-height:32px;font-size:14px;color:#333}
+.user-interflow-reply .user-interflow-text{float:left;width:558px;height:54px;padding:10px 0 0 10px;margin:0;margin-right:5px;border:1px solid #ececec;background-color:#fff;overflow:hidden}
+.user-interflow-reply .user-interflow-submit{float:left;width:66px;height:66px;line-height:66px;text-align:center;padding:0;margin:0;background:#06a3f9;border:0;font-size:14px;color:#fff;cursor:pointer}
+.user-interflow-reply .user-interflow-submit:hover{background:#079bec}
+/*用户信息交流列表 --结束*/
+
+/*用户基本信息设置 --开始*/
+.text-input{float:left;height:38px;margin-right:10px;border:1px solid #ddd;line-height:38px;font-size:16px;padding:0 0 0 10px;background:none;position:relative;z-index:2;_zoom:1}
+.input_310{width:298px}
+.input_200{width:188px}
+.input-placeholder{float:left;display:block;height:38px;margin:1px 0 0 -298px;line-height:38px;position:relative;z-index:1;_zoom:1;font-size:16px;text-align:left;color:#ccc}
+.placeholder_310{margin-left:-309px}
+.placeholder_200{margin-left:-199px}
+
+select::-ms-expand{display:none}
+select{-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none}
+.text-select{_position:relative;_z-index:1;_zoom:1;width:150px;height:40px;margin-right:10px;border:1px solid #ddd;line-height:40px;font-size:16px;color:#ccc;padding:0 0 0 10px;background:url(../img/publish.png) 128px -634px no-repeat;_background:url(../img/png8/publish.png) 128px -634px no-repeat}
+.text-select option{color:#333}
+/*提交按钮*/
+.submit-box{clear:both;padding-left:160px;height:40px;line-height:40px}
+.editInfo-submit{float:left;display:block;width:140px;height:40px;padding:0;margin-right:10px;border:0;line-height:40px;text-align:center;background:#3b8de3;font-size:16px;color:#fff;border-radius:2px;cursor:pointer}
+.editInfo-submit:hover{background:#3082d8}
+.submit-box .message{float:left;width:240px;height:40px;line-height:40px;color:#f5272e;overflow:hidden}
+.submit-box .message span{display:block}
+.user-edit-info{width:680px;height:auto;border:1px solid #e8e8e8;padding-bottom:60px;border-top:none;border-bottom-left-radius:2px;border-bottom-right-radius:2px;background:#fff;overflow:hidden}
+.user-edit-info dl{float:left;width:500px;padding:32px 0 22px;height:auto}
+.user-edit-info dt{float:left;width:130px;height:40px;margin-top:16px;margin-right:30px;line-height:40px;text-align:right;font-size:16px}
+.user-edit-info dd{_position:relative;float:left;width:340px;height:40px;margin-top:16px;line-height:40px}
+.user-edit-info dd em{font-style:normal;font-size:16px;margin-right:20px;color:#333}
+.user-edit-info dd a{font-size:12px;color:#7cbcff}
+.user-edit-info dd label{float:left;height:20px;margin:8px 20px 12px 0;*margin-top:10px;_margin-top:12px;line-height:20px;font-size:16px;cursor:pointer}
+.user-edit-info dd label input{vertical-align:text-top;margin:6px 6px 0 0;*margin-top:2px;_margin-top:-2px}
+.user-edit-info dd iframe{display:none;width:100%;height:40px;filter:alpha(opacity=0);-moz-opacity:0;position:absolute;top:0;left:0;z-index:1;_zoom:1}
+.user-edit-info .editInfo-img{float:left;width:180px;margin-top:70px;height:164px}
+.user-edit-info .editInfo-img img{display:block;width:140px;height:140px;border-radius:50%}
+.user-edit-info .editInfo-img span{display:block;line-height:14px;margin-top:10px;text-indent:50px;font-size:12px;color:#666}
+
+.user-edit-info .return-personal-center{float:right;width:80px;margin-right:20px;font-size:12px;color:#666}
+.user-edit-info a:hover,.user-edit-info a:hover span{color:#fb8526}
+/*用户基本信息设置 --结束*/
+
+/*绑定手机 --开始*/
+.user-bind-phone dl{width:680px;height:auto;overflow:hidden}
+.user-bind-phone dt{float:left;width:120px;height:40px;margin:16px 30px 0 0;line-height:40px;text-align:right;font-size:16px}
+.user-bind-phone dt em{font-style:normal;color:#ccc}
+.user-bind-phone dd{float:left;width:530px;height:auto}
+.user-bind-phone dd em,.user-bind-phone dd i{float:left;height:20px;margin-top:10px;line-height:20px;font-style:normal}
+.user-bind-phone dd i{background:url(../img/user.png) -230px -232px no-repeat;_background:url(../img/png8/user.png) -230px -232px no-repeat;padding-left:24px;color:#ccc}
+.user-bind-phone dd a{float:left;width:120px;height:40px;margin-bottom:16px;line-height:40px;text-align:center;font-size:16px;color:#fff;background:#a0d468}
+.user-bind-phone dd a:hover{background:#96cb5d;color:#fff}
+.user-bind-phone dd .editInfo-captcha-disabled{display:none;float:left;width:120px;height:40px;margin-bottom:16px;line-height:40px;text-align:center;font-size:16px;color:#fff;background:#bcbcbd}
+.user-bind-phone dd .editInfo-captcha-disabled:hover{color:#fff;background:#bcbcbd}
+.user-bind-phone dd p{clear:both;width:100%;line-height:20px;font-size:12px;color:#999;text-indent:0}
+.user-bind-phone .submit-box{padding-left:150px}
+.bind-success{padding-bottom:20px}
+/*绑定手机 --结束*/
+
+/*修改头像 --开始*/
+#editImgBox-bg{display:none;position:fixed;_position:absolute;top:0;left:0;width:100%;height:100%;background:#000;filter:alpha(opacity=40);-moz-opacity:0.4;opacity:0.4;z-index:998;_zoom:1}
+
+#editImgBox{display:none;position:fixed;_position:absolute;top:20px;left:50%;width:740px;height:420px;margin-left:-390px;padding:15px 20px;overflow:hidden;background:#fff;border-radius:5px;z-index:999;_zoom:1}
+#editImgBox .head{width:100%;height:28px;line-height:28px;font-size:16px}
+#editImgBox .head span{float:left;color:#333}
+#editImgBox .head a{float:right;width:30px;height:28px;line-height:28px;font-size:12px;color:#333}
+#editImgBox .head a:hover{color:#fb8526}
+
+.upload-content{width:100%;margin-top:15px;overflow:hidden}
+.upload-left{float:left;background:#eee;width:430px;height:310px;margin-right:60px}
+.avatar-symbol{display:block;margin:90px auto 10px;width:74px;height:74px;line-height:70px;color:#c2c2c2;font-size:60px;text-align:center;border:2px dashed #c2c2c2}
+.upload-left p{width:250px;text-align:center;margin:0 auto;line-height:18px;font-size:12px;color:#999}
+
+.upload-right{float:left;width:200px;height:320px;overflow:hidden}
+.upload-right img{display:block}
+.upload-right p{line-height:30px;color:#999}
+.upload-right i{display:block;float:left;position:relative;z-index:10;_zoom:1;background:url(../img/avatar_mask.png) 0 0 no-repeat}
+.upload-right .avatar_200x200_i{width:200px;height:200px;margin-top:-200px}
+.upload-right .avatar_60x60_i{width:60px;height:60px;margin-top:-60px;background-position:0 -202px}
+
+.imgform{float:left;margin:10px 0;width:700px}
+.ajax-file-upload,.ajax-file-upload:hover{float:left;font-weight:normal;box-shadow:none;border-radius:0;padding:0;margin-right:30px;width:120px;height:40px;line-height:40px;font-size:16px;text-align:center;color:#fff;background:#a0d468;cursor:pointer;_overflow:hidden}
+.ajax-file-upload:hover{background:#95ca5d}
+.ajax-file-upload input{filter:alpha(opacity=0);-moz-opacity:0;opacity:0}
+
+#imgformA{margin-left:0}
+.imguploader,.imgsubmit{float:left;width:120px;height:40px;line-height:40px;border:none;text-align:center;background:#3b8de3;color:#fff;font-size:16px;cursor:pointer}
+.imguploader{background:#a0d468;margin-right:30px}
+.imguploader:hover{background:#94c75e}
+.imgsubmit:hover{background:#3585d9}
+#message{color:#ff2020}
+
+#avatar_200x200{margin-left:0;width:200px;height:200px;overflow:hidden;}
+#avatar_60x60{margin-left: 0;width: 60px;height: 60px;overflow: hidden;}
+
+
+/*修改头像 --结束*/
+
+/*服务帮助 --开始*/
+.help-left{float:left;width:300px;margin-right:16px;border:1px solid #e8e8e8;background:#fff}
+.help-left ul{width:280px; margin:0 auto}
+.help-left ul li{width:100%;height:64px;border-bottom:1px solid #eee}
+.help-left ul li:last-child{border-bottom:0}
+.help-left ul li a{display:block;height:64px;line-height:64px;font-size:16px;color:#333;overflow:hidden}
+.help-left ul li a.hover,.help-left ul li a:hover{color:#3b8de3}
+
+.help-right{float:left;width:680px;border:1px solid #e8e8e8;padding-bottom:30px;background:#fff}
+.help-right dl{width:660px;margin:0 auto}
+.help-right dt{height:60px;line-height:60px;font-size:20px;color:#333}
+.help-right dd p{line-height:30px;font-size:16px;color:#333}
+.help-right dd li{margin-bottom:10px}
+
+.help-right table{background:#d7d7d7;width:442px;margin:20px auto 40px}
+.help-right table caption{height:60px;line-height:60px;font-size:24px;font-weight:bold}
+.help-right table th,.help-right table td{background:#fff;height:40px;line-height:40px;text-align:center}
+.help-right table th,.help-right table .gray{background:#f2f2f2}
+/*服务帮助 --结束*/

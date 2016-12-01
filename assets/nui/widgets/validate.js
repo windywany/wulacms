@@ -13,17 +13,8 @@
             var name = form.attr('name'),rules={};
             if(name && nUI.validateRules[name]){
                 rules = nUI.validateRules[name];
-                if(rules.rules){
-                    for (var i in rules.rules){
-                        for(var j in rules.rules[i]){
-                            if(j == 'pattern'){                               
-                               eval('var rule = '+rules.rules[i][j]+';');                               
-                               rules.rules[i][j] = rule;
-                            }
-                        }
-                    }
-                }
-            }
+                rules = jQuery.prepareValidateRule(rules);
+			}
             this.useValidatePlugin = true;
             rules.errorPlacement = errorPlacement;
             rules.onsubmit = form.attr('data-submit')=='true'?true:false;
@@ -83,4 +74,17 @@
             }
         });
     };
+    jQuery.prepareValidateRule = function (rules) {
+		if(rules.rules){
+			for (var i in rules.rules){
+				for(var j in rules.rules[i]){
+					if(j == 'pattern'){
+						eval('var rule = '+rules.rules[i][j]+';');
+						rules.rules[i][j] = rule;
+					}
+				}
+			}
+		}
+		return rules;
+	};
 })(window.nUI, jQuery);

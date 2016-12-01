@@ -225,7 +225,7 @@
                 	m = '未知错误！';
                 }
                 var message = '<div class="txtl"><h4>Request:</h4>' + ajax + '</div><div class="txtl"><h4>Response:</h4>' + m + '</div>';
-                nUI.errorTip(message);
+                nUI.errorTip(message,null,{min_width:800,max_height:600,max_width:1000});
             }
         }).ajaxSend(function(event, jqXHR, ajaxOptions) {
             if(ajaxOptions.async && ajaxOptions.blockUI){
@@ -365,7 +365,10 @@
             }
             if(typeof(pageSetUp) == 'function' ){
                 pageSetUp(elm);
-            }                       
+            }
+            if(typeof(tableHeightSize) == 'function' ){
+            	tableHeightSize();
+            }
         });
         $('body').on('blur', '.form-control.ipt-error', function() {
             var ipt = $(this), msge = ipt.data('msge'), fde = ipt.data('fde'), p = ipt.data('parent');
@@ -466,6 +469,46 @@
 		}
 		return undefined;
 	};
+	exports.showButtons = nUI.showButtons = function(opts,elem){
+		opts.owner = elem;
+		var target = opts.target?elem.find(opts.target):elem;
+		if(target.find('.nui-pop-toolbar').length > 0){
+			var btng = target.find('.nui-pop-toolbar').eq(0);
+		}else{
+			if(opts.wrapper){
+				var btng = $(opts.wrapper).addClass('nui-pop-toolbar');
+			}else{
+				var btng = $('<div class="nui-pop-toolbar"></div>');
+			}
+			if(opts.wrapcls){
+				btng.css(opts.wrapcls);
+			}
+			target.css('position','relative');
+    		for(var i in opts.buttons){
+    			var btn = opts.buttons[i];
+    			var bn = $(btn.html);
+    			btng.append(bn);
+    			if(btn.onClick){
+    				bn.click(function(){
+    					btn.onClick(elem);    					
+    				});
+    			}
+    		}
+    		btng.applyNUI();
+    		if(opts.target){
+    			target.append(btng);
+    		}else{
+    			target.append(btng);
+    		}
+		}
+		btng.show();
+		opts.elem = btng;
+	};
+	exports.hideButtons = nUI.hideButtons = function(opts){
+		if(opts.elem){
+			opts.elem.hide();
+		}
+	};
     window.checkResponse = function(ajaxReq,rtn) {
         if(!ajaxReq.responseChecked){
             ajaxReq.responseChecked = true;
@@ -482,7 +525,7 @@
                 if(rtn){
                     return msg;
                 }else{
-                    nUI.errorTip(msg);
+                    nUI.errorTip(msg,null,{min_width:800,max_height:600,max_width:1000});
                 }   
                 return true;
             } else if (ajaxRes) {

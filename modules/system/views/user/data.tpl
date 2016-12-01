@@ -24,7 +24,7 @@
 	</tr>
 	<tr parent="{$row.user_id}">
 		<td colspan="2"></td>
-		<td colspan="6">暂无信息</td>
+		<td colspan="7">暂无信息</td>
 	</tr>
 	{/foreach}
 </tbody>

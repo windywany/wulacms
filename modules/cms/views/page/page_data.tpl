@@ -18,7 +18,7 @@
 		<td class="hidden-xs hidden-sm">{$row.status|status:$status}</td>
 		{/if}
 		<td class="hidden-xs hidden-sm">
-			{$row.cuname}
+			{$row.uuname|default:$row.cuname}
 		</td>
 		<td class="hidden-xs hidden-sm">
 			{$row.update_time|date_format:'Y-m-d H:i'}

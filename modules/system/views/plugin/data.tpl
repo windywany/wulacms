@@ -1,23 +1,23 @@
 <tbody data-total="{$total}">
 	{foreach $apps as $app}
-	<tr>
+	<tr name="plugin" rel="{$app@iteration}">
 		<td>
 			<strong>{$app.appname}</strong>								
 			{if $app.status=='0'}
 			<span class="label label-default">禁用</span>
-			{elseif $app.upgradable}
-			<span class="label label-warning">可升级到{$app.currentVer}</span>
 			{/if}
+		</td>
+		<td>
 			{if $app.urlmapping}
 			<p  style="margin:10px 0 0;"><a href="{'system/plugin/mapping'|app}{$app.name}" dialog-id="urlmapDialog" dialog-width="300" dialog-model="true" dialog-title="设置URL" target="dialog" title="">{$app.urlmapping}</a>
 				{if $app.conflict}<span class="bg-color-red">URL冲突,建议修改.</span>{/if}
 			</p>								
 			{/if}
 		</td>
-		<td>{$app.installedVer}</td>							
+		<td>{$app.installedVer}{if $app.upgradable}
+			<span class="label label-warning">可升级</span>{/if}</td>							
 		<td class="hidden-xs hidden-sm">
-			<p>{$app.desc|escape|nl2br}</p>
-			<p style="margin:5px 0 0;" class="text-info">
+			<p style="margin:0;" class="text-info">
                 最新版本:{$app.currentVer} | 
                 作者:{$app.author} |
                 <a target="_blank" href="{$app.website}">插件主页</a>
@@ -62,7 +62,8 @@
 			{/if}								
 		</td>						
 	</tr>
+	<tr parent="{$app@iteration}"><td colspan="5"><p>{$app.desc|escape|nl2br}</p></td></tr>
 	{foreachelse}
-	<tr><td colspan="4" class="">无可用插件</td></tr>
+	<tr><td colspan="5" class="">无可用插件</td></tr>
 	{/foreach}	
 </tbody>

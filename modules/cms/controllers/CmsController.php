@@ -31,7 +31,7 @@ class CmsController extends Controller {
 					include_once $file;
 				}
 			}
-			$func = 'get_condition_for_' . $provider;
+			$func = $con_func;
 			$data ['widgets'] = array ();
 			if (is_callable ( $func )) {
 				$cons = call_user_func_array ( $func, array () );
@@ -46,14 +46,19 @@ class CmsController extends Controller {
 		}
 		$providers = KissGoSetting::getSetting ( 'cts_providers' );
 		if (isset ( $providers [$provider] )) {
+			$mapfunc = 'get_fieldmap_for_' . $provider;
+			$varname = 'name';
 			list ( $f, $title, $desc, $con_func ) = $providers [$provider];
 			if (is_array ( $f )) {
 				list ( $func, $file ) = $f;
 				if ($file) {
 					include_once $file;
 				}
+			}else if($f instanceof \cms\classes\CtsDataProvider){
+				$mapfunc = array($f,'getFieldmap');
+				$varname = $f->getVarName();
 			}
-			$func = 'get_condition_for_' . $provider;
+			$func = $con_func;
 			$args = array ();
 			$tplargs = array ();
 			if (is_callable ( $func )) {
@@ -74,7 +79,6 @@ class CmsController extends Controller {
 				}
 			}
 			$datas = get_data_from_cts_provider ( $provider, $args, array () );
-			$mapfunc = 'get_fieldmap_for_' . $provider;
 			$map = array ('id' => 'id','name' => 'title' );
 			if (is_callable ( $mapfunc )) {
 				$map = call_user_func_array ( $mapfunc, array () );
@@ -89,14 +93,14 @@ class CmsController extends Controller {
 			if ($datas->total ()) {
 				$fields = $datas->getData ();
 				foreach ( $datas as $data ) {
-					$id = $data [$mapId];
-					$name = $data [$mapName];
+					$id = html_escape($data [$mapId]);
+					$name = html_escape($data [$mapName]);
 					$trs [] = "<tr><td>{$id}</td><td>{$name}</td></tr>";
 				}
 			} else {
 				$trs [] = '<tr><td colspan="2">未调取到数据</td></tr>';
 			}
-			$tpl = '{cts var=name from=' . $provider . ' ' . implode ( ' ', $tplargs ) . '}{/cts}';
+			$tpl = '{cts var='.$varname.' from=' . $provider . ' ' . implode ( ' ', $tplargs ) . '}{/cts}';
 			
 			$args = array ('fields' => var_export ( $fields, true ),'cts' => $tpl,'data' => implode ( '', $trs ),'ct' => $datas->getCountTotal () );
 			return NuiAjaxView::callback ( 'setPreviewData', $args );

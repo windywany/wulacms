@@ -10,15 +10,14 @@
 			<a href="#{'passport/members/edit'|app:0}{$row.mid}">{$row.username}</a>
 			{else}
 			{$row.username}
-			{/if}({$row.nickname})</strong>{if $row.binder}<br/>[{$row.binder}]{/if}
+			{/if}{if $row.nickname}({$row.nickname}){/if}</strong>
 		</td>		
 		<td>{$row.group_name}</td>
-		<td>{$row.roles}</td>
-		<td>{$types[$row.type]}</td>
+        <td>{if $row.email}<a href="mailto:{$row.email}">{$row.email}</a>{/if}</td>
 		<td>
-			{if $row.email}<a href="mailto:{$row.email}">{$row.email}</a><br/>{/if}
 			{if $row.phone}{$row.phone}{/if}
 		</td>
+        <td>{$row.roles}</td>
 		<td>
 			{$row.registered|date_format:'Y-m-d'}
 			{if $row.nickname1}
@@ -26,15 +25,6 @@
 				推荐人:{$row.nickname1}
 			{/if}
 		</td>
-		{if $enable_auth}
-		<td>
-			{if $auth_api_url}
-				<a href="{$auth_api_url}?mid={$row.mid}&status={$row.auth_status}">{$auth_status[$row.auth_status]}</a>
-			{else}
-				{$auth_status[$row.auth_status]}
-			{/if}
-		</td>
-		{/if}
 		<td>
 			{if $row.status == '1'}
 			<span class="label label-success">正常</span>
@@ -69,14 +59,14 @@
 		</td>		
 	</tr>
 	<tr parent="{$row.mid}">
-		<td colspan="2"></td>
-		<td colspan="{if $enable_auth}10{else}9{/if}">						
+        <td colspan="2"></td>
+		<td colspan="8">
 			{'render_member_extra'|fire:$row}
 		</td>
 	</tr>
 	{foreachelse}
 	<tr>
-		<td colspan="{if $enable_auth}12{else}11{/if}" class="text-center">无记录</td>
+		<td colspan="10" class="text-center">无记录</td>
 	</tr>
 	{/foreach}
 </tbody>

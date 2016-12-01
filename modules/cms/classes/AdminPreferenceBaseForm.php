@@ -7,8 +7,8 @@ class AdminPreferenceBaseForm {
 	public static function init($form) {
 		$form ['cms_url'] = array ('group' => '0_1','col' => 3,'label' => '前台页面URL' );
 		$form ['site_domain'] = array ('group' => '0_1','col' => 3,'label' => 'SEO监控域名' );
-		$form ['enable_short'] = array ('group' => '0_1','col' => '2','label' => '显示快捷','widget' => 'radio','default' => '0','defaults' => "1=启用\n0=不启用" );
-		$form ['enable_report'] = array ('group' => '0_1','col' => '2','label' => '显示报表','widget' => 'radio','default' => '0','defaults' => "1=启用\n0=不启用" );
+		$form ['enable_short'] = array ('group' => '0_1','col' => '2','label' => '显示快捷','widget' => 'radio','default' => '1','defaults' => "1=启用\n0=不启用" );
+		$form ['enable_report'] = array ('group' => '0_1','col' => '2','label' => '显示报表','widget' => 'radio','default' => '1','defaults' => "1=启用\n0=不启用" );
 		$form ['enable_s_role'] = array ('group' => '0_1','col' => '2','label' => '新建菜单分组','widget' => 'radio','default' => '0','defaults' => "1=启用\n0=不启用" );
 		
 		$form ['keywords_count'] = array ('group' => '1','col' => 3,'label' => '自动获取关键词数量','note' => '不填写则使用默认值5.','rules' => array ('num' => '只能是整数。' ) );

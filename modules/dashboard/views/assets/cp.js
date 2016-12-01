@@ -1130,8 +1130,8 @@ function loadURL(url, container) {
 					pagefunction = null;
 					container.removeData().html("");
 					// place cog
-					container.html('<h1 class="ajax-loading-animation"><i class="fa fa-cog fa-spin"></i> Loading...</h1>');
-
+					//container.html('<h1 class="ajax-loading-animation"><i class="fa fa-cog fa-spin"></i> Loading...</h1>');
+					$('#ribbon i.fa-refresh').addClass('fa-spin');
 					// Only draw breadcrumb if it is main content material
 					if (container[0] == $("#content")[0]) {						
 						$('body').find('> *').filter(
@@ -1157,11 +1157,13 @@ function loadURL(url, container) {
 					// clear data var
 					data = null;
 					container = null;
+					$('#ribbon i.fa-refresh').removeClass('fa-spin');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					var msg = checkResponse(xhr, true);
 					container.html('<h4 class="ajax-loading-error"><i class="fa fa-warning txt-color-orangeDark"></i> Error!.</h4><div>'
 									+ msg + '</div>');
+					$('#ribbon i.fa-refresh').removeClass('fa-spin');
 				},
 				async : true
 			});
@@ -1238,5 +1240,23 @@ function getParam(name) {
 		return "";
 	else
 		return results[1];
+}
+function tableHeightSize() {	
+	if ($('body').hasClass('menu-on-top')) {
+		var menuHeight = 68;
+		var tableHeight = ($(window).height() - 180) - menuHeight;
+		if (tableHeight < (320 - menuHeight)) {
+			$('.table-wrap').css('height', (320 - menuHeight) + 'px');
+		} else {
+			$('.table-wrap').css('height', tableHeight + 'px');
+		}
+	} else {
+		var tableHeight = $(window).height() - 180;
+		if (tableHeight < 320) {
+			$('.table-wrap').css('height', 320 + 'px');
+		} else {
+			$('.table-wrap').css('height', tableHeight + 'px');
+		}
+	}
 }
 /* ~ END: HELPFUL FUNCTIONS */

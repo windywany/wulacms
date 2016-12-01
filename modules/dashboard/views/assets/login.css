@@ -14,7 +14,7 @@ html, body {
     background: #f9f9f9;
     height: 240px;
     position: relative;
-    padding: 20px;
+    padding: 20px 20px;
     height: 40%;
     text-align: center;
     margin-bottom: 60px;
@@ -67,11 +67,10 @@ html, body {
     }
 }
 
-
-}
 .form-group {
     padding-left: 0;
 }
+
 .form-control {
     border-right: 0;
 }
@@ -83,32 +82,40 @@ html, body {
     width: 100%;
     margin: 0 auto;
 }
+
 .for-btn {
     text-align: right;
 }
+
 .main > .container > .sign-in.form-inline .form-title {
     font-size: 1.2em;
     line-height: 1.5em;
     color: #f9f9f9;
 }
+
 .main > .container > .sign-in.form-inline .reset-password {
     display: inline-block;
 }
+
 .form-group .input-group {
     width: 100%;
     border-radius: 4px;
     overflow: hidden;
 }
+
 .reset-password {
     margin-top: 20px !important;
 }
+
 .glyphicon-lock a {
     color: #999;
     text-decoration: none;
 }
+
 .log-btn button {
     width: 100%;
 }
+
 .log-btn a {
     width: 100%;
 }
@@ -117,32 +124,35 @@ html, body {
 .hid {
     display: none !important;
 }
+
 .code-group span {
     color: #fff;
     margin-left: 8px;
     cursor: pointer;
 }
+
 #code-img {
     height: 30px;
     cursor: pointer;
     width: 80px;
     border-radius: 4px;
 }
-@media screen and (min-width:760px) {
+
+@media screen and (min-width: 760px) {
     .banner {
-        padding: 60px 20px;
+        padding: 80px 20px;
     }
-    
     .code-row {
         margin-bottom: 10px;
     }
-    
     .log-btn {
         padding-left: 0;
     }
-    
     #code-img {
         height: 34px;
         width: 100px;
     }
+}
+@media screen and (max-width: 760px) {
+    .row {margin-left:0;}
 }

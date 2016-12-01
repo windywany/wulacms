@@ -8,4 +8,3 @@ define ( 'R_UUID_ENABLED', true );
 include_once WEB_ROOT . 'bootstrap.php';
 $router = Router::getRouter ();
 $router->route ();
-?>

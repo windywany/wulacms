@@ -18,7 +18,7 @@
 
 <section id="widget-grid">
 	<div class="row">
-		<article class="col-sm-12">
+		<article class="col-sm-12 col-md-10 col-lg-6">
 			<div class="jarviswidget"
                 id="wid-member-form-1"     
                 data-widget-colorbutton="false"
@@ -38,7 +38,7 @@
 						<li class="active">
 							<a href="#base-member-info" data-toggle="tab">
 								<i class="fa fa-user"></i> 
-								<span class="hidden-mobile hidden-tablet">基本信息</span>
+								<span class="hidden-mobile hidden-tablet">通行证信息</span>
 							</a>
 						</li>						
 					</ul>                    
@@ -46,24 +46,67 @@
                 <div>
                  <div class="widget-body widget-hide-overflow no-padding">
                       <form class="smart-form tab-content" name="MemberModelForm" data-widget="nuiValidate" action="{'passport/members/save'|app}" method="post" id="member-form" target="ajax">
-                      	<input type="hidden" name="mid" value="{$mid}"/>                      	
-                      	<input type="hidden" name="otype" value="{$type}"/>  
-                      	<input type="hidden" name="role_id" value="0"/>  
-						<div id="base-member-info" class="tab-pane active">
+                      	<input type="hidden" name="mid" value="{$mid}"/>
+                        <input type="hidden" name="salt" value="{$salt}"/>
+                          <div id="base-member-info" class="tab-pane active">
 							<fieldset>
+                                <div class="row">
+                                    <section class="col col-6">
+                                        <label class="label">账户</label>
+                                        <label class="input">
+                                            <i class="icon-append fa fa-user"></i>
+                                            <input type="text" name="username"
+                                                   id="username" value="{$username}"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-6">
+                                        <label class="label">昵称</label>
+                                        <label class="input">
+                                            <i class="icon-append fa fa-user"></i>
+                                            <input type="text" name="nickname"
+                                                   id="nickname" value="{$nickname}"/>
+                                        </label>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-6">
+                                        <label class="label">邮箱</label>
+                                        <label class="input">
+                                            <i class="icon-append fa fa-envelope-o"></i>
+                                            <input type="text" name="email"
+                                                   id="email" value="{$email}"/>
+                                        </label>
+                                    </section>
+                                    <section class="col col-6">
+                                        <label class="label">手机</label>
+                                        <label class="input">
+                                            <i class="icon-append fa fa-envelope-o"></i>
+                                            <input type="text" name="phone" id="phone" value="{$phone}"/>
+                                        </label>
+                                    </section>
+                                </div>
+                                {if $enable_invation}
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label class="label">推荐码</label>
+                                            <label class="input">
+                                                <input type="text" value="{$recommend_code}" id="recommend_code" name="recommend_code"/>
+                                            </label>
+                                            <div class="note">用于邀请其他会员注册</div>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label">邀请码</label>
+                                            <label class="input">
+                                                <input type="text" name="invite_code"
+                                                       id="invite_code" value="{$invite_code}"/>
+                                            </label>
+                                            <div class="note">注册时填写的推荐码</div>
+                                        </section>
+                                    </div>
+                                {/if}
 								<div class="row">
-									<section class="col col-3">
-										<label class="label">类型</label>
-										<label class="select">
-											<select name="type" id="type">
-												{html_options options=$types selected={$type}}
-											</select>
-											<i></i>
-										</label>
-										<div class="note">警告:修改会员类型需要重新认证。</div>
-									</section>
-									<section class="col col-3">
-										<label class="label">会员组</label>
+									<section class="col col-6">
+										<label class="label">会员组(等级)</label>
 										<label class="select">
 											<select name="group_id" id="group_id">
 												{html_options options=$groups selected="{$group_id}"}
@@ -85,10 +128,10 @@
 												<i></i>未激活</label>	
 										</div>
 									</section>		
-								</div>	
+								</div>
+                                <section class="timeline-seperator text-align-left"><span><i class="fa fa-user"></i>选择角色</span></section>
 								<div class="row">
 									<section class="col col-12">
-										<label class="label">角色</label>
 										<div class="inline-group">
 											{foreach $all_roles as $r}
 											<label class="checkbox">
@@ -99,69 +142,9 @@
 											{/foreach}
 										</div>
 									</section>
-								</div>											
-								<div class="row">									
-									<section class="col col-3">
-										<label class="label">账户</label>
-										<label class="input">
-										<i class="icon-append fa fa-user"></i>
-										<input type="text" name="username" 
-											id="username" value="{$username}"/>
-										</label>
-									</section>
-									<section class="col col-3">
-										<label class="label">昵称</label>
-										<label class="input">
-										<i class="icon-append fa fa-user"></i>
-										<input type="text" name="nickname" 
-											id="nickname" value="{$nickname}"/>
-										</label>
-									</section>
-									<section class="col col-3">
-										<label class="label">邮箱</label>
-										<label class="input">
-										<i class="icon-append fa fa-envelope-o"></i>
-										<input type="text" name="email" 
-											id="email" value="{$email}"/>
-										</label>
-									</section>
-									<section class="col col-3">
-										<label class="label">手机</label>
-										<label class="input">
-										<i class="icon-append fa fa-envelope-o"></i>
-										<input type="text" name="phone" id="phone" value="{$phone}"/>
-										</label>
-									</section>
-								</div>								
-								{if $enable_invation}	
-								<div class="row">
-									<section class="col col-3">
-										<label class="label">推荐码</label>
-										<label class="input">										
-										<input type="text" value="{$recommend_code}" id="recommend_code" name="recommend_code"/>
-										</label>
-										<div class="note">用于邀请其他会员注册</div>
-									</section>	
-									<section class="col col-3">
-										<label class="label">邀请码</label>
-										<label class="input">										
-										<input type="text" name="invite_code" 
-											id="invite_code" value="{$invite_code}"/>
-										</label>
-										<div class="note">注册时填写的推荐码</div>
-									</section>
-									<section class="col col-3">
-										<label class="label">邀请人ID</label>
-										<label class="input">										
-										<input type="text" name="invite_mid" 
-											id="invite_mid" value="{$invite_mid}" readonly="readonly"/>
-										</label>
-										<div class="note">注册时填写的推荐码对应的会员</div>
-									</section>
 								</div>
-								{/if}
-								{if $widgets}{$widgets|render}{/if}								
-								<div class="row">									
+                                <section class="timeline-seperator text-align-left"><span><i class="fa fa-key"></i>修改密码</span></section>
+								<div class="row">
 									<section class="col col-6">
 										<label class="label">密码</label>
 										<label class="input">

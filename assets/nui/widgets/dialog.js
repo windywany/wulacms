@@ -21,6 +21,10 @@
 		this.opts = $.extend({
 			width : 'auto',
 			height : 'auto',
+			min_width:-1,
+			min_height:-1,
+			max_width:-1,
+			max_height:-1,
 			model : false,
 			icon : 'fa fa-windows',
 			theme : '',
@@ -34,6 +38,18 @@
 				width : this.opts.width,
 				height : this.opts.height
 			});
+			if(this.opts.min_width>0){
+				this.dialogElm.css('min-width',this.opts.min_width);
+			}
+			if(this.opts.min_height>0){
+				this.dialogElm.css('min-height',this.opts.min_height);
+			}
+			if(this.opts.max_width>0){
+				this.dialogElm.css('max-width',this.opts.max_width);
+			}
+			if(this.opts.max_height>0){
+				this.dialogElm.css('max-height',this.opts.max_height);
+			}
 			if (me.opts.closable) {
 				this.dialogElm.on('click', 'div.nui-title button.close', function() {
 					me.close(1);
@@ -47,9 +63,9 @@
 		}
 		this.titleElm = this.dialogElm.find('div.nui-title h6 span');
 		this.iconElm = this.dialogElm.find('div.nui-title h6 i');
-		//if(this.opts.theme){
-		//	this.dialogElm.addClass('panel-' + this.opts.theme);
-		//}
+		if(this.opts.theme){
+			this.dialogElm.addClass('panel-' + this.opts.theme);
+		}
 		this.titleElm.text(title);
 		this.iconElm.addClass(this.opts.icon);
 	};
@@ -213,17 +229,18 @@
 		delete nUI.dialogsInstances[this.id];
 	};
 
-	nUI.alert = nuiDialog.alert = function(content, cb, theme, buttons, title) {
+	nUI.alert = nuiDialog.alert = function(content, cb, theme, buttons, title,opts) {
 		if (theme == 'info' && !title) {
 			title = '请您确认';
 		}
 		title = title || '提示';
-		var dialog = new nuiDialog(false, title, {
-			model : true,
-			theme : theme || 'primary',
-			width : 'auto',
-			height : 'auto',
-		});
+		var ops = $.extend({
+				model : true,
+				theme : theme || 'primary',
+				width : 'auto',
+				height : 'auto',
+			},opts || {}); 
+		var dialog = new nuiDialog(false, title,ops);
 		var btns = buttons || [ {
 			'text' : '确定',
 			'icon' : 'glyphicon glyphicon-ok',
@@ -234,11 +251,11 @@
 		return dialog;
 	};
 
-	nUI.successTip = nuiDialog.successTip = function(content, cb) {
-		return nUI.alert(content, cb, 'success', false, '操作成功!');
+	nUI.successTip = nuiDialog.successTip = function(content, cb,opts) {
+		return nUI.alert(content, cb, 'success', false, '操作成功!',opts);
 	};
-	nUI.errorTip = nuiDialog.errorTip = function(content, cb) {
-		return nUI.alert(content, cb, 'danger', false, '出错啦!');
+	nUI.errorTip = nuiDialog.errorTip = function(content, cb,opts) {
+		return nUI.alert(content, cb, 'danger', false, '出错啦!',opts);
 	};
 	nUI.confirm = nuiDialog.confirm = function(content, onOk, onCancel) {
 		return nUI.alert(content, null, 'info', [ {

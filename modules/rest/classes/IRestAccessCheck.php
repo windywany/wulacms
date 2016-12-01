@@ -14,4 +14,3 @@ interface IRestAccessCheck {
 	 */
 	function getAppSecret($appkey);	
 }
-?>

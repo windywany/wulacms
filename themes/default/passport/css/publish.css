@@ -1,0 +1,233 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{background:#f1f1f1}
+/*发帖入口 --开始*/
+.publish-entry{width:740px;height:auto;padding-left:20px;margin:50px auto 0;overflow:hidden}
+.publish-entry li{float:left;width:350px;height:150px;margin-right:20px}
+.publish-entry li a{display:block;width:350px;height:150px;background:url(../img/publish.png) 0 -160px no-repeat;_background:url(../img/png8/publish.png) 0 -160px no-repeat}
+.publish-entry li a.classic-post{background-position:0 -480px}
+.publish-entry li a:hover{background-position:0 0}
+.publish-entry li a.classic-post:hover{background-position:0 -320px}
+.publish-entry p{width:224px;line-height:30px;font-size:16px;color:#666;margin:20px auto 0}
+
+.publish-agreement{height:20px;padding-left:380px;margin:60px 0 50px;line-height:20px;font-size:14px;color:#666}
+.publish-agreement input{float:left;margin:3px 9px 0 0}
+.publish-agreement a{color:#666}
+.publish-agreement a:hover{color:#fb8526}
+/*发帖入口 --结束*/
+
+/*公用样式 --开始*/
+.publish-left,.publish-right{float:left;width:680px;height:auto;border:1px solid #e8e8e8;border-radius:2px;background:#fff;overflow:hidden}
+.publish-right{width:300px;margin:0}
+
+.text-input{height:38px;border:1px solid #ddd;line-height:38px;font-size:16px;padding-left:10px;background:none;position:relative;z-index:2;_zoom:1}
+.input_640{width:628px}
+.input_480{width:468px}
+.input_400{width:388px}
+.input_240{width:228px}
+.input_230{width:218px}
+.input_120{width:108px}
+
+.input-placeholder{float:left;display:block;height:38px;margin-top:1px;line-height:38px;position:relative;z-index:1;_zoom:1;font-size:16px;text-align:left;color:#ccc}
+.placeholder_640{margin-left:-638px}
+.placeholder_480{margin-left:-478px}
+.placeholder_400{margin-left:-398px}
+.placeholder_240{margin-left:-238px}
+.placeholder_230{margin-left:-228px}
+.placeholder_120{margin-left:-118px}
+
+select::-ms-expand{display:none}
+select{-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none}
+
+.text-select{height:40px;border:1px solid #ddd;line-height:40px;color:#ccc;font-size:16px;padding:0 0 0 10px;background:url(../img/publish.png) 138px -634px no-repeat;_background:url(../img/png8/publish.png) 138px -634px no-repeat}
+.text-select option{color:#333}
+.select_150{width:150px;background-position:128px -634px}
+.select_160{width:160px;background-position:138px -634px}
+.select_300{width:300px;background-position:278px -634px}
+.select_400{width:400px;background-position:378px -634px}
+
+textarea{position:relative;border:1px solid #ddd;z-index:2;_zoom:1}
+.textarea-placeholder{float:left;display:block;height:32px;line-height:32px;position:relative;z-index:1;_zoom:1;font-size:16px;text-align:left;color:#ccc}
+
+.publish-submit{display:block;width:300px;margin:0 0 35px 155px;border:0;height:44px;line-height:44px;text-align:center;font-size:18px;color:#fff;background:#3b8de3;cursor:pointer}
+.publish-submit:hover{background:#3284d9}
+/*公用样式 --结束*/
+
+/*发帖公用样式 --开始*/
+.publish{padding:30px 20px 35px}
+.publish li{position:relative;overflow:hidden;width:100%;height:auto;margin-top:20px}
+.publish li.editor-box{overflow:visible}
+.publish li img{max-width:100%;}
+.publish li input,.publish li select{float:left;margin-right:10px}
+.publish li p{height:18px;line-height:18px;margin-bottom:5px;font-size:16px;color:#666}
+.publish li label{float:left;vertical-align: middle;width:128px;height:40px;line-height:40px;font-size:14px;color:#666}
+.publish li label input{float:none;margin:0 7px 0 0;vertical-align: middle}
+.publish li em{float:left;font-style:normal;width:230px;height:40px;line-height:40px;color:#999;overflow:hidden}
+.publish li textarea{float:left;width:626px;height:148px;font-size:14px;padding:10px 0 0 12px;overflow:hidden;overflow-y:visible}
+.publish li .textarea-placeholder{margin-left:-626px;margin-top:2px;font-size:14px}
+.publish li .content-del{position:absolute;z-index:10;top:10px;left:564px;display:block;font-style:normal;width:65px;height:26px;border-radius:13px;line-height:26px;text-align:center;font-size:14px;color:#fff;background:#e34a45;cursor:pointer;filter:alpha(opacity=50);opacity:0.5;-moz-opacity:0.5;cursor: pointer}
+.publish li .content-del:hover{background:#da423d;filter:alpha(opacity=100);opacity:1;-moz-opacity:1}
+.publish li .content-up{position:absolute;z-index:10;top:10px;left:490px;display:block;font-style:normal;width:65px;height:26px;border-radius:13px;line-height:26px;text-align:center;font-size:14px;color:#fff;background:#e34a45;cursor:pointer;filter:alpha(opacity=50);opacity:0.5;-moz-opacity:0.5;cursor: pointer}
+.publish li .content-up:hover{background:#da423d;filter:alpha(opacity=100);opacity:1;-moz-opacity:1}
+.publish li .content-down{position:absolute;z-index:10;top:10px;left:415px;display:block;font-style:normal;width:65px;height:26px;border-radius:13px;line-height:26px;text-align:center;font-size:14px;color:#fff;background:#e34a45;cursor:pointer;filter:alpha(opacity=50);opacity:0.5;-moz-opacity:0.5;cursor: pointer}
+.publish li .content-down:hover{background:#da423d;filter:alpha(opacity=100);opacity:1;-moz-opacity:1}
+
+
+
+
+
+
+.add-content-wrap{float:left;display:block;width:40px;height:40px;margin:3px 6px 4px 0;border-radius:50%;background:#06a3f9 url(../img/publish.png) -321px -633px no-repeat;_background:#06a3f9 url(../img/png8/publish.png) -321px -633px no-repeat}
+.publish li.add-content-btn{height:40px;line-height:40px;margin-bottom:25px}
+.add-content-btn a{float:left;width:90px;height:40px;padding-left:30px;font-size:16px;color:#fff;line-height:40px;text-align:center;margin-right:5px;border-radius:20px;background:#06a3f9 url(../img/publish.png) -318px -663px no-repeat;_background:#06a3f9 url(../img/png8/publish.png) -318px -663px no-repeat}
+.add-content-btn .pic{background-position:-318px -693px}
+.add-content-btn .video{background-position:-318px -723px}
+.add-content-btn a:hover,.add-content-wrap a:hover{background-color:#0698e8}
+
+.publish-operate{height:44px;line-height:44px}
+.publish-operate label{margin-top:4px}
+.publish-operate label input{_vertical-align:top;_margin-top:8px !important}
+.publish-operate .publish-submit{float:right;width:200px;margin:0}
+
+.edit-area{width:638px;height:395px;border:1px solid #ddd}
+/*发帖公用样式 --结束*/
+
+/*经典版发帖*/
+.publish-old li.publish-descr-box p{height:20px;line-height:20px;margin:0;font-size:16px;color:#333;}
+.publish-old li .wangEditor-container p{height:auto;line-height:30px;font-size:16px;color:#333;margin:8px 0 0;}
+
+
+
+/*用户左侧信息 -开始*/
+.user-left{float:left;width:302px;margin-right:16px;height:auto;overflow:hidden}
+.user-right{float:left;width:682px;height:auto;overflow:hidden}
+.user-right-minHight{min-height:520px;_height:expression(this.scrollHeight<520?"520px":true)}
+
+.user-info{position:relative;width:300px;height:307px;border:1px solid #e8e8e8;border-bottom:0;border-radius:2px;background:#fff;overflow:hidden}
+.user-info img{width:140px;height:140px;margin:30px 80px 6px;border-radius:50%}
+.user-info a{position:absolute;top:10px;right:10px;display:block;width:58px;height:24px;border-radius:2px;color:#666;line-height:24px;text-align:center;border:1px solid #ececec}
+.user-info-name{width:290px;padding:0 5px;height:24px;margin-bottom:8px;line-height:24px;font-size:20px;text-align:center;overflow:hidden}
+.user-info-honor{width:240px;padding:0 30px;height:16px;margin-bottom:18px;overflow:hidden}
+.user-info-honor span{float:left;width:120px;height:16px;line-height:16px;text-align:center;color:#666;overflow:hidden}
+.user-info-honor i{font-style:normal;color:#f66248}
+.user-info a:hover{color:#fb8526}
+.user-info-award{width:208px;height:50px;padding-left:90px;text-align:center}
+.user-info-award li{float:left;width:48px;height:36px;padding-top:12px;margin-right:20px;border-radius:50%;border:1px solid #f39800;color:#f39800}
+.user-info-award li.user-info-green{border-color:#8fc31f;color:#8fc31f}
+.user-info-award li.user-info-blue{border-color:#19d0cc;color:#19d0cc}
+.user-info-award li.user-info-red{border-color:#f67660;color:#f67660}
+.user-info-award li p{width:40px;height:16px;margin:0 auto;line-height:16px;text-align:center;overflow:hidden}
+
+.user-info-rate{width:301px;height:70px;border:1px solid #e8e8e8;border-right:0;background:#fff}
+.user-info-rate li{float:left;width:150px;height:70px;border-right:1px solid #e8e8e8}
+.user-info-rate li a{float:left;display:block;width:150px;height:70px;cursor:pointer}
+.user-info-rate .user-info-fans,.user-info-rate .user-info-fans a{width:149px}
+.user-info-rate p{height:30px;margin-top:10px;line-height:30px;text-align:center;font-size:24px}
+.user-info-rate span{display:block;width:100%;height:20px;line-height:20px;text-align:center;color:#666}
+/*用户左侧信息 -结束*/
+/*Ta的关注 粉丝 --开始*/
+.user-left-nav{width:280px;height:auto;padding:0 10px;margin-bottom:-1px;border:1px solid #e8e8e8;border-radius:2px;background:#fff}
+.user-left-nav li{width:100%;height:26px;padding:19px 0;border-bottom:1px solid #eee;background:#fff}
+.user-left-nav li:last-child{border-bottom:none}
+.user-left-nav li a{display:block;width:100%;height:26px;color:#333;cursor:pointer}
+.user-left-nav li i{float:left;width:26px;height:26px;margin-right:10px;vertical-align:bottom;background:url(../img/user.png) -194px -24px no-repeat;_background:url(../img/png8/user.png) -194px -24px no-repeat}
+.user-left-nav li span{float:left;height:26px;margin-right:18px;line-height:26px;font-size:16px}
+.user-left-nav li em{float:left;font-style:normal;height:26px;line-height:26px;color:#fb8526}
+.user-left-nav li.hover a,.user-left-nav a:hover{color:#3b8de3}
+.user-left-nav li.hover i,.user-left-nav a:hover i{background-position:-159px -24px}
+
+.user-left-nav li .user-left-set{width:26px;height:26px;background-position:-123px -162px}
+.user-left-nav li.hover .user-left-set,.user-left-nav a:hover .user-left-set{background-position:-87px -162px}
+
+.user-left-nav li .user-left-news{width:25px;height:25px;background-position:-194px -162px}
+.user-left-nav li.hover .user-left-news,.user-left-nav a:hover .user-left-news{background-position:-159px -162px}
+
+    /*新版发帖*/
+.publish li.publish-descr{display:none}
+.publish li.publish-descr-box{display:none}
+.add-video-box{display:none;position:fixed;top:50%;left:50%;z-index:1000;margin:-110px 0 0 -200px;width:410px;height:200px;padding:10px 20px;border:1px solid #dedede;background:#fff;border-radius: 3px}
+.add-video-box dt{height:26px;line-height:26px;font-size:14px;overflow:hidden;border-bottom:1px solid #dedede}
+.add-video-box dt span{float:left}
+.add-video-box dt i{float:right;font-style: normal;font-family: '宋体';cursor: pointer}
+.add-video-box dd{height:32px;line-height: 32px;margin-top:10px;}
+.add-video-box dd .video-url,.add-video-box dd .video-width,.add-video-box dd .video-height{border:1px solid #999;height:28px;padding-left:5px;border-radius: 3px;margin-right:4px;}
+.add-video-box dd .video-url{width:300px}
+.add-video-box dd .video-width,.add-video-box dd .video-height{width:60px}
+.add-video-box dd .video-submit{width:60px;border:1px solid #ccc;height:28px;background:#fff;border-radius:3px;cursor: pointer}
+.add-video-box dd .video-submit:hover{background:#f3f3f3}
+
+/*app下载 --开始*/
+.publish-app-download{margin-top:18px}
+.publish-app-download dt{width:100%;height:20px;line-height:20px;text-indent:20px;font-size:16px}
+.publish-app-download dd{width:280px;height:100px;padding:20px 0 20px 20px}
+.publish-app-download dd span{float:left;margin-right:10px;width:100px;height:100px;background:url(../img/app_download_100_100.png?20160322) no-repeat}
+.publish-app-download dd a{float:left;width:148px;height:40px;margin:5px 0;border-radius:40px;font-size:14px;line-height:40px;color:#fff;text-align:center;background:#4fc1e9}
+.publish-app-download dd a.ios{background:#a0d468}
+.publish-app-download dd a:hover{background-color:#40b3db;color:#fff}
+.publish-app-download dd .ios:hover{background-color:#94ca5a}
+/*app下载 --结束*/
+
+/*添加钓场、渔具店 --开始*/
+.publish-fishing{margin-top:7px}
+.publish-fishing dt{float:left;width:128px;height:40px;margin-right:27px;line-height:40px;font-size:16px;text-align:right;color:#666}
+.publish-fishing dd{float:left;width:525px;height:auto;margin-bottom:20px}
+.publish-fishing dd.low-bottom{margin-bottom:9px}
+.publish-fishing dd select{float:left;margin-right:9px}
+.publish-fishing dd input{float:left;margin-right:10px}
+.publish-fishing dd label{float:left;height:40px;margin-right:38px;line-height:40px;font-size:16px}
+.publish-fishing dd label input{margin:14px 10px 0 0}
+.publish-fishing dd.low-bottom label input{*vertical-align:top;*margin-top:10px;_margin-top:8px}
+.publish-fishing dd li{float:left;width:90px;height:90px;margin-right:10px}
+.publish-fishing dd li img{width:90px;height:90px}
+.publish-fishing dd li a{display:block;width:88px;height:88px;border:1px dashed #ddd;border-radius:5px;background:url(../img/publish.png) -87px -634px no-repeat;_background:url(../img/png8/publish.png) -87px -634px no-repeat}
+.publish-fishing dd li a:hover{background-color:#f1f1f1}
+.publish-fishing dd i{float:left;font-style:normal;height:40px;line-height:40px;font-size:16px;color:#666}
+.publish-fishing dd p{line-height:40px}
+.category a{float:left;width:58px;height:38px;margin:0 10px 5px 0;border:1px solid #ddd;line-height:38px;text-align:center;font-size:16px;color:#666;overflow:hidden}
+.category a.hover{width:60px;height:40px;line-height:40px;border:none;background:url(../img/publish.png) -23px -633px no-repeat;_background:url(../img/png8/publish.png) -23px -633px no-repeat}
+.category a:hover{border-color:#06a3f9}
+.publish-fishing dd textarea{float:left;width:468px;height:90px;padding:8px 0 0 10px;font-size:16px;overflow:hidden}
+.publish-fishing dd .textarea-placeholder{margin-left:-468px}
+.charge-mode,.charge-price{display:none}
+.upload-img-box{}
+.upload-img-box li{position: relative}
+.upload-img-box li img{display:block}
+.upload-img-box li i{position: absolute;top:-10px;right:-10px;width:20px;height:20px;line-height:20px;text-align:center;border:1px solid #fff;background:#f7554a;font-size:16px;color:#fff;border-radius:50%;font-family:'宋体';cursor:pointer}
+.upload-img-box li i:hover{background:#ed4d42}
+
+
+
+/*添加钓场、渔具店 --结束*/
+
+/*添加钓场、渔具店图片 --开始*/
+.add-fishing-pic{padding:20px 0 20px 30px}
+.add-fishing-pic p{height:18px;line-height:18px;font-size:16px;color:#666}
+.add-fishing-pic ul{width:800px;margin:18px 0 22px;overflow:hidden}
+.add-fishing-pic ul li{float:left;width:150px;height:150px;margin:0 85px 24px 0}
+.add-fishing-pic ul li img{width:150px;height:150px}
+.add-fishing-pic ul li i{position:absolute;display:block;top:5px;right:5px;font-style:normal;width:30px;height:30px;line-height:30px;text-align:center;border:2px solid #fff;background:#f7554a;font-size:20px;color:#fff;border-radius:50%;font-family:'宋体';cursor:pointer}
+.add-fishing-pic ul li i:hover{background:#ed4d42}
+.add-fishing-pic ul li a{display:block;width:148px;height:148px;border:1px dashed #ddd;border-radius:5px;background:url(../img/publish.png) -162px -633px no-repeat;_background:url(../img/png8/publish.png) -162px -633px no-repeat}
+.add-fishing-pic ul li a:hover{background-color:#f1f1f1}
+.add-fishing-pic span{display:block;width:100%;height:16px;line-height:16px;text-align:center;color:#999}
+.add-fishing-pic .publish-submit{margin:20px auto 15px}
+/*添加钓场、渔具店图片 --结束*/
+
+/*发帖成功 --开始*/
+.publish-success{width:430px;height:auto;margin:100px auto 300px}
+.publish-success dt span{display:block;width:162px;height:32px;margin:0 auto;line-height:32px;text-indent:40px;font-size:30px;color:#00b40d;background:url(../img/user.png) -220px -183px no-repeat;background:url(../img/png8/user.png) -220px -183px no-repeat}
+.publish-success dd{margin-top:12px}
+.publish-success dd p{line-height:26px;text-align:center;font-size:16px;color:#666}
+.publish-success dd a{float:left;width:200px;height:46px;margin:30px 30px 0 0;line-height:46px;text-align:center;font-size:18px;color:#fff;background:#3b8de3}
+.publish-success dd .return-personal-center{margin-right:0;background:#a0d468}
+.publish-success dd a:hover{background:#3585d8}
+.publish-success dd .return-personal-center:hover{background:#95c95c}
+/*发帖成功 --结束*/
+
+#uploadContainer{*height:30px;}
+.upload-btn{background:none;*position:absolute;border:1px solid #dedede;width:80px;height:30px;line-height:30px;text-align: center;border-radius: 2px;margin-right:20px !important;cursor: pointer}
+.upload-btn:hover{background:#dedede}
+.upload-btn_1{top:0;left:10px}
+.upload-btn_2{top:0;left:110px}
+
+

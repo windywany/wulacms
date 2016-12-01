@@ -1,1 +1,1 @@
-window.kssUM = { login:{$login}, user:{$user} };
+window.kssUM = { login:{$login}, user:{$user} ,sid:'{$sid}'};

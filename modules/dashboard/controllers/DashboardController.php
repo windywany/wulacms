@@ -26,11 +26,11 @@ class DashboardController extends Controller {
 	public function index() {
 		if ($this->user->isLogin ()) {
 			$data = array ('passport' => $this->user );
-			$data ['cp_theme'] = $this->user->getAttr ( 'theme', '2' );
+			$data ['cp_theme'] = $this->user->getAttr ( 'theme', '4' );
 			$data ['cp_theme'] = 'smart-style-' . $data ['cp_theme'];
-			$data ['menu_on_top'] = $this->user->getAttr ( 'menu_on_top', 1 );
+			$data ['menu_on_top'] = $this->user->getAttr ( 'menu_on_top', 0 );
 			if ($data ['menu_on_top']) {
-				$data ['menu_fixed'] = $this->user->getAttr ( 'menu_fixed', 1 );
+				$data ['menu_fixed'] = $this->user->getAttr ( 'menu_fixed', 0 );
 			} else {
 				$data ['menu_fixed'] = 0;
 			}
@@ -86,6 +86,7 @@ class DashboardController extends Controller {
 					$where ['username'] = $formData ['username'];
 					$id = 'username';
 				}
+				$where ['deleted'] = 0;
 				$user = dbselect ( '*' )->from ( '{user}' )->where ( $where );
 				if (count ( $user ) == 0 || $user [0] ['passwd'] != md5 ( $formData ['passwd'] ) || $user [0] [$id] != $formData ['username']) {
 					$data ['errorMsg'] = __ ( '@auth:Invalide User Name or Password.' );

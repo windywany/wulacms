@@ -17,14 +17,20 @@
         this.hideHead = table.attr('data-hh') == 'true' ? true : false;
         this.autoExpend = table.attr('data-expend') == 'true' ? true : false;
         this.autoLoad = table.attr('data-auto') == 'true' ? true : false;
+        this.noHover = table.attr('data-no-hover') == 'true'?true:false;
         this.blockUI  = table.attr('data-blockui') === 'false'? false : true;
         this.currentTreeNode = null;
         if (this.isTree) {
-            this.folderOpenIcon = table.attr('data-folderIcon1') || 'glyphicon glyphicon-minus';
-            this.folderCloseIcon = table.attr('data-folderIcon2') || 'glyphicon glyphicon-plus';
+            this.folderOpenIcon = table.attr('data-folderIcon1') || 'fa fa-minus-circle fa-lg';
+            this.folderCloseIcon = table.attr('data-folderIcon2') || 'fa fa-plus-circle fa-lg';
             this.leafIcon = table.attr('data-leafIcon') || '';
+            this.blockUI = false;
         }
-        table.addClass('table table-hover');
+        if(this.noHover){
+        	table.addClass('table');
+        }else{
+        	table.addClass('table table-hover');
+        }
         if (!this.isTree) {
             table.addClass('table-striped');
         }
@@ -56,11 +62,11 @@
             this.table.on('click', 'tbody tr > td:first-child span.tt-folder', function() {
                 var h = $(this), node = me.currentTreeNode = h.parent().parent();
                 if (node.attr('data-parent') == 'true') {
-                    if (h.hasClass(me.folderOpenIcon)) {
-                        h.removeClass(me.folderOpenIcon).addClass(me.folderCloseIcon);
+                    if (h.hasClass('node-open')) {
+                        h.removeClass(me.folderOpenIcon).removeClass('node-open').addClass(me.folderCloseIcon);
                         collapseNode(node, me);
                     } else {
-                        h.removeClass(me.folderCloseIcon).addClass(me.folderOpenIcon);
+                        h.removeClass(me.folderCloseIcon).addClass('node-open').addClass(me.folderOpenIcon);
                         if (node.data('loaded')) {
                             expendNode(node, me);
                         } else {
@@ -220,7 +226,31 @@
             });
         }
     };
-
+    nuiTable.prototype.reloadNode = function(ids) {
+    	var me = this;
+		if(ids){
+			ids = ''+ids;
+			ids = ids.split(',');
+			$.each(ids,function(i,e){
+				me.currentTreeNode = me.table.find('tr[rel='+e+']').eq(0);
+				if(me.currentTreeNode && me.currentTreeNode.data('loaded')){
+					var icon = me.currentTreeNode.find('td:first-child span.tt-folder');
+					me.currentTreeNode.data('loaded', false);
+					if(icon.hasClass('node-open')) {
+						clearSubNode(me.currentTreeNode, me);
+						me.currentTreeNode.find('td:first-child span.tt-folder').removeClass(me.folderOpenIcon).removeClass('node-open').addClass(me.folderCloseIcon);
+						me.reload()
+					}
+				}
+			});
+		}else{
+			if(me.currentTreeNode){
+				me.currentTreeNode.data('loaded',false);
+				me.currentTreeNode = null;
+			}
+			this.reload();
+		}
+    };
     nuiTable.prototype.doPage = function(cp, limit, reload,ct) {
         this.data.cp = cp;
         this.currentTreeNode = null;
@@ -295,6 +325,7 @@
                 name : '_tid',
                 value : me.currentTreeNode.attr('rel')
             });
+            me.currentTreeNode.find('.tt-folder').addClass('fa-spin');
         }
         if(this.keep){
         	nuiTableDataCache[this.keep] = this.data;
@@ -315,6 +346,7 @@
                         me.initTree(html);
                         me.currentTreeNode.after(html);
                         me.currentTreeNode.data('loaded', true);
+                        me.currentTreeNode.find('.tt-folder').removeClass('fa-spin '+me.folderCloseIcon).addClass(me.folderOpenIcon+' node-open');
                         expendNode(me.currentTreeNode,me);
                     } else {
                         me.table.find('tbody').remove();
@@ -369,13 +401,13 @@
             node.after(tree.find('[parent="' + treeid + '"]'));
             node.data('childrenMoved',true);
         }
-        var ml = (subLevel * 16)+'px';
+        var ml = (subLevel * 10)+'px';
         tree.find('[parent="' + treeid + '"]').each(function(i, n) {            
             var $this = $(n), h = $this.find('td:first span.tt-folder');            
             $this.data('ttLevel',subLevel);            
             $this.find('td:first span.tt-line').css({'margin-left':ml});
             $this.css({'display':'table-row'});
-            if (h.hasClass(table.folderOpenIcon)) {
+            if (h.hasClass('node-open')) {
                 expendNode($this, table);
             }
         });
@@ -385,8 +417,17 @@
         var tree = table.table;
         tree.find('[parent="' + treeid + '"]').each(function(i, n) {
             var $this = $(n);
-            $this.css('display', 'none');
             collapseNode($this, table);
+            $this.css('display', 'none');
         });
-    };    
+    };   
+    var clearSubNode = function (node,table){
+    	var treeid = node.attr('rel');
+        var tree = table.table;
+        tree.find('[parent="' + treeid + '"]').each(function(i, n) {
+            var $this = $(n);
+            clearSubNode($this, table);
+            $this.css('display', 'none').remove();
+        });
+    }
 })(window.nUI, jQuery);

@@ -199,6 +199,9 @@
 		    if ($('nav').length) {		    	
 			    checkURL();
 		    }
+		    $(window).resize(function() {
+				tableHeightSize()
+			});
 		    $('#{$cp_theme}').click();
 		    {'on_dashboard_window_ready_scripts'|fire}
 	    });

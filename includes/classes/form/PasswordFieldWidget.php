@@ -21,6 +21,7 @@ class PasswordFieldWidget implements IFieldWidget {
 		$id = isset ( $definition ['id'] ) ? $definition ['id'] : $definition ['name'];
 		$pl = isset ( $definition ['placeholder'] ) ? 'placeholder="' . $definition ['placeholder'] . '" ' : '';
 		$readonly = isset ( $definition ['readonly'] ) ? ' readonly="readonly" ' : '';
+		$definition ['value'] = html_escape($definition ['value'] );
 		$disabled = isset ( $definition ['disabled'] ) ? ' disabled="disabled" ' : '';
 		$html [] = '<label class="input">';
 		$html [] = '<input id="' . $id . '" type="password" ' . $pl . $readonly . $disabled . ' name="' . $definition ['name'] . '" value="' . $definition ['value'] . '" class="' . $cls . '"/>';

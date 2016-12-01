@@ -5,6 +5,7 @@ class AutoCompleteWidget implements IFieldWidget, IFieldWidgetDataProvidor {
 		$widgets->register ( new AutoCompleteWidget () );
 		$widgets->register ( new TplFieldWidget () );
 		$widgets->register ( new TreeViewWidget () );
+		$widgets->register ( new TagAutoWidget () );
 	}
 	/**
 	 *
@@ -30,11 +31,11 @@ class AutoCompleteWidget implements IFieldWidget, IFieldWidgetDataProvidor {
 		list ( $table, $idx, $text, $acl, $utype, $plugin ) = $values;
 		if ($table) {
 			$attr = '';
-			if($values[6]){
-				$num = count($values);
-				for($i=6; $i<$num; $i++){
-					$attr .= $values[$i];
-					unset($values[$i]);
+			if ($values [6]) {
+				$num = count ( $values );
+				for($i = 6; $i < $num; $i ++) {
+					$attr .= $values [$i];
+					unset ( $values [$i] );
 				}
 			}
 			
@@ -47,8 +48,11 @@ class AutoCompleteWidget implements IFieldWidget, IFieldWidgetDataProvidor {
 			if ($plugin) {
 				unset ( $values [5] );
 			}
-			
-			$url .= untrailingslashit ( implode ( '/', $values ) ) . '/?_ut=' . ($utype ? $utype : $type) . '&_up=' . ($plugin ? $plugin : '').$attr;
+			$v = $definition['value'];
+			if($v && strpos($v,':')===false){
+				$v = $this->getValues($v,$table,$idx,$text);
+			}
+			$url .= untrailingslashit ( implode ( '/', $values ) ) . '/?_ut=' . ($utype ? $utype : $type) . '&_up=' . ($plugin ? $plugin : '') . $attr;
 			$readonly = isset ( $definition ['readonly'] ) ? ' readonly="readonly" ' : '';
 			$disabled = isset ( $definition ['disabled'] ) ? ' disabled="disabled" ' : '';
 			$placeholder = isset ( $definition ['placeholder'] ) ? ' placeholder="' . $definition ['placeholder'] . '"' : '';
@@ -57,7 +61,7 @@ class AutoCompleteWidget implements IFieldWidget, IFieldWidgetDataProvidor {
 											data-widget="nuiCombox"
 											style="width:100%"
 											data-source="' . $url . '"
-											name="' . $name . '" id="' . $id . '" value="' . $definition ['value'] . '"' . $readonly . $disabled . $placeholder . '/>
+											name="' . $name . '" id="' . $id . '" value="' . $v. '"' . $readonly . $disabled . $placeholder . '/>
 										</label>';
 		} else {
 			return '';
@@ -95,5 +99,14 @@ class AutoCompleteWidget implements IFieldWidget, IFieldWidgetDataProvidor {
 	 */
 	public function setOptions($options) {
 		$this->options = $options;
+	}
+	private function getValues($v,$table,$idx,$text){
+		$vs = safe_ids2($v);
+		$items = dbselect($idx,$text)->from('{'.$table.'}')->where([$idx.' IN'=>$vs])->toArray();
+		$values=[];
+		foreach ($items as $item) {
+			$values[]= $item[$idx].':'. html_escape($item[$text]);
+		}
+		return implode(',',$values);
 	}
 }

@@ -19,7 +19,7 @@
 		<td class="hidden-xs hidden-sm">
 			{$row.update_time|date_format:'Y-m-d H:i'}						
 		</td>
-		<td class="hidden-xs hidden-sm">{$row.uuname}</td>
+		<td class="hidden-xs hidden-sm">{$row.uuname|default:$row.cuname}</td>
 	</tr>	
 	{foreachelse}
 	<tr class="hidden-xs hidden-sm">

@@ -28,8 +28,13 @@
                      <ul class="nav nav-tabs pull-right in">
                      	{foreach $groups as $key => $g}
 						<li {if $key == $_g}class="active"{/if}>
-							<a href="{$p_url}?_g={$key}" target="tag" data-tag="#content">
-								<i class="fa fa-fw fa-cog"></i> 
+							<a href="#{$gp_url}?_g={$key}">
+                                {if is_object($g)}
+                                    {$icon=$g->icon}
+                                {else}
+                                    {$icon=false}
+                                {/if}
+								<i class="fa {if $icon}{$icon}{else}fa-cog{/if}"></i>
 								<span class="hidden-mobile hidden-tablet">{$g}</span>
 							</a>
 						</li>
@@ -50,7 +55,8 @@
                           <form name="{$formName}"                          		
                           		data-widget="nuiValidate" action="{$p_url}" 
                           		method="post" id="{$formName}-form" class="smart-form" target="ajax">
-                          		<input type="hidden" name="_g" value="{$_g}"/>                      	
+                          		<input type="hidden" name="_g" value="{$_g}"/> 
+                          		<input type="hidden" name="_hp" id="_hidden_tip"/>                      	
 							<fieldset>							
 								{$widgets|render}
 							</fieldset>
@@ -76,8 +82,8 @@
 	{/foreach}
 {/if}
 <script type="text/javascript">
-    var customDelURL = "{'system/preference/delf'|app}{$customEnabled}/";
-    var customEditURL = "{'system/preference/custom'|app}{$customEnabled}/";
+    var customDelURL = "{'system/preference'|app}delf{$customEnabled}/";
+    var customEditURL = "{'system/preference'|app}custom{$customEnabled}/";
 	nUI.validateRules['{$formName}'] = {$rules};	
 	nUI.validateRules['CustomCfgFieldForm'] = {$crules};
 	var cfields = {$cfields};
