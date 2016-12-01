@@ -65,7 +65,7 @@
 					id="page-table"
 					data-widget="nuiTable"		
 					data-auto="true"
-					data-source="{'album/data'|app}"
+					data-source="{'taoke/data'|app}"
 					data-sort="CP.id,d"	
 					data-tfoot="true"
 					data-tree="true">

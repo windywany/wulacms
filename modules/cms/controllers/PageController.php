@@ -31,7 +31,7 @@ class PageController extends Controller {
 		$data ['pageTypeName']      = $data ['type'] == 'topic' ? '专题' : '内容';
 		$data ['status']            = $this->status;
 		$data ['disable_approving'] = bcfg('disable_approving@cms', false);
-		$data ['models']            = array();
+		$data ['models']            = array(''=>'全部内容');
 		dbselect()->from('{cms_model}')->treeWhere(array('deleted' => 0, 'hidden' => 0, 'is_delegated' => 1, 'is_topic_model' => $data ['type'] == 'topic' ? 1 : 0))->treeKey('refid')->treeOption($data ['models']);
 		$data ['canDelPage']    = icando('d:cms/page');
 		$data ['canEditPage']   = icando('u:cms/page');

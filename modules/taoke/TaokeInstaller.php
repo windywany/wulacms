@@ -4,7 +4,6 @@ class TaokeInstaller extends AppInstaller {
 	public function getVersionLists() {
 		$v ['1.0.0'] = '20161210001';
 
-
 		return $v;
 	}
 
@@ -31,7 +30,7 @@ class TaokeInstaller extends AppInstaller {
 	public function onInstall($dialect) {
 		$rst = parent::onInstall($dialect);
 		if ($rst) {
-			$model = new TaokeContentModel ();
+			$model = new \taoke\classes\TaokeContentModel();
 			$rst   = $model->install($dialect);
 
 			return $rst ? true : false;
@@ -41,7 +40,7 @@ class TaokeInstaller extends AppInstaller {
 	}
 
 	public function uninstall() {
-		$model     = new TaokeContentModel ();
+		$model     = new \taoke\classes\TaokeContentModel();
 		$models [] = 'taoke';
 		if (!$model->uninstall($models)) {
 			return false;
