@@ -246,9 +246,6 @@ if ($_kissgo_processing_installation != true) {
 	// requst
 	$__rqst = false;
 	if(class_exists('\Notoj\Notoj')){
-		if(DEBUG > DEBUG_DEBUG) {
-			\Notoj\Notoj::enableCache(TMP_PATH . 'annotations.php');
-		}
 		define('ANNOTATION_SUPPORT',true);
 	}else{
 		define('ANNOTATION_SUPPORT',false);
