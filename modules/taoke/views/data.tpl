@@ -3,7 +3,7 @@
     <tr>
      <td><input type="checkbox" value="{{$c.cid}}" class="grp"/></td>
     <td>
-       <img src="/{$c.image}" width="50px;" height="50px;">
+       <img src="{$c.image|media}" width="50px;" height="50px;">
     </td>
 
     <td>{$c.price}</td>

@@ -60,6 +60,7 @@ class CmsInstaller extends AppInstaller {
 		$lists ['4.1.0'] = '201605310031';
 		$lists ['4.1.1'] = '201607180032';
 		$lists ['4.5.0'] = '201608190033';
+		$lists ['4.6.0'] = '201612020034';// 將cms_channel的refid長度增加到48箇字符.
 		return $lists;
 	}
 	/**
