@@ -28,7 +28,7 @@ $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}tbk_goods` (
     UNIQUE INDEX `UDX_PAGE_ID` (`page_id` ASC)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=UTF8MB4 COMMENT='淘宝客商品优惠券'";
 
-$tables['1.0.0'] = "CREATE TABLE `tbk_token` (
+$tables['1.0.0'][] = "CREATE TABLE `tbk_token` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '淘宝客logo',
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT 'url地址',
