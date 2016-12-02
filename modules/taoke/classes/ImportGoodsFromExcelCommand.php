@@ -71,7 +71,7 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 			if (preg_match('#.+?(\d+).+?(\d+)#', $coupon_price, $ms)) {
 				$data['use_price'] = $ms[1];
 				$data['discount']  = $ms[2];
-			} elseif (preg_match('#.+?(\d+).+#', $coupon_price, $ms)) {
+			} elseif (preg_match('#.*?(\d+).+#', $coupon_price, $ms)) {
 				$data['discount'] = $ms[1];
 			} else {
 				$data['discount'] = 0;
