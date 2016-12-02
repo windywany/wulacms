@@ -21,7 +21,7 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 		} else {
 			$file = $this->opt(-1, 'tbk.xlsx');
 		}
-		$file = APPDATA_PATH . 'test.xlsx';
+
 		if (!is_file($file)) {
 			$this->log('the file ' . $file . ' dose not exist!');
 			exit(1);
@@ -110,7 +110,3 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 		return $commands;
 	}
 }
-
-$cmd = new ImportGoodsFromExcelCommand();
-
-$cmd->run();
