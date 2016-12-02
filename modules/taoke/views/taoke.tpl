@@ -73,15 +73,15 @@
 						<tr>							
 							<th width="30"><input type="checkbox" class="grp"/></th>
 							<th width="40">商品</th>
-							<th width="100" data-sort="CP.channel,a" class="hidden-xs hidden-sm">商品价格</th>
-							<th width="120" data-sort="CP.create_time,d" class="hidden-xs hidden-sm">商品月销量</th>
-							<th width="120" data-sort="CP.update_time,d" class="hidden-xs hidden-sm">佣金</th>
-							<th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">店铺名称</th>
-                            <th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">优惠券总量</th>
-                            <th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">优惠卷剩余</th>
-                            <th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">开始时间</th>
-                            <th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">结束时间</th>
-							<th width="70"></th>
+							<th width="70" data-sort="tbk.comission,a" class="hidden-xs hidden-sm">商品价格--佣金</th>
+							<th width="80" data-sort="tbk.sale_count,a" class="hidden-xs hidden-sm">商品月销量</th>
+							<th width="50"  class="hidden-xs hidden-sm">店铺名称</th>
+                            <th width="40"  class="hidden-xs hidden-sm">平台</th>
+                            <th width="60"  data-sort="tbk.rate,a"class="hidden-xs hidden-sm">收入比率</th>
+                            <th width="120" data-sort="tbk.coupon_remain,a" class="hidden-xs hidden-sm">优惠券总量//剩余</th>
+                            <th width="90" data-sort="tbk.coupon_start,a" class="hidden-xs hidden-sm">开始时间</th>
+                            <th width="90" data-sort="tbk.coupon_stop,a" class="hidden-xs hidden-sm">结束时间</th>
+							<th width="70">操作</th>
 						</tr>
 					</thead>
 				</table>

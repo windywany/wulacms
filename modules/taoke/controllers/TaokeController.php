@@ -30,7 +30,7 @@ class TaokeController extends Controller {
 		}
         $where['cp.deleted'] = 0;
 		$where['cp.model']  ='taoke';
-		$row =dbselect('cp.id as cid,cp.image as image,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk','cp.id=tbk.page_id')->where($where);
+		$row =dbselect('cp.id as cid,cp.title as title,cp.image as image,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk','cp.id=tbk.page_id')->where($where);
 
 		$data ['results'] = $row->limit(($_cp - 1) * $_lt, $_lt)->sort($_sf, $_od)->toArray();
 		$data ['total']   = count($data['results']);
