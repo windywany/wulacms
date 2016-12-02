@@ -3,15 +3,18 @@
     <tr>
      <td><input type="checkbox" value="{{$c.cid}}" class="grp"/></td>
     <td>
-       {mb_substr($c.title,0,6)}..<img src="{$c.image|media}" width="50px;" height="50px;">
+        <p> <img src="{$c.image|media}" width="80" height="80" style="float: left;margin-right: 5px;">{$c.title}</p>
+
     </td>
 
-    <td>【{$c.price}】--【{$c.comission}】</td>
+    <td>{$c.price}/{$c.comission}</td>
+    <td>{$c.coupon_price}</td>
     <td>{$c.sale_count}</td>
     <td>{$c.shopname}</td>
     <td>{$c.platform}</td>
+    <td>{$c.wangwang}</td>
     <td>{$c.rate}</td>
-    <td>【{$c.coupon_count}】--【{$c.coupon_remain}】</td>
+    <td>{$c.coupon_count}/{$c.coupon_remain}</td>
     <td>{$c.coupon_start}</td>
     <td>{$c.coupon_stop}</td>
     <td>

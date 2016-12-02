@@ -36,22 +36,19 @@
 				  			<div class="row">
 				  				<section class="col col-md-3">
 									<label class="input">										
-										<input type="text" placeholder="ID" name="pid"/>
+										<input type="text" placeholder="商品名" name="title"/>
 									</label>
 								</section>
-				  				<section class="col col-md-5">
+				  				<section class="col col-md-3">
 									<label class="input">										
-										<input type="text" placeholder="店铺名" name="name"/>
+										<input type="text" placeholder="平台" name="platform"/>
 									</label>
 								</section>
-								<section class="col col-md-2">
-									<label class="select">
-										<select name="channel" id="channel">
-											{html_options options=$channels selected=$channel}
-										</select>
-										<i></i>
-									</label>
-								</section>	
+								<section class="col col-md-3">
+                                    <label class="input">
+                                        <input type="text" placeholder="旺旺" name="wangwang"/>
+                                    </label>
+								</section>
 								<section class="col col-md-2 text-right">
 									<button class="btn btn-sm btn-primary" type="submit">
 										<i class="fa fa-search"></i> 搜索
@@ -72,16 +69,18 @@
 					<thead>
 						<tr>							
 							<th width="30"><input type="checkbox" class="grp"/></th>
-							<th width="40">商品</th>
-							<th width="70" data-sort="tbk.comission,a" class="hidden-xs hidden-sm">商品价格--佣金</th>
-							<th width="80" data-sort="tbk.sale_count,a" class="hidden-xs hidden-sm">商品月销量</th>
-							<th width="50"  class="hidden-xs hidden-sm">店铺名称</th>
-                            <th width="40"  class="hidden-xs hidden-sm">平台</th>
-                            <th width="60"  data-sort="tbk.rate,a"class="hidden-xs hidden-sm">收入比率</th>
-                            <th width="120" data-sort="tbk.coupon_remain,a" class="hidden-xs hidden-sm">优惠券总量//剩余</th>
-                            <th width="90" data-sort="tbk.coupon_start,a" class="hidden-xs hidden-sm">开始时间</th>
-                            <th width="90" data-sort="tbk.coupon_stop,a" class="hidden-xs hidden-sm">结束时间</th>
-							<th width="70">操作</th>
+							<th>商品</th>
+							<th width="150" data-sort="tbk.comission,a" class="hidden-xs hidden-sm">价格/佣金</th>
+							<th width="100" data-sort="tbk.coupon_price,a" class="hidden-xs hidden-sm">优惠券价格</th>
+							<th width="100" data-sort="tbk.sale_count,a" class="hidden-xs hidden-sm">月销量</th>
+							<th width="200"  class="hidden-xs hidden-sm">店铺名称</th>
+                            <th width="60"  class="hidden-xs hidden-sm">平台</th>
+                            <th width="120"  class="hidden-xs hidden-sm">旺旺</th>
+                            <th width="90"  data-sort="tbk.rate,a"class="hidden-xs hidden-sm">收入比率</th>
+                            <th width="120" data-sort="tbk.coupon_remain,a" class="hidden-xs hidden-sm">优惠券/剩余</th>
+                            <th width="100" data-sort="tbk.coupon_start,a" class="hidden-xs hidden-sm">开始时间</th>
+                            <th width="100" data-sort="tbk.coupon_stop,a" class="hidden-xs hidden-sm">结束时间</th>
+							<th width="80">操作</th>
 						</tr>
 					</thead>
 				</table>
