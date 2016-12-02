@@ -371,3 +371,10 @@ ADD COLUMN `is_delegated` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否
 
 $tables ['4.5.0'] [] = "ALTER TABLE `{prefix}cms_page`
 ADD COLUMN `url_handler` VARCHAR(16) NULL COMMENT '自定义页面处理器' AFTER `model`";
+
+
+$tables ['4.6.0'] [] = "ALTER TABLE `{prefix}cms_page` 
+CHANGE COLUMN `channel` `channel` VARCHAR(48) NOT NULL COMMENT '栏目'";
+
+$tables ['4.6.0'] [] = "ALTER TABLE `{prefix}cms_channel` 
+CHANGE COLUMN `refid` `refid` VARCHAR(48) NOT NULL COMMENT '模板引用ID'";

@@ -1,38 +1,50 @@
 {
-  "name" : "wulacms/wulacms",
-  "description" : "努力做一个比较优秀的CMS，争取让她像异星战场中的乌拉一样快。",
-  "require" : {
-    "php" : ">=5.6.0",
-    "ext-json" : "*",
-    "ext-pdo" : "*",
-    "ext-mbstring" : "*",
-    "ext-curl" : "*",
-    "ext-SPL" : "*",
-    "smarty/smarty":"~3.1",
-    "phpmailer/phpmailer":"~5.2"
+  "name": "wulacms/wulacms",
+  "description": "努力做一个比较优秀的CMS，争取让她像异星战场中的乌拉一样快。",
+  "require": {
+	"php": ">=5.6.0",
+	"ext-json": "*",
+	"ext-pdo": "*",
+	"ext-mbstring": "*",
+	"ext-curl": "*",
+	"ext-SPL": "*",
+	"smarty/smarty": "~3.1",
+	"phpmailer/phpmailer": "~5.2"
   },
-  "license" : "MIT",
-  "keywords" : [ "CMS", "MVC","Plugin","Module" ],
-  "time" : "2016-08-20",
-  "scripts" : {
-    "post-root-package-install" : [ "php bin/wula.php --init" ]
+  "require-dev": {
+	"phpoffice/phpexcel": "~1.8"
   },
-  "type" : "project",
-  "config" : {
-    "preferred-install" : "dist"
+  "license": "MIT",
+  "keywords": [
+	"CMS",
+	"MVC",
+	"Plugin",
+	"Module"
+  ],
+  "time": "2016-08-20",
+  "scripts": {
+	"post-root-package-install": [
+	  "php bin/wula.php --init"
+	]
   },
-  "authors" : [ {
-    "name" : "Leo Ning",
-    "email" : "windywany@163.com"
-  } ],
+  "type": "project",
+  "config": {
+	"preferred-install": "dist"
+  },
+  "authors": [
+	{
+	  "name": "Leo Ning",
+	  "email": "windywany@163.com"
+	}
+  ],
   "extra": {
-    "branch-alias": {
-        "dev-master": "1.0.x-dev"
-    }
+	"branch-alias": {
+	  "dev-master": "1.0.x-dev"
+	}
   },
   "support": {
-        "issues": "https://github.com/ninggf/wulacms/issues"
+	"issues": "https://github.com/ninggf/wulacms/issues"
   },
-  "homepage" : "http://www.wulacms.com/",
+  "homepage": "http://www.wulacms.com/",
   "repositories": []
 }

@@ -13,7 +13,7 @@ class ChannelForm extends AbstractForm {
 	private $upid = array ('rules' => array ('regexp(/^(0|[1-9]\d*)$/)' => '请正确填写上级栏目ID' ),'type' => 'int' );
 	private $default_model = array ('rules' => array ('required' => '请选择内容模型' ) );
 	private $name = array ('rules' => array ('required' => '请填写名称' ) );
-	private $refid = array ('rules' => array ('required' => '请识别ID','regexp(/^[a-z][a-z0-9_]*$/i)' => '识别ID只能是字母,数字和下划线的组合.','callback(@checkRefId,id)' => '已经存在' ) );
+	private $refid = array ('rules' => array ('required' => '请识别ID','callback(@checkRefId,id)' => '已经存在' ) );
 	private $basedir = array ('rules' => array ('regexp(/^[\/a-z_0-9]*[a-z0-9]$/i)' => '目录名格式不正确.' ) );
 	private $isfinal;
 	private $default_template = array ('rules' => array ('required' => '请填写文章页模板','regexp(/^[\/a-z_0-9]+\.tpl$/i)' => '文件名格式不正确.' ) );

@@ -15,7 +15,7 @@ abstract class ParameterDef {
 		$ary  = [];
 		foreach ($vars as $var) {
 			$name  = $var->getName();
-			$value = $var->getValue($obj);
+			$value = $this->{$name};
 
 			if (is_null($value)) {
 				continue;

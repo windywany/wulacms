@@ -3,7 +3,7 @@
     <tr>
      <td><input type="checkbox" value="{{$c.cid}}" class="grp"/></td>
     <td>
-       {mb_substr($c.title,0,6)}..<img src="/{$c.image}" width="50px;" height="50px;">
+       {mb_substr($c.title,0,6)}..<img src="{$c.image|media}" width="50px;" height="50px;">
     </td>
 
     <td>【{$c.price}】--【{$c.comission}】</td>

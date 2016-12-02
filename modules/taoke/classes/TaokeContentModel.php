@@ -29,8 +29,9 @@ class TaokeContentModel extends \DefaultContentModel {
 	public function save($page, $form) {
 		$id = $page['id'];
 
-		$goods            = $form->toArray();
-		$goods['page_id'] = $id;
+		$goods                = $form->toArray();
+		$goods['page_id']     = $id;
+		$goods['update_time'] = $page['update_time'];
 		//var_dump($goods);exit;
 		dbsave($goods, ['page_id' => $id], 'id')->into('{tbk_goods}')->save();
 
