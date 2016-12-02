@@ -41,7 +41,7 @@
 								</section>
 				  				<section class="col col-md-5">
 									<label class="input">										
-										<input type="text" placeholder="关键词" name="keywords"/>
+										<input type="text" placeholder="店铺名" name="name"/>
 									</label>
 								</section>
 								<section class="col col-md-2">
@@ -66,17 +66,21 @@
 					data-widget="nuiTable"		
 					data-auto="true"
 					data-source="{'taoke/data'|app}"
-					data-sort="CP.id,d"	
+					data-sort="cp.id,d"
 					data-tfoot="true"
 					data-tree="true">
 					<thead>
 						<tr>							
 							<th width="30"><input type="checkbox" class="grp"/></th>
-							<th>淘宝客</th>
-							<th width="100" data-sort="CP.channel,a" class="hidden-xs hidden-sm">栏目</th>
-							<th width="120" data-sort="CP.create_time,d" class="hidden-xs hidden-sm">作者</th>
-							<th width="120" data-sort="CP.update_time,d" class="hidden-xs hidden-sm">最后更新</th>
-							<th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">相片</th>
+							<th width="40">商品</th>
+							<th width="100" data-sort="CP.channel,a" class="hidden-xs hidden-sm">商品价格</th>
+							<th width="120" data-sort="CP.create_time,d" class="hidden-xs hidden-sm">商品月销量</th>
+							<th width="120" data-sort="CP.update_time,d" class="hidden-xs hidden-sm">佣金</th>
+							<th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">店铺名称</th>
+                            <th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">优惠券总量</th>
+                            <th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">优惠卷剩余</th>
+                            <th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">开始时间</th>
+                            <th width="90" data-sort="CP.channel,a" class="hidden-xs hidden-sm">结束时间</th>
 							<th width="70"></th>
 						</tr>
 					</thead>

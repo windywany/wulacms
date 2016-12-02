@@ -13,7 +13,7 @@ class TaokeContentModel extends \DefaultContentModel {
 		$model ['search_page_prefix'] = '';
 		$model ['search_page_tpl']    = '';
 		$model ['search_page_limit']  = '';
-		$model ['template']           = 'cms/views/page/default_form.tpl';
+		$model ['template']           = '';
 		$model ['note']               = '淘宝客模型';
 		$model ['role']               = '';
 		parent::__construct($model);
@@ -31,7 +31,9 @@ class TaokeContentModel extends \DefaultContentModel {
 
 		$goods            = $form->toArray();
 		$goods['page_id'] = $id;
+		//var_dump($goods);exit;
 		dbsave($goods, ['page_id' => $id], 'id')->into('{tbk_goods}')->save();
+
 	}
 
 	/*
@@ -40,6 +42,7 @@ class TaokeContentModel extends \DefaultContentModel {
 	public function load(&$data, $id) {
 		$goods = dbselect('*')->from('{tbk_goods}')->where(array('page_id' => $id))->get();
 		if ($goods) {
+			unset($id);
 			foreach ($goods as $key => $v) {
 				$data[ $key ] = $v;
 			}
