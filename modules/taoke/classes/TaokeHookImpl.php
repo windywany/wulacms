@@ -14,7 +14,7 @@ class TaokeHookImpl {
 			$pageMenu = new \AdminNaviMenu ('taoke_menu', '淘宝客', 'fa-picture-o', tourl('taoke', false));
 			$pageMenu->addSubmenu(array('taokelist', '淘宝客列表', 'fa-picture-o', tourl('taoke', false)), false, 1);
 			$pageMenu->addSubmenu(array('addtaoke', '生成淘口令', 'fa-picture-o', tourl('taoke/generate', false)), false, 2);
-
+			$pageMenu->addSubmenu(array('config', '淘宝客配置', 'fa-picture-o', tourl('taoke/preference', false)), false, 2);
 			$menu->addItem($pageMenu, false, 15);
 		}
 	}

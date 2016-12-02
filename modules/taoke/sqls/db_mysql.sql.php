@@ -27,3 +27,14 @@ $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}tbk_goods` (
     PRIMARY KEY (`id`),
     UNIQUE INDEX `UDX_PAGE_ID` (`page_id` ASC)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=UTF8MB4 COMMENT='淘宝客商品优惠券'";
+
+$tables['1.0.0'] = "CREATE TABLE `tbk_token` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '淘宝客logo',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT 'url地址',
+  `user_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '淘宝客user_id',
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '内容',
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '淘口令',
+  `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '生成时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='淘宝客淘口令'";
