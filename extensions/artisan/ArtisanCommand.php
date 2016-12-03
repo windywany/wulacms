@@ -99,7 +99,7 @@ abstract class ArtisanCommand {
 		flush();
 	}
 
-	public final function run() {
+	public function run() {
 		$options = $this->getOptions();
 
 		return $this->execute($options);

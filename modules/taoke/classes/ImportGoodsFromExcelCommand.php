@@ -38,7 +38,7 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 		$parma                      = new ChannelImporterParam();
 		$parma->default_model       = 'taoke';
 		$parma->default_template    = 'taoke.tpl';
-		$parma->default_url_pattern = '{tbk}/{aid}.html';
+		$parma->default_url_pattern = 'tbk/{aid}.html';
 		$parma->page_name           = 'index.html';
 		$parma->index_page_tpl      = 'taobaoke/category.tpl';
 		$parma->list_page_tpl       = 'taobaoke/list.tpl';

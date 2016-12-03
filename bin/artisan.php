@@ -1,4 +1,5 @@
 <?php
+declare(ticks = 1);
 /*
  * the entry of artisan script
  */
@@ -17,4 +18,3 @@ if (!isset($commands[ $cmd ])) {
 } else {
 	exit($commands[ $cmd ]->run());
 }
-
