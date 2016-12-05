@@ -1,5 +1,4 @@
 <?php
-declare(ticks = 1);
 /*
  * the entry of artisan script
  */

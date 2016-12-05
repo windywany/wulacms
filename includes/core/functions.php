@@ -826,8 +826,12 @@ function sess_del($name, $default = '') {
 
 function rqst($name, $default = '', $xss_clean = true) {
 	global $__rqst;
-	if (!$__rqst) {
+	if (defined('KISS_CLI_PID')) {
 		$__rqst = Request::getInstance();
+	} else {
+		if (!$__rqst) {
+			$__rqst = Request::getInstance();
+		}
 	}
 
 	return $__rqst->get($name, $default, $xss_clean);
@@ -835,8 +839,12 @@ function rqst($name, $default = '', $xss_clean = true) {
 
 function arg($name, $default = '') {
 	global $__rqst;
-	if (!$__rqst) {
+	if (defined('KISS_CLI_PID')) {
 		$__rqst = Request::getInstance();
+	} else {
+		if (!$__rqst) {
+			$__rqst = Request::getInstance();
+		}
 	}
 
 	return $__rqst->get($name, $default, false);

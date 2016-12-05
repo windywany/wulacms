@@ -1,10 +1,12 @@
 <?php
+declare(ticks = 5);
 
 namespace taoke\classes;
 
 use artisan\ArtisanCommand;
 use cms\classes\ChannelImporter;
 use cms\classes\ChannelImporterParam;
+use taoke\command\ImportTask;
 
 class ImportGoodsFromExcelCommand extends ArtisanCommand {
 	public function cmd() {
@@ -85,8 +87,6 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 			}
 			$i++;
 		}
-		dbdelete()->from('{cms_page}')->where(['update_time <' => $time, 'model' => 'taoke'])->exec();
-		dbdelete()->from('{tbk_goods}')->where(['update_time <' => $time])->exec();
 
 		return 0;
 	}
@@ -105,7 +105,8 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 	}
 
 	public static function get_artisan_commands($commands) {
-		$commands['tbk_import'] = new self();
+		$commands['tbk_import']  = new self();
+		$commands['tbk_import1'] = new ImportTask();
 
 		return $commands;
 	}

@@ -1,10 +1,15 @@
 <?php
+declare(ticks = 5);
+
 namespace artisan;
 
 abstract class ArtisanDaemonTask extends ArtisanCommand {
-	private $maxParallel = 1;
-	private $isParent    = true;
-	private $shutdown    = false;
+	protected $workerCount = 1;
+	protected $taskId      = 0;
+	private   $isParent    = true;
+	protected $shutdown    = false;
+	private   $workers     = [];
+
 	const WORK_DONE_EXIT_CODE = 42;
 
 	public final function run() {
@@ -19,14 +24,23 @@ abstract class ArtisanDaemonTask extends ArtisanCommand {
 			exit(0);
 		} elseif (0 === $pid) {
 			umask(0);
-			openlog('daemon-' . $cmd, LOG_PID | LOG_PERROR, LOG_LOCAL0);
+			openlog('daemon-' . $cmd, LOG_PID | LOG_PERROR, LOG_USER);
 			$sid = posix_setsid();
 			if ($sid < 0) {
 				syslog(LOG_ERR, 'Could not detach session id.');
 				exit(1);
 			}
 			$this->setUp($options);
+			fclose(STDIN);
+			fclose(STDOUT);
+			fclose(STDERR);
+
+			$STDIN  = fopen('/dev/null', 'r');
+			$STDOUT = fopen($cmd . '.out', 'wb');
+			$STDERR = fopen($cmd . '.err', 'wb');
+
 			$this->doStartLoop($options);
+
 			$this->tearDown($options);
 			closelog();
 			exit(0);
@@ -36,36 +50,40 @@ abstract class ArtisanDaemonTask extends ArtisanCommand {
 	}
 
 	private function doStartLoop($options) {
-		$this->maxParallel = isset($options['workerCount']) ? $options['workerCount'] : 1;
-		$parallel          = $this->maxParallel;
-		$forks             = array();
-		$this->initSignal($forks);
+		$parallel = $this->workerCount;
+		$this->initSignal();
 		$i = 0;
-		while (count($forks) < $parallel) {
+		while (count($this->workers) < $parallel) {
 			$pid = pcntl_fork();
 			if (0 === $pid) {
+				define('KISS_CLI_PID', posix_getpid());
 				$this->isParent = false;
+				$this->taskId   = $i;
 				$this->initSignal();
-				$ops      = array_merge(['taskId' => $i], $options);
-				$exitCode = $this->execute($ops);
+				$exitCode = $this->execute($options);
 				usleep(1000000);
-				exit($exitCode === true ? self::WORK_DONE_EXIT_CODE : 0);
+				syslog(LOG_NOTICE, 'exit with code: ' . $exitCode);
+				exit(0);
 			} else {
-				$forks[ $pid ] = $pid;
+				$i++;
+				$this->workers[ $pid ] = $pid;
 			}
 		}
 
 		do {
 			// Check if the registered jobs are still alive
-			if ($pid = pcntl_wait($status)) {
+			$pid = pcntl_wait($status, WNOHANG);
+			if ($pid > 0) {
 				if (self::WORK_DONE_EXIT_CODE === pcntl_wexitstatus($status)) {
-					$parallel = $this->maxParallel;
+					$parallel = $this->workerCount;
 				} else if ($parallel > 1) {
 					$parallel = $parallel - 1;
 				}
-				unset($forks[ $pid ]);
+				unset($this->workers[ $pid ]);
+			} else {
+				usleep(1000);
 			}
-		} while (count($forks) >= $parallel);
+		} while (count($this->workers) >= $parallel);
 	}
 
 	// 准备任务
@@ -78,31 +96,28 @@ abstract class ArtisanDaemonTask extends ArtisanCommand {
 
 	}
 
-	private function initSignal(&$workers = null) {
-		$signals = array(SIGTERM, SIGINT);
+	private function initSignal() {
+		$signals = array(SIGTERM, SIGINT, SIGHUP, SIGUSR1, SIGTSTP, SIGTTOU);
 		foreach (array_unique($signals) as $signal) {
-			pcntl_signal($signal, function ($signal) use ($workers) {
-				if ($this->isParent) {
-					$this->log("Shutdown Signal Received\n");
-					if ($workers) {
-						foreach ($workers as $pid) {
-							@posix_kill($pid, $signal);
-						}
-					}
-				} else {
-					$this->shutdown = true;
-				}
-			});
+			pcntl_signal($signal, array($this, 'signal'));
 		}
 	}
 
-	/**
-	 * 更新进度
-	 *
-	 * @param $a
-	 * @param $b
-	 */
-	protected function update($a, $b) {
+	public function signal($signal) {
+		if ($this->isParent) {
+			$wks = array_merge([], $this->workers);
+			if ($wks) {
+				foreach ($wks as $pid) {
+					@posix_kill($pid, $signal);
+					pcntl_signal_dispatch();
+				}
+			}
+		} else {
+			$this->shutdown = true;
+		}
+	}
 
+	protected function setMaxMemory($size) {
+		@ini_set('memory_limit', $size);
 	}
 }

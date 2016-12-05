@@ -37,17 +37,27 @@ class Request implements ArrayAccess {
 	/**
 	 * 得到request的实例.
 	 *
+	 * @param bool $use_xss_clean
+	 *
 	 * @return Request
 	 */
 	public static function getInstance($use_xss_clean = null) {
-		if (self::$INSTANCE == null) {
-			self::$INSTANCE = new Request ($use_xss_clean);
-		}
-		if (is_bool($use_xss_clean)) {
-			self::$INSTANCE->set_cleaner_enable($use_xss_clean);
-		}
+		if (defined('KISS_CLI_PID')) {
+			if (!isset(self::$INSTANCE[ KISS_CLI_PID ])) {
+				self::$INSTANCE[ KISS_CLI_PID ] = new Request ($use_xss_clean);
+			}
 
-		return self::$INSTANCE;
+			return self::$INSTANCE[ KISS_CLI_PID ];
+		} else {
+			if (self::$INSTANCE == null) {
+				self::$INSTANCE = new Request ($use_xss_clean);
+			}
+			if (is_bool($use_xss_clean)) {
+				self::$INSTANCE->set_cleaner_enable($use_xss_clean);
+			}
+
+			return self::$INSTANCE;
+		}
 	}
 
 	/**
@@ -286,17 +296,21 @@ class Request implements ArrayAccess {
 
 	// 处理全局输入
 	private function _sanitize_globals() {
-		Request::$_GET  = $_GET;
-		Request::$_POST = $_POST;
-		$this->getData  = array_merge(array(), $_GET);
-		$this->postData = array_merge(array(), $_POST);
-		$_GET           = $this->_clean_input_data($_GET);
-		$_POST          = $this->_clean_input_data($_POST);
-		$_REQUEST       = $this->_clean_input_data($_REQUEST);
-		unset ($_COOKIE ['$Version']);
-		unset ($_COOKIE ['$Path']);
-		unset ($_COOKIE ['$Domain']);
-		$_COOKIE = $this->_clean_input_data($_COOKIE);
+		static $sanitized = false;
+		if ($sanitized === false) {
+			$sanitized      = true;
+			Request::$_GET  = $_GET;
+			Request::$_POST = $_POST;
+			$this->getData  = array_merge(array(), $_GET);
+			$this->postData = array_merge(array(), $_POST);
+			$_GET           = $this->_clean_input_data($_GET);
+			$_POST          = $this->_clean_input_data($_POST);
+			$_REQUEST       = $this->_clean_input_data($_REQUEST);
+			unset ($_COOKIE ['$Version']);
+			unset ($_COOKIE ['$Path']);
+			unset ($_COOKIE ['$Domain']);
+			$_COOKIE = $this->_clean_input_data($_COOKIE);
+		}
 	}
 
 	/**
