@@ -52,6 +52,11 @@ class ImportTask extends ArtisanDaemonTask {
 			} else {
 				$data['discount'] = 0;
 			}
+			if (floatval($data['use_price']) <= floatval($data['price'])) {
+				$data['real_price'] = $data['price'] - $data['discount'];
+			} else {
+				$data['real_price'] = $data['price'];
+			}
 			$request->addUserData($data, true);
 			$id = \CmsPage::save('page', 'taoke', null, false);
 			if ($id) {
