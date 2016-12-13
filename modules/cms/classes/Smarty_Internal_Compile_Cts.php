@@ -36,13 +36,13 @@ class Smarty_Internal_Compile_Cts extends Smarty_Internal_CompileBase {
 	 *
 	 * @param array $args
 	 *        	array with attributes from parser
-	 * @param object $compiler
+	 * @param Smarty_Internal_TemplateCompilerBase $compiler
 	 *        	compiler object
 	 * @param array $parameter
 	 *        	array with compilation parameter
 	 * @return string compiled code
 	 */
-	public function compile($args, $compiler, $parameter) {
+	public function compile($args,Smarty_Internal_TemplateCompilerBase $compiler, $parameter) {
 		$tpl = $compiler->template;
 		// check and get attributes
 		$_attr = $this->getAttributes ( $compiler, $args );
@@ -75,17 +75,18 @@ class Smarty_Internal_Compile_Cts extends Smarty_Internal_CompileBase {
 		$output .= " \$_smarty_tpl->tpl_vars['{$pname}_total']->value = \$_{$pname}_data['size'];\n";
 		if ($loop) {
 			$ItemVarName = '$' . $pname . '@';
+			$tplContent = $tpl->source->getContent();
 			// evaluates which Smarty variables and properties have to be computed
-			$usesPropFirst = strpos ( $tpl->source->content, $ItemVarName . 'first' ) !== false;
-			$usesPropLast = strpos ( $tpl->source->content, $ItemVarName . 'last' ) !== false;
-			$usesPropIndex = $usesPropFirst || strpos ( $tpl->source->content, $ItemVarName . 'index' ) !== false;
-			$usesPropIteration = $usesPropLast || strpos ( $tpl->source->content, $ItemVarName . 'iteration' ) !== false;
-			$usesPropTotal = $usesPropIteration || strpos ( $tpl->source->content, $ItemVarName . 'total' ) !== false;
+			$usesPropFirst = strpos ( $tplContent, $ItemVarName . 'first' ) !== false;
+			$usesPropLast = strpos ( $tplContent, $ItemVarName . 'last' ) !== false;
+			$usesPropIndex = $usesPropFirst || strpos ( $tplContent, $ItemVarName . 'index' ) !== false;
+			$usesPropIteration = $usesPropLast || strpos ( $tplContent, $ItemVarName . 'iteration' ) !== false;
+			$usesPropTotal = $usesPropIteration || strpos ( $tplContent, $ItemVarName . 'total' ) !== false;
 			
 			$output .= " \$_from = \$_{$pname}_data;\n";			
 			$output .= "if (!is_array(\$_from) && !is_object(\$_from)) { settype(\$_from, 'array');}\n";
 			if ($usesPropTotal) {
-				$output .= " \$_smarty_tpl->tpl_vars[$item]->total= \$_smarty_tpl->_count(\$_from);\n";
+				$output .= " \$_smarty_tpl->tpl_vars[$item]->total= count(\$_{$pname}_data);\n";
 			}
 			if ($usesPropIteration) {
 				$output .= " \$_smarty_tpl->tpl_vars[$item]->iteration=0;\n";

@@ -884,7 +884,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		} else {
 			log_warn('无法保存页面:' . var_export($form->getErrors(), true));
 
-			return $ajax ? NuiAjaxView::validate('PageForm', '请正确填写表单.', $form->getErrors()) : false;
+			return $ajax ? NuiAjaxView::validate('PageForm', '请正确填写表单.', $form->getErrors()) : $form->getErrors();
 		}
 	}
 
