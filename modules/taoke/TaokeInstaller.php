@@ -3,7 +3,9 @@
 class TaokeInstaller extends AppInstaller {
 	public function getVersionLists() {
 		$v ['1.0.0'] = '20161210001';
-
+		$v ['1.0.1'] = '20161210002';
+		$v ['1.0.2'] = '20161210003';
+		$v ['1.0.3'] = '20161210004';
 		return $v;
 	}
 
@@ -48,6 +50,19 @@ class TaokeInstaller extends AppInstaller {
 
 		return parent::uninstall();
 	}
+	public function upgradeTo20161210002($dialect){
+		dbupdate('{tbk_goods}')->set(['real_price'=>imv('price - discount')])->where(['use_price <='=>imv('price')])->exec();
+		dbupdate('{tbk_goods}')->set(['real_price'=>imv('price')])->where(['use_price >'=>imv('price')])->exec();
+		return true;
+	}
 
+	public function upgradeTo20161210003($dialect){
+
+		return true;
+	}
+	public function upgradeTo20161210004($dialect){
+
+		return true;
+	}
 
 }

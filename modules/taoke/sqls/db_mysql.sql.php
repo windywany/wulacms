@@ -42,3 +42,13 @@ $tables['1.0.0'][] = "CREATE TABLE `tbk_token` (
   `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '生成时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='淘宝客淘口令'";
+
+
+$tables['1.0.1'][] ="ALTER TABLE `tbk_goods`
+ADD COLUMN `real_price`  decimal(10,2) NOT NULL DEFAULT 0.00 COMMENT '折扣之后价格' AFTER `discount`";
+
+$tables['1.0.2'][] ="ALTER TABLE `tbk_goods`
+ADD COLUMN `reason`  varchar(255) NOT NULL DEFAULT 0 COMMENT '推荐理由' AFTER `coupon_url`";
+
+$tables['1.0.3'][] ="ALTER TABLE `tbk_goods`
+ADD COLUMN `token`  varchar(255) NOT NULL DEFAULT NULL COMMENT '淘口令' AFTER `reason`";

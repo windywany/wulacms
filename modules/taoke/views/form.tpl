@@ -105,8 +105,9 @@
             dataType:"json",
             data:{ logo:logo,content:content,turl:turl,user_id:user_id},
             success:function (data) {
+                console.log(data);
                 if(data.status==0){
-                    $('#token').val(data.msg);
+                    $('#token').val(content+data.msg[0]);
                     $('#token_div').show();
 
                 }else{

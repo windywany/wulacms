@@ -34,4 +34,13 @@ class TaokeHookImpl {
 	public static function on_destroy_cms_page($ids) {
 		dbdelete()->from('{tbk_goods}')->where(array('page_id IN' => $ids))->exec();
 	}
+	public static function build_page_common_query(\Query $query,$con){
+		if(isset($con['model']) && $con['model']=='taoke'){
+			$sortby = get_condition_value('sortby', $con);
+			if(strpos($sortby,'TBKG') !== false) {
+				$query->join('{tbk_goods} AS TBKG', 'TBKG.page_id = CP.id');
+			}
+		}
+		return $query;
+	}
 }
