@@ -15,12 +15,16 @@ class Createtbk {
 	    {
 		    return ['status'=>1,'msg'=>'内容，url必填'];
 	    }
-	    $appkey = '23553049';
-	    $secret = '1a28c9927814ec04b49cc3ded288306c';
+	    $appkey = cfg('appkey@taoke','');
+	    $secret = cfg('appsecret@taoke','');
+	    if($appkey==''||$secret=='')
+	    {
+		    return ['status'=>1,'msg'=>'appkey和secretkey不可为空'];
+	    }
 	    date_default_timezone_set('Asia/Shanghai');
 	    $c = new \TopClient();
-	    $c->appkey = cfg('appkey@taoke',$appkey);
-	    $c->secretKey = cfg('appsecret@taoke',$secret);
+	    $c->appkey =  $appkey;
+	    $c->secretKey = $secret;
 	    $req = new \WirelessShareTpwdCreateRequest();
 	    $tpwd_param = new \IsvTpwdInfo();
 	    $tpwd_param->ext="{\"xx\":\"xx\"}";

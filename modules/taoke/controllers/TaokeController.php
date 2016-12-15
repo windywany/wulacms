@@ -114,6 +114,9 @@ class TaokeController extends Controller {
 		if($data){
 			$tbk = new \taoke\classes\Createtbk();
 			$res = $tbk->create($data['title'],$data['goods_url'],$data['page_id']);
+			if($res['status'] == 1){
+				return NuiAjaxView::error($res['msg']);
+			}
 			$token = $res['msg'];
 			if($token){
 				dbupdate('{tbk_goods}')->set(['token'=>$token])->where(['page_id'=>$id])->exec();
