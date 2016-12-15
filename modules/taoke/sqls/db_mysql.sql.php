@@ -51,4 +51,4 @@ $tables['1.0.2'][] ="ALTER TABLE `tbk_goods`
 ADD COLUMN `reason`  varchar(255) NOT NULL DEFAULT 0 COMMENT '推荐理由' AFTER `coupon_url`";
 
 $tables['1.0.3'][] ="ALTER TABLE `tbk_goods`
-ADD COLUMN `token`  varchar(255) NOT NULL DEFAULT NULL COMMENT '淘口令' AFTER `reason`";
+ADD COLUMN `token`  varchar(255) NOT NULL DEFAULT '' COMMENT '淘口令' AFTER `reason`";
