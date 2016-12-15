@@ -43,10 +43,11 @@
                     data-confirm="你真的要特荐选中的文章吗?"
             ><i class="glyphicon glyphicon-ok-sign"></i> 批量特荐
             </button>
-            <button  type="button"  class="btn  btn-danger"
+            <button  type="button"  id="import_excel" class="btn  btn-danger"
                href="{'taoke/import/index'|app}" target="ajax"
-               data-confirm="你确定要导入excel吗?">
+               data-confirm="你确定要导入excel吗?" {if $disable}disabled="disabled"{/if}>
                 <i class="glyphicon glyphicon-check"></i>excel导入</button>
+            <input type="hidden" id="disbtn">
 		</div>		
 	</div>
 </div>
@@ -123,5 +124,8 @@
         var id = arg.id;
         $('#gbtn-'+id).remove();
         $('#tid-'+id).html('淘口令:'+arg.token);
-    }
+    };
+    $('#disbtn').click(function () {
+        $('#import_excel').attr('disabled',"true");
+    });
 </script>

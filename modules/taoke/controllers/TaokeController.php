@@ -13,6 +13,10 @@ class TaokeController extends Controller {
 		$data ['canDelPage'] = icando ( 'd:cms/page' );
 		$data ['canAddPage'] = icando ( 'c:cms/page' );
 		$data ['channels'] = ChannelForm::getChannelTree ( 'taoke', false, true );
+
+		if(date('Y-m-d',time()) == dbselect('value')->from('{preferences}')->where(['preference_group'=>'taoke','name'=>'endtime'])->get('value')){
+			$data['disable'] = 1;
+		}
 		return view ( 'taoke.tpl', $data );
 	}
 
