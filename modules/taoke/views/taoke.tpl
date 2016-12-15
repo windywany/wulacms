@@ -96,13 +96,13 @@
                             <th width="25"></th>
 							<th width="30"><input type="checkbox" class="grp"/></th>
 							<th >商品</th>
-							<th width="150" data-sort="tbk.comission,a" class="hidden-xs hidden-sm">价格/佣金</th>
-							<th width="100" data-sort="tbk.coupon_price,a" class="hidden-xs hidden-sm">优惠券价格</th>
-                            <th width="120" data-sort="tbk.real_price,a" class="hidden-xs hidden-sm" >折后价格</th>
-                            <th width="90"  data-sort="tbk.rate,a"class="hidden-xs hidden-sm">收入比率</th>
-                            <th width="120" data-sort="tbk.coupon_remain,a" class="hidden-xs hidden-sm">优惠券/剩余</th>
-                            <th width="100" data-sort="tbk.coupon_start,a" class="hidden-xs hidden-sm">开始时间</th>
-                            <th width="100" data-sort="tbk.coupon_stop,a" class="hidden-xs hidden-sm">结束时间</th>
+							<th width="120" data-sort="tbk.comission,a">价格/佣金</th>
+							<th width="100" data-sort="tbk.coupon_price,a">优惠券价格</th>
+                            <th width="90" data-sort="tbk.real_price,a" >折后价格</th>
+                            <th width="80"  data-sort="tbk.rate,a">收入比率</th>
+                            <th width="100" data-sort="tbk.coupon_remain,a">优惠券/剩余</th>
+                            <th width="100" data-sort="tbk.coupon_start,a">开始时间</th>
+                            <th width="100" data-sort="tbk.coupon_stop,a">结束时间</th>
 							<th width="80">操作</th>
 						</tr>
 					</thead>
@@ -117,8 +117,7 @@
 <script type="text/javascript">
     nUI.ajaxCallbacks.setTbkToken = function (arg) {
         var id = arg.id;
-        console.log(arg);
         $('#gbtn-'+id).remove();
-        $('#tid-'+id).html(arg.token);
+        $('#tid-'+id).html('淘口令:'+arg.token);
     }
 </script>

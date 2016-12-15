@@ -52,7 +52,6 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 
 		$request = \Request::getInstance();
 		$i       = 2;
-		$time    = time() - 10;
 		while (true) {
 			$data = $this->getData($defs, $sheet, $i);
 			if (empty($data['goods_id'])) {
@@ -62,12 +61,8 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 			if ($channel) {
 				$data['channel'] = $channel;
 			}
-			$data['model'] = 'taoke';
-			$data['type']  = 'page';
-			$page_id       = dbselect()->from('{tbk_goods}')->where(['goods_id' => $data['goods_id']])->get('page_id');
-			if ($page_id) {
-				$data['id'] = $page_id;
-			}
+			$data['model']     = 'taoke';
+			$data['type']      = 'page';
 			$coupon_price      = $data['coupon_price'];
 			$data['use_price'] = 0;
 			if (preg_match('#.+?(\d+).+?(\d+)#', $coupon_price, $ms)) {
@@ -77,6 +72,11 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 				$data['discount'] = $ms[1];
 			} else {
 				$data['discount'] = 0;
+			}
+			if (floatval($data['use_price']) <= floatval($data['price'])) {
+				$data['real_price'] = $data['price'] - $data['discount'];
+			} else {
+				$data['real_price'] = $data['price'];
 			}
 			$request->addUserData($data, true);
 			$id = \CmsPage::save('page', 'taoke', null, false);

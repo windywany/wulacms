@@ -36,12 +36,8 @@ class ImportTask extends ArtisanDaemonTask {
 			if ($channel) {
 				$data['channel'] = $channel;
 			}
-			$data['model'] = 'taoke';
-			$data['type']  = 'page';
-			$page_id       = dbselect()->from('{tbk_goods}')->where(['goods_id' => $data['goods_id'], 'coupon_price' => $data['coupon_price']])->get('page_id');
-			if ($page_id) {
-				$data['id'] = $page_id;
-			}
+			$data['model']     = 'taoke';
+			$data['type']      = 'page';
 			$coupon_price      = $data['coupon_price'];
 			$data['use_price'] = 0;
 			if (preg_match('#.+?(\d+).+?(\d+)#', $coupon_price, $ms)) {
@@ -51,6 +47,11 @@ class ImportTask extends ArtisanDaemonTask {
 				$data['discount'] = $ms[1];
 			} else {
 				$data['discount'] = 0;
+			}
+			if (floatval($data['use_price']) <= floatval($data['price'])) {
+				$data['real_price'] = $data['price'] - $data['discount'];
+			} else {
+				$data['real_price'] = $data['price'];
 			}
 			$request->addUserData($data, true);
 			$id = \CmsPage::save('page', 'taoke', null, false);
@@ -102,12 +103,6 @@ class ImportTask extends ArtisanDaemonTask {
 		$parma->is_topic_channel    = 0;
 		$this->importer             = new ChannelImporter($parma);
 		$this->time                 = time();
-	}
-
-	protected function tearDown(&$options) {
-		$time = $this->time;
-		dbdelete()->from('{cms_page}')->where(['update_time <' => $time, 'model' => 'taoke'])->exec();
-		dbdelete()->from('{tbk_goods}')->where(['update_time <' => $time])->exec();
 	}
 
 	private function getData(\PHPExcel_Worksheet $sheet, $i) {
