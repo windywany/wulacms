@@ -1552,12 +1552,21 @@ function get_thumbnail_filename($filename, $w, $h, $sep = '-') {
  */
 function the_thumbnail_src($src, $w, $h) {
 	static $img_s_url = false;
-	if (!$img_s_url) {
-		$img_s_url = trailingslashit(cfg('media_url@media', BASE_URL));
+	$src = get_thumbnail_filename($src, $w, $h);
+	if (preg_match('#^(/|http|ftp)s?://.+#i', $src)) {
+		return $src;
 	}
-	$thumbfile = get_thumbnail_filename($src, $w, $h);
 
-	return $img_s_url . $thumbfile;
+	if ($img_s_url === false) {
+		$img_s_url = trailingslashit(cfg('media_url@media', BASE_URL));
+		$img_s_url = explode(',', $img_s_url);
+	}
+
+	if (count($img_s_url) > 1) {
+		return $img_s_url [ array_rand($img_s_url) ] . $src;
+	} else {
+		return $img_s_url [0] . $src;
+	}
 }
 
 /**
