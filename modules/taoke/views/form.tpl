@@ -56,7 +56,7 @@
                                     <section class="col col-3">
                                         <label class="label">淘口令主题标题uid</label>
                                         <label class="input">
-                                            <input value="" id="tbk_user_id"  placeholder="请填写user_id" type="text">
+                                            <input value="" id="tbk_user_id"  placeholder="请填写大于0的user_id" type="text">
                                         </label>
                                     </section>
                                 </div>
@@ -111,7 +111,7 @@
                     $('#token_div').show();
 
                 }else{
-                    alert('淘口令未生成');
+                    alert(data.msg[0]);
                 }
 
 
