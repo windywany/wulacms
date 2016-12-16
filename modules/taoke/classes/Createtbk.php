@@ -43,9 +43,9 @@ class Createtbk {
 			$data['create_time'] = time();
 			dbinsert($data)->into('{tbk_token}')->exec();
 
-			return ['status' => 0, 'msg' => $resp->model];
+			return ['status' => 0, 'msg' => $resp->model.''];
 		} else {
-			return ['status' => 1, 'msg' => $resp->sub_msg];
+			return ['status' => 1, 'msg' => $resp->sub_msg.''];
 		}
 
 	}

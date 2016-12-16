@@ -107,11 +107,11 @@
             success:function (data) {
                 console.log(data);
                 if(data.status==0){
-                    $('#token').val(content+data.msg[0]);
+                    $('#token').val(content+data.msg);
                     $('#token_div').show();
 
                 }else{
-                    alert(data.msg[0]);
+                    alert(data.msg);
                 }
 
 
