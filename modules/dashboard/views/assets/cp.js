@@ -1147,6 +1147,7 @@ function loadURL(url, container) {
 					// end if
 				},
 				success : function(data) {
+					$(window).trigger('unload-container');
 					// dump data to container
 					container.css({
 						opacity : '0.0'
@@ -1160,6 +1161,7 @@ function loadURL(url, container) {
 					$('#ribbon i.fa-refresh').removeClass('fa-spin');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
+					$(window).trigger('unload-container');
 					var msg = checkResponse(xhr, true);
 					container.html('<h4 class="ajax-loading-error"><i class="fa fa-warning txt-color-orangeDark"></i> Error!.</h4><div>'
 									+ msg + '</div>');

@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 /*
  * the entry of artisan script

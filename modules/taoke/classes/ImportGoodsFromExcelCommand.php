@@ -52,10 +52,14 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 
 		$request = \Request::getInstance();
 		$i       = 2;
+		$date    = date('Y-m-d');
 		while (true) {
 			$data = $this->getData($defs, $sheet, $i);
 			if (empty($data['goods_id'])) {
 				break;
+			}
+			if ($data['coupon_stop'] < $date) {
+				continue;
 			}
 			$channel = $importer->importByNames($data['channel']);
 			if ($channel) {
@@ -87,6 +91,7 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 			}
 			$i++;
 		}
+		rename($file, $file . '.bak');
 
 		return 0;
 	}

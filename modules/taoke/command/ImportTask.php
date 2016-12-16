@@ -25,10 +25,14 @@ class ImportTask extends ArtisanDaemonTask {
 	}
 
 	protected function execute($options) {
+		$date    = date('Y-m-d');
 		$i       = $this->taskId * 1000 + 2;
 		$request = \Request::getInstance();
 		for ($j = 0; $j <= 1000; $j++) {
 			$data = $this->getData($this->sheet, $i + $j);
+			if ($data['coupon_stop'] < $date) {
+				continue;
+			}
 			if (empty($data['goods_id'])) {
 				break;
 			}
@@ -65,6 +69,17 @@ class ImportTask extends ArtisanDaemonTask {
 
 	protected function getOpts() {
 		return ['file::excel file' => 'the excel file contains goods information.'];
+	}
+
+	protected function tearDown(&$options) {
+		if (isset($options['file'])) {
+			$file = $options['file'];
+		} else {
+			$file = $this->opt(-1, 'tbk.xlsx');
+		}
+		if (is_file($file)) {
+			rename($file, $file . '.bak');
+		}
 	}
 
 	protected function setUp(&$options) {

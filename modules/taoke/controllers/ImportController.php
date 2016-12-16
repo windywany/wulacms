@@ -11,62 +11,48 @@ class ImportController extends \Controller {
 	protected $checkUser = true;
 
 	public function index() {
-		$client = new \GearmanClient();
-		$client->addServer("127.0.0.1");
+		$client = null;
+		try {
+			$client = new \GearmanClient();
+			$client->addServer("127.0.0.1");
+			if (isset($_SESSION['p_excel_jid'])) {
+				$status = $client->jobStatus($_SESSION['p_excel_jid']);
+				if ($status && $status[0] && $status[1]) {
+					return \NuiAjaxView::click('#disbtn', '系统正在导入数据,请稍等.');
+				}
+			}
+			$jobH = $client->doBackground('parse-excel', 'gearman task');
+			if ($jobH) {
+				$_SESSION['p_excel_jid'] = $jobH;
+
+				return \NuiAjaxView::callback('startImport', [], '系统已经开始导入商品，请稍等.');
+			} else {
+				return \NuiAjaxView::error('导入失败，无法创建导入任务.');
+			}
+		} catch (\GearmanException $e) {
+			return \NuiAjaxView::error($e->getMessage());
+		}
+	}
+
+	public function checkstatus() {
 		if (isset($_SESSION['p_excel_jid'])) {
-			$job_res = $client->jobStatus($_SESSION['p_excel_jid']);
-			if ($job_res[0]) {
-				return \NuiAjaxView::click('#disbtn', '数据导入正在执行');
-			} else {
-				$add_res = $this->add();
-				if ($add_res['status'] == 0) {
-					return \NuiAjaxView::click('#disbtn', '数据导入成功');
+			$jh = $_SESSION['p_excel_jid'];
+			try {
+				$client = new \GearmanClient();
+				$client->addServer("127.0.0.1");
+				$status = $client->jobStatus($jh);
+				if (!$status || !$status[0] || !$status[1]) {
+					$_SESSION['p_excel_jid'] = null;
+
+					return ['done' => true, 'msg' => '商品导入完成.'];
 				} else {
-					return \NuiAjaxView::error('过期时间设置失败');
+					return ['done' => false];
 				}
+			} catch (\GearmanException $e) {
+				log_error($e->getMessage(), 'gearman');
 			}
-
-		} else {
-
-			$job                     = $client->addTaskBackground('parse-excel', 'gearman task');
-			$_SESSION['p_excel_jid'] = $job->jobHandle();
-			$client->runTasks();
-			//return \NuiAjaxView::error('后台正在导入中');
-			if ($client->returnCode() != GEARMAN_SUCCESS) {
-				return \NuiAjaxView::error('后台正在导入中');
-			} else {
-				$add_res = $this->add();
-				if ($add_res['status'] == 0) {
-					return \NuiAjaxView::click('#disbtn', '数据导入成功');
-				} else {
-					return \NuiAjaxView::error('过期时间设置失败');
-				}
-			}
-
 		}
+
+		return ['done' => true];
 	}
-
-	private function add() {
-		$today = date('Y-m-d', time());
-		$res   = dbselect('*')->from('{preferences}')->where(['preference_group' => 'taoke', 'name' => 'endtime'])->get();
-		if (!$res) {
-			$data['user_id']          = 1;
-			$data['update_time']      = time();
-			$data['preference_group'] = 'taoke';
-			$data['name']             = 'endtime';
-			$data['value']            = $today;
-			$up_res                   = dbinsert($data)->into('{preferences}')->exec();
-		} else {
-			$up_res = dbupdate('{preferences}')->set(['value' => $today])->where(['preference_group' => 'taoke', 'name' => 'endtime'])->exec();
-		}
-		if ($up_res) {
-			unset($_SESSION['p_excel_jid']);
-
-			return ['status' => 0];
-		} else {
-
-			return ['status' => 1];
-		}
-	}
-
 }

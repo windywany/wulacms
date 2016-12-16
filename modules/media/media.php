@@ -14,7 +14,7 @@ bind('parse_mimage_field_value', '&MimageFieldWidget');
 bind('after_load_page_fields', 'hook_for_media_after_load_page_fields@hooks/page_checkbox_options');
 if (bcfg('thumbnail@media')) {
 	bind('before_parse_url', function ($url) {
-		if (extension_loaded('imagick') && preg_match('#(.+)/(.+?)-([1-9]\d*)x([1-9]\d*)\.(png|jpeg|jpg|gif)#i', $url, $ms)) {
+		if (extension_loaded('imagick') && preg_match('#^(.+)/(.+?)-([1-9]\d*)x([1-9]\d*)\.(png|jpeg|jpg|gif)$#i', $url, $ms)) {
 			$save_path     = WEB_ROOT . $ms[0];
 			$origin        = $ms[1] . '/' . $ms[2] . '.' . $ms[5];
 			$target_width  = $ms[3];
@@ -28,7 +28,9 @@ if (bcfg('thumbnail@media')) {
 			if (is_file($orig_file)) {
 				$image = new Imagick($orig_file);
 				$image->thumbnailImage($target_width, $target_height, bcfg('bestfill@media'), true);
-				$image->writeImage($save_path);
+				if (!file_exists($orig_file)) {
+					$image->writeImage($save_path);
+				}
 				$mime = $image->getImageMimeType();
 				header('Content-Type: ' . $mime);
 				echo $image->getImageBlob();
