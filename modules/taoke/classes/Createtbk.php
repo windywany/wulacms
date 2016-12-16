@@ -11,7 +11,7 @@ namespace taoke\classes;
 
 class Createtbk {
 	public function create($text, $url, $user_id = '', $logo = '') {
-		if ($text == '' || $url == '' || $user_id == '') {
+		if ($text == '' || $url == '') {
 			return ['status' => 1, 'msg' => '内容，url,uid必填'];
 		}
 		$appkey = cfg('appkey@taoke', '');
@@ -20,17 +20,22 @@ class Createtbk {
 			return ['status' => 1, 'msg' => 'appkey和secretkey不可为空'];
 		}
 		date_default_timezone_set('Asia/Shanghai');
-		$c               = new \TopClient();
-		$c->appkey       = $appkey;
-		$c->secretKey    = $secret;
-		$req             = new \WirelessShareTpwdCreateRequest();
-		$tpwd_param      = new \IsvTpwdInfo();
+		$c            = new \TopClient();
+		$c->appkey    = $appkey;
+		$c->secretKey = $secret;
+		$req          = new \WirelessShareTpwdCreateRequest();
+		$tpwd_param   = new \IsvTpwdInfo();
 		if ($logo) {
 			$tpwd_param->logo = $logo;
 		}
-		$tpwd_param->user_id = $user_id;
-		$tpwd_param->text    = $text;
-		$tpwd_param->url     = $url;
+		if (!$user_id) {
+			$tpwd_param->user_id = cfg('user_id@taoke', '');
+		} else {
+			$tpwd_param->user_id = $user_id;
+		}
+
+		$tpwd_param->text = $text;
+		$tpwd_param->url  = $url;
 		$req->setTpwdParam(json_encode($tpwd_param));
 		$resp = $c->execute($req);
 		if ($resp->model) {
@@ -43,9 +48,9 @@ class Createtbk {
 			$data['create_time'] = time();
 			dbinsert($data)->into('{tbk_token}')->exec();
 
-			return ['status' => 0, 'msg' => $resp->model.''];
+			return ['status' => 0, 'msg' => $resp->model . ''];
 		} else {
-			return ['status' => 1, 'msg' => $resp->sub_msg.''];
+			return ['status' => 1, 'msg' => $resp->sub_msg . ''];
 		}
 
 	}

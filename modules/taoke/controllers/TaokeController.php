@@ -119,7 +119,7 @@ class TaokeController extends Controller {
 		$data = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
 		if ($data) {
 			$tbk = new \taoke\classes\Createtbk();
-			$res = $tbk->create($data['title'], $data['goods_url'], $data['page_id']);
+			$res = $tbk->create($data['title'], $data['goods_url'], cfg('user_id@taoke', ''));
 			if ($res['status'] == 1) {
 				return NuiAjaxView::error($res['msg']);
 			}
