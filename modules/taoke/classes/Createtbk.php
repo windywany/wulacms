@@ -25,7 +25,6 @@ class Createtbk {
 		$c->secretKey    = $secret;
 		$req             = new \WirelessShareTpwdCreateRequest();
 		$tpwd_param      = new \IsvTpwdInfo();
-		$tpwd_param->ext = "{\"xx\":\"xx\"}";
 		if ($logo) {
 			$tpwd_param->logo = $logo;
 		}
