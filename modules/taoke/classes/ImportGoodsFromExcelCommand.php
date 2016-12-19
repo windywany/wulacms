@@ -78,7 +78,7 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 				$data['discount'] = 0;
 			}
 			if (floatval($data['use_price']) <= floatval($data['price'])) {
-				$data['real_price'] = $data['price'] - $data['discount'];
+				$data['real_price'] = number_format(floatval($data['price']) - floatval($data['discount']), 2);
 			} else {
 				$data['real_price'] = $data['price'];
 			}
