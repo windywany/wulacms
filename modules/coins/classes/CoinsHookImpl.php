@@ -31,6 +31,9 @@ class CoinsHookImpl {
 		$acl->addOperate('a', '添加');
 		$acl->addOperate('u', '修改');
 		$acl->addOperate('d', '删除');
+		$acl = $manager->getResource('coins/preference', '类型管理');
+		$acl->addOperate('r', '列表', '', true);
+		$acl->addOperate('u', '修改');
 
 		return $manager;
 	}

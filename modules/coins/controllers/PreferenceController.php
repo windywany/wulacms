@@ -6,7 +6,7 @@
  */
 class PreferenceController extends  DefaultPreferencePage {
 	protected $checkUser = true;
-	protected $acls      = array('index' => 'gm:coins/preference', 'index_post' => 'gm:coins/preference', 'custom' => 'gm:coins/preference', 'custom_post' => 'gm:coins/preference', 'delf' => 'gm:system/preference');
+	protected $acls      = array('index' => 'r:coins/preference', 'index_post' => 'ru:coins/preference',  'delf' => 'r:conis/preference');
 
 	protected function getPreferenceGroup($type) {
 		return 'coins';
