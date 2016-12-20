@@ -263,3 +263,10 @@ $tables['4.0.0'][] = "CREATE TABLE IF NOT EXISTS `{prefix}services` (
     PRIMARY KEY (`id`),
     UNIQUE INDEX `UDX_SERVICE` (`service` ASC)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=UTF8 COMMENT='服务列表'";
+
+$tables['4.1.0'][] = "CREATE TABLE IF NOT EXISTS `{prefix}user_table` (
+    `uid` INT UNSIGNED NOT NULL COMMENT '用户编号',
+    `table` VARCHAR(48) NOT NULL COMMENT '表格ID',
+    `columns` TEXT NULL COMMENT '显示列表',
+    PRIMARY KEY (`uid` , `table`)
+)  ENGINE=INNODB DEFAULT CHARACTER SET=UTF8 COMMENT='用户表格列'";

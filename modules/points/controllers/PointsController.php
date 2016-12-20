@@ -141,10 +141,10 @@ class PointsController extends \Controller {
 		return view('points/index_data.tpl', $data);
 	}
 
-	public function record($mid = 0, $type = '') {
+	public function record($mid = '', $type = '') {
 		$p_type            = new  \points\models\MemberPointsTypeModel();
 		$data              = [];
-		$data['mid']       = intval($mid);
+		$data['mid']       = $mid;
 		$data['type']      = trim($type);
 		$data['pageTitle'] = '积分详情';
 		$data['types']     = $p_type->get_all();
@@ -162,7 +162,7 @@ class PointsController extends \Controller {
 	 * @return  mixed view
 	 */
 	public function re_data($_cp = 1, $_lt = 20, $_sf = 'id', $_od = 'd', $_ct = 0) {
-		$mid   = rqst('mid');
+		$mid   = irqst('mid');
 		$type  = rqst('type');
 		$data  = [];
 		$where = [];

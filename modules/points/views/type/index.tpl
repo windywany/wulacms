@@ -50,7 +50,7 @@
                         <th width="20" class="hidden-xs hidden-sm"></th>
                         <th width="30"><input type="checkbox" class="grp"/></th>
                         <th width="60" data-sort="id,d">ID</th>
-                        <th width="80" class="hidden-xs hidden-sm">积分类型名称</th>
+                        <th width="120" class="hidden-xs hidden-sm">类型名称</th>
                         <th width="120" class="hidden-xs hidden-sm">积分类型</th>
                         <th width="100" class="hidden-xs hidden-sm">系统预留</th>
                         <th class="hidden-xs hidden-sm">备注</th>

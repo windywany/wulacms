@@ -11,7 +11,7 @@
 		<article class="col-sm-12">
 			<div class="panel panel-default">
 				<div class="panel-body no-padding">
-				  	<form data-widget="nuiSearchForm" data-for="#page-table" class="smart-form">
+				  	<form data-widget="nuiSearchForm" data-for="#pointsTable" class="smart-form">
 				  		<fieldset>
 				  			<div class="row">
 
@@ -49,7 +49,7 @@
 				  	</form>
 				</div>
 				<table
-					id="page-table"
+					id="pointsTable"
 					data-widget="nuiTable"
 					data-auto="true"
 					data-source="{'points/points/data/'|app}"
@@ -61,17 +61,17 @@
 							<th width="20" class="hidden-xs hidden-sm"></th>
 							<th width="30"><input type="checkbox" class="grp"/></th>
 							<th width="60" data-sort="id,d">ID</th>
-							<th width="80" class="hidden-xs hidden-sm">会员名(ID)</th>
-							<th width="120" class="hidden-xs hidden-sm">总积分</th>
-							<th width="100" class="hidden-xs hidden-sm">可用积分</th>
-							<th width="100" class="hidden-xs hidden-sm">已用积分</th>
-							<th width="100" class="hidden-xs hidden-sm">积分类型</th>
-							<th width="280" class='text-center'>操作</th>
+							<th>会员名(ID)</th>
+							<th width="120">总积分</th>
+							<th width="100">可用积分</th>
+							<th width="100">已用积分</th>
+							<th width="100">积分类型</th>
+							<th width="80" class='text-center'></th>
 						</tr>
 					</thead>
 				</table>
 				<div class="panel-footer">
-					<div data-widget="nuiPager" data-for="#page-table" data-limit="20"></div>
+					<div data-widget="nuiPager" data-for="#pointsTable" data-limit="20"></div>
 				</div>
 			</div>
 		</article>

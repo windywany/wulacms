@@ -33,4 +33,23 @@ class PointsHookImpl {
 
 		return $manager;
 	}
+
+	public static function get_columns_of_pointsRecords($cols) {
+		$cols['subject'] = ['name' => '项目', 'order' => 90, 'show' => true, 'width' => 100];
+		$cols['expired'] = ['name' => '是否过期', 'order' => 91, 'show' => true, 'width' => 100, 'render' => function ($v, $data, $e) {
+			if ($v) {
+				return '是';
+			}
+
+			return '否';
+		}];
+
+		$cols['expire_time'] = ['name' => '过期时间', 'order' => 92, 'show' => false, 'width' => 100, 'render' => function ($v, $data, $e) {
+			return date('Y-m-d', $v);
+		}];
+
+		$cols['note'] = ['name' => '备注', 'order' => 99, 'show' => false];
+
+		return $cols;
+	}
 }

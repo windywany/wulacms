@@ -232,7 +232,7 @@ class MembersController extends Controller {
 			$total = $rows->count('M.mid');
 		}
 
-		$data                     = array('total' => $total, 'rows' => $rows);
+		$data                     = array('total' => $total, 'rows' => $rows->toArray());
 		$data ['groups']          = dbselect('group_id,group_name')->from('{user_group}')->where(['type' => 'vip'])->toArray('group_name', 'group_id');
 		$data ['canEditMember']   = icando('u:account/member');
 		$data ['canDelMember']    = icando('d:account/member');

@@ -9,7 +9,34 @@ bind('on_save_user_passport_vip', '&PassportPluginImpl', 1, 2);
 bind('get_sms_templates', '&\passport\classes\BindMobileSms');
 bind('get_sms_templates', '&\passport\classes\ResetPasswdSms');
 bind('get_sms_templates', '&passport\classes\RegCodeTemplate');
+bind('get_columns_of_member-table', function ($cols) {
+	$cols['group_id']     = ['name' => '组(等级)', 'show' => true, 'width' => 100, 'sort' => 'M.group_id,d', 'order' => 10, 'render' => function ($v, $data, $groups) {
+		return $groups[ $v ];
+	}];
+	$cols['contact']      = ['name' => '联系方式', 'show' => true, 'width' => 120, 'order' => 11, 'render' => function ($v, $data, $extras) {
+		$html = '';
+		if ($data['email']) {
+			$html .= '<p><a href="mailto:' . $data['email'] . '">' . $data['email'] . '</a></p>';
+		}
+		if ($data['phone']) {
+			$html .= '<p><i class="fa fa-mobile-phone"></i>' . $data['phone'] . '</p>';
+		}
 
+		return $html;
+	}];
+	$cols['group_expire'] = ['name' => '过期日期', 'show' => false, 'sort' => 'M.group_expire,d', 'order' => 13, 'width' => 100, 'render' => function ($v, $data, $extra) {
+		if (!$v) {
+			return '久不过期';
+		}
+
+		return date('Y-m-d', $v);
+	}];
+	$cols['registered']   = ['name' => '注册日期', 'show' => true, 'sort' => 'M.registered,d', 'order' => 12, 'width' => 100, 'render' => function ($v, $data, $extra) {
+		return date('Y-m-d', $v);
+	}];
+
+	return $cols;
+}, 1);
 /**
  * 取会员通行证.
  *

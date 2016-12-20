@@ -147,4 +147,31 @@ function smarty_modifiercompiler_catalogname($params, $compiler) {
 
 	return 'CatalogForm::cataname(' . $params [0] . ',' . $c . ',' . $n . ')';
 }
+
+function smarty_modifiercompiler_tableset($params, $compiler) {
+	$id = $params [0];
+
+	return 'system\model\UserTableModel::echoSetButton(' . $id . ')';
+}
+
+function smarty_modifiercompiler_tablehead($params, $compiler) {
+	$id = $params [0];
+
+	return 'system\model\UserTableModel::echoHead(' . $id . ')';
+}
+
+function smarty_modifiercompiler_tablerow($params, $compiler) {
+	$id     = $params [0];
+	$data   = isset($params[1]) ? $params[1] : '[]';
+	$extras = isset($params[2]) ? $params[2] : '[]';
+
+	return 'system\model\UserTableModel::echoRow(' . $id . ',' . $data . ',' . $extras . ')';
+}
+
+function smarty_modifiercompiler_tablespan($params, $compiler) {
+	$id   = $params [0];
+	$data = isset($params[1]) ? $params[1] : 0;
+
+	return 'system\model\UserTableModel::colspan(' . $id . ',' . $data . ')';
+}
 // end of system.php

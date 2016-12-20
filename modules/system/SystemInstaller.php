@@ -2,7 +2,8 @@
 /*
  * KissCms
  */
-defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
+defined('KISSGO') or exit ('No direct script access allowed');
+
 /**
  * 验证程序安装程序.
  *
@@ -13,15 +14,19 @@ class SystemInstaller extends AppInstaller {
 	public function getAuthor() {
 		return 'Leo Ning';
 	}
+
 	public function getDscription() {
 		return '运行时环境.';
 	}
+
 	public function getName() {
 		return '核心应用';
 	}
+
 	public function getWebsite() {
 		return 'http://www.wulacms.com/';
 	}
+
 	public function getVersionLists() {
 		$versions ['0.0.1'] = '2014081300000';
 		$versions ['0.0.2'] = '2014081300001';
@@ -55,32 +60,39 @@ class SystemInstaller extends AppInstaller {
 		$versions ['3.2.0'] = '2016082500028'; // controller支持命名空间
 		$versions ['3.3.0'] = '2016082500028'; // 组支持等级，升级所需要金币，组别名
 		$versions ['4.0.0'] = '2016121900029'; // 服务支持
+		$versions ['4.1.0'] = '2016122000030'; // 自定义要表格显示的列
 		return $versions;
 	}
+
 	public function upgradeTo2014081300003($dialect) {
-		dbdelete ()->setDialect ( $dialect )->from ( '{user_role_acl}' )->exec ();
+		dbdelete()->setDialect($dialect)->from('{user_role_acl}')->exec();
+
 		return true;
 	}
+
 	public function upgradeTo2014101100009($dialect) {
 		// 取所有栏目数据
-		$groups = dbselect ( 'upid,group_id' )->setDialect ( $dialect )->from ( '{user_group}' )->toArray ();
+		$groups = dbselect('upid,group_id')->setDialect($dialect)->from('{user_group}')->toArray();
 		// 遍历树形数据
-		$iterator = new TreeIterator ( $groups, 0, 'group_id', 'upid' );
-		$nodes = $iterator->getNodes ();
-		unset ( $nodes [0] );
-		foreach ( $nodes as $id => $node ) {
-			$parents = $node->getParentsIdList ( 'group_id' );
+		$iterator = new TreeIterator ($groups, 0, 'group_id', 'upid');
+		$nodes    = $iterator->getNodes();
+		unset ($nodes [0]);
+		foreach ($nodes as $id => $node) {
+			$parents = $node->getParentsIdList('group_id');
 			if ($parents) {
-				$parents = implode ( ',', $parents );
+				$parents = implode(',', $parents);
 			} else {
 				$parents = '';
 			}
-			dbupdate ( '{user_group}' )->setDialect ( $dialect )->set ( array ('parents' => $parents ) )->where ( array ('group_id' => $id ) )->exec ();
+			dbupdate('{user_group}')->setDialect($dialect)->set(array('parents' => $parents))->where(array('group_id' => $id))->exec();
 		}
+
 		return true;
 	}
+
 	public function upgradeTo2016032300027($dialect) {
-		TreeIterator::updateTreeNode ( '{catalog}', array ('deleted' => 0 ), 'id', 'upid', 'parents', 'sub', $dialect );
+		TreeIterator::updateTreeNode('{catalog}', array('deleted' => 0), 'id', 'upid', 'parents', 'sub', $dialect);
+
 		return true;
 	}
 }
