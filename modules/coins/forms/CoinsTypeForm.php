@@ -3,9 +3,8 @@
 namespace coins\forms;
 
 /**
- * Created by PhpStorm.
- * User: Peter
- * Date: 2016/9/5
+ * Created by FLY.
+ * Date: 2016/12/20
  * Time: 18:44
  */
 class CoinsTypeForm extends \AbstractForm {
@@ -30,3 +29,4 @@ class CoinsTypeForm extends \AbstractForm {
 		return true;
 	}
 }
+

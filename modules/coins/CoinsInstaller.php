@@ -15,6 +15,7 @@ class CoinsInstaller extends AppInstaller {
 
 	public function getVersionLists() {
 		$v ['1.0.0'] = '20160905001';
+		$v ['1.0.1'] = '20161220002';/*修正字段*/
 
 		return $v;
 	}
