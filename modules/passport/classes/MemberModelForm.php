@@ -10,7 +10,7 @@ class MemberModelForm extends AbstractForm {
 	private $group_id       = array('rules' => array('digits' => '非法的用户组.'));
 	private $nickname       = array('rules' => array('callback(@checkNickname)' => '昵称不可用'));
 	private $status         = array('type' => 'int');
-	private $invite_code    = array('rules' => array('callback(@checkInviteCode)' => '邀请人不存在.'));
+	private $invite_mid     = array('rules' => array('callback(@checkInviteCode,mid)' => '邀请人不存在或邀请人是自己.'));
 	private $recommend_code = array('rules' => array('callback(@checkRecommendCode,mid)' => '推荐码已经存在.'));
 	private $salt           = array();
 
@@ -107,7 +107,10 @@ class MemberModelForm extends AbstractForm {
 		if (empty ($value)) {
 			return true;
 		}
-		if (!dbselect()->from('{member}')->where(array('recommend_code' => $value))->exist('mid')) {
+		if ($data['mid'] && $value == $data['mid']) {
+			return $message;
+		}
+		if (!dbselect()->from('{member}')->where(array('mid' => $value))->exist('mid')) {
 			return $message;
 		}
 
@@ -130,29 +133,6 @@ class MemberModelForm extends AbstractForm {
 		}
 
 		return true;
-	}
-
-	/**
-	 * 保存用户角色.
-	 *
-	 * @param int   $mid
-	 * @param array $roles
-	 */
-	public static function saveRoles($mid, $roles) {
-		if ($mid) {
-			dbdelete()->from('{member_has_role}')->where(array('mid' => $mid))->exec();
-			$roleName = '';
-			if (!empty ($roles)) {
-				$datas = array();
-				foreach ($roles as $role_id) {
-					$datas [] = array('mid' => $mid, 'role_id' => $role_id, 'sort' => 0);
-				}
-				dbinsert($datas, true)->into('{member_has_role}')->exec();
-				$roleNames = dbselect('role_name')->from('{user_role}')->where(array('role_id IN' => $roles))->toArray('role_name');
-				$roleName  = implode(',', $roleNames);
-			}
-			dbsave(array('mid' => $mid, 'name' => 'roles', 'value' => $roleName), array('mid' => $mid, 'name' => 'roles'), 'mid')->into('{member_meta}')->exec();
-		}
 	}
 
 	public static function generatePwd($password, $salt) {

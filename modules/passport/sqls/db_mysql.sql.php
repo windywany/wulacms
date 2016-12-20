@@ -16,6 +16,7 @@ $tables ['0.0.2'] [] = "CREATE TABLE `{prefix}member` (
     `update_uid` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后修改用户',
 	`deleted` TINYINT(1) NOT NULL DEFAULT 0,
     `group_id` SMALLINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户组',
+    `gender` TINYINT(2) NOT NULL DEFAULT 0 COMMENT '性别,0保密,1男,2女',
     `username` VARCHAR(32) NOT NULL COMMENT '用户名',
     `email` VARCHAR(64) DEFAULT NULL COMMENT '邮件',
 	`phone` VARCHAR(32) DEFAULT NULL COMMENT '手机号',
@@ -46,9 +47,9 @@ $tables ['0.0.2'] [] = "CREATE TABLE `{prefix}member_meta` (
     INDEX `IDX_MID_NAME` (`mid`,`name`)
 )  ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COMMENT='会员meta记录'";
 
-$tables ['1.0.0'] [] = "ALTER TABLE `{prefix}member` ADD `invite_code` VARCHAR(32) DEFAULT '' COMMENT '邀请码' AFTER `nickname`";
-$tables ['1.0.0'] [] = "ALTER TABLE `{prefix}member` ADD `recommend_code` VARCHAR(32) DEFAULT '' COMMENT '我的推荐码,用于推荐其他人注册.' AFTER `nickname`";
-$tables ['1.0.0'] [] = "CREATE INDEX `IDX_M_ICODE` ON `{prefix}member` (`invite_code`)";
+$tables ['1.0.0'] [] = "ALTER TABLE `{prefix}member` ADD `recommend_code` VARCHAR(32) DEFAULT '' COMMENT '我的推荐码,用于推荐其他人注册.' AFTER `invite_code`";
+$tables ['1.0.0'] [] = "ALTER TABLE `{prefix}member` ADD `invite_mid` INT(10) UNSIGNED DEFAULT 0 COMMENT '我的邀请人ID.' AFTER `nickname`";
+$tables ['1.0.0'] [] = "CREATE INDEX `IDX_M_ICODE` ON `{prefix}member` (`invite_mid`)";
 $tables ['1.0.0'] [] = "CREATE INDEX `IDX_R_ICODE` ON `{prefix}member` (`recommend_code`)";
 
 $tables ['2.1.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}member_has_role` (
@@ -109,3 +110,6 @@ $tables ['2.1.3'] [] = "CREATE TABLE `{prefix}member_oauth_data` (
 
 $tables['2.1.3'][] = "INSERT INTO `{prefix}user_group` (`upid`, `group_refid`, `group_name`, `type`, `level`, `coins`, `rank`) VALUES ('0', 'vip0', '新注册', 'vip', '1', '0', '初出茅庐')";
 $tables['2.1.3'][] = "INSERT INTO `{prefix}user_role` (`role`, `role_name`, `type`, `priority`) VALUES ('vip', '普通会员', 'vip', '1')";
+
+$tables['2.2.0'][] = "ALTER TABLE `{prefix}member` 
+  ADD COLUMN `group_expire` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户组有效期,0表示永久有效' AFTER `group_id`";

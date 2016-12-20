@@ -158,18 +158,31 @@ class JoinController extends Controller {
 	private function registerMember($user, $model) {
 		$role_id = intval(cfg('default_role@passport', 0));
 		$user    = apply_filter('before_member_created', $user);
-
+		$model->removeValidateRule('captcha');
+		if (isset($user['invite_code'])) {
+			$invite_code = $user['invite_code'];
+			unset($user['invite_code']);
+			$model->removeValidateRule('invite_code');
+			$mid                = $model->getField('mid', ['recommend_code' => $invite_code, 'status' => 1, 'deleted' => 0], 0);
+			$user['invite_mid'] = $mid;
+		} else {
+			$user['invite_mid'] = 0;
+		}
 		$rst = $model->create($user);
 
 		if ($rst) {
 			$user ['mid'] = $rst;
 			if ($role_id) {
-				MemberModelForm::saveRoles($rst, [$role_id]);
+				$model = new \passport\models\MemberMetaModel();
+				$model->saveRoles($rst, [$role_id]);
 			}
 			$user = apply_filter('after_member_created', $user);
 			if ($user) {
 				return $rst;
 			}
+		} else {
+			log_error(var_export($model->getErrors(), true), 'passport');
+			log_error($model->lastSQL(), 'passport');
 		}
 
 		return 0;

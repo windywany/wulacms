@@ -54,6 +54,7 @@ class SystemInstaller extends AppInstaller {
 		$versions ['3.1.4'] = '2016032300027'; // 更新catalog 表中的sub，parents字段
 		$versions ['3.2.0'] = '2016082500028'; // controller支持命名空间
 		$versions ['3.3.0'] = '2016082500028'; // 组支持等级，升级所需要金币，组别名
+		$versions ['4.0.0'] = '2016121900029'; // 服务支持
 		return $versions;
 	}
 	public function upgradeTo2014081300003($dialect) {

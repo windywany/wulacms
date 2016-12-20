@@ -18,7 +18,7 @@
 
 <section id="widget-grid">
 	<div class="row">
-		<article class="col-sm-12 col-md-10 col-lg-6">
+		<article class="col-sm-12 col-md-10 col-lg-8">
 			<div class="jarviswidget"
                 id="wid-member-form-1"     
                 data-widget-colorbutton="false"
@@ -95,12 +95,15 @@
                                             <div class="note">用于邀请其他会员注册</div>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label">邀请码</label>
+                                            <label class="label">邀请人</label>
                                             <label class="input">
-                                                <input type="text" name="invite_code"
-                                                       id="invite_code" value="{$invite_code}"/>
+                                                <input type="hidden" name="invite_mid"
+                                                       data-widget="nuiCombox"
+                                                       style="width:100%"
+                                                       placeholder="邀请人"
+                                                       data-source="{'system/ajax/autocomplete/member/mid/nickname/m:account'|app}?_up=passport"
+                                                       id="invite_mid" value="{$invite_mid}"/>
                                             </label>
-                                            <div class="note">注册时填写的推荐码</div>
                                         </section>
                                     </div>
                                 {/if}

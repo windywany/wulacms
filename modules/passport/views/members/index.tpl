@@ -53,7 +53,7 @@
 				  		<input type="hidden" id="status" name="M_status" value="{$status}"/>
 				  		<fieldset>
 				  			<div class="row">
-				  				<section class="col col-3 input">
+				  				<section class="col col-6 input">
 				  					<div class="input-group">
 										<div class="input-group-btn">
 											<button tabindex="-1" id="keyword-label" class="btn btn-default btn-iptg" type="button">账户</button>
@@ -67,7 +67,7 @@
 												<li><a rel="email" href="javascript:void(0);">邮件</a></li>
 												<li><a rel="phone" href="javascript:void(0);">手机</a></li>
 												{if $enable_invation}
-												<li><a rel="invite_code" href="javascript:void(0);">邀请码</a></li>
+												<li><a rel="invite_mid" href="javascript:void(0);">邀请人ID</a></li>
 												{/if}
 											</ul>
 										</div>										
@@ -81,7 +81,7 @@
 										</select>
 										<i></i>
 									</label>
-								</section>	
+								</section>
 								<section class="col col-2">
 									<label class="select">
 										<select name="M_role_id">
@@ -89,13 +89,14 @@
 										</select>
 										<i></i>
 									</label>
-								</section>	
-								<section class="col col-1">
+								</section>
+                                <section class="col col-2">
 									<button class="btn btn-sm btn-primary" type="submit">
 										<i class="fa fa-search"></i> 搜索
 									</button>
 								</section>
-				  			</div>				  			
+				  			</div>
+                            {if $widgets}{$widgets|render}{/if}
 				  		</fieldset>				  		
 				  	</form>			  
 				</div>
@@ -112,11 +113,12 @@
 							<th width="20"></th>
 							<th width="30"><input type="checkbox" class="grp"/></th>
 							<th width="90" data-sort="M.mid,d">ID</th>
-							<th width="200" data-sort="M.username,d">账户</th>
-							<th width="120" data-sort="M.group_id,d">组(等级)</th>
-                            <th width="180" data-sort="M.phone,d">邮箱</th>
-							<th width="150" data-sort="M.phone,d">手机</th>
-                            <th>角色</th>
+							<th data-sort="M.username,d">账户</th>
+							<th width="90" data-sort="M.group_id,d">组(等级)</th>
+							<th width="120">联系方式</th>
+							{foreach $columns as $col}
+								<th width="{$col.width}" {if $col.sort}data-sort="{$col.sort}"{/if}>{$col.name}</th>
+							{/foreach}
 							<th width="100" data-sort="M.registered,d">注册日期</th>
 							<th width="80" data-sort="M.status,d">状态</th>
 							<th width="70" class="text-center"></th>

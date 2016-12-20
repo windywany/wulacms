@@ -13,16 +13,15 @@ class PassportController extends Controller {
 	 * @return \ThemeView
 	 */
 	public function index($from = '') {
-		if (!$from) {
-			$from = sess_get('passport_from');
+		if (empty($from) || $from == '/') {
+			$from = cfg('redirect_url@passport');
 		}
-		if (!$from) {
-			$from = $_SERVER['HTTP_REFERER'];
+		if (empty($from)) {
+			trigger_error('no landing page', E_USER_ERROR);
+			exit();
 		}
-		if (!$from) {
-			$from = cfg('redirect_url@passport', DETECTED_ABS_URL);
-		}
-		$this->user = whoami('vip');
+		$_SESSION['passport_from'] = $from;
+		$this->user                = whoami('vip');
 		if ($this->user->isLogin()) {
 			Response::redirect($from);
 		}
@@ -91,7 +90,8 @@ class PassportController extends Controller {
 				}
 				$where [ $idf ]   = $formData ['username'];
 				$where['deleted'] = 0;
-				$user             = dbselect('*')->from('{member}')->where($where)->get();
+				$model            = new \passport\models\MemberModel();
+				$user             = $model->get($where);
 				if ($user) {
 					if ($user ['passwd'] != MemberModelForm::generatePwd($passwd, $user['salt']) || $user [ $idf ] !== $formData ['username']) {
 						$data ['errorMsg']  = __('@auth:Invalide User Name or Password.');
@@ -107,14 +107,15 @@ class PassportController extends Controller {
 						sess_del('_auth_passport_try_count');
 						$this->user       = whoami('vip');
 						$user ['logined'] = true;
-
-						$metas = dbselect('name,value')->from('{member_meta}')->where(array('mid' => $user ['mid']))->toArray('value', 'name');
+						$mm               = new \passport\models\MemberMetaModel();
+						$metas            = $mm->getArray(array('mid' => $user ['mid']), 'value', 'name');
+						unset($user['passwd'], $user['salt'], $user['deleted'], $user['username']);
 						if ($metas) {
 							$user = array_merge($metas, $user);
 						}
 						$this->user->save($user);
 						ActivityLog::info(__('Member %s(%s) Login successfully.', $this->user->getAccount(), $this->user->getDisplayName()), 'MLogin');
-						$callback         = sess_get('passport_from', cfg('redirect_url@passport', DETECTED_ABS_URL));
+						$callback         = sess_del('passport_from', cfg('redirect_url@passport', DETECTED_ABS_URL));
 						$data ['success'] = true;
 						$data ['url']     = $callback;
 					}

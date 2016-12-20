@@ -15,6 +15,27 @@ class MembersController extends Controller {
 		$data ['canDelMember']    = icando('d:account/member');
 		$data ['canAddMember']    = icando('c:account/member') && !bcfg('connect_to@passport');
 		$data ['enable_invation'] = bcfg('enable_invation@passport');
+		$data ['columns']         = apply_filter('get_member_columns', []);
+		$fields                   = apply_filter('get_member_search_fields', []);
+
+		if ($fields) {
+			$gp          = 1;
+			$col         = 0;
+			$csearchForm = new DynamicForm ('CustomerMemberSearchForm');
+			foreach ($fields as $n => $f) {
+				if (!isset ($f ['col']) || !intval($f ['col'])) {
+					$f ['col'] = 3;
+				}
+				$col += intval($f ['col']);
+				if ($col > 12) {
+					$gp += 1;
+					$col = intval($f ['col']);
+				}
+				$f ['group'] = $gp;
+				$csearchForm->addField($n, $f);
+			}
+			$data ['widgets'] = new DefaultFormRender ($csearchForm->buildWidgets(array()));
+		}
 
 		return view('members/index.tpl', $data);
 	}
@@ -53,8 +74,9 @@ class MembersController extends Controller {
 	 * @return NuiAjaxView SmartyView
 	 */
 	public function edit($id) {
-		$id   = intval($id);
-		$user = dbselect('*')->from('{member}')->where(array('mid' => $id))->get(0);
+		$id    = intval($id);
+		$model = new \passport\models\MemberModel();
+		$user  = $model->get(['mid' => $id]);
 		if (empty ($user)) {
 			return NuiAjaxView::error('会员不存在.');
 		} else {
@@ -64,7 +86,11 @@ class MembersController extends Controller {
 
 			$user ['roles']     = dbselect('role_id')->from('{member_has_role}')->where(array('mid' => $id))->toArray('role_id');
 			$user ['all_roles'] = dbselect('role_id,role_name')->where(array('type' => 'vip'))->from('{user_role}');
-
+			if ($user['invite_mid']) {
+				$user['invite_mid'] .= ':' . $model->getField('nickname', $user['invite_mid'], '');
+			} else {
+				$user['invite_mid'] = '';
+			}
 			$form->removeRlue('passwd', 'required');
 			$user ['rules']           = $form->rules(true);
 			$user ['enable_invation'] = bcfg('enable_invation@passport');
@@ -129,6 +155,7 @@ class MembersController extends Controller {
 
 			$user ['update_time'] = time();
 			$user ['update_uid']  = $this->user->getUid();
+			$user ['invite_mid']  = (int)$user['invite_mid'];
 			start_tran();
 			if (empty ($mid)) {
 				// 新增
@@ -146,14 +173,15 @@ class MembersController extends Controller {
 				$rst          = apply_filter('after_member_save', $user);
 				if ($rst) {
 					$roles = rqst('roles', array());
-					MemberModelForm::saveRoles($mid, $roles);
+					$model = new \passport\models\MemberMetaModel();
+					$model->saveRoles($mid, $roles);
 					commit_tran();
 
 					return NuiAjaxView::ok('成功保存会员', 'click', '#btn-rtn-member');
 				} else {
 					rollback_tran();
 
-					return NuiAjaxView::error('插件保存数据时出错啦.');
+					return NuiAjaxView::error('会员保存时出错啦.');
 				}
 			} else {
 				rollback_tran();
@@ -177,9 +205,8 @@ class MembersController extends Controller {
 	 * @return SmartyView
 	 */
 	public function data($_cp = 1, $_lt = 20, $_sf = 'mid', $_od = 'd', $_ct = 0) {
-		$rows = dbselect('M.*,UG.group_name,UG.group_refid AS `group`,RM.nickname as nickname1,RM.username AS username1,MM.value AS roles')->from('{member} AS M')->limit(($_cp - 1) * $_lt, $_lt);
-		$rows->join('{user_group} AS UG', 'M.group_id = UG.group_id');
-		$rows->join('{member} AS RM', "M.invite_code = RM.recommend_code AND M.invite_code <> ''");
+		$rows = dbselect('M.*,RM.nickname as nickname1,RM.username AS username1,MM.value AS roles')->from('{member} AS M')->limit(($_cp - 1) * $_lt, $_lt);
+		$rows->join('{member} AS RM', "M.invite_mid = RM.mid");
 		$rows->join('{member_meta} AS MM', "M.mid = MM.mid AND MM.name = 'roles'");
 		$rows->sort($_sf, $_od);
 		$where               = Condition::where('M.group_id', 'M.status');
@@ -187,7 +214,7 @@ class MembersController extends Controller {
 		$ktype               = rqst('ktype', 'username');
 		$keyword             = rqst('keyword');
 		if ($keyword) {
-			if ($ktype == 'mid') {
+			if ($ktype == 'mid' || $ktype == 'invite_mid') {
 				$where [ 'M.' . $ktype ] = intval($keyword);
 			} else {
 				$where [ 'M.' . $ktype . ' LIKE' ] = "%{$keyword}%";
@@ -199,15 +226,19 @@ class MembersController extends Controller {
 			$where ['@'] = $ex;
 		}
 		$rows->where($where);
+		$rows  = apply_filter('filter_members_query', $rows);
 		$total = '';
 		if ($_ct) {
 			$total = $rows->count('M.mid');
 		}
+
 		$data                     = array('total' => $total, 'rows' => $rows);
+		$data ['groups']          = dbselect('group_id,group_name')->from('{user_group}')->where(['type' => 'vip'])->toArray('group_name', 'group_id');
 		$data ['canEditMember']   = icando('u:account/member');
 		$data ['canDelMember']    = icando('d:account/member');
 		$data ['canAuthMember']   = icando('a:account/member');
 		$data ['enable_invation'] = bcfg('enable_invation@passport');
+		$data ['columns']         = apply_filter('get_member_columns', []);
 
 		return view('members/data.tpl', $data);
 	}
