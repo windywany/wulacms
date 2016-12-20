@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 hidden-xs hidden-sm">
 		<h1 class="txt-color-blueDark">
-			<i class="fa-fw fa fa-user"></i> 昵称黑名单
+			<i class="fa-fw fa fa-user txt-color-red"></i> 昵称黑名单
 		</h1>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">

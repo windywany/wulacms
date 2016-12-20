@@ -43,6 +43,8 @@ class PassportInstaller extends AppInstaller {
 	public function uninstall() {
 		parent::uninstall();
 		dbdelete()->from('{preferences}')->where(array('preference_group' => 'passport'))->exec();
+		dbdelete()->from('{user_role}')->where(['type' => 'vip'])->exec();
+		dbdelete()->from('{user_group}')->where(['type' => 'vip'])->exec();
 
 		return true;
 	}

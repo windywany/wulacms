@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 hidden-xs hidden-sm">
 		<h1 class="txt-color-blueDark">
-			<i class="fa fa-fw fa-user"></i> 黑名单		
+			<i class="fa fa-fw fa-user txt-color-red"></i> 黑名单
 		</h1>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
@@ -33,7 +33,7 @@
 				  	<form data-widget="nuiSearchForm" id="member-search-form" data-for="#member-table" class="smart-form">
 				  		<fieldset>
 				  			<div class="row">
-				  				<section class="col col-6 input">
+				  				<section class="col col-3 input">
 				  					<div class="input-group">
 										<input type="text" placeholder="请输入关键词" class="form-control" name="keyword"/>
 									</div>									
@@ -59,10 +59,10 @@
 						<tr>
 							<th width="20"></th>
 							<th width="30"><input type="checkbox" class="grp"/></th>
-							<th width="70" data-sort="id,d">ID</th>				
-							<th>黑名单</th>							
+							<th width="90" data-sort="id,d">ID</th>
+							<th>昵称</th>
 							<th width="150" data-sort="create_time,d">创建时间</th>
-							<th width="120" class="text-center"></th>
+							<th width="80" class="text-center">操作</th>
 						</tr>
 					</thead>								
 				</table>

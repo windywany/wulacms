@@ -22,11 +22,8 @@ class PassportPluginImpl {
 			$menub = new AdminNaviMenu ('vip-role', '会员角色', 'fa-user', tourl('system/role/vip', false));
 			$menu->addItem($menub, false, 2);
 
-			$menub = new AdminNaviMenu ('memblacklist', '昵称黑名单', 'fa-user txt-color-red', tourl('passport/black', false));
+			$menub = new AdminNaviMenu ('memblacklist', '黑名单', 'fa-user txt-color-red', tourl('passport/black', false));
 			$menu->addItem($menub, false, 3);
-
-			$menub = new AdminNaviMenu ('vip-login', '通行证', 'fa-key', tourl('passport/members', false));
-			$menu->addItem($menub, false, 4);
 
 			$acc->addItem($menu, false);
 		}
