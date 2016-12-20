@@ -47,7 +47,7 @@ $tables ['0.0.2'] [] = "CREATE TABLE `{prefix}member_meta` (
     INDEX `IDX_MID_NAME` (`mid`,`name`)
 )  ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COMMENT='会员meta记录'";
 
-$tables ['1.0.0'] [] = "ALTER TABLE `{prefix}member` ADD `recommend_code` VARCHAR(32) DEFAULT '' COMMENT '我的推荐码,用于推荐其他人注册.' AFTER `invite_code`";
+$tables ['1.0.0'] [] = "ALTER TABLE `{prefix}member` ADD `recommend_code` VARCHAR(32) DEFAULT '' COMMENT '我的推荐码,用于推荐其他人注册.' AFTER `nickname`";
 $tables ['1.0.0'] [] = "ALTER TABLE `{prefix}member` ADD `invite_mid` INT(10) UNSIGNED DEFAULT 0 COMMENT '我的邀请人ID.' AFTER `nickname`";
 $tables ['1.0.0'] [] = "CREATE INDEX `IDX_M_ICODE` ON `{prefix}member` (`invite_mid`)";
 $tables ['1.0.0'] [] = "CREATE INDEX `IDX_R_ICODE` ON `{prefix}member` (`recommend_code`)";
