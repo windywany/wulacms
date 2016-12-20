@@ -15,4 +15,5 @@ class PreferenceForm extends \AbstractForm {
 	private $appkey    = array('group' => '2', 'col' => '4', 'label' => 'appkey', 'default' => '',);
 	private $appsecret = array('group' => '2', 'col' => '4', 'label' => 'appsecret', 'default' => '');
 	private $user_id   = array('group' => '2', 'col' => '4', 'label' => 'user_id', 'rules' => ['required' => '请填写user_id']);
+	private $word      = array('widget'=>'textarea','row'=>'8','label' => '推广语', 'default' => '');
 }

@@ -105,6 +105,11 @@ class TaokeController extends Controller {
 					$data['flag_c'] = 0;
 					$data['flag_a'] = 1;
 				}
+			} else {
+				$data['flag_c'] = 0;
+				$data['flag_a'] = 0;
+			}
+			if ($data) {
 				dbupdate('{cms_page}')->set($data)->where(['id' => $page_id])->exec();
 			}
 
@@ -133,5 +138,35 @@ class TaokeController extends Controller {
 		}
 
 		return NuiAjaxView::error('修改失败');
+	}
+
+	//生成推广语
+	public function share() {
+		$data = [];
+		$id  = rqst('page_id', '');
+		$share_word   = rqst('share_word','');
+		if (!$share_word) {
+			return NuiAjaxView::error('推广语好像没填');
+		}
+		$word = cfg('word@taoke', '');
+		if ($word) {
+			$data    = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
+			$rep_arr = ['platform', 'title', 'price', 'real_price', 'token'];
+			foreach ($rep_arr as $k) {
+
+				$res  = str_replace('{' . $k . '}', $data[ $k ], $word);
+				$word = $res;
+			}
+			if ($res) {
+				$end_res = str_replace('{share_word}', $share_word, $res);
+				return NuiAjaxView::callback('setTbkShare', ['word' => $end_res, 'id' => $id], '已复制到粘贴板,可直接右键粘贴');
+			} else {
+				return NuiAjaxView::error('好像失败了');
+			}
+
+		} else {
+			return NuiAjaxView::error('暂无推广语配置,请您先填写配置');
+		}
+
 	}
 }

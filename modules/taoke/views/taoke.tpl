@@ -122,6 +122,21 @@
 		$('#tid-' + id).html('淘口令:' + arg.token);
 	};
 
+    nUI.ajaxCallbacks.setTbkShare = function (arg) {
+        var id = arg.id;
+       Copy(arg.word);
+    };
+
+    function Copy(str){
+        var save = function(e){
+            e.clipboardData.setData('text/plain', str);
+            e.preventDefault();
+        }
+        document.addEventListener('copy', save);
+        document.execCommand('copy');
+        document.removeEventListener('copy',save);
+    }
+
 	nUI.ajaxCallbacks.startImport = function (arg) {
 		$('#import_excel').attr('disabled', "true");
 		if (!window.taobaokeTimer) {

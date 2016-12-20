@@ -5,7 +5,7 @@
         <td><input type="checkbox" value="{$c.cid}" class="grp"/></td>
     <td>
         <p>
-            <img src="{$c.image|media}" width="80" height="80" style="float: left;margin-right: 5px;">{$c.title}
+           <a href="/tbk/{$c.cid}.html" target="_blank"> <img src="{$c.image|media}" width="80" height="80" style="float: left;margin-right: 5px;">{$c.title}</a>
             {if $c.flag_c}<span class="label bg-color-orange">推荐</span>&nbsp;{/if}
             {if $c.flag_a}<span class="label bg-color-teal">特荐</span>&nbsp;{/if}
         </p>
@@ -39,13 +39,23 @@
     <tr parent="{$c.cid}">
         <td colspan="2"></td>
         <td colspan="12">
-            <form target="ajax" id="apply-form" method="post" action="{'taoke/taoke/saveReason'|app}" data-widget="nuiValidate" name="ApplyForm" class="smart-form">
-                <label class="form-inline"><input type="hidden" class="form-control" name="page_id" value="{$c.cid}"/></label>
-                <label class="form-inline">推荐理由：<input type="text" class="form-control" name="reason" value="{$c.reason}" style="width: 350px;"/></label>
-                <label class="form-inline">推荐<input type="checkbox" name="checkbox[]" class="form-control" value="1" {if $c.flag_c} checked {/if}/></label>
-                <label class="form-inline">特荐<input type="checkbox" name="checkbox[]" class="form-control" value="2" {if $c.flag_a} checked {/if}/></label>
-                <label class="form-inline"><button id="submit" class="btn btn-xs btn-primary" type="submit">保存</button></label>
-            </form>
+            <label class="form-inline">
+                <form target="ajax" id="apply-form" method="post" action="{'taoke/taoke/saveReason'|app}" data-widget="nuiValidate" name="ApplyForm" class="smart-form">
+                    <label class="form-inline"><input type="hidden" class="form-control" name="page_id" value="{$c.cid}"/></label>
+                    <label class="form-inline">推荐理由：<input type="text" class="form-control" name="reason" value="{$c.reason}" style="width: 350px;"/></label>
+                    <label class="form-inline">推荐<input type="checkbox" name="checkbox[]" class="form-control" value="1" {if $c.flag_c} checked {/if}/></label>
+                    <label class="form-inline">特荐<input type="checkbox" name="checkbox[]" class="form-control" value="2" {if $c.flag_a} checked {/if}/></label>
+                    <label class="form-inline"><button id="submit" class="btn btn-xs btn-primary" type="submit">保存</button></label>
+                </form>
+         </label>
+            <label class="form-inline">
+                <form target="ajax" id="apply-form" method="post" action="{'taoke/taoke/share'|app}" data-widget="nuiValidate" name="ApplyForm" class="smart-form">
+                    <label class="form-inline"><input type="hidden" class="form-control" name="page_id" value="{$c.cid}"/></label>
+                    <label class="form-inline">推广语：<input type="text" class="form-control" name="share_word" value="" style="width: 350px;"/></label>
+                    <label class="form-inline"><button id="submit" class="btn btn-xs btn-warning" type="submit">生成推广语</button></label>
+                </form>
+          </label >
+
         </td>
     </tr>
   {foreachelse}
