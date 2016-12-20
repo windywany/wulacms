@@ -25,7 +25,7 @@ class PassportPluginImpl {
 			$menub = new AdminNaviMenu ('memblacklist', '昵称黑名单', 'fa-user txt-color-red', tourl('passport/black', false));
 			$menu->addItem($menub, false, 3);
 
-			$menub = new AdminNaviMenu ('vip-login', '通行证', 'fa-key', tourl('passport/users', false));
+			$menub = new AdminNaviMenu ('vip-login', '通行证', 'fa-key', tourl('passport/members', false));
 			$menu->addItem($menub, false, 4);
 
 			$acc->addItem($menu, false);
@@ -81,21 +81,9 @@ class PassportPluginImpl {
 	}
 
 	public static function get_user_group_types($types) {
-		$types ['vip'] = '通行证';
+		$types ['vip'] = '会员';
 
 		return $types;
-	}
-
-	/**
-	 *
-	 * @param Query $query
-	 *
-	 * @return Query
-	 */
-	public static function on_init_autocomplete_condition_up_passport($query) {
-		$query->where(array('ATABLE.type' => 'vip'));
-
-		return $query;
 	}
 
 	/**
@@ -110,5 +98,6 @@ class PassportPluginImpl {
 		$passport->setAttr('avatar_big', $user ['avatar_big']);
 		$passport->setAttr('avatar_small', $user ['avatar_small']);
 		$passport->setAttr('phone', $user ['phone']);
+		$passport->setAttr('expire', $user['group_expire']);
 	}
 }

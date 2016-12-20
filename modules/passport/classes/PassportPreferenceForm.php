@@ -15,6 +15,7 @@ class PassportPreferenceForm extends AbstractForm {
 	private $mail_active     = array('group' => '1', 'col' => '3', 'label' => '邮件注册必须激活', 'widget' => 'radio', 'default' => '1', 'defaults' => "0=否\n1=是");
 	private $enable_invation = array('group' => '4', 'col' => '3', 'label' => '启用邀请机制', 'widget' => 'radio', 'default' => '0', 'defaults' => "0=否\n1=是");
 	private $invite_required = array('group' => '4', 'col' => '3', 'label' => '必须邀请', 'widget' => 'radio', 'default' => '0', 'defaults' => "0=否\n1=是", 'note' => '启用邀请机制后生效');
+	private $avatar_dir      = array('group' => '4', 'col' => '3', 'label' => '头像目录', 'note' => '默认为avatar', 'rules' => array('regexp(/^[a-z][\da-z_]*$/i)' => '只能是字母,数字,下划线。'));
 	private $default_group   = array('group' => '2', 'col' => '3', 'label' => '默认用户组', 'widget' => 'auto', 'defaults' => 'user_group,group_id,group_name,pst:system/preference,,passport', 'note' => '用户注册时将用户添加到该组。');
 	private $default_role    = array('group' => '2', 'col' => '3', 'label' => '默认角色', 'widget' => 'auto', 'defaults' => 'user_role,role_id,role_name,pst:system/preference,,passport', 'note' => '用户注册后用户拥有该角色。');
 	private $join_url        = array('group' => '2', 'col' => '6', 'label' => '注册成功后默认跳转到页面', 'rules' => array('url' => '请填写正确的URL。'));

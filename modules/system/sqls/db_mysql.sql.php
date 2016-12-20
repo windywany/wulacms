@@ -2,9 +2,9 @@
 /*
  * Kisscms core sqls for mysql.
  */
-defined ( 'KISSGO' ) or exit ( 'No direct script access allowed' );
+defined('KISSGO') or exit ('No direct script access allowed');
 
-$tables = array ();
+$tables = array();
 
 $tables ['0.0.1'] [] = "CREATE TABLE `{prefix}user_group` (
   `group_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -222,3 +222,44 @@ ADD COLUMN `sub`  varchar(500) NULL AFTER `parents`";
 $tables['3.3.0'][] = "ALTER TABLE `{prefix}user_group` ADD `level` SMALLINT(8) UNSIGNED DEFAULT 0 COMMENT '会员等级,值越大等级越高' AFTER `type`,
   ADD `coins` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所需金币（积分）' AFTER `level`,
   ADD `rank` VARCHAR(64) NULL COMMENT '等级称号' AFTER `coins`";
+
+$tables['4.0.0'][] = "ALTER TABLE `{prefix}user` 
+  ADD COLUMN `group_expire` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户组有效期,0表示永久有效' AFTER `group_id`";
+
+$tables['4.0.0'][] = "CREATE TABLE IF NOT EXISTS `{prefix}user_group_service` (
+    `id` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `enabled` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否启用',
+    `group_id` SMALLINT(5) UNSIGNED NOT NULL COMMENT '用户名编号',
+    `service` VARCHAR(32) NOT NULL COMMENT '服务名',
+    `config` LONGTEXT NULL COMMENT '服务配置',
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `UDX_GID_SERVER` (`group_id` ASC,`service` ASC)
+)  ENGINE=INNODB DEFAULT CHARACTER SET=UTF8 COMMENT='用户组的服务'";
+
+$tables['4.0.0'][] = "CREATE TABLE IF NOT EXISTS `{prefix}user_service` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `valid` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否有效',
+    `mid` INT(10) UNSIGNED NOT NULL COMMENT '会员编号',
+    `service` VARCHAR(32) NOT NULL COMMENT '服务名',
+    `cost` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '费用',
+    `service_start` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '订购日期',
+    `expire` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '过期日期',
+    `version` VARCHAR(64) NULL COMMENT '服务版本',
+    `order_id` VARCHAR(32) NULL COMMENT '订单编号',
+    `config` LONGTEXT NULL COMMENT '服务配置',
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `UDX_UID_SERVICE` (`mid` ASC , `service` ASC),
+    INDEX `IDX_VALID` (`valid` ASC , `expire` ASC)
+)  ENGINE=INNODB DEFAULT CHARACTER SET=UTF8 COMMENT='用户订购的服务'";
+
+$tables['4.0.0'][] = "CREATE TABLE IF NOT EXISTS `{prefix}services` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `service` VARCHAR(32) NOT NULL COMMENT '服务',
+    `name` VARCHAR(128) NOT NULL COMMENT '服务名',
+    `type`  enum('G','U') NOT NULL DEFAULT 'U' COMMENT '服务类型',
+    `enabled` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否启用',
+    `forsale` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否可以被购买',
+    `description` TEXT NULL COMMENT '自定义说明',
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `UDX_SERVICE` (`service` ASC)
+)  ENGINE=INNODB DEFAULT CHARACTER SET=UTF8 COMMENT='服务列表'";
