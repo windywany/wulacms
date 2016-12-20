@@ -53,4 +53,4 @@ $tables['1.0.1'][]="ALTER TABLE `{prefix}member_coins_type` ADD COLUMN  `use_pri
 $tables['1.0.1'][]="DELETE FROM  `{prefix}member_coins_type` WHERE type='summary' and reserved=1";
 $tables['1.0.1'][]="INSERT INTO `{prefix}member_coins_type` (`name`, `type`, `reserved`, `note`, `deleted`, `create_time`, `update_time`, `update_uid`, `create_uid`, `can_withdraw`, `use_priority`) VALUES ('系统预置', 'summary', '1', '预置总账户', '0', '1473070741', '1473070741', '1', '1', '0', '0')";
 /**/
-$tables['1.0.1'][]="ALTER TABLE `{prefix}member_coins_record` ADD COLUMN  `from_type`  varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源类型' AFTER `is_outlay`";
+$tables['1.0.1'][]="ALTER TABLE `{prefix}member_coins_record` ADD COLUMN  `join_type`  varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '相关类型,支出,支出类型,收入,则收入来源类型' AFTER `is_outlay`";
