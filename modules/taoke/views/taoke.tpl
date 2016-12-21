@@ -39,17 +39,17 @@
                     <form data-widget="nuiSearchForm" data-for="#page-table" class="smart-form">
                         <fieldset>
                             <div class="row">
-                                <section class="col col-md-4">
+                                <section class="col col-md-2">
                                     <label class="input">
                                         <input type="text" placeholder="商品名" name="title"/>
                                     </label>
                                 </section>
-                                <section class="col col-md-3">
-                                    <label class="input">
-                                        <input type="text" placeholder="平台" name="platform"/>
-                                    </label>
-                                </section>
-                                <section class="col col-md-3">
+                                {*<section class="col col-md-2">*}
+                                    {*<label class="input">*}
+                                        {*<input type="text" placeholder="平台" name="platform"/>*}
+                                    {*</label>*}
+                                {*</section>*}
+                                <section class="col col-md-2">
                                     <label class="select">
                                         <select name="status" id="status">
                                             <option value="">所有</option>
@@ -58,6 +58,17 @@
                                         </select>
                                         <i></i>
                                     </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i> <input type="text" name="bd" placeholder="导入开始时间" data-range-to="log-to-date" data-widget="nuiDatepicker" id="log-from-date">
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="input"> <i class="icon-append fa fa-calendar"></i> <input type="text" name="sd" placeholder="导入结束时间" data-range-from="log-from-date" data-widget="nuiDatepicker" id="log-to-date">
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    {channel_tree name=channel type=$is_topic id=channel value=$channel multi=1 placeholder="请选择栏目"}
                                 </section>
                                 <section class="col col-md-2 text-right">
                                     <button class="btn btn-sm btn-primary" type="submit">

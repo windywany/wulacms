@@ -26,6 +26,22 @@ class TaokeController extends Controller {
 		$wangwang = trim(rqst('wangwang', ''));
 		$platform = trim(rqst('platform', ''));
 		$status   = trim(rqst('status', ''));
+		$start    = trim(rqst('bd', ''));
+		$end      = trim(rqst('sd', '')) . '23:59:59';
+		$channel  = rqst('channel');
+		if (preg_match('/^[a-z].*/i', $channel)) {
+			$where ['cp.channel'] = $channel;
+		} else if ($channel) {
+			$channel            = safe_ids2($channel);
+			$where ['ch.id IN'] = $channel;
+		}
+		//var_dump($where);exit();
+		if ($start != '') {
+			$where ['tbk.update_time >='] = strtotime($start);
+		}
+		if ($end != '') {
+			$where ['tbk.update_time  <'] = strtotime($end);
+		}
 		if ($name != '') {
 			$where ['cp.title LIKE'] = '%' . $name . '%';
 		}
@@ -46,7 +62,7 @@ class TaokeController extends Controller {
 		$where['cp.deleted']         = 0;
 		$where['cp.model']           = 'taoke';
 		$where['tbk.coupon_stop >='] = $date;
-		$row                         = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where($where);
+		$row                         = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->join('{cms_channel} as ch', 'cp.channel = ch.refid')->where($where);
 		$data ['total']              = $row->count('cp.id');
 		$data ['results']            = $row->limit(($_cp - 1) * $_lt, $_lt)->sort($_sf, $_od)->toArray();
 
@@ -142,24 +158,25 @@ class TaokeController extends Controller {
 
 	//生成推广语
 	public function share() {
-		$data = [];
-		$id  = rqst('page_id', '');
-		$share_word   = rqst('share_word','');
-		if (!$share_word) {
-			return NuiAjaxView::error('推广语好像没填');
-		}
+		$data       = [];
+		$id         = rqst('page_id', '');
+		$share_word = rqst('share_word', '');
+
 		$word = cfg('word@taoke', '');
 		if ($word) {
 			$data    = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
-			$rep_arr = ['platform', 'title', 'price', 'real_price', 'token'];
+			$rep_arr = ['platform', 'title', 'price', 'real_price', 'token', 'page_id'];
 			foreach ($rep_arr as $k) {
 
 				$res  = str_replace('{' . $k . '}', $data[ $k ], $word);
 				$word = $res;
 			}
 			if ($res) {
-				$end_res = str_replace('{share_word}', $share_word, $res);
-				return NuiAjaxView::callback('setTbkShare', ['word' => $end_res, 'id' => $id], '已复制到粘贴板,可直接右键粘贴');
+				//				if($share_word){
+				//					$res = str_replace('{share_word}', $share_word, $res);
+				//				}
+
+				return NuiAjaxView::callback('setTbkShare', ['word' => $res, 'id' => $id], '已复制到粘贴板,可直接右键粘贴');
 			} else {
 				return NuiAjaxView::error('好像失败了');
 			}
@@ -169,4 +186,5 @@ class TaokeController extends Controller {
 		}
 
 	}
+
 }

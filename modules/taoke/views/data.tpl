@@ -51,7 +51,7 @@
             <label class="form-inline">
                 <form target="ajax" id="apply-form" method="post" action="{'taoke/taoke/share'|app}" data-widget="nuiValidate" name="ApplyForm" class="smart-form">
                     <label class="form-inline"><input type="hidden" class="form-control" name="page_id" value="{$c.cid}"/></label>
-                    <label class="form-inline">推广语：<input type="text" class="form-control" name="share_word" value="" style="width: 350px;"/></label>
+                    <label class="form-inline"><input type="hidden" class="form-control" name="share_word" value="" style="width: 350px;"/></label>
                     <label class="form-inline"><button id="submit" class="btn btn-xs btn-warning" type="submit">生成推广语</button></label>
                 </form>
           </label >
