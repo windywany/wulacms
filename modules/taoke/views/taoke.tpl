@@ -31,45 +31,57 @@
         </div>
     </div>
 </div>
-<section id="widget-grid">
+<section id="widget-grid" class="hasr">
+    <span class="barhr">
+        <i class="fa fa-search"></i>
+    </span>
+    <div class="rightbar">
+        <div class="panel panel-default">
+            <div class="panel-heading">搜索</div>
+            <div class="panel-body">
+                <form data-widget="nuiSearchForm" data-for="#tbkGoodsTable" class="smart-form">
+                    <fieldset>
+                            <section>
+                                <label class="input">
+                                    <input type="text" placeholder="商品名" name="title"/>
+                                </label>
+                            </section>
+                            <section>
+                                <label class="select">
+                                    <select name="status" id="status">
+                                        <option value="">所有</option>
+                                        <option value="0">推荐</option>
+                                        <option value="1">特荐</option>
+                                    </select>
+                                    <i></i>
+                                </label>
+                            </section>
+                            <section>
+                                <label class="input"> <i class="icon-append fa fa-calendar"></i> <input type="text" name="bd" placeholder="导入开始时间" data-range-to="log-to-date" data-widget="nuiDatepicker" id="log-from-date">
+                                </label>
+                            </section>
+                            <section>
+                                <label class="input"> <i class="icon-append fa fa-calendar"></i> <input type="text" name="sd" placeholder="导入结束时间" data-range-from="log-from-date" data-widget="nuiDatepicker" id="log-to-date">
+                                </label>
+                            </section>
+                            <section>
+                                {channel_tree name=channel type=$is_topic id=channel value=$channel multi=1 placeholder="请选择栏目"}
+                            </section>
+                            <section class="text-align-right">
+                                <button class="btn btn-sm btn-primary" type="submit">
+                                    <i class="fa fa-search"></i> 搜索
+                                </button>
+                            </section>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <article class="col-sm-12">
             <div class="panel panel-default">
-                <div class="panel-body no-padding">
-                    <form data-widget="nuiSearchForm" data-for="#page-table" class="smart-form">
-                        <fieldset>
-                            <div class="row">
-                                <section class="col col-md-4">
-                                    <label class="input">
-                                        <input type="text" placeholder="商品名" name="title"/>
-                                    </label>
-                                </section>
-                                <section class="col col-md-3">
-                                    <label class="input">
-                                        <input type="text" placeholder="平台" name="platform"/>
-                                    </label>
-                                </section>
-                                <section class="col col-md-3">
-                                    <label class="select">
-                                        <select name="status" id="status">
-                                            <option value="">所有</option>
-                                            <option value="0">推荐</option>
-                                            <option value="1">特荐</option>
-                                        </select>
-                                        <i></i>
-                                    </label>
-                                </section>
-                                <section class="col col-md-2 text-right">
-                                    <button class="btn btn-sm btn-primary" type="submit">
-                                        <i class="fa fa-search"></i> 搜索
-                                    </button>
-                                </section>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <table id="page-table" data-widget="nuiTable" data-auto="true" data-source="{'taoke/data'|app}"
-                       data-sort="cp.id,d" data-tfoot="true" data-tree="true">
+                <table id="tbkGoodsTable" data-widget="nuiTable" data-auto="true" data-source="{'taoke/data'|app}"
+                       data-sort="cp.id,d" data-tree="true">
                     <thead>
                     <tr>
                         <th width="25"></th>
@@ -78,16 +90,15 @@
                         <th width="120" data-sort="tbk.comission,a">价格/佣金</th>
                         <th width="100" data-sort="tbk.coupon_price,a">优惠券价格</th>
                         <th width="90" data-sort="tbk.real_price,a">折后价格</th>
-                        <th width="80" data-sort="tbk.rate,a">收入比率</th>
-                        <th width="100" data-sort="tbk.coupon_remain,a">优惠券/剩余</th>
-                        <th width="100" data-sort="tbk.coupon_start,a">开始时间</th>
-                        <th width="100" data-sort="tbk.coupon_stop,a">结束时间</th>
-                        <th width="80">操作</th>
+                        {'tbkGoodsTable'|tablehead}
+                        <th width="80" class="text-align-right">
+                            {'tbkGoodsTable'|tableset}
+                        </th>
                     </tr>
                     </thead>
                 </table>
                 <div class="panel-footer">
-                    <div data-widget="nuiPager" data-for="#page-table" data-limit="20"></div>
+                    <div data-widget="nuiPager" data-for="#tbkGoodsTable" data-limit="20"></div>
                 </div>
             </div>
         </article>
@@ -124,6 +135,11 @@
 
     nUI.ajaxCallbacks.setTbkShare = function (arg) {
         var id = arg.id;
+        var token = arg.token;
+        if(token){
+            $('#gbtn-' + id).remove();
+            $('#tid-' + id).html('淘口令:' + arg.token);
+        }
        Copy(arg.word);
     };
 

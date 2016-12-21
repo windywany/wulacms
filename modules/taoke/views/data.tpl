@@ -17,14 +17,10 @@
                 {/if}
         </p>
     </td>
-
     <td>{$c.price}/{$c.comission}</td>
     <td>{$c.coupon_price}</td>
     <td>{$c.real_price}</td>
-    <td>{$c.rate}</td>
-    <td>{$c.coupon_count}/{$c.coupon_remain}</td>
-    <td>{$c.coupon_start}</td>
-    <td>{$c.coupon_stop}</td>
+    {'tbkGoodsTable'|tablerow:$c}
     <td class="text-align-right">
         <div class="btn-group">
         <a href="#{'cms/page/edit/page/'|app:0}{$c.cid}" class="btn btn-xs btn-primary">
@@ -38,7 +34,7 @@
     </tr>
     <tr parent="{$c.cid}">
         <td colspan="2"></td>
-        <td colspan="12">
+        <td colspan="{'tbkGoodsTable'|tablespan:5}">
             <label class="form-inline">
                 <form target="ajax" id="apply-form" method="post" action="{'taoke/taoke/saveReason'|app}" data-widget="nuiValidate" name="ApplyForm" class="smart-form">
                     <label class="form-inline"><input type="hidden" class="form-control" name="page_id" value="{$c.cid}"/></label>
@@ -51,17 +47,15 @@
             <label class="form-inline">
                 <form target="ajax" id="apply-form" method="post" action="{'taoke/taoke/share'|app}" data-widget="nuiValidate" name="ApplyForm" class="smart-form">
                     <label class="form-inline"><input type="hidden" class="form-control" name="page_id" value="{$c.cid}"/></label>
-                    <label class="form-inline">推广语：<input type="text" class="form-control" name="share_word" value="" style="width: 350px;"/></label>
+                    <label class="form-inline"><input type="hidden" class="form-control" name="share_word" value="" style="width: 350px;"/></label>
                     <label class="form-inline"><button id="submit" class="btn btn-xs btn-warning" type="submit">生成推广语</button></label>
                 </form>
-          </label >
-
+          </label>
         </td>
     </tr>
   {foreachelse}
-
     <tr class="text-center">
-        <td colspan="12">
+        <td colspan="{'tbkGoodsTable'|tablespan:7}">
             暂无数据
         </td>
     </tr>

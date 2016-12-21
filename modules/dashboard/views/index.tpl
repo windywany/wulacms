@@ -29,9 +29,8 @@
 <link href="{'favicon.ico'|base}" rel="icon" type="image/x-icon"/>
 </head>
 
-<body class="{$cp_theme}{if $menu_on_top} menu-on-top {if $menu_fixed}fixed-header fixed-ribbon fixed-navigation{/if}{/if}" data-validateURL="{$validateURL}">
-
-	<header id="header">	
+<body class="{$cp_theme}{if $menu_on_top} menu-on-top {if $menu_fixed}fixed-header fixed-ribbon fixed-navigation{/if}{/if} minified" data-validateURL="{$validateURL}">
+	<header id="header">
 	<div id="logo-group">		
 		<span id="logo"><img alt="wulacms" src="{'assets/logo.svg'|here}"></span>		
 	</div>
@@ -83,13 +82,6 @@
 			</li>
 		</ul>
 		{/if}
-		<form onsubmit="return doQuickSearch()" class="header-search pull-right">
-			<input id="search-fld" name="param" placeholder="快速查找" type="text" style="min-width: 300px;"/>
-			<button type="button" id="search-form-submitter">
-				<i class="fa fa-search"></i>
-			</button>			
-		</form>
-		
 	</div>
 	</header>
 	<!-- END HEADER -->
@@ -139,7 +131,7 @@
 	</div>
 	<div class="page-footer">
 		<div class="row">
-			<div class="col-xs-12 col-sm-6"><span class="txt-color-white">wualacms {$KISS_VERSION} {$KISS_RELEASE_VER} <span class="hidden-xs"> - Powered by <a href="http://www.wulacms.com">wulacms!</a> </span> &copy; 2014 - {'Y'|date}</span></div>
+			<div class="col-xs-12 col-md-6"><span class="txt-color-white">wualacms {$KISS_VERSION} {$KISS_RELEASE_VER} <span class="hidden-xs"> - Powered by <a href="http://www.wulacms.com">wulacms!</a> </span> &copy; 2014 - {'Y'|date}</span></div>
 		</div>
 	</div>
 	<!-- END MAIN PANEL -->	
@@ -196,6 +188,9 @@
 	    $(function(){
 	    	KindEditor.options.basePath = "{'kindeditor'|assets}/";
 	    	nUI.init({ debug:false });
+			if ($(window).width() >= 1280) {
+				$('[data-action="minifyMenu"]').click();
+			}
 		    if ($('nav').length) {		    	
 			    checkURL();
 		    }
@@ -203,12 +198,9 @@
 				tableHeightSize()
 			});
 		    $('#{$cp_theme}').click();
+		    $('#content').css('min-height',$('#left-panel').height());
 		    {'on_dashboard_window_ready_scripts'|fire}
 	    });
-	    function doQuickSearch(){
-	    	$('#search-form-submitter').click();
-			return false;
-		}
 	{/minify}
 	</script>
 </body>
