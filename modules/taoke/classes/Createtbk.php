@@ -29,8 +29,7 @@ class Createtbk {
 			$tpwd_param->logo = $logo;
 		}
 		if (!$user_id) {
-			$tpwd_param->user_id = cfg('user_id@taoke', '');
-			$user_id = cfg('user_id@taoke', '');
+			$user_id = $tpwd_param->user_id = cfg('user_id@taoke', '24234234234');
 		} else {
 			$tpwd_param->user_id = $user_id;
 		}
@@ -54,5 +53,11 @@ class Createtbk {
 			return ['status' => 1, 'msg' => $resp->sub_msg . ''];
 		}
 
+	}
+
+	public function getText($data) {
+		$tpl = cfg('tpl@taoke', '{title}原价{price}元，抢券立省{discount}元');
+
+		return $tpl;
 	}
 }
