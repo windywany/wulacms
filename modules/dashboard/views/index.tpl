@@ -188,6 +188,9 @@
 	    $(function(){
 	    	KindEditor.options.basePath = "{'kindeditor'|assets}/";
 	    	nUI.init({ debug:false });
+			if ($(window).width() >= 1280) {
+				$('[data-action="minifyMenu"]').click();
+			}
 		    if ($('nav').length) {		    	
 			    checkURL();
 		    }
