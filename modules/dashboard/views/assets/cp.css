@@ -126,3 +126,184 @@ td.proc-td{
 }
 .inbox-table .checkbox,.inbox-table .radio{margin-top:-2px;margin-bottom:0}
 nav ul li.active>a:before {right:0;text-align:right}
+body.menu-on-top .smart-style-4 #header{background: #71a06a}
+
+#widget-grid>div.leftbar{
+    display: none;
+    width: 225px;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-right: 1px solid #ddd;
+    padding: 13px 10px;
+    background: #f2f4f8;
+    z-index: 100;
+}
+#widget-grid.hasl {
+    padding-left: 220px;
+}
+#widget-grid.hasl>div.leftbar{
+    display: block;
+}
+
+#widget-grid>div.rightbar{
+    display: none;
+    width: 250px;
+    position: absolute;
+    top:64px;
+    right: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-left: 1px solid #ddd;
+    padding: 13px 10px;
+    background: #f2f4f8;
+    z-index: 100;
+}
+
+#widget-grid.hasr{
+    padding-right: 245px;
+}
+
+#widget-grid.hasr>div.rightbar{
+    display: block;
+}
+
+#widget-grid.hasr>span.barhr{
+    display: none;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #CDCECF;
+    border-right: 1px solid #f2f4f8!important;
+    position: absolute;
+    right: 0;
+    top: 78px;
+    border-radius: 50% 0 0 50%;
+    padding: 3px 1px 3px 5px;
+    font-size: 16px;
+    line-height: 16px;
+    cursor: pointer;
+    color: #868686;
+    box-shadow: inset 0 0.2em 0 rgba(0,0,0,.05);
+    -moz-box-shadow: inset 0 .2em 0 rgba(0,0,0,.05);
+    background: #f2f4f8;
+    text-align: center;
+    z-index: 101;
+}
+
+#widget-grid.openr>span.barhr{
+    right: 249px;
+}
+
+#widget-grid.hasl>span.barhl{
+    display: none;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #CDCECF;
+    border-left: 1px solid #f2f4f8!important;
+    position: absolute;
+    left: 0;
+    top: 78px;
+    border-radius: 0 50% 50% 0;
+    padding: 3px 5px 3px 1px;
+    font-size: 16px;
+    line-height: 16px;
+    cursor: pointer;
+    color: #868686;
+    box-shadow: inset 0 0.2em 0 rgba(0,0,0,.05);
+    -moz-box-shadow: inset 0 .2em 0 rgba(0,0,0,.05);
+    background: #f2f4f8;
+    text-align: center;
+    z-index: 101;
+}
+
+#widget-grid.openl>span.barhl{
+    left: 224px;
+}
+
+@media (max-width: 1115px) {
+    #widget-grid.hasr{
+        padding-right:0;;
+    }
+    #widget-grid.hasr>div.rightbar {
+        display: none;
+    }
+    #widget-grid.hasr>span.barhr{
+        display: block;
+    }
+    #widget-grid.hasl{
+        padding-left: 0;
+    }
+
+    #widget-grid.hasl>div.leftbar {
+        display: none;
+    }
+    #widget-grid.hasl>span.barhl{
+        display: block;
+    }
+
+}
+
+@media (min-width: 1115px ) and ( max-width: 1279px){
+    #widget-grid.hasr{
+        padding-right:0;;
+    }
+    #widget-grid.hasr>div.rightbar {
+        display: none;
+    }
+    #widget-grid.hasr>span.barhr{
+        display: block;
+    }
+
+    #widget-grid.hasl{
+        padding-left: 0;
+    }
+    #widget-grid.hasl>div.leftbar {
+        display: none;
+    }
+    #widget-grid.hasl>span.barhl{
+        display: block;
+    }
+
+
+    body.minified #widget-grid.hasr{
+        padding-right:245px;
+    }
+
+    body.minified #widget-grid.hasr>div.rightbar {
+        display: block;
+    }
+
+    body.minified  #widget-grid.hasr>span.barhr{
+        display: none;
+    }
+
+    body.minified #widget-grid.hasl{
+        padding-left: 220px;
+    }
+
+    body.minified #widget-grid.hasl>div.leftbar {
+        display: block;
+    }
+    body.minified  #widget-grid.hasl>span.barhl{
+        display: none;
+    }
+}
+
+@media (max-width: 979px) {
+    .smart-style-4 #project-context>:first-child, .smart-style-4 #project-selector, .smart-style-4 .btn-header.transparent a, .smart-style-4 .header-dropdown-list>li>.dropdown-toggle, .smart-style-4 .project-context>:first-child, .smart-style-4 .project-selector {
+        background: 0 0;
+        border: none;
+    }
+}
+
+#widget-grid.openr>div.rightbar, body.minified #widget-grid.openr>div.rightbar{
+    display: block;
+}
+
+#widget-grid.openl>div.leftbar, body.minified #widget-grid.openl>div.leftbar{
+    display: block;
+}

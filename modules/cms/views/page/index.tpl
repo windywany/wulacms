@@ -50,61 +50,93 @@
 		</div>		
 	</div>
 </div>
-<section id="widget-grid">	
+<section id="widget-grid" class="hasr">
+    <span class="barhr">
+        <i class="fa fa-search"></i>
+    </span>
+	<div class="rightbar">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                搜索
+            </div>
+            <div class="panel-body no-padding">
+                <form data-widget="nuiSearchForm" data-for="#page-table" class="smart-form">
+                    <fieldset>
+                            <section>
+                                <label class="input">
+                                    <input type="text" placeholder="ID" name="pid"/>
+                                </label>
+                            </section>
+                            <section>
+                                <label class="input">
+                                    <input type="text" placeholder="关键词" name="keywords"/>
+                                </label>
+                            </section>
+                            {if $my=='all'}
+                                <section>
+                                    <label class="input" for="uuname">
+                                        <input type="hidden"
+                                               data-widget="nuiCombox"
+                                               style="width:100%"
+                                               placeholder="作者"
+                                               data-source="{'system/ajax/autocomplete/user/user_id/nickname/r:cms'|app}" name="uuname" id="uuname"/>
+                                    </label>
+                                </section>
+                            {/if}
+                            <section>
+                                {channel_tree name=channel type=$is_topic id=channel value=$channel multi=1 placeholder="请选择栏目"}
+                            </section>
+                            <section>
+                                <label class="select">
+                                    <select name="model" id="model">
+                                        {html_options options=$models}
+                                    </select>
+                                    <i></i>
+                                </label>
+                            </section>
+                            {if $disable_approving}
+                                <section>
+                                    <label class="select">
+                                        <select name="status" id="status">
+                                            {html_options options=$status selected=$pstatus}
+                                        </select>
+                                        <i></i>
+                                    </label>
+                                </section>
+                            {/if}
+                        {if $widgets}{$widgets|render}{/if}
+                        <section>
+                            <div class="inline-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="flag_h">
+                                    <i></i>头条[h]</label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="flag_c">
+                                    <i></i>推荐[c]</label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="flag_a">
+                                    <i></i>特荐[a]</label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="flag_b">
+                                    <i></i>加粗[b]</label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="flag_j">
+                                    <i></i>跳转[j]</label>
+                            </div
+                        </section>
+                        <section>
+                            <button class="btn btn-sm btn-primary" type="submit">
+                                <i class="fa fa-search"></i> <span>搜索</span>
+                            </button>
+                        </section>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
 	<div class="row">
 		<article class="col col-sm-12">
 			<div class="panel panel-default">
-				<div class="panel-body no-padding">			  
-				  	<form data-widget="nuiSearchForm" data-for="#page-table" class="smart-form">
-				  		<fieldset>
-				  			<div class="row">
-				  				<section class="col col-md-{if $disable_approving}1{else}2{/if}">
-									<label class="input">										
-										<input type="text" placeholder="ID" name="pid"/>
-									</label>
-								</section>
-				  				<section class="col col-md-2">
-									<label class="input">										
-										<input type="text" placeholder="关键词" name="keywords"/>
-									</label>
-								</section>				
-								{if $my=='all'}
-								<section class="col col-md-2">
-									<label class="input" for="uuname">
-									<input type="hidden" 
-											data-widget="nuiCombox" 
-											style="width:100%"
-											placeholder="作者"
-											data-source="{'system/ajax/autocomplete/user/user_id/nickname/r:cms'|app}" name="uuname" id="uuname"/>
-										</label>
-								</section>	
-								{/if}
-								<section class="col col-md-3">
-									{channel_tree name=channel type=$is_topic id=channel value=$channel multi=1 placeholder="请选择栏目"}
-								</section>
-								<section class="col col-md-{if $disable_approving}2{else}3{/if}">
-									<label class="select">
-										<select name="model" id="model">
-											{html_options options=$models}
-										</select>
-										<i></i>
-									</label>
-								</section>
-								{if $disable_approving}
-								<section class="col col-md-2">
-									<label class="select">
-										<select name="status" id="status">
-											{html_options options=$status selected=$pstatus}
-										</select>
-										<i></i>
-									</label>
-								</section>
-								{/if}																
-				  			</div>				  			
-				  			{if $widgets}{$widgets|render}{/if}				  					  			
-				  		</fieldset>				  		
-				  	</form>			  
-				</div>
 				<table 
 					id="page-table"
 					data-widget="nuiTable"		

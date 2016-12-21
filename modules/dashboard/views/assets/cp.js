@@ -22,13 +22,7 @@ sortableJarvisWidgets = true,
 enableMobileWidgets = false,
 
 fastClick = false,
-
-boxList = [], showList = [], nameList = [], idList = [],
-
-chatbox_config = {
-	width : 200,
-	gap : 35
-}, ignore_key_elms = [ "#header, #superbox-overlay, #superbox-wrapper, #left-panel, #right-panel, #main, div.page-footer, #shortcut, #divSmallBoxes, #divMiniIcons, #divbigBoxes, #voiceModal, script, .ui-chatbox,.keepit" ];
+	ignore_key_elms = [ "#header, #superbox-overlay, #superbox-wrapper, #left-panel, #right-panel, #main, div.page-footer, #shortcut, #divSmallBoxes, #divMiniIcons, #divbigBoxes, #voiceModal, script, .ui-chatbox,.keepit" ];
 
 $.intervalArr = [];
 
@@ -425,13 +419,35 @@ initApp.menuPos();
  * DOCUMENT LOADED EVENT Description: Fire when DOM is ready
  */
 jQuery(document).ready(function() {
-
 	initApp.SmartActions();
 	initApp.leftNav();
 	initApp.domReadyMisc();
 	initApp.layoutSetting();
+	if($(window).width() >= 1280 ){
+		$('body').removeClass('minified');
+	}
 	$(window).resize(calc_body_height);
 	calc_body_height();
+	$('#content').on('click','.barhr',function () {
+		var i = $(this).find('i'),pt = $('#content').find('.hasr');
+		if(i.hasClass('fa-times')){
+			i.removeClass('fa-times');
+			pt.removeClass('openr');
+		}else{
+			i.addClass('fa-times');
+			pt.addClass('openr');
+		}
+	});
+	$('#content').on('click','.barhl',function () {
+		var i = $(this).find('i'),pt = $('#content').find('.hasl');
+		if(i.hasClass('fa-times')){
+			i.removeClass('fa-times');
+			pt.removeClass('openl');
+		}else{
+			i.addClass('fa-times');
+			pt.addClass('openl');
+		}
+	});
 });
 /*
  * RESIZER WITH THROTTLE Source:
@@ -553,9 +569,7 @@ jQuery(document).ready(function() {
  * script utilizes JSthrottle script so don't worry about memory/CPU usage
  */
 $('#main').resize(function() {
-
 	initApp.mobileCheckActivation();
-
 });
 
 /* ~ END: NAV OR #LEFT-BAR RESIZE DETECT */
@@ -912,21 +926,6 @@ function setup_widgets_mobile() {
 		setup_widgets_desktop();
 	}
 
-}
-/* ~ END: GOOGLE MAPS */
-function loadScript(scriptName, callback) {
-	if (!jsArray[scriptName]) {
-		jsArray[scriptName] = true;
-		// adding the script tag to the head as suggested before
-		var body = document.getElementsByTagName('body')[0], script = document.createElement('script');
-		script.type = 'text/javascript';
-		script.src = scriptName;
-		script.onload = callback;
-		// fire the loading
-		body.appendChild(script);
-	} else if (callback) {
-		callback();
-	}
 }
 /* ~ END: LOAD SCRIPTS */
 if ($.navAsAjax) {

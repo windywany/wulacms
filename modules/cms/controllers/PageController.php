@@ -31,7 +31,7 @@ class PageController extends Controller {
 		$data ['pageTypeName']      = $data ['type'] == 'topic' ? '专题' : '内容';
 		$data ['status']            = $this->status;
 		$data ['disable_approving'] = bcfg('disable_approving@cms', false);
-		$data ['models']            = array(''=>'全部内容');
+		$data ['models']            = array('' => '全部内容');
 		dbselect()->from('{cms_model}')->treeWhere(array('deleted' => 0, 'hidden' => 0, 'is_delegated' => 1, 'is_topic_model' => $data ['type'] == 'topic' ? 1 : 0))->treeKey('refid')->treeOption($data ['models']);
 		$data ['canDelPage']    = icando('d:cms/page');
 		$data ['canEditPage']   = icando('u:cms/page');
@@ -40,42 +40,11 @@ class PageController extends Controller {
 		$data ['channel']       = $channel;
 		$data ['pstatus']       = $status;
 		$fields                 = apply_filter('get_customer_cms_search_field', array(), $type);
-		$fields ['_flags']      = array('widget' => 'htmltag', 'defaults' => '<div class="inline-group">
-										<label class="checkbox">
-											<input type="checkbox" name="flag_h">
-											<i></i>头条[h]</label>
-										<label class="checkbox">
-											<input type="checkbox" name="flag_c">
-											<i></i>推荐[c]</label>
-										<label class="checkbox">
-											<input type="checkbox" name="flag_a">
-											<i></i>特荐[a]</label>
-										<label class="checkbox">
-											<input type="checkbox" name="flag_b">
-											<i></i>加粗[b]</label>
-										<label class="checkbox">
-											<input type="checkbox" name="flag_j">
-											<i></i>跳转[j]</label>
-									</div>', 'col' => 10);
-
-		$fields ['_abc1'] = array('widget' => 'htmltag', 'defaults' => '<button class="btn btn-sm btn-primary" type="submit">
-										<i class="fa fa-search"></i> <span>搜索</span>
-									</button>', 'col' => 1);
-
 		if ($fields) {
-			$gp          = 1;
-			$col         = 0;
 			$csearchForm = new DynamicForm ('CustomerPageSearchForm');
 			foreach ($fields as $n => $f) {
-				if (!isset ($f ['col']) || !intval($f ['col'])) {
-					$f ['col'] = 3;
-				}
-				$col += intval($f ['col']);
-				if ($col > 12) {
-					$gp += 1;
-					$col = intval($f ['col']);
-				}
-				$f ['group'] = $gp;
+				$f ['group'] = null;
+				$f['col']    = null;
 				$csearchForm->addField($n, $f);
 			}
 			$data ['widgets'] = new DefaultFormRender ($csearchForm->buildWidgets(array()));
