@@ -10,7 +10,7 @@
         <article class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body no-padding">
-                    <form data-widget="nuiSearchForm" data-for="#page-table" class="smart-form">
+                    <form data-widget="nuiSearchForm" data-for="#coinsRecords" class="smart-form">
                         <fieldset>
                             <div class="row">
 
@@ -55,27 +55,26 @@
                         </fieldset>
                     </form>
                 </div>
-                <table id="page-table" data-widget="nuiTable" data-auto="true" data-source="{'coins/re_data/'|app}"
-                       data-sort="id" data-tfoot="true" data-tree="true">
+                <table id="coinsRecords" data-widget="nuiTable" data-auto="true" data-source="{'coins/re_data/'|app}"
+                       data-sort="id">
                     <thead>
                     <tr>
-                        <th width="20" class="hidden-xs hidden-sm"></th>
                         <th width="30"><input type="checkbox" class="grp"/></th>
-                        <th width="60" data-sort="id,d">ID</th>
-                        <th width="200">会员名(ID)</th>
-                        <th width="120" class="hidden-xs hidden-sm">金币数量</th>
-                        <th width="100" class="hidden-xs hidden-sm">可用金币</th>
-                        <th width="100" class="hidden-xs hidden-sm">是否支出</th>
-                        <th width="100" class="hidden-xs hidden-sm">金币类型</th>
-                        <th width="100" class="hidden-xs hidden-sm">金币项目</th>
-                        <th class="hidden-xs hidden-sm">备注</th>
-                        <th width="100" class="hidden-xs hidden-sm">创建时间</th>
-                        <th width="80" class='text-center'>操作</th>
+                        <th width="120">时间</th>
+                        <th>会员名(ID)</th>
+                        <th width="120">数量</th>
+                        <th width="100">可用金币</th>
+                        <th width="100">支出</th>
+                        <th width="100">类型</th>
+                        {'coinsRecords'|tablehead}
+                        <th width="80" class='text-center'>
+                            {'coinsRecords'|tableset}
+                        </th>
                     </tr>
                     </thead>
                 </table>
                 <div class="panel-footer">
-                    <div data-widget="nuiPager" data-for="#page-table" data-limit="20"></div>
+                    <div data-widget="nuiPager" data-for="#coinsRecords" data-limit="20"></div>
                 </div>
             </div>
         </article>

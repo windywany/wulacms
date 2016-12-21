@@ -7,3 +7,5 @@
 defined('KISSGO') or exit('No direct script access allowed');
 bind('do_admin_layout', '&FinanceHookImpl', 20);
 bind('get_acl_resource', '&FinanceHookImpl');
+bind('get_columns_of_depositTable', '&FinanceHookImpl', 1);
+bind('get_columns_of_withdrawTable', '&FinanceHookImpl', 1);

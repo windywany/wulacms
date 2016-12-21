@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 hidden-xs hidden-sm">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
         <h1 class="txt-color-blueDark">
             <i class="fa fa-fw fa-sign-in"></i> 充值记录 </h1>
     </div>
@@ -9,7 +9,7 @@
         <article class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body no-padding">
-                    <form data-widget="nuiSearchForm" data-for="#page-table" class="smart-form">
+                    <form data-widget="nuiSearchForm" data-for="#depositTable" class="smart-form">
                         <fieldset>
                             <div class="row">
 
@@ -52,29 +52,25 @@
                     </form>
 
                 </div>
-                <table id="page-table" data-widget="nuiTable" data-auto="true"
-                       data-source="{'finance/deposit/data/'|app}" data-sort="id" data-tfoot="true" data-tree="true">
+                <table id="depositTable" data-widget="nuiTable" data-auto="true"
+                       data-source="{'finance/deposit/data/'|app}" data-sort="id">
                     <thead>
                     <tr>
-                        <th width="20" class="hidden-xs hidden-sm"></th>
                         <th width="30"><input type="checkbox" class="grp"/></th>
-                        <th width="60" data-sort="id,d">ID</th>
+                        <th width="120">充值时间</th>
+                        <th width="120">入帐时间</th>
                         <th>会员名(ID)</th>
-                        <th width="120" class="hidden-xs hidden-sm">订单ID</th>
                         <th width="100">充值金额</th>
-                        <th width="100" class="hidden-xs hidden-sm">充值平台</th>
-                        <th width="100" class="hidden-xs hidden-sm">交易ID</th>
-                        <th width="100" class="hidden-xs hidden-sm">充值帐户</th>
-                        <th width="100" class="hidden-xs hidden-sm">设备来源</th>
-                        <th width="100" class="hidden-xs hidden-sm">创建时间</th>
-                        <th width="100" class="hidden-xs hidden-sm">入帐时间</th>
-                        <th width="100" class="hidden-xs hidden-sm">充值项目</th>
-                        <th width="80" class='text-center'>操作</th>
+                        <th width="120">订单ID</th>
+                        {'depositTable'|tablehead}
+                        <th width="80" class='text-center'>
+                            {'depositTable'|tableset}
+                        </th>
                     </tr>
                     </thead>
                 </table>
                 <div class="panel-footer">
-                    <div data-widget="nuiPager" data-for="#page-table" data-limit="20"></div>
+                    <div data-widget="nuiPager" data-for="#depositTable" data-limit="20"></div>
                 </div>
             </div>
         </article>

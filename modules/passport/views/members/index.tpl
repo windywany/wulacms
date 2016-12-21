@@ -102,7 +102,7 @@
                     </form>
                 </div>
                 <table id="member-table" data-widget="nuiTable" data-auto="true"
-                       data-source="{'passport/members/data'|app}" data-sort="M.mid,d" data-tfoot="true"
+                       data-source="{'passport/members/data'|app}" data-sort="M.mid,d"
                        data-tree="true">
                     <thead>
                     <tr>

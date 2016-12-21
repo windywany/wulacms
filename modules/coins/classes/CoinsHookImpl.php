@@ -37,4 +37,12 @@ class CoinsHookImpl {
 
 		return $manager;
 	}
+
+	public static function get_columns_of_coinsRecords($cols) {
+		$cols['subject'] = ['name' => '项目', 'order' => 80, 'width' => 100, 'show' => true];
+		$cols['note']    = ['name' => '备注', 'order' => 99, 'show' => false];
+
+		return $cols;
+	}
+
 }

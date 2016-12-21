@@ -55,4 +55,22 @@ class FinanceHookImpl {
 
 		return $manager;
 	}
+
+	public static function get_columns_of_depositTable($cols) {
+		$cols['subject']  = ['name' => '项目', 'width' => 100, 'show' => true, 'order' => 80];
+		$cols['device']   = ['name' => '设备', 'width' => 80, 'show' => true, 'order' => 81];
+		$cols['platform'] = ['name' => '充值平台', 'width' => 80, 'show' => true, 'order' => 89];
+		$cols['transid']  = ['name' => '交易ID', 'width' => 120, 'show' => false, 'order' => 90];
+
+		return $cols;
+	}
+
+	public static function get_columns_of_withdrawTable($cols) {
+		$cols['account']         = ['name' => '帐户', 'width' => 150, 'show' => true, 'order' => 70];
+		$cols['tax_amount']      = ['name' => '税率/税费', 'width' => 120, 'order' => 85, 'show' => false];
+		$cols['discount']        = ['name' => '费率/手续费', 'width' => 120, 'order' => 80, 'show' => true];
+		$cols['approve_message'] = ['name' => '审核备注', 'order' => 99, 'show' => false];
+
+		return $cols;
+	}
 }

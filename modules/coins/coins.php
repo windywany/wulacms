@@ -7,4 +7,5 @@
 defined('KISSGO') or exit('No direct script access allowed');
 bind('do_admin_layout', '&CoinsHookImpl', 21);
 bind('get_acl_resource', '&CoinsHookImpl');
+bind('get_columns_of_coinsRecords', '&CoinsHookImpl');
 bind('sub_conis', '&\coins\classes\CoinsAccount', 1);
