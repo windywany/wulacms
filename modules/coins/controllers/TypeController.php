@@ -18,6 +18,7 @@ class TypeController extends \Controller {
 		return view('type/index.tpl', $data);
 	}
 
+
 	public function edit($id = 0) {
 		$id = intval($id);
 		if (empty($id)) {

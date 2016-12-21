@@ -62,10 +62,11 @@
                         <th width="30"><input type="checkbox" class="grp"/></th>
                         <th width="120">时间</th>
                         <th>会员名(ID)</th>
-                        <th width="120">数量</th>
-                        <th width="100">可用金币</th>
-                        <th width="100">支出</th>
+                        <th width="120">金币数量</th>
+                        {*<th width="100">可用金币</th>*}
                         <th width="100">类型</th>
+                        <th width="100">收支</th>
+                        <th width="100">关联类型</th>
                         {'coinsRecords'|tablehead}
                         <th width="80" class='text-center'>
                             {'coinsRecords'|tableset}

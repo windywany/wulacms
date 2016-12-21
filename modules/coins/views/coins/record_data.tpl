@@ -10,7 +10,7 @@
             {$row.amount}
 		</td>
 		<td>
-			{$row.balance}
+            {$types[$row.type]}
 		</td>
 		<td>
             {if $row.is_outlay==1}
@@ -18,11 +18,12 @@
                     支出<i class="fa fa-arrow-right"></i>
                 </a>
             {else}
-                否
+               收入
+                <i class="fa fa-arrow-left"></i>
             {/if}
 		</td>
         <td>
-			{$types[$row.type]}
+			{$types[$row.join_type]}
         </td>
 		{'coinsRecords'|tablerow:$row}
 		<td class='text-center'>

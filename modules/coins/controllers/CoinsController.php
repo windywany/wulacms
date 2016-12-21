@@ -142,7 +142,6 @@ class CoinsController extends \Controller {
 		$where['_od'] = $_od;
 		$where['_ct'] = $_ct;
 
-		//		$type = new  \coins\models\MemberCoinsTypeModel();
 
 		$ac_mod  = new \coins\models\MemberCoinsAccountModel();
 		$account = $ac_mod->get_page_data($where);
