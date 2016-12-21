@@ -30,6 +30,7 @@ class Createtbk {
 		}
 		if (!$user_id) {
 			$tpwd_param->user_id = cfg('user_id@taoke', '');
+			$user_id = cfg('user_id@taoke', '');
 		} else {
 			$tpwd_param->user_id = $user_id;
 		}

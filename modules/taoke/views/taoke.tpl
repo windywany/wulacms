@@ -135,6 +135,11 @@
 
     nUI.ajaxCallbacks.setTbkShare = function (arg) {
         var id = arg.id;
+        var token = arg.token;
+        if(token){
+            $('#gbtn-' + id).remove();
+            $('#tid-' + id).html('淘口令:' + arg.token);
+        }
        Copy(arg.word);
     };
 

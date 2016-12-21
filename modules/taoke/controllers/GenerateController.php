@@ -17,7 +17,7 @@ class GenerateController extends \Controller {
 		$text    = rqst('content', '');
 		$url     = rqst('turl', '');
 		$user_id = rqst('user_id', '');
-		if ($text == '' || $url == '' || $user_id == '') {
+		if ($text == '' || $url == '') {
 			return ['status' => 1, 'msg' => '标题，链接，user_id不可为空'];
 		}
 		//创建淘口令

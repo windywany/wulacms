@@ -164,7 +164,17 @@ class TaokeController extends Controller {
 
 		$word = cfg('word@taoke', '');
 		if ($word) {
-			$data    = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
+			$data = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
+			if (!$data['token']) {
+				$tbk = new \taoke\classes\Createtbk();
+				$res = $tbk->create($data['title'], $data['coupon_url'], cfg('user_id@taoke', ''));
+				if ($res['status'] == 1) {
+					return NuiAjaxView::error($res['msg']);
+				}
+				$token = $res['msg'];
+				dbupdate('{tbk_goods}')->set(['token' => $token])->where(['page_id' => $id])->exec();
+				$data['token'] = $token;
+			}
 			$rep_arr = ['platform', 'title', 'price', 'real_price', 'token', 'page_id'];
 			foreach ($rep_arr as $k) {
 
@@ -172,11 +182,7 @@ class TaokeController extends Controller {
 				$word = $res;
 			}
 			if ($res) {
-				//				if($share_word){
-				//					$res = str_replace('{share_word}', $share_word, $res);
-				//				}
-
-				return NuiAjaxView::callback('setTbkShare', ['word' => $res, 'id' => $id], '已复制到粘贴板,可直接右键粘贴');
+				return NuiAjaxView::callback('setTbkShare', ['word' => $res, 'id' => $id, 'token' => $token], '已复制到粘贴板,可直接右键粘贴');
 			} else {
 				return NuiAjaxView::error('好像失败了');
 			}
