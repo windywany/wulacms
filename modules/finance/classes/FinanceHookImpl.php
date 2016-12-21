@@ -12,10 +12,10 @@ class FinanceHookImpl {
 			$deposit = new AdminNaviMenu ('findeposit', '充值记录', 'fa-sign-in', tourl('finance/deposit', false));
 
 			$withdraw = new AdminNaviMenu ('finwithdraw', '提现管理', 'fa-sign-out');
-			$withdraw->addSubmenu(['withdraw-pending', '待审核', 'fa-sign-out', tourl('finance/withdraw', false)], false, 1);
-			$withdraw->addSubmenu(['withdraw-approve', '待付款', 'fa-sign-out txt-color-blue', tourl('finance/withdraw', false)], false, 2);
-			$withdraw->addSubmenu(['withdraw-pay', '已付款', 'fa-sign-out txt-color-green', tourl('finance/withdraw', false)], false, 3);
-			$withdraw->addSubmenu(['withdraw-refuse', '已拒绝', 'fa-sign-out txt-color-red', tourl('finance/withdraw', false)], false, 4);
+			$withdraw->addSubmenu(['withdraw-pending', '待审核', 'fa-sign-out', tourl('finance/withdraw/0', false)], false, 1);
+			$withdraw->addSubmenu(['withdraw-approve', '待付款', 'fa-sign-out txt-color-blue', tourl('finance/withdraw/1', false)], false, 2);
+			$withdraw->addSubmenu(['withdraw-pay', '已付款', 'fa-sign-out txt-color-green', tourl('finance/withdraw/3', false)], false, 3);
+			$withdraw->addSubmenu(['withdraw-refuse', '已拒绝', 'fa-sign-out txt-color-red', tourl('finance/withdraw/2', false)], false, 4);
 
 			$menu->addItem($member, 'r:finance/finance', 1);
 			$menu->addItem($deposit, 'r:finance/deposit', 2);

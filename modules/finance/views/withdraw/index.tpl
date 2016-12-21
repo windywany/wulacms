@@ -15,7 +15,7 @@
 
                                 <section class="col col-md-3">
                                     <label class="input">
-                                        <input type="text" placeholder="会员ID" name="uid" value="{$uid}"/>
+                                        <input type="text" placeholder="会员ID" name="uid" value=""/>
                                     </label>
                                 </section>
 
@@ -24,19 +24,7 @@
                                         <input type="text" placeholder="回执ID" name="transid"/>
                                     </label>
                                 </section>
-
-                                <section class="col col-md-3">
-                                    <label class="select">
-                                        <select name="status" id="status">
-                                            <option value="" selected="selected">请选择状态</option>
-                                            <option value="0">审请中</option>
-                                            <option value="1">已通过</option>
-                                            <option value="2">已拒绝</option>
-                                            <option value="3">已付款</option>
-                                        </select><i></i>
-                                    </label>
-                                </section>
-
+                                    <input type="hidden" value="{$status}" id="status" name="status" >
                                 <section class="col col-2">
                                     <button class="btn btn-sm btn-primary" type="submit">
                                         <i class="fa fa-search"></i> 搜索
@@ -55,11 +43,11 @@
                         <th width="120">提现时间</th>
                         <th>会员名(ID)</th>
                         <th width="80">提现金额</th>
-                        <th width="150">支付</th>
+                        <th width="100">支付</th>
                         <th width="80">平台</th>
                         {'withdrawTable'|tablehead}
                         <th width="60">状态</th>
-                        <th width="80">
+                        <th width="150" class="text-align-cente">
                             {'withdrawTable'|tableset}
                         </th>
                     </tr>

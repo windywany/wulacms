@@ -10,10 +10,10 @@ class WithdrawController extends \Controller {
 	protected $checkUser = true;
 
 	//申请中
-	public function index($member_id = 0) {
+	public function index($status = 0) {
 		$data = array();
-		if (intval($member_id)) {
-			$data['uid'] = intval($member_id);
+		if (in_array($status, [0, 1, 2, 3])) {
+			$data['status'] = intval($status);
 		}
 
 		return view('withdraw/index.tpl', $data);
@@ -88,7 +88,7 @@ class WithdrawController extends \Controller {
 			$where ['mid '] = $uid;
 		}
 
-		if ($status) {
+		if (in_array($status, [0, 1, 2, 3])) {
 			$where ['status'] = $status;
 		}
 
@@ -110,6 +110,38 @@ class WithdrawController extends \Controller {
 
 		//类型
 		return view('withdraw/index_data.tpl', $data);
+	}
+
+	public function refuse($wid = 0) {
+		$wid = intval($wid);
+		if (isset($_POST) AND !empty($_POST)) {
+			$ret    = false;
+			$op     = rqst('op');
+			$wd_mod = new \finance\models\MemberWithdrawRecordModel();
+			$res    = $wd_mod->get_one(['id' => $wid]);
+			if (empty ($res)) {
+				return \NuiAjaxView::error('不存在该数据！');
+			}
+
+			if ($res ['status'] == 0) {
+				$note = array('rename' => '未实名认证', 'reopenid' => '微信openid异常');
+			} else {
+				return \NuiAjaxView::error('状态异常,无法操作！');
+			}
+
+			$ret = $wd_mod->update(['status' => '2', 'approve_message' => $note[ $op ], 'approve_uid' => $this->user['uid'], 'approve_time' => time()], ['id' => $wid]);
+			if ($ret) {
+				return \NuiAjaxView::refresh('添加成功！');
+			} else {
+				return \NuiAjaxView::error('操作失败！');
+			}
+		} else {
+
+			$data        = array();
+			$data['wid'] = $wid;
+
+			return view('withdraw/refuse.tpl', $data);
+		}
 	}
 }
 
