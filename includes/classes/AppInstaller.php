@@ -268,7 +268,8 @@ abstract class AppInstaller {
 	/**
 	 * 取当前模板所定义的表.
 	 *
-	 * @param DatabaseDialect $dialect        	
+	 * @param DatabaseDialect $dialect
+	 * @return array
 	 */
 	public function getDefinedTables($dialect) {
 		$sqlFile = MODULES_PATH . $this->name . DS . 'sqls' . DS . 'db_' . $dialect->getDriverName () . '.sql.php';
