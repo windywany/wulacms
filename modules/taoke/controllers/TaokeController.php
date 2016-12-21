@@ -139,8 +139,12 @@ class TaokeController extends Controller {
 	public function createtoken($id) {
 		$data = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
 		if ($data) {
-			$tbk = new \taoke\classes\Createtbk();
-			$res = $tbk->create($data['title'], $data['coupon_url'], 0, $data['image']);
+			$tbk  = new \taoke\classes\Createtbk();
+			$text = $tbk->getText($data);
+			if(!$text){
+				return NuiAjaxView::error('失败');
+			}
+			$res  = $tbk->create($text, $data['coupon_url'], 0, $data['image']);
 			if ($res['status'] == 1) {
 				return NuiAjaxView::error($res['msg']);
 			}
@@ -166,8 +170,12 @@ class TaokeController extends Controller {
 		if ($word) {
 			$data = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
 			if (!$data['token']) {
-				$tbk = new \taoke\classes\Createtbk();
-				$res = $tbk->create($data['title'], $data['coupon_url'], cfg('user_id@taoke', ''));
+				$tbk  = new \taoke\classes\Createtbk();
+				$text = $tbk->getText($data);
+				if(!$text){
+					return NuiAjaxView::error('失败');
+				}
+				$res  = $tbk->create($text, $data['coupon_url'], 0, $data['image']);
 				if ($res['status'] == 1) {
 					return NuiAjaxView::error($res['msg']);
 				}
@@ -175,9 +183,8 @@ class TaokeController extends Controller {
 				dbupdate('{tbk_goods}')->set(['token' => $token])->where(['page_id' => $id])->exec();
 				$data['token'] = $token;
 			}
-			$rep_arr = ['platform', 'title', 'price', 'real_price', 'token', 'page_id'];
+			$rep_arr = ['platform', 'title', 'price', 'url', 'real_price', 'token', 'page_id', 'conpou_price', 'discount', 'coupon_remain', 'coupon_stop', 'wangwang', 'shopname'];
 			foreach ($rep_arr as $k) {
-
 				$res  = str_replace('{' . $k . '}', $data[ $k ], $word);
 				$word = $res;
 			}
