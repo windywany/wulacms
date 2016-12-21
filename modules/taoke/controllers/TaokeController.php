@@ -137,14 +137,15 @@ class TaokeController extends Controller {
 
 	//生成淘口令
 	public function createtoken($id) {
-		$data = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
+		$data = dbselect('cp.id as cid,cp.title as title,url,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
 		if ($data) {
-			$tbk  = new \taoke\classes\Createtbk();
-			$text = $tbk->getText($data);
-			if(!$text){
+			$tbk         = new \taoke\classes\Createtbk();
+			$data['url'] = safe_url($data);
+			$text        = $tbk->getText($data);
+			if (!$text) {
 				return NuiAjaxView::error('失败');
 			}
-			$res  = $tbk->create($text, $data['coupon_url'], 0, $data['image']);
+			$res = $tbk->create($text, $data['coupon_url'], 0, $data['image']);
 			if ($res['status'] == 1) {
 				return NuiAjaxView::error($res['msg']);
 			}
@@ -162,20 +163,18 @@ class TaokeController extends Controller {
 
 	//生成推广语
 	public function share() {
-		$data       = [];
-		$id         = rqst('page_id', '');
-		$share_word = rqst('share_word', '');
-
-		$word = cfg('word@taoke', '');
+		$id   = rqst('page_id', '');
+		$word = cfg('word@taoke', '{token}');
 		if ($word) {
-			$data = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
+			$data        = dbselect('cp.id as cid,cp.title as title,url,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
+			$data['url'] = safe_url($data);
 			if (!$data['token']) {
 				$tbk  = new \taoke\classes\Createtbk();
 				$text = $tbk->getText($data);
-				if(!$text){
+				if (!$text) {
 					return NuiAjaxView::error('失败');
 				}
-				$res  = $tbk->create($text, $data['coupon_url'], 0, $data['image']);
+				$res = $tbk->create($text, $data['coupon_url'], 0, $data['image']);
 				if ($res['status'] == 1) {
 					return NuiAjaxView::error($res['msg']);
 				}
@@ -183,7 +182,8 @@ class TaokeController extends Controller {
 				dbupdate('{tbk_goods}')->set(['token' => $token])->where(['page_id' => $id])->exec();
 				$data['token'] = $token;
 			}
-			$rep_arr = ['platform', 'title', 'price', 'url', 'real_price', 'token', 'page_id', 'conpou_price', 'discount', 'coupon_remain', 'coupon_stop', 'wangwang', 'shopname'];
+			$rep_arr = ['platform', 'title', 'price', 'url', 'real_price', 'token', 'conpou_price', 'discount', 'coupon_remain', 'coupon_stop', 'wangwang', 'shopname', 'reason'];
+			$res     = false;
 			foreach ($rep_arr as $k) {
 				$res  = str_replace('{' . $k . '}', $data[ $k ], $word);
 				$word = $res;
@@ -197,7 +197,5 @@ class TaokeController extends Controller {
 		} else {
 			return NuiAjaxView::error('暂无推广语配置,请您先填写配置');
 		}
-
 	}
-
 }

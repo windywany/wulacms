@@ -60,6 +60,7 @@ class Createtbk {
 			$data['title'] = mb_substr($data['title'], 0, 14);
 			$tpl           = cfg('tpl@taoke', '{title}原价{price}元，抢券立省{discount}元');
 			$rep_arr       = ['platform', 'title', 'price', 'real_price', 'token', 'page_id', 'conpou_price', 'discount', 'coupon_remain', 'coupon_stop', 'wangwang', 'shopname'];
+			$res           = false;
 			foreach ($rep_arr as $k) {
 				$res = str_replace('{' . $k . '}', $data[ $k ], $tpl);
 				$tpl = $res;
@@ -67,7 +68,7 @@ class Createtbk {
 
 			return $res;
 		} else {
-			return [];
+			return null;
 		}
 	}
 }
