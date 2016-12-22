@@ -8,9 +8,9 @@
  */
 class  GeturlController extends Controller {
 	//推广跳转链接
-	public function index($id) {
-		if ($id) {
-			$tbk_url = dbselect('coupon_url')->from('{tbk_goods}')->where(['page_id' => $id])->get('coupon_url');
+	public function index($token) {
+		if ($token) {
+			$tbk_url = dbselect('coupon_url')->from('{tbk_goods}')->where(['token' => '￥'.$token.'￥'])->get('coupon_url');
 			if ($tbk_url) {
 				return ['status' => 0, 'url' => $tbk_url];
 			} else {

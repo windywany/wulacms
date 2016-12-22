@@ -167,7 +167,6 @@ class TaokeController extends Controller {
 		$word = cfg('word@taoke', '{token}');
 		if ($word) {
 			$data        = dbselect('cp.id as cid,cp.title as title,url,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
-			$data['url'] = safe_url($data);
 			if (!$data['token']) {
 				$tbk  = new \taoke\classes\Createtbk();
 				$text = $tbk->getText($data);
@@ -182,6 +181,7 @@ class TaokeController extends Controller {
 				dbupdate('{tbk_goods}')->set(['token' => $token])->where(['page_id' => $id])->exec();
 				$data['token'] = $token;
 			}
+			$data['url'] = cfg('cms_url@cms').'share/'.str_replace('￥','',$data['token']).'/index.html';
 			$rep_arr = ['platform', 'title', 'price', 'url', 'real_price', 'token', 'conpou_price', 'discount', 'coupon_remain', 'coupon_stop', 'wangwang', 'shopname', 'reason'];
 			$res     = false;
 			foreach ($rep_arr as $k) {
