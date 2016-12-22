@@ -117,19 +117,19 @@ class WithdrawController extends \Controller {
 		if (isset($_POST) AND !empty($_POST)) {
 			$ret    = false;
 			$op     = rqst('op');
+			$note   = trim(rqst('note'));
 			$wd_mod = new \finance\models\MemberWithdrawRecordModel();
 			$res    = $wd_mod->get_one(['id' => $wid]);
 			if (empty ($res)) {
 				return \NuiAjaxView::error('不存在该数据！');
 			}
 
-			if ($res ['status'] == 0) {
-				$note = array('rename' => '未实名认证', 'reopenid' => '微信openid异常');
-			} else {
+			if (!$res ['status'] == 0) {
 				return \NuiAjaxView::error('状态异常,无法操作！');
 			}
 
-			$ret = $wd_mod->update(['status' => '2', 'approve_message' => $note[ $op ], 'approve_uid' => $this->user['uid'], 'approve_time' => time()], ['id' => $wid]);
+			$op_list= array('rename' => '未实名认证', 'reopenid' => '微信openid异常', 'reother' => '其他');
+			$ret = $wd_mod->update(['status' => '2', 'approve_message' => $op_list[ $op ].' '.$note, 'approve_uid' => $this->user['uid'], 'approve_time' => time()], ['id' => $wid]);
 			if ($ret) {
 				return \NuiAjaxView::refresh('添加成功！');
 			} else {

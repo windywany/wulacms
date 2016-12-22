@@ -33,30 +33,18 @@
                     </a>
                 {/if}
                 {if $row.status==2}
-                    <a data-confirm="你确定要进行 未实名操作？" target="ajax" href="{'finance/withdraw/change/rename'|app}{$row.id}"
-                       class="btn btn-default btn-xs">
-                        <i class="fa fa-user"></i>未实名</a>
+                    {$row.approve_message}
                 {/if}
-                {if $row.status==0||$row.status==2}
+                {if $row.status==0}
                     <button data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu pull-right">
-                    {if $row.status==0}
                         <li>
                             <a data-confirm="你确定要进行 拒绝 操作？" target="dialog" dialog-width="400"
                                href="{'finance/withdraw/refuse'|app}{$row.id}" class="">
                                 <i class="fa fa-remove text-danger"></i>拒绝</a>
                         </li>
-                    {/if}
-                    {if $row.status==2}
-                        <li>
-                            <a data-confirm="你确定要进行 无openid操作？" target="ajax"
-                               href="{'finance/withdraw/change/reopenid'|app}{$row.id}" class="text-danger">
-                                <i class="fa fa-weixin"></i>openid异常</a>
-                        </li>
-                        </ul>
-                    {/if}
                 {/if}
             </div>
             {if $row.status==1 && $row.status !=3}

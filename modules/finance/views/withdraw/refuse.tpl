@@ -5,13 +5,6 @@
 			<span>&gt; 提现拒绝</span>
 		</h5>
 	</div>
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
-		<div class="pull-right margin-top-5 margin-bottom-5">
-			<a  class="btn btn-default" href="#{'finance/withdraw/0'|app:0}" id="rtnbtn">
-				<i class="glyphicon glyphicon-circle-arrow-left"></i> 返回
-			</a>			
-		</div>
-	</div>
 </div>
 
 <section id="widget-grid">
@@ -35,24 +28,26 @@
                 </header>
                 <div>
                      <div class="widget-body widget-hide-overflow no-padding">
-						 <form name="{$formName}"
-							   data-widget="nuiValidate" action="{'finance/withdraw/refuse/'|app}{$wid}"
-							   method="post" id="{$formName}-form" class="smart-form" target="ajax"
-						 >
-
+						 <form name="{$formName}" data-widget="nuiValidate" action="{'finance/withdraw/refuse/'|app}{$wid}" method="post" id="{$formName}-form" class="smart-form" target="ajax">
 							<fieldset>
                                 <input type="hidden" name="wid"  id="wid" value="{$wid}" />
 								<div class="row">
-									<section class="col col-12">
-										<label class="label">选择拒绝理由</label>
-										<label class="select">
-											<select name="op" id="op">
-                                                <option value="rename">未实名认证</option>
-                                                <option value="reopenid">openid异常</option>
-											</select>
-											<i></i>
-										</label>
+									<section class="col col-8">
+										{*<label class="label">选择拒绝理由</label>*}
+                                        <div class="group">
+                                            <label class="radio"><input id="re_1" type="radio" name="op" checked value="rename"><i></i>未实名认证</label>
+                                            <label class="radio"><input id="re_2" type="radio"  name="op" value="reopenid"><i></i>微信openid异常</label>
+                                            <label class="radio"><input id="re_2" type="radio"  name="op" value="reother"><i></i>其他</label>
+                                        </div>
 									</section>
+                                    <section class="col col-8">
+                                        <label class="label">
+                                           补充说明
+                                        </label>
+                                            <label class="input">
+                                                <input type="text" name="note" id="note">
+                                        </label>
+                                    </section>
 								</div>
 							</fieldset>
 
@@ -60,9 +55,6 @@
 								<button type="submit" class="btn btn-primary">
 									保存
 								</button>
-								{*<a  class="btn btn-default" href="#{'finance/withdraw/0'|app:0}">*}
-									{*返回*}
-								{*</a>*}
 							</footer>
 						</form>
 
