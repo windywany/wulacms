@@ -24,6 +24,10 @@
                     data-grp="#tbkGoodsTable tbody input.grp:checked" data-arg="ids" data-warn="请选择要特荐的文章!"
                     data-confirm="你真的要特荐选中的文章吗?"><i class="fa fa-thumbs-o-up"></i> 特荐
             </button>
+            <button type="button" class="btn btn-warning" data-url="{'taoke/changeh'|app}" target="ajax"
+                    data-grp="#tbkGoodsTable tbody input.grp:checked" data-arg="ids" data-warn="请选择要特荐的文章!"
+                    data-confirm="你真的要特荐选中的文章吗?"><i class="fa fa-thumbs-o-up"></i> 热门
+            </button>
             <button disabled="disabled" type="button" id="import_excel" class="btn btn-primary"
                     href="{'taoke/import/index'|app}" target="ajax" data-confirm="开始之前请确保最新的EXCEL文件已经上传?">
                 <i class="fa fa-cloud-upload"></i>导入
@@ -52,6 +56,7 @@
                                         <option value="">所有</option>
                                         <option value="0">推荐</option>
                                         <option value="1">特荐</option>
+                                        <option value="2">热门</option>
                                     </select>
                                     <i></i>
                                 </label>

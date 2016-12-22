@@ -8,6 +8,7 @@
            <a href="/tbk/{$c.cid}.html" target="_blank"> <img src="{$c.image|media}" width="80" height="80" style="float: left;margin-right: 5px;">{$c.title}</a>
             {if $c.flag_c}<span class="label bg-color-orange">推荐</span>&nbsp;{/if}
             {if $c.flag_a}<span class="label bg-color-teal">特荐</span>&nbsp;{/if}
+            {if $c.flag_h}<span class="label bg-color-red">热门</span>&nbsp;{/if}
         </p>
         <p><span id="tid-{$c.cid}" class="label label-primary">{if $c.token}淘口令:{$c.token}{/if}</span>
                 {if !$c.token}<a id="gbtn-{$c.cid}" title="淘口令" class="btn btn-xs btn-primary"
