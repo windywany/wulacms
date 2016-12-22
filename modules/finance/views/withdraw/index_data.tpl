@@ -22,7 +22,7 @@
             {/if}
 
         </td>
-        <td class='text-center ' colspan="2">
+        <td class='text-right' colspan="2">
             <div class="btn-group">
 
                 {if $row.status==0}
@@ -41,8 +41,8 @@
                     </button>
                     <ul class="dropdown-menu pull-right">
                         <li>
-                            <a data-confirm="你确定要进行 拒绝 操作？" target="dialog" dialog-width="400"
-                               href="{'finance/withdraw/refuse'|app}{$row.id}" class="">
+                            <a  target="dialog" dialog-width="500" dialog-title="拒绝理由" dialog-model="true"
+                               href="{'finance/withdraw/refuse'|app}{$row.id}" >
                                 <i class="fa fa-remove text-danger"></i>拒绝</a>
                         </li>
                 {/if}

@@ -47,7 +47,7 @@
                         <th width="80">平台</th>
                         {'withdrawTable'|tablehead}
                         <th width="60">状态</th>
-                        <th width="150" class="text-align-cente">
+                        <th width="150" class="text-right">
                             {'withdrawTable'|tableset}
                         </th>
                     </tr>
