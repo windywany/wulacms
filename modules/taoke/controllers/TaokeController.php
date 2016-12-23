@@ -55,6 +55,9 @@ class TaokeController extends Controller {
 			if ($status == 1) {
 				$where ['cp.flag_a'] = 1;
 			}
+			if ($status == 2) {
+				$where ['cp.flag_h'] = 1;
+			}
 		}
 		if ($wangwang != '') {
 			$where ['tbk.wangwang LIKE'] = '%' . $wangwang . '%';
@@ -62,7 +65,7 @@ class TaokeController extends Controller {
 		$where['cp.deleted']         = 0;
 		$where['cp.model']           = 'taoke';
 		$where['tbk.coupon_stop >='] = $date;
-		$row                         = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->join('{cms_channel} as ch', 'cp.channel = ch.refid')->where($where);
+		$row                         = dbselect('cp.id as cid,cp.title as title,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,cp.flag_h as flag_h,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->join('{cms_channel} as ch', 'cp.channel = ch.refid')->where($where);
 		$data ['total']              = $row->count('cp.id');
 		$data ['results']            = $row->limit(($_cp - 1) * $_lt, $_lt)->sort($_sf, $_od)->toArray();
 
@@ -75,7 +78,7 @@ class TaokeController extends Controller {
 		if ($ids) {
 			$res = dbupdate('{cms_page}')->set(['flag_c' => 1])->where(['id in' => $ids])->exec();
 			if ($res) {
-				return NuiAjaxView::reload('#page-table', '修改成功');
+				return NuiAjaxView::reload('#tbkGoodsTable', '修改成功');
 			} else {
 				return NuiAjaxView::error('修改失败.');
 			}
@@ -91,7 +94,23 @@ class TaokeController extends Controller {
 		if ($ids) {
 			$res = dbupdate('{cms_page}')->set(['flag_a' => 1])->where(['id in' => $ids])->exec();
 			if ($res) {
-				return NuiAjaxView::reload('#page-table', '修改成功');
+				return NuiAjaxView::reload('#tbkGoodsTable', '修改成功');
+			} else {
+				return NuiAjaxView::error('修改失败.');
+			}
+
+		}
+
+		return NuiAjaxView::error('未指定任何文章.');
+	}
+
+	//批量修改热门
+	public function changeh($ids) {
+		$ids = safe_ids($ids, ',', true);
+		if ($ids) {
+			$res = dbupdate('{cms_page}')->set(['flag_h' => 1])->where(['id in' => $ids])->exec();
+			if ($res) {
+				return NuiAjaxView::reload('#tbkGoodsTable', '修改成功');
 			} else {
 				return NuiAjaxView::error('修改失败.');
 			}
@@ -129,7 +148,7 @@ class TaokeController extends Controller {
 				dbupdate('{cms_page}')->set($data)->where(['id' => $page_id])->exec();
 			}
 
-			return NuiAjaxView::reload('#page-table', '修改成功');
+			return NuiAjaxView::reload('#tbkGoodsTable', '修改成功');
 		}
 
 		return NuiAjaxView::error('修改失败');
@@ -167,7 +186,6 @@ class TaokeController extends Controller {
 		$word = cfg('word@taoke', '{token}');
 		if ($word) {
 			$data        = dbselect('cp.id as cid,cp.title as title,url,cp.image as image,cp.flag_c as flag_c,cp.flag_a as flag_a,tbk.*')->from('{cms_page} as cp')->join('{tbk_goods} as tbk', 'cp.id=tbk.page_id')->where(['cp.id' => $id])->get();
-			$data['url'] = safe_url($data);
 			if (!$data['token']) {
 				$tbk  = new \taoke\classes\Createtbk();
 				$text = $tbk->getText($data);
@@ -182,6 +200,7 @@ class TaokeController extends Controller {
 				dbupdate('{tbk_goods}')->set(['token' => $token])->where(['page_id' => $id])->exec();
 				$data['token'] = $token;
 			}
+			$data['url'] = trailingslashit(cfg('share_url@taoke')).str_replace('￥','',$data['token']);
 			$rep_arr = ['platform', 'title', 'price', 'url', 'real_price', 'token', 'conpou_price', 'discount', 'coupon_remain', 'coupon_stop', 'wangwang', 'shopname', 'reason'];
 			$res     = false;
 			foreach ($rep_arr as $k) {

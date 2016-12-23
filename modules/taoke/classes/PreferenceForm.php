@@ -15,6 +15,8 @@ class PreferenceForm extends \AbstractForm {
 	private $appkey    = array('group' => '2', 'col' => '4', 'label' => 'appkey', 'default' => '',);
 	private $appsecret = array('group' => '2', 'col' => '4', 'label' => 'appsecret', 'default' => '');
 	private $user_id   = array('group' => '2', 'col' => '4', 'label' => 'user_id','note'=>'淘宝用户ID，请到源码中查找');
+	private $share_url  = array(  'label' => '分享url','note'=>'分享url');
+	private $hot_search  = array(  'label' => '热门搜索','note'=>'请以逗号隔开。如：A,B,C,D');
 	private $tpl       = array('label'=>'淘口令弹框内容','default'=>'{title}... 原价{price}元，抢券立省{discount}元',
 	                           'note'=>'{platform}:平台;{title}:商品标题;{price}:原价;{real_price}:券后价格;{conpou_price}:优惠券价格;{discount}:折扣;{coupon_remain}:剩余;{coupon_stop}:结束日期;{wangwang}:旺旺;{shopname}:店铺');
 	private $word      = array('widget'=>'textarea','row'=>'6','label' => '推广语', 'default' => '',
