@@ -53,7 +53,6 @@ abstract class DefaultPreferencePage extends Controller {
 		$data ['widgets'] = new DefaultFormRender ($form->buildWidgets($values));
 		$data ['cfields'] = json_encode($data ['cfields']);
 		$tpl              = $this->getTemplate($_g);
-
 		return view($tpl, $data);
 	}
 

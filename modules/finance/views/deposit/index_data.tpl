@@ -4,17 +4,22 @@
         <td><input type="checkbox" value="{$row.id}" class="grp"/></td>
         <td>{$row.create_time|date_format:"Y-m-d H:i"}</td>
         <td>{$row.confirmed|date_format:"Y-m-d H:i"}</td>
+        <td>
+            {if $row.order_confirmed}
+                {$row.order_confirmed|date_format:"Y-m-d H:i"}
+            {else}
+                ---
+            {/if}
+        </td>
         <td>{$row.mname}({$row.mid})</td>
+        <td>
+            {number_format($row.amount,0,'','')}
+        </td>
         <td>
             {$row.orderid}
         </td>
-        <td>
-            {$row.amount}
-        </td>
         {'depositTable'|tablerow:$row}
-        <td class='text-center'>
-            <a href="#{'points/record'|app}{$row.mid}/{$row.type}" class="btn btn-primary btn-xs"><i></i>积分流水</a>
-            <a href="#{'points/record'|app}{$row.mid}/{$row.type}" class="btn btn-primary btn-xs"><i></i>金币流水</a>
+        <td class='text-right'>
         </td>
     </tr>
     {foreachelse}

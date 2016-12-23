@@ -14,8 +14,8 @@ class FinanceInstaller extends AppInstaller {
 	}
 
 	public function getVersionLists() {
-		$v ['1.0.0'] = '20160917001';
 		$v ['2.0.0'] = '20160917001';
+		$v ['2.0.1'] = '2016122317001';
 
 		return $v;
 	}

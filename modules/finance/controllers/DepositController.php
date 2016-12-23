@@ -40,12 +40,13 @@ class DepositController extends \Controller {
 
 	public function data($_cp = 1, $_lt = 20, $_sf = 'id', $_od = 'd', $_ct = 0) {
 
-		$uid       = rqst('uid');
-		$orderid   = rqst('orderid');
-		$transid   = rqst('transid');
-		$confirmed = rqst('confirmed');
-		$start     = trim(rqst('bd', ''));
-		$end       = trim(rqst('sd', '')) . '23:59:59';
+		$uid              = rqst('uid');
+		$orderid          = rqst('orderid');
+		$transid          = rqst('transid');
+		$confirmed        = rqst('confirmed');
+		$start            = trim(rqst('bd', ''));
+		$end              = trim(rqst('sd', '')) . '23:59:59';
+		$where['deleted'] = 0;
 		if ($uid) {
 			$where ['mid '] = $uid;
 		}
@@ -57,11 +58,23 @@ class DepositController extends \Controller {
 		if ($transid) {
 			$where ['transid'] = $transid;
 		}
-		if ($confirmed == 1) {
-			$where ['confirmed >'] = 0;
-		}
-		if ($confirmed == 2) {
-			$where ['confirmed '] = 0;
+		if (in_array($confirmed, [1, 2, 3, 4])) {
+			if ($confirmed == 1) {
+				$where ['confirmed >']       = 0;
+				$where ['order_confirmed >'] = 0;
+			}
+			if ($confirmed == 2) {
+				$where ['confirmed >']     = 0;
+				$where ['order_confirmed'] = 0;
+			}
+			if ($confirmed == 3) {
+				$where ['confirmed ']      = 0;
+				$where ['order_confirmed'] = 0;
+			}
+			if ($confirmed == 4) {
+				$where ['confirmed ']      = 0;
+				$where ['order_confirmed'] = 0;
+			}
 		}
 		if ($start != '') {
 			$where ['create_time >='] = strtotime($start);

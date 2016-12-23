@@ -53,8 +53,11 @@
 							<th width="120" class="hidden-xs hidden-sm">总金额</th>
 							<th width="100" class="hidden-xs hidden-sm">可用金额</th>
 							<th width="100" class="hidden-xs hidden-sm">冻结金额</th>
+                            <th width="100" class="hidden-xs hidden-sm">已用金额</th>
 							<th width="100" class="hidden-xs hidden-sm">创建时间</th>
-							<th width="100" class='text-center'>操作</th>
+                            <th width="150" class="text-right">
+                                <i class="fa fa-gear"></i>
+                            </th>
 						</tr>
 					</thead>
 				</table>

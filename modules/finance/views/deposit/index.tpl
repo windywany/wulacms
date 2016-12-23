@@ -13,7 +13,7 @@
                         <fieldset>
                             <div class="row">
 
-                                <section class="col col-md-3">
+                                <section class="col col-md-2">
                                     <label class="input">
                                         <input type="text" placeholder="会员ID" name="uid" value="{$uid}"/>
                                     </label>
@@ -32,18 +32,20 @@
                                     </label>
                                 </section>
 
-                                <section class="col col-md-3">
+                                <section class="col col-md-2">
                                     <label class="select">
                                         <select name="confirmed" id="confirmed">
                                             <option value="">请选择状态</option>
-                                            <option value="1" selected="selected">成功</option>
-                                            <option value="2">失败</option>
+                                            <option value="1" selected="selected">已完成</option>
+                                            <option value="2">待入帐</option>
+                                            <option value="3">待复核</option>
+                                            <option value="4">已作废</option>
                                         </select><i></i>
                                     </label>
                                 </section>
 
-                                <section class="col col-1">
-                                    <button class="btn btn-sm btn-primary" type="submit">
+                                <section class="col col-md-2">
+                                    <button class="btn btn-primary btn-sm" type="submit">
                                         <i class="fa fa-search"></i> 搜索
                                     </button>
                                 </section>
@@ -58,6 +60,7 @@
                     <tr>
                         <th width="30"><input type="checkbox" class="grp"/></th>
                         <th width="120">充值时间</th>
+                        <th width="120">确认时间</th>
                         <th width="120">入帐时间</th>
                         <th>会员名(ID)</th>
                         <th width="100">充值金额</th>
