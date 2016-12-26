@@ -22,11 +22,74 @@
         </div>
     </div>
 </div>
-<section id="widget-grid">
+<section id="widget-grid" class="hasr">
+    <span class="barhr">
+        <i class="fa fa-search"></i>
+    </span>
+    <div class="rightbar">
+        <div class="panel panel-default">
+            <div class="panel-heading">搜索</div>
+            <div class="panel-body padding-5">
+                <form data-widget="nuiSearchForm" id="member-search-form" data-for="#member-table"
+                      class="smart-form">
+                    <input type="hidden" id="keyword-type" name="ktype" value="username"/>
+                    <input type="hidden" id="status" name="M_status" value="{$status}"/>
+                    <fieldset>
+                            <section>
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button tabindex="-1" id="keyword-label" class="btn btn-default btn-iptg"
+                                                type="button">账户
+                                        </button>
+                                        <button tabindex="-1" data-toggle="dropdown"
+                                                class="btn btn-iptg btn-default dropdown-toggle" type="button">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul role="menu" id="keyword-type-selector" class="dropdown-menu">
+                                            <li><a rel="mid" href="javascript:void(0);">ID</a></li>
+                                            <li><a rel="username" href="javascript:void(0);">账户</a></li>
+                                            <li><a rel="nickname" href="javascript:void(0);">昵称</a></li>
+                                            <li><a rel="email" href="javascript:void(0);">邮件</a></li>
+                                            <li><a rel="phone" href="javascript:void(0);">手机</a></li>
+                                            {if $enable_invation}
+                                                <li><a rel="invite_mid" href="javascript:void(0);">邀请人</a></li>
+                                            {/if}
+                                        </ul>
+                                    </div>
+                                    <input type="text" placeholder="请输入关键词" class="form-control" name="keyword" style="height: 30px"/>
+                                </div>
+                            </section>
+                            <section>
+                                <label class="select">
+                                    <select name="M_group_id">
+                                        {html_options options=$groups}
+                                    </select>
+                                    <i></i>
+                                </label>
+                            </section>
+                            <section>
+                                <label class="select">
+                                    <select name="M_role_id">
+                                        {html_options options=$all_roles}
+                                    </select>
+                                    <i></i>
+                                </label>
+                            </section>
+                            {$widgets|render}
+                            <section>
+                                <button class="btn btn-sm btn-primary" type="submit">
+                                    <i class="fa fa-search"></i> 搜索
+                                </button>
+                            </section>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <article class="col-sm-12">
             <div class="panel panel-default">
-                <div class="panel-body no-padding">
+                <div class="panel-body no-padding has-tab">
                     <ul class="nav nav-tabs in" id="passport-type-tab">
                         <li>
                             <a href="#" class="txt-color-gray"><i class="fa fa-user"></i> <span
@@ -45,65 +108,10 @@
                                         class="hidden-mobile hidden-tablet">禁用</span></a>
                         </li>
                     </ul>
-                    <form data-widget="nuiSearchForm" id="member-search-form" data-for="#member-table"
-                          class="smart-form">
-                        <input type="hidden" id="keyword-type" name="ktype" value="username"/>
-                        <input type="hidden" id="status" name="M_status" value="{$status}"/>
-                        <fieldset>
-                            <div class="row">
-                                <section class="col col-6 input">
-                                    <div class="input-group">
-                                        <div class="input-group-btn">
-                                            <button tabindex="-1" id="keyword-label" class="btn btn-default btn-iptg"
-                                                    type="button">账户
-                                            </button>
-                                            <button tabindex="-1" data-toggle="dropdown"
-                                                    class="btn btn-iptg btn-default dropdown-toggle" type="button">
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul role="menu" id="keyword-type-selector" class="dropdown-menu">
-                                                <li><a rel="mid" href="javascript:void(0);">ID</a></li>
-                                                <li><a rel="username" href="javascript:void(0);">账户</a></li>
-                                                <li><a rel="nickname" href="javascript:void(0);">昵称</a></li>
-                                                <li><a rel="email" href="javascript:void(0);">邮件</a></li>
-                                                <li><a rel="phone" href="javascript:void(0);">手机</a></li>
-                                                {if $enable_invation}
-                                                    <li><a rel="invite_mid" href="javascript:void(0);">邀请人ID</a></li>
-                                                {/if}
-                                            </ul>
-                                        </div>
-                                        <input type="text" placeholder="请输入关键词" class="form-control" name="keyword"/>
-                                    </div>
-                                </section>
-                                <section class="col col-2">
-                                    <label class="select">
-                                        <select name="M_group_id">
-                                            {html_options options=$groups}
-                                        </select>
-                                        <i></i>
-                                    </label>
-                                </section>
-                                <section class="col col-2">
-                                    <label class="select">
-                                        <select name="M_role_id">
-                                            {html_options options=$all_roles}
-                                        </select>
-                                        <i></i>
-                                    </label>
-                                </section>
-                                <section class="col col-2">
-                                    <button class="btn btn-sm btn-primary" type="submit">
-                                        <i class="fa fa-search"></i> 搜索
-                                    </button>
-                                </section>
-                            </div>
-                            {if $widgets}{$widgets|render}{/if}
-                        </fieldset>
-                    </form>
                 </div>
                 <table id="member-table" data-widget="nuiTable" data-auto="true"
                        data-source="{'passport/members/data'|app}" data-sort="M.mid,d"
-                       data-tree="true">
+                       data-tree="true" style="border-top: none">
                     <thead>
                     <tr>
                         <th width="20"></th>
@@ -112,7 +120,7 @@
                         <th data-sort="M.username,d">账户</th>
                         {'member-table'|tablehead}
                         <th width="80" data-sort="M.status,d">状态</th>
-                        <th width="70" class="text-center" data-columnset="true">
+                        <th width="90" class="text-center" data-columnset="true">
                             {'member-table'|tableset}
                         </th>
                     </tr>

@@ -15,23 +15,12 @@ class MembersController extends Controller {
 		$data ['canDelMember']    = icando('d:account/member');
 		$data ['canAddMember']    = icando('c:account/member') && !bcfg('connect_to@passport');
 		$data ['enable_invation'] = bcfg('enable_invation@passport');
-		$data ['columns']         = apply_filter('get_member_columns', []);
 		$fields                   = apply_filter('get_member_search_fields', []);
 
 		if ($fields) {
-			$gp          = 1;
-			$col         = 0;
 			$csearchForm = new DynamicForm ('CustomerMemberSearchForm');
 			foreach ($fields as $n => $f) {
-				if (!isset ($f ['col']) || !intval($f ['col'])) {
-					$f ['col'] = 3;
-				}
-				$col += intval($f ['col']);
-				if ($col > 12) {
-					$gp += 1;
-					$col = intval($f ['col']);
-				}
-				$f ['group'] = $gp;
+				$f ['group'] = null;
 				$csearchForm->addField($n, $f);
 			}
 			$data ['widgets'] = new DefaultFormRender ($csearchForm->buildWidgets(array()));
@@ -238,7 +227,6 @@ class MembersController extends Controller {
 		$data ['canDelMember']    = icando('d:account/member');
 		$data ['canAuthMember']   = icando('a:account/member');
 		$data ['enable_invation'] = bcfg('enable_invation@passport');
-		$data ['columns']         = apply_filter('get_member_columns', []);
 
 		return view('members/data.tpl', $data);
 	}

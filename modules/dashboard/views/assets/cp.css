@@ -307,3 +307,7 @@ body.menu-on-top .smart-style-4 #header{background: #71a06a}
 #widget-grid.openl>div.leftbar, body.minified #widget-grid.openl>div.leftbar{
     display: block;
 }
+
+.has-tab .nav-tabs>li.active>a,.has-tab .nav-tabs>li.active>a:focus,.has-tab .nav-tabs>li.active>a:hover{
+    background: #eee;
+}
