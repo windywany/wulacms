@@ -51,7 +51,7 @@ $tables ['2.0.0'] [] = "CREATE TABLE `{prefix}member_finance_account` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4";
 $tables['2.0.1'][]   = "ALTER TABLE `{prefix}member_deposit_record` ADD COLUMN  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除,0正1删' AFTER `create_time`";
-$tables['2.0.1'][]   = "ALTER TABLE `{prefix}member_deposit_record` ADD COLUMN  `order_confirmed` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订单处理完成时间' AFTER `order_id`";
+$tables['2.0.1'][]   = "ALTER TABLE `{prefix}member_deposit_record` ADD COLUMN  `order_confirmed` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订单处理完成时间' AFTER `orderid`";
 $tables['2.0.1'][]   = "ALTER TABLE `{prefix}member_finance_account` MODIFY COLUMN `mname`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '会员名称' AFTER `mid`";
 $tables['2.0.1'][]   = "ALTER TABLE `{prefix}member_finance_account` ADD COLUMN `spend`  decimal(13,3) NULL DEFAULT 0.000 COMMENT '已经花费' AFTER `balance`";
 $tables['2.0.1'][]   = "ALTER TABLE `{prefix}member_finance_account` ADD COLUMN `update_time`  decimal(10,0) NULL DEFAULT 0 COMMENT '更新时间' AFTER `spend`";
