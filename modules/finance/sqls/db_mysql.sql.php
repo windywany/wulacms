@@ -81,5 +81,5 @@ $tables['2.2.0'][] = "ALTER TABLE `{prefix}member_deposit_record`
 ADD COLUMN `device` VARCHAR(16) NULL DEFAULT '' COMMENT '设备' AFTER `subject`,
 ADD COLUMN `channel` VARCHAR(32) NULL DEFAULT '' COMMENT '推广渠道' AFTER `device`";
 
-$tables['2.2.0'] = "ALTER TABLE `{prefix}member_finance_outlay` 
+$tables['2.2.0'][] = "ALTER TABLE `{prefix}member_finance_outlay` 
 DROP COLUMN `mname`";
