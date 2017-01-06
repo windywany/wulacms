@@ -1,8 +1,8 @@
 <?php
-namespace finance\controllers;
+namespace pay\controllers;
 
-use finance\classes\IPayChannel;
-use finance\classes\PayChannelManager;
+use pay\classes\IPayChannel;
+use pay\classes\PayChannelManager;
 
 class GatewayController extends \NonSessionController {
 	/**

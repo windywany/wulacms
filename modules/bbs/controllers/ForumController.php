@@ -2,8 +2,8 @@
 
 namespace bbs\controllers;
 
-use bbs\model\BbsForumsModel;
 use bbs\form\BbsForumForm;
+use bbs\model\BbsForumsModel;
 use bbs\model\BbsThreadsModel;
 
 /**
@@ -12,6 +12,7 @@ use bbs\model\BbsThreadsModel;
  * @checkUser
  */
 class ForumController extends \Controller {
+	protected $checkUser   = true;
 	private   $allows_flag = ['allow_markdown', 'allow_bbscode', 'allow_anonymous'];
 	protected $acls        = ['*' => 'r:bbs/forum', 'save' => 'id|u:bbs/forum;c:bbs/forum', 'del' => 'd:bbs/forum'];
 

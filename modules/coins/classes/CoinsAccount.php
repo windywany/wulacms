@@ -49,4 +49,15 @@ class CoinsAccount {
 		}
 
 	}
+
+	public static function load_member_data_for_passport(\Passport $user) {
+		$mid     = $user->getUid();
+		$model   = new MemberCoinsAccountModel();
+		$account = $model->getSummaryAccount($mid);
+		if ($account) {
+			$user['coins'] = $account['balance'];
+		} else {
+			$user['coins'] = 0;
+		}
+	}
 }

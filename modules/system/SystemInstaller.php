@@ -61,6 +61,7 @@ class SystemInstaller extends AppInstaller {
 		$versions ['3.3.0'] = '2016082500028'; // 组支持等级，升级所需要金币，组别名
 		$versions ['4.0.0'] = '2016121900029'; // 服务支持
 		$versions ['4.1.0'] = '2016122000030'; // 自定义要表格显示的列
+		$versions ['4.2.0'] = '2017010500031'; // 等级续费折扣
 		return $versions;
 	}
 

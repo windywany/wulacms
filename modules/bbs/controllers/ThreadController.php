@@ -15,7 +15,8 @@ use bbs\model\BbsForumsModel;
  * @checkUser
  */
 class ThreadController extends \Controller {
-	protected $acls = ['*' => 'r:bbs/thread'];
+	protected $checkUser = true;
+	protected $acls      = ['*' => 'r:bbs/thread'];
 
 	/**
 	 *

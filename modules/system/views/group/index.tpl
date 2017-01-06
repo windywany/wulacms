@@ -31,11 +31,12 @@
 					data-widget="nuiTable">
 					<thead>
 						<tr>					
-							<th width="300">用户组名</th>
+							<th width="160">用户组名</th>
 							<th width="80">ID</th>
                             <th width="100">等级</th>
-                            <th width="80">限值</th>
-                            <th width="180">等级名称</th>
+                            <th width="80">年费</th>
+							<th width="120">续费折扣</th>
+                            <th width="130">等级名称</th>
 							<th class="hidden-xs hidden-sm">说明</th>
 							<th width="80"></th>
 						</tr>
@@ -55,6 +56,7 @@
 							<td>{$group.group_refid}</td>
                             <td>{$group.level}</td>
                             <td>{$group.coins}</td>
+                            <td>{$group.discount}</td>
                             <td>{$group.rank}</td>
 							<td class="hidden-xs hidden-sm">{$group.note|escape}</td>
 							<td class="text-right">
@@ -75,7 +77,7 @@
 						</tr>
                         {foreachelse}
                         <tr>
-                            <td colspan="7">
+                            <td colspan="8">
                                 无分组
                             </td>
                         </tr>

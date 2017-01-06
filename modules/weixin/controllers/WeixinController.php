@@ -17,6 +17,8 @@ class WeixinController extends NonSessionController {
 	 *            随机数.
 	 * @param string $echostr
 	 *            校验成功后返回给微信的字符串.
+	 *
+	 * @return mixed
 	 */
 	public function index($signature, $timestamp, $nonce, $echostr) {
 		$args [] = $nonce;
@@ -37,11 +39,8 @@ class WeixinController extends NonSessionController {
 	/**
 	 * 接收消息 (普通消息,事件推送).
 	 *
-	 * @param unknown $param
 	 */
 	public function index_post() {
-		echo 'success';
-		@ob_flush();
 		$content = @file_get_contents('php://input');
 		if ($content) {
 			$isLoginAccount = rqset('login');
@@ -56,15 +55,18 @@ class WeixinController extends NonSessionController {
 			if (WeixinUtil::checkSignature($args, rqst('signature'))) {
 				$xml = simplexml_load_string($content);
 				if ($xml) {
-					log_debug($content, 'weixin');
-					if ($xml->MsgType == 'event') {
+					$msgType = strtolower($xml->MsgType);
+					if ($msgType == 'event') {
 						$rtn = apply_filter('on_weixin_event_' . strtolower($xml->Event), 'success', $xml, $isLoginAccount);
 					} else {
-						$rtn = apply_filter('on_weixin_message_' . $xml->MsgType, 'success', $xml, $isLoginAccount);
+						$rtn = apply_filter('on_weixin_message_' . $msgType, 'success', $xml, $isLoginAccount);
 					}
+
 					if ($rtn !== false) {
 						return $rtn;
 					}
+
+					return 'success';
 				} else {
 					log_debug('[weixin] 无法解析数据:' . $content, 'weixin');
 				}

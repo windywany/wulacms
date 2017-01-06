@@ -29,10 +29,13 @@ function cms_pages_provider($con, $tplvars = [], $dialect = null) {
 	$where ['CP.deleted'] = 0;
 	$where ['CP.hidden']  = 0;
 	$clen                 = count($where);
+	$where                = array_merge($where, get_common_page_condition_where($con, $mfield));
+	$data                 = CmsPage::query($con);
 
-	$where = array_merge($where, get_common_page_condition_where($con));
+	if ($mfield) {
+		$data->field($mfield);
+	}
 
-	$data = CmsPage::query($con);
 	if ($dialect) {
 		$data->setDialect($dialect);
 	}
@@ -69,7 +72,6 @@ function cms_pages_provider($con, $tplvars = [], $dialect = null) {
 		}
 		$data = apply_filter('build_pages_query_for_' . $model, $data, $con);
 	}
-
 	$data->where($where);
 	$sortby = get_condition_value('sortby', $con);
 	if ($sortby) {
@@ -78,10 +80,10 @@ function cms_pages_provider($con, $tplvars = [], $dialect = null) {
 		$orders  = explode(',', $order);
 		foreach ($sortbys as $idx => $sortby) {
 			$order = isset($orders[ $idx ]) ? $orders[ $idx ] : $orders[0];
-			if (!strpos($sortby, '.')) {
+			if (strpos($sortby, '.') === false) {
 				$data->sort('CP.' . $sortby, $order);
 			} else {
-				$data->sort($sortby, $order);
+				$data->sort(ltrim($sortby, '.'), $order);
 			}
 		}
 	}

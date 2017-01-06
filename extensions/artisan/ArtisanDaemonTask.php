@@ -30,7 +30,12 @@ abstract class ArtisanDaemonTask extends ArtisanCommand {
 				syslog(LOG_ERR, 'Could not detach session id.');
 				exit(1);
 			}
+			\DatabaseDialect::resetDialect();
 			$this->setUp($options);
+			if ($this->workerCount == 0) {
+				syslog(LOG_ERR, 'No workers to do this job.');
+				exit(1);
+			}
 			fclose(STDIN);
 			fclose(STDOUT);
 			fclose(STDERR);

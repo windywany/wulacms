@@ -15,7 +15,8 @@ class CoinsInstaller extends AppInstaller {
 
 	public function getVersionLists() {
 		$v ['1.0.0'] = '20160905001';
-		$v ['1.0.1'] = '20161220002';/*修正字段*/
+		$v ['1.0.1'] = '20161220002';// 修正字段
+		$v['1.1.0']  = '20161227003';// 添加默认金币类型
 
 		return $v;
 	}

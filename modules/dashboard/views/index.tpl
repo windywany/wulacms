@@ -53,7 +53,7 @@
 				</ul>
 			</li>
 		</ul>
-		<div class="btn-header transparent pull-right">
+		<div class="btn-header transparent pull-right hidden-xs">
 			<span>
 				<a data-action="logoutUser" data-logout-msg="你确定要注销吗?" href="{'dashboard/signout'|app}" title="退出">
 					<i class="fa fa-sign-out"></i>

@@ -7,24 +7,24 @@
 		<td>
 			{$row.id}
 		</td>
-		<td>{$row.mname}({$row.mid})</td>
+		<td>{$row.nickname}({$row.mid})</td>
 		<td>
             {$row.amount}
 		</td>
-
 		<td>
 			{$row.balance}
 		</td>
-
 		<td>
             {$row.frozen_amount}
 		</td>
+		<td>
+            {$row.spend}
+        </td>
         <td>
-            {date('Y-m-d H:i:s',$row.create_time)}
+            {date('Y-m-d',$row.create_time)}
         </td>
 		<td class='text-center'>
-			<a   href="#{'finance/deposit/index'|app}{$row.mid}" class="btn btn-primary btn-xs"><i></i>充值详情</a>
-			<a   href="#{'finance/withdraw/index'|app}{$row.mid}" class="btn btn-primary btn-xs"><i></i>提现详情</a>
+			<a  href="#{'finance/deposit'|app:0}{$row.mid}" class="btn btn-primary btn-xs">详情</a>
 		</td>
 	</tr>
 	{foreachelse}

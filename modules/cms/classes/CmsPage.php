@@ -852,8 +852,6 @@ class CmsPage implements ArrayAccess, ICtsPage {
 				}
 
 				CmsPage::saveCustomerFieldValues($id, $page, $cform);
-				$page = apply_filter('after_save_page', $page);
-				$page = apply_filter('after_save_page_' . $page ['model'], $page);
 
 				if (isset ($page ['is_new'])) {
 					$html [] = '[<a href="javascript:void(0);" onclick="return add_next_page();">再添加一篇</a>]';
@@ -868,6 +866,8 @@ class CmsPage implements ArrayAccess, ICtsPage {
 				$page ['root']    = $url ['root'];
 				$page ['channel'] = $url ['channel'];
 				$page ['url']     = $url ['url'];
+				$page             = apply_filter('after_save_page', $page);
+				$page             = apply_filter('after_save_page_' . $page ['model'], $page);
 				$url              = safe_url($url);
 				$html             = apply_filter('get_extra_saved_actions', $html, $page);
 				$html []          = '[<a href="' . $url . '?preview" target="_blank">预览</a>]';

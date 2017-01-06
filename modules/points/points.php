@@ -8,3 +8,4 @@ defined('KISSGO') or exit('No direct script access allowed');
 bind('do_admin_layout', '&PointsHookImpl', 22);
 bind('get_acl_resource', '&PointsHookImpl');
 bind('get_columns_of_pointsRecords', '&PointsHookImpl');
+bind('load_member_data_for_passport', '&PointsHookImpl');

@@ -46,6 +46,7 @@ class ApproveController extends Controller {
 			$page ['id'] = 0;
 		}
 		$page = apply_filter('cms_get_page_author', $page);
+
 		return view('approve/approving.tpl', $page);
 	}
 
@@ -117,6 +118,14 @@ class ApproveController extends Controller {
 					}
 				}
 				dbupdate('{cms_page}')->set($data)->where($where)->exec();
+				if ($result == 1) {
+					foreach ($ids as $id) {
+						$page = CmsPage::load($id);
+						if ($page) {
+							apply_filter('after_page_published', $page);
+						}
+					}
+				}
 				ActivityLog::info($msg, 'Approve');
 			}
 			if (Request::isAjaxRequest()) {

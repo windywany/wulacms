@@ -113,3 +113,8 @@ $tables['2.1.3'][] = "INSERT INTO `{prefix}user_role` (`role`, `role_name`, `typ
 
 $tables['2.2.0'][] = "ALTER TABLE `{prefix}member` 
   ADD COLUMN `group_expire` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户组有效期,0表示永久有效' AFTER `group_id`";
+
+$tables['2.3.0'][] = "ALTER TABLE `{prefix}member` 
+ADD COLUMN `lastip` VARCHAR(64) NULL COMMENT '最后登录IP' AFTER `ip`";
+$tables['2.3.0'][] = "ALTER TABLE `{prefix}member` 
+ADD COLUMN `lastlogin` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后登录时间' AFTER `lastip`";

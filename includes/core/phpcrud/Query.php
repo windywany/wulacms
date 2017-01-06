@@ -11,6 +11,7 @@ class Query extends QueryBuilder implements Countable, ArrayAccess, IteratorAggr
 	private $treeCon        = null;
 	private $treeKey        = null;
 	private $treePad        = true;
+	private $forupdate      = false;
 
 	public function __construct() {
 		parent::__construct();
@@ -235,6 +236,20 @@ class Query extends QueryBuilder implements Countable, ArrayAccess, IteratorAggr
 		}
 
 		return new ArrayIterator ($this->resultSet);
+	}
+
+	public function forupdate() {
+		$this->checkDialect();
+		if (!$this->dialect->inTransaction()) {
+			return false;
+		}
+		$this->forupdate = true;
+		$data            = $this->get(0);
+		if ($data) {
+			return $data;
+		}
+
+		return false;
 	}
 
 	/**
@@ -477,6 +492,6 @@ class Query extends QueryBuilder implements Countable, ArrayAccess, IteratorAggr
 		$group  = $this->sanitize($this->group);
 		$order  = $this->sanitize($this->order);
 
-		return $this->dialect->getSelectSQL($fields, $from, $joins, $this->where, $having, $group, $order, $this->limit, $this->values);
+		return $this->dialect->getSelectSQL($fields, $from, $joins, $this->where, $having, $group, $order, $this->limit, $this->values, $this->forupdate);
 	}
 }

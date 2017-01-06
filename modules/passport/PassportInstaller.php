@@ -35,7 +35,8 @@ class PassportInstaller extends AppInstaller {
 		$versions ['2.1.1'] = '20160412007'; // 接口新增第三方登录，手机注册
 		$versions ['2.1.2'] = '20160509008'; // nickname 限制过滤
 		$versions ['2.1.3'] = '20160902001'; // 关注用户
-		$versions['2.2.0']  = '20161220002'; // 添加会员组过期时间
+		$versions ['2.2.0'] = '20161220002'; // 添加会员组过期时间
+		$versions ['2.3.0'] = '20170105003'; // 最后登录IP与时间
 
 		return $versions;
 	}

@@ -7,7 +7,7 @@ class MemcachedInstaller extends AppInstaller {
 		return '基于memcached的缓存系统，提供系统缓存功能.需要安装memcache(d)扩展。';
 	}
 	public function getName() {
-		return 'memcached缓存';
+		return '缓存';
 	}
 	public function getWebsite() {
 		return 'http://www.wulacms.com/plugins/memcache';

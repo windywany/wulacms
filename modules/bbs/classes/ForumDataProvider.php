@@ -16,6 +16,6 @@ class ForumDataProvider extends CtsDataProvider {
 	}
 
 	protected function getData() {
-		return new \CtsData([['id'=>'aa','title'=>'aaaa'],['id'=>'bb','title'=>'bbbb']]);
+		return new \CtsData([['id' => 'aa', 'title' => 'aaaa'], ['id' => 'bb', 'title' => 'bbbb']]);
 	}
 }

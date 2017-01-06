@@ -30,8 +30,10 @@ abstract class Model {
 	 */
 	public function __construct($dialect = null) {
 		$this->config();
-		$tb          = explode("\\", get_class($this));
-		$this->alias = str_replace('Model', '', array_pop($tb));
+		$tb = explode("\\", get_class($this));
+		if (!$this->alias) {
+			$this->alias = str_replace('Model', '', array_pop($tb));
+		}
 		if (!$this->table) {
 			$tb          = lcfirst($this->alias);
 			$this->table = preg_replace_callback('#[A-Z]#', function ($r) {

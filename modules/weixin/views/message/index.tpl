@@ -50,18 +50,16 @@
 					data-auto="true"
 					data-source="{'weixin/message/data'|app}"
 					data-sort="id"	
-					data-tfoot="true"
-					data-tree="true">
+					data-tfoot="true">
 					<thead>
 						<tr>
-							<th width="20" class="hidden-xs hidden-sm"></th>
 							<th width="30"><input type="checkbox" class="grp"/></th>
 							<th width="60">ID</th>
 							<th width="60">名称</th>
 							<th>关键词</th>
 							<th width="160">回复类型</th>
-							<th width="140" data-sort="create_time,d" class="hidden-xs hidden-sm">时间</th>
-							<th width="200"></th>
+							<th width="140" data-sort="create_time,d">更新时间</th>
+							<th width="80">操作</th>
 						</tr>
 					</thead>
 				</table>

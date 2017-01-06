@@ -14,6 +14,7 @@ class UserGroupForm extends AbstractForm {
 	private $level = array('rules'=>array('regexp(/^(0|[1-9]\d*)$/)'=>'只能是数字'));
 	private $rank  = array();
 	private $coins = array('rules'=>array('regexp(/^(0|[1-9]\d*)$/)'=>'只能是数字'));
+	private $discount = array('rules'=>array('regexp(/^(0|1|0\.\d\d?)(,(0|1|0\.\d\d?))*$/)'=>'请正确输入折扣'));
 	/**
 	 * 检测ID是否重复.
 	 *

@@ -49,11 +49,19 @@ $tables ['1.0.0'] [] = "CREATE TABLE `{prefix}member_coins_type` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8";
 
 $tables['1.0.1'][] = "DELETE FROM  `{prefix}member_coins_type` WHERE type='summary' and reserved=1";
-$tables['1.0.1'][] = "INSERT INTO `{prefix}member_coins_type` (`name`, `type`, `reserved`, `note`, `deleted`, `create_time`, `update_time`, `update_uid`, `create_uid`, `can_withdraw`, `use_priority`) VALUES ('系统预置', 'summary', '1', '预置总账户', '0', '1473070741', '1473070741', '1', '1', '0', '0')";
+
+$tables['1.0.1'][] = "INSERT INTO `{prefix}member_coins_type` (`name`, `type`, `reserved`, `note`, `deleted`, `create_time`, `update_time`, `update_uid`, `create_uid`, `can_withdraw`, `use_priority`) VALUES ('汇总', 'summary', '1', '预置总账户', '0', 0, 0, '1', '1', '0', '0')";
+
 $tables['1.0.1'][] = "ALTER TABLE `{prefix}member_coins_record` ADD COLUMN  `join_type`  varchar(64)  DEFAULT NULL COMMENT '相关类型,支出,支出类型,收入,则收入来源类型' AFTER `is_outlay`";
+
 $tables['1.0.1'][] = "ALTER TABLE `{prefix}member_coins_record` ADD COLUMN  `join_id`  int(10)  DEFAULT '0' COMMENT '相关类型,ID' AFTER `is_outlay`";
+
 $tables['1.0.1'][] = "ALTER TABLE `{prefix}member_coins_record` ADD COLUMN  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除,0正1删' AFTER `note`";
+
+//删除了以下四个字段
 $tables['1.0.1'][] = "ALTER TABLE `{prefix}member_coins_record` DROP COLUMN `balance`";
 $tables['1.0.1'][] = "ALTER TABLE `{prefix}member_coins_record` DROP COLUMN `expire_time`";
 $tables['1.0.1'][] = "ALTER TABLE `{prefix}member_coins_record` DROP COLUMN `expired`";
 $tables['1.0.1'][] = "ALTER TABLE `{prefix}member_coins_record` DROP COLUMN `subject`";
+
+$tables['1.1.0'][] = "INSERT INTO `{prefix}member_coins_type` (`name`, `type`, `reserved`, `note`, `deleted`, `create_time`, `update_time`, `update_uid`, `create_uid`, `can_withdraw`, `use_priority`) VALUES ('默认', 'default', '1', '默认类型', '0', 0, 0, '1', '1', '1', '1')";

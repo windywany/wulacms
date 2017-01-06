@@ -84,24 +84,31 @@
 									</section>
 								</section>
                                 <section class="row">
-                                    <section class="col col-4">
+                                    <section class="col col-3">
                                         <label class="label">等级名</label>
                                         <label class="input">
                                             <input type="text" name="rank" id="rank" value="{$rank}"/>
                                         </label>
                                     </section>
-                                    <section class="col col-4">
+                                    <section class="col col-3">
                                         <label class="label">等级</label>
                                         <label class="input">
                                             <input type="text" name="level" id="level" value="{$level}"/>
                                         </label>
                                     </section>
-                                    <section class="col col-4">
-                                        <label class="label">限值</label>
+                                    <section class="col col-2">
+                                        <label class="label">年费</label>
                                         <label class="input">
                                             <input type="text" name="coins" id="coins" value="{$coins}"/>
                                         </label>
                                     </section>
+									<section class="col col-4">
+										<label class="label">续费折扣</label>
+										<label class="input">
+											<input type="text" name="discount" id="discount" value="{$discount}"/>
+										</label>
+                                        <div class="note">以逗号分隔折扣，如1,0.9,0.7</div>
+									</section>
                                 </section>
 								<section>
 									<label class="label">备注</label>

@@ -28,9 +28,8 @@ class WeixinHookImpl {
 		if (icando ( 'm:system/preference' )) {
 			$sysMenu = $layout->getNaviMenu ( 'system' );
 			$settingMenu = $sysMenu->getItem ( 'preferences' );
-			$settingMenu->addSubmenu ( array ('weixin','微信接口设置','fa-wechat text-success',tourl ( 'weixin/preference', false ) ), 'weixin:system/preference' );
+			$settingMenu->addSubmenu ( array ('weixin','微信设置','fa-wechat text-success',tourl ( 'weixin/preference', false ) ), 'weixin:system/preference' );
 		}
-		
 	}
 	public static function on_destroy_weixin_account($ids) {
 		dbdelete ()->from ( '{weixin_account}' )->where ( array ('id IN' => $ids ) );

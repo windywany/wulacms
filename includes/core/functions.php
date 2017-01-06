@@ -297,20 +297,42 @@ function parse_page_url($pattern, $data) {
  *
  * @return array
  */
-function get_keywords($keywords, $string = '', $count = null, $dict = null) {
+function get_keywords($keywords, $string = '', $count = null, $dict = null, $add = false) {
+	static $scwss = [], $dicts = [];
 	if ($keywords) {
 		$keywords = preg_split('#,+#', trim(trim(str_replace(array('，', ' ', '　', '-', ';', '；', '－'), ',', $keywords)), ','));
 		$keywords = implode(' ', $keywords);
 	} else if (extension_loaded('scws') && $string) {
-		$scws = scws_new();
-		$scws->set_charset('utf8');
+		$pid = defined('KISS_CLI_PID') ? KISS_CLI_PID : 0;
+		if (!isset($scwss[ $pid ])) {
+			$scws = scws_new();
+			$scws->set_charset('utf8');
+			$scwss[ $pid ] = $scws;
+		} else {
+			$scws = $scwss[ $pid ];
+		}
 		$attr = null;
 		if ($dict && is_file($dict)) {
-			@$scws->set_dict($dict);
-			$attr = 'nk';
-			$scws->set_multi(SCWS_MULTI_NONE);
+			if (!isset($dicts[ $dict ])) {
+				if ($add) {
+					if (preg_match('/.+\.txt$/i', $dict)) {
+						$scws->add_dict($dict, SCWS_XDICT_TXT);
+					} else {
+						$scws->add_dict($dict);
+					}
+					$dicts[ $dict ] = 1;
+					$od             = trailingslashit(ini_get('scws.default.fpath')) . 'dict.utf8.xdb';
+					$scws->add_dict($od);
+					$scws->set_multi(15);
+				} else {
+					@$scws->set_dict($dict);
+					$dicts[ $dict ] = 1;
+					$attr           = 'nk';
+					$scws->set_multi(SCWS_MULTI_NONE);
+				}
+			}
 		} else {
-			$scws->set_multi(SCWS_MULTI_ZMAIN);
+			$scws->set_multi(15);
 		}
 		$scws->set_duality(false);
 		$scws->set_ignore(true);
@@ -327,7 +349,6 @@ function get_keywords($keywords, $string = '', $count = null, $dict = null) {
 			}
 			$keywords = implode(' ', $keywords);
 		}
-		$scws->close();
 	}
 	if (!empty ($keywords)) {
 		return array(str_replace(' ', ',', $keywords), convert_search_keywords($keywords));

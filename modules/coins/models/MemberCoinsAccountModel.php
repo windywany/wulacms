@@ -72,11 +72,47 @@ class MemberCoinsAccountModel extends Model {
 		return $res;
 	}
 
+	/**
+	 * 获取用户金币账户.
+	 *
+	 * @param int    $mid
+	 * @param string $type
+	 *
+	 * @return null|array
+	 */
+	public function getAccount($mid, $type = 'summary') {
+		$coins = $this->select('*')->where(['mid' => $mid, 'type' => $type])->get();
+
+		return $coins;
+	}
+
+	/**
+	 * 用户汇总账户.
+	 *
+	 * @param int $mid
+	 *
+	 * @return array|null
+	 */
+	public function getSummaryAccount($mid) {
+		return $this->getAccount($mid, 'summary');
+	}
+
+	/**
+	 * 获取用户默认金币账户.
+	 *
+	 * @param int $mid
+	 *
+	 * @return array|null
+	 */
+	public function getDefaultAccount($mid) {
+		return $this->getAccount($mid, 'default');
+	}
+
 	public function init($mid, $type) {
 		$id = $this->get(['mid' => $mid, 'type' => $type], 'id');
 		if (!$id ['id']) {
 			$uname     = dbselect('nickname')->from('{member}')->where(['mid' => $mid])->get('nickname');
-			$typeModel = new \coins\models\MemberCoinsTypeModel ();
+			$typeModel = new MemberCoinsTypeModel ();
 			$type_info = $typeModel->get_one(['type' => $type]);
 			$set       = ['create_time' => time(), 'mid' => $mid, 'type' => $type, 'mname' => $uname, 'can_withdraw' => $type_info ['can_withdraw'], 'use_priority' => $type_info ['use_priority']];
 			$res       = $this->create($set);

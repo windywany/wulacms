@@ -9,6 +9,8 @@
 		</td>
 		<td>{$row.name}</td>
 		<td>{$row.type}</td>
+        <td>{if $row.can_withdraw}是{/if}</td>
+		<td>{$row.use_priority}</td>
 		<td>
 			{if $row.reserved}
 				是
@@ -16,7 +18,6 @@
 				否
 			{/if}
 		</td>
-
 
 		<td>
 			{$row.note}

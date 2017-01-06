@@ -116,11 +116,11 @@
                     <tr>
                         <th width="20"></th>
                         <th width="30"><input type="checkbox" class="grp"/></th>
-                        <th width="70" data-sort="M.mid,d">ID</th>
+                        <th width="60" data-sort="M.mid,d">ID</th>
                         <th data-sort="M.username,d">账户</th>
                         {'member-table'|tablehead}
-                        <th width="80" data-sort="M.status,d">状态</th>
-                        <th width="90" class="text-center" data-columnset="true">
+                        <th width="70" data-sort="M.status,d">状态</th>
+                        <th width="80" class="text-center">
                             {'member-table'|tableset}
                         </th>
                     </tr>

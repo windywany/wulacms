@@ -44,3 +44,7 @@ $tables ['1.0.0'] [] = "CREATE TABLE `{prefix}member_points_type` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UDX_TYPE` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='积分类型表'";
+
+$tables['1.1.0'][] = "INSERT INTO `{prefix}member_points_type` (`name`,`type`,`reserved`,`note`,`deleted`,`create_time`,`update_time`,`update_uid`,`create_uid`,`use_priority`) VALUES ('汇总','summary',1,'积分汇总',0,0,0,0,0,0)";
+
+$tables['1.1.0'][] = "INSERT INTO `{prefix}member_points_type` (`name`,`type`,`reserved`,`note`,`deleted`,`create_time`,`update_time`,`update_uid`,`create_uid`,`use_priority`) VALUES ('默认','default',1,'默认积分',0,0,0,0,0,0)";

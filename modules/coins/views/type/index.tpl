@@ -57,11 +57,13 @@
 							<th width="20" class="hidden-xs hidden-sm"></th>
 							<th width="30"><input type="checkbox" class="grp"/></th>
 							<th width="60" data-sort="id,d">ID</th>
-							<th width="140" class="hidden-xs hidden-sm">类型名称</th>
-							<th width="100" class="hidden-xs hidden-sm">类型</th>
-							<th width="80" class="hidden-xs hidden-sm">系统预留</th>
+							<th width="140">类型名称</th>
+							<th width="100">类型</th>
+							<th width="80" data-sort="can_withdraw,d">可提现</th>
+							<th width="80" data-sort="use_priority,d">优先级</th>
+							<th width="100" data-sort="reserved,d">系统预留</th>
 							<th class="hidden-xs hidden-sm">备注</th>
-							<th width="150" data-sort="create_time,d" class="hidden-xs hidden-sm">时间</th>
+							<th width="150">时间</th>
 							<th width="80" class="text-align-center">操作</th>
 						</tr>
 					</thead>

@@ -14,23 +14,8 @@ class DepositController extends \Controller {
 
 	//申请中
 	public function index($member_id = 0) {
-		$data                    = array();
-		$uid                     = intval($member_id);
-		$data['pageTitle']       = '列表';
-		$data['pay_success_num'] = cfg('pay_success_num@dashen', 0);
-		$data['pay_total_money'] = cfg('pay_total_money@dashen', 0);
-		//		$data[''] = $sum_sta
-		$sum_data = dbselect('sum_money,device')->from('{dept_statistics}')->where(['type' => 0])->sort('device', 'desc')->toArray();
-		$sum_sta  = [];
-		/*andr,ios,oth,sum*/
-		$list = ['1' => 'andr', '2' => 'ios', '3' => 'h5', '4' => 'oth', '0' => 'sum'];
-		foreach ($sum_data as $row) {
-			if (!isset($list[ $row['device'] ])) {
-				continue;
-			}
-			$sum_sta[ $list[ $row['device'] ] ] = number_format($row['sum_money'], 0, '.', '');
-		}
-		$data['sum_sta'] = $sum_sta;
+		$data = array();
+		$uid  = intval($member_id);
 		if ($uid > 0) {
 			$data['uid'] = $uid;
 		}
@@ -39,48 +24,38 @@ class DepositController extends \Controller {
 	}
 
 	public function data($_cp = 1, $_lt = 20, $_sf = 'id', $_od = 'd', $_ct = 0) {
+		$id                   = irqst('id');
+		$uid                  = irqst('uid');
+		$orderid              = irqst('orderid');
+		$transid              = rqst('transid');
+		$status               = rqst('status');
+		$start                = trim(rqst('bd', ''));
+		$end                  = trim(rqst('sd', '')) . '23:59:59';
+		$where['DPT.deleted'] = 0;
 
-		$uid              = rqst('uid');
-		$orderid          = rqst('orderid');
-		$transid          = rqst('transid');
-		$confirmed        = rqst('confirmed');
-		$start            = trim(rqst('bd', ''));
-		$end              = trim(rqst('sd', '')) . '23:59:59';
-		$where['deleted'] = 0;
-		if ($uid) {
-			$where ['mid '] = $uid;
-		}
-
-		if ($orderid) {
-			$where ['orderid'] = $orderid;
-		}
-
-		if ($transid) {
-			$where ['transid'] = $transid;
-		}
-		if (in_array($confirmed, [1, 2, 3, 4])) {
-			if ($confirmed == 1) {
-				$where ['confirmed >']       = 0;
-				$where ['order_confirmed >'] = 0;
+		if ($id) {
+			$where['DPT.id'] = $id;
+		} else {
+			if ($uid) {
+				$where ['DPT.mid '] = $uid;
 			}
-			if ($confirmed == 2) {
-				$where ['confirmed >']     = 0;
-				$where ['order_confirmed'] = 0;
+			if ($orderid) {
+				$where ['orderid'] = $orderid;
 			}
-			if ($confirmed == 3) {
-				$where ['confirmed ']      = 0;
-				$where ['order_confirmed'] = 0;
+			if ($transid) {
+				$where ['transid'] = $transid;
 			}
-			if ($confirmed == 4) {
-				$where ['confirmed ']      = 0;
-				$where ['order_confirmed'] = 0;
+			if (is_numeric($status) && in_array($status, [0, 1, 2, 3, 4, 5])) {
+				$where['DPT.status'] = $status;
 			}
-		}
-		if ($start != '') {
-			$where ['create_time >='] = strtotime($start);
-		}
-		if ($end != '') {
-			$where ['create_time <'] = strtotime($end);
+			if ($start != '') {
+				$where ['DPT.create_time >='] = strtotime($start);
+			} else {
+				$where ['DPT.create_time >='] = strtotime('-7 days');
+			}
+			if ($end != '') {
+				$where ['DPT.create_time <'] = strtotime($end);
+			}
 		}
 
 		$where['_cp'] = $_cp;
@@ -94,6 +69,7 @@ class DepositController extends \Controller {
 
 		$data ['total'] = $account['total'];
 		$data ['rows']  = $account['rows'];
+		$data['status'] = ['0' => '待付款', '1' => '已付款', '2' => '已入账', '3' => '已处理', '4' => '已对账', '5' => '已作废'];
 
 		//类型
 		return view('deposit/index_data.tpl', $data);

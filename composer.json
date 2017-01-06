@@ -9,7 +9,8 @@
 	"ext-curl": "*",
 	"ext-SPL": "*",
 	"smarty/smarty": "~3.1",
-	"phpmailer/phpmailer": "~5.2"
+	"phpmailer/phpmailer": "~5.2",
+    "hightman/xunsearch": "^1.4"
   },
   "require-dev": {
 	"phpoffice/phpexcel": "~1.8"

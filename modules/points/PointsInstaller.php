@@ -15,6 +15,7 @@ class PointsInstaller extends AppInstaller {
 
 	public function getVersionLists() {
 		$v ['1.0.0'] = '20160617001';
+		$v ['1.1.0'] = '20161227002';// 添加默认积分类型
 
 		return $v;
 	}

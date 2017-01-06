@@ -52,4 +52,15 @@ class PointsHookImpl {
 
 		return $cols;
 	}
+
+	public static function load_member_data_for_passport(Passport $user) {
+		$mid    = $user->getUid();
+		$model  = new \points\models\MemberPointsAccountModel();
+		$points = $model->getSummaryAccount($mid);
+		if ($points) {
+			$user['points'] = $points['balance'];
+		} else {
+			$user['points'] = 0;
+		}
+	}
 }

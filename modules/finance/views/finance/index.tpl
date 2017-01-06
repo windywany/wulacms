@@ -50,13 +50,12 @@
 							<th width="30"><input type="checkbox" class="grp"/></th>
 							<th width="60" data-sort="id,d">ID</th>
 							<th>会员名(ID)</th>
-							<th width="120" class="hidden-xs hidden-sm">总金额</th>
-							<th width="100" class="hidden-xs hidden-sm">可用金额</th>
-							<th width="100" class="hidden-xs hidden-sm">冻结金额</th>
-                            <th width="100" class="hidden-xs hidden-sm">已用金额</th>
-							<th width="100" class="hidden-xs hidden-sm">创建时间</th>
-                            <th width="150" class="text-right">
-                                <i class="fa fa-gear"></i>
+							<th width="120">总金额</th>
+							<th width="100">可用金额</th>
+							<th width="100">冻结金额</th>
+                            <th width="100">已用金额</th>
+							<th width="100">创建日期</th>
+                            <th width="100" class="text-right">
                             </th>
 						</tr>
 					</thead>

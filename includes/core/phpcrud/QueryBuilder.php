@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class QueryBuilder
+ *
+ * @method forupdate()
+ */
 abstract class QueryBuilder implements Countable {
 	const LEFT  = 'LEFT';
 	const RIGHT = 'RIGHT';
@@ -7,6 +12,9 @@ abstract class QueryBuilder implements Countable {
 	private static $sqlCount = 0;
 	protected      $alias;
 	protected      $dbconf;
+	/**
+	 * @var DatabaseDialect
+	 */
 	protected      $dialect;
 	protected      $values;
 	protected      $options  = array();

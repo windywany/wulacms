@@ -5,11 +5,15 @@
  * Time: 14:18
  */
 
-namespace finance\classes;
+namespace pay\classes;
 abstract class PayChannel implements IPayChannel {
 	/**
 	 * @param $form
 	 */
 	public function getSettingForm($form) {
+	}
+
+	public function onNotify() {
+		return 'success';
 	}
 }

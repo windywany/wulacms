@@ -49,7 +49,7 @@ abstract class DatabaseDialect extends PDO {
 			$name = $name ? $name : 'default';
 			if (defined('KISS_CLI_PID')) {
 				self::$lastErrorMassge = false;
-				if (!isset (self::$INSTANCE [ KISS_CLI_PID ])) {
+				if (!isset (self::$INSTANCE [ KISS_CLI_PID ][ $name ])) {
 					$settings = KissGoSetting::getSetting();
 					if (!isset ($settings ['database'])) {
 						trigger_error('the configuration for database is not found!', E_USER_ERROR);
@@ -67,13 +67,13 @@ abstract class DatabaseDialect extends PDO {
 					$dr = new $driverClz ($options);
 					$dr->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					$dr->onConnected();
-					self::$INSTANCE [ KISS_CLI_PID ] = $dr;
+					self::$INSTANCE [ KISS_CLI_PID ][ $name ] = $dr;
 				}
 
-				return self::$INSTANCE [ KISS_CLI_PID ];
+				return self::$INSTANCE [ KISS_CLI_PID ][ $name ];
 			} else {
 				self::$lastErrorMassge = false;
-				if (!isset (self::$INSTANCE [ $name ])) {
+				if (!isset (self::$INSTANCE [0] [ $name ])) {
 					$settings = KissGoSetting::getSetting();
 					if (!isset ($settings ['database'])) {
 						trigger_error('the configuration for database is not found!', E_USER_ERROR);
@@ -91,10 +91,10 @@ abstract class DatabaseDialect extends PDO {
 					$dr = new $driverClz ($options);
 					$dr->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					$dr->onConnected();
-					self::$INSTANCE [ $name ] = $dr;
+					self::$INSTANCE [0][ $name ] = $dr;
 				}
 
-				return self::$INSTANCE [ $name ];
+				return self::$INSTANCE[0] [ $name ];
 			}
 		} catch (PDOException $e) {
 			self::$lastErrorMassge = $e->getMessage();
@@ -109,6 +109,7 @@ abstract class DatabaseDialect extends PDO {
 	 * @param string $name 配置(名).
 	 */
 	public static function resetDialect($name = null) {
+		$pid = defined('KISS_CLI_PID') ? KISS_CLI_PID : 0;
 		if (is_array($name)) {
 			$setting = KissGoSetting::getSetting();
 			$dbcnfs  = $setting ['database'];
@@ -129,8 +130,8 @@ abstract class DatabaseDialect extends PDO {
 
 		$name                  = $name ? $name : 'default';
 		self::$lastErrorMassge = false;
-		if (isset (self::$INSTANCE [ $name ])) {
-			unset (self::$INSTANCE [ $name ]);
+		if (isset (self::$INSTANCE [ $pid ] [ $name ])) {
+			unset (self::$INSTANCE [ $pid ][ $name ]);
 		}
 	}
 
@@ -210,15 +211,16 @@ abstract class DatabaseDialect extends PDO {
 	 * @param array      $order
 	 * @param array      $limit
 	 * @param BindValues $values
+	 * @param bool       $forupdate
 	 *
 	 * @return string
 	 */
-	public abstract function getSelectSQL($fields, $from, $joins, $where, $having, $group, $order, $limit, $values);
+	public abstract function getSelectSQL($fields, $from, $joins, $where, $having, $group, $order, $limit, $values, $forupdate);
 
 	/**
 	 * get a select sql for geting the count from database
 	 *
-	 * @param array      $fields
+	 * @param array      $field
 	 * @param array      $from
 	 * @param array      $joins
 	 * @param Condition  $where

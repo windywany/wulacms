@@ -1,6 +1,6 @@
 <?php
 
-namespace finance\classes;
+namespace pay\classes;
 
 class PayChannelManager {
 	/**
@@ -27,5 +27,23 @@ class PayChannelManager {
 
 	public static function getCfg($channel, $name, $default = '') {
 		return cfg($name . '@gateway_' . $channel, $default);
+	}
+
+	public static function getSuccessURL($order_id) {
+		$url = cfg('success_url@finance');
+		if (!$url) {
+			$url = '/';
+		}
+
+		return url_append_args($url, ['order_id' => $order_id]);
+	}
+
+	public static function getFailureURL() {
+		$url = cfg('failure_url@finance');
+		if (!$url) {
+			$url = '/';
+		}
+
+		return $url;
 	}
 }

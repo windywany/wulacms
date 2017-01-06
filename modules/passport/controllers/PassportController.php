@@ -113,7 +113,13 @@ class PassportController extends Controller {
 						if ($metas) {
 							$user = array_merge($metas, $user);
 						}
+						//更新本次登录数据
+						$last['lastlogin'] = time();
+						$last['lastip']    = Request::getIp();
+						$model->update($last, $user['mid']);
+
 						$this->user->save($user);
+
 						ActivityLog::info(__('Member %s(%s) Login successfully.', $this->user->getAccount(), $this->user->getDisplayName()), 'MLogin');
 						$callback         = sess_del('passport_from', cfg('redirect_url@passport', DETECTED_ABS_URL));
 						$data ['success'] = true;

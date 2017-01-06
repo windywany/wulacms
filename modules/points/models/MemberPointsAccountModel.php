@@ -72,6 +72,42 @@ class MemberPointsAccountModel extends Model {
 		return $res;
 	}
 
+	/**
+	 * 取用户积分账户.
+	 *
+	 * @param int    $mid
+	 * @param string $type
+	 *
+	 * @return array|null
+	 */
+	public function getAccount($mid, $type = 'summary') {
+		$account = $this->select('*')->where(['mid' => $mid, 'type' => $type])->get(0);
+
+		return $account;
+	}
+
+	/**
+	 * 取会员汇总账户.
+	 *
+	 * @param int $mid
+	 *
+	 * @return array|null
+	 */
+	public function getSummaryAccount($mid) {
+		return $this->getAccount($mid, 'summary');
+	}
+
+	/**
+	 * 取会员默认积分账户.
+	 *
+	 * @param int $mid
+	 *
+	 * @return array|null
+	 */
+	public function getDefaultAccount($mid) {
+		return $this->getAccount($mid, 'default');
+	}
+
 	public function init($mid, $type) {
 		$id = $this->get(['mid' => $mid, 'type' => $type], 'id');
 		if (!$id ['id']) {

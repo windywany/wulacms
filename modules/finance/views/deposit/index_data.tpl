@@ -3,29 +3,17 @@
     <tr name="points" rel="{$row.id}">
         <td><input type="checkbox" value="{$row.id}" class="grp"/></td>
         <td>{$row.create_time|date_format:"Y-m-d H:i"}</td>
-        <td>{$row.confirmed|date_format:"Y-m-d H:i"}</td>
-        <td>
-            {if $row.order_confirmed}
-                {$row.order_confirmed|date_format:"Y-m-d H:i"}
-            {else}
-                ---
-            {/if}
-        </td>
-        <td>{$row.mname}({$row.mid})</td>
-        <td>
-            {number_format($row.amount,0,'','')}
-        </td>
-        <td>
-            {$row.orderid}
-        </td>
+        <td>{$row.nickname}({$row.mid})</td>
+        <td>{$row.amount}</td>
         {'depositTable'|tablerow:$row}
+        <td>{$row.status|status:$status}</td>
         <td class='text-right'>
         </td>
     </tr>
     {foreachelse}
-    <tr class="hidden-xs hidden-sm">
+    <tr>
         <td></td>
-        <td colspan="{'depositTable'|tablespan:6}">暂无记录</td>
+        <td colspan="{'depositTable'|tablespan:5}">暂无记录</td>
     </tr>
 {/foreach}
 </tbody>

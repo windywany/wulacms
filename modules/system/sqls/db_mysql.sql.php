@@ -270,3 +270,5 @@ $tables['4.1.0'][] = "CREATE TABLE IF NOT EXISTS `{prefix}user_table` (
     `columns` TEXT NULL COMMENT '显示列表',
     PRIMARY KEY (`uid` , `table`)
 )  ENGINE=INNODB DEFAULT CHARACTER SET=UTF8 COMMENT='用户表格列'";
+
+$tables['4.2.0'][] = "ALTER TABLE `{prefix}user_group` ADD `discount` VARCHAR(512) NULL COMMENT '充值折扣比，以;分隔' AFTER `coins`";

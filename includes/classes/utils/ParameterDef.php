@@ -5,23 +5,30 @@
  * 只需定义public属性即可。
  */
 abstract class ParameterDef {
+	private $__vars = [];
+
+	public function __construct() {
+		$obj  = new ReflectionObject($this);
+		$vars = $obj->getProperties(ReflectionProperty::IS_PUBLIC);
+		foreach ($vars as $var) {
+			$this->__vars[] = $var->getName();
+		}
+	}
+
 	/**
 	 * 获取参数列表.
 	 * @return array
 	 */
 	public function toArray() {
-		$obj  = new ReflectionObject($this);
-		$vars = $obj->getProperties(ReflectionProperty::IS_PUBLIC);
-		$ary  = [];
-		foreach ($vars as $var) {
-			$name  = $var->getName();
-			$value = $this->{$name};
-
+		$ary = [];
+		foreach ($this->__vars as $var) {
+			$value = $this->{$var};
 			if (is_null($value)) {
 				continue;
 			}
-			$ary[ $name ] = $value;
+			$ary[ $var ] = $value;
 		}
+
 		unset($obj, $vars, $var);
 
 		return $ary;
