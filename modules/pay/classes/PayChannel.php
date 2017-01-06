@@ -13,6 +13,18 @@ abstract class PayChannel implements IPayChannel {
 	public function getSettingForm($form) {
 	}
 
+	public function checkForm() {
+		return null;
+	}
+
+	public function doCheck() {
+		return true;
+	}
+
+	public function getPayForm($order) {
+		return null;
+	}
+
 	public function onNotify() {
 		return 'success';
 	}

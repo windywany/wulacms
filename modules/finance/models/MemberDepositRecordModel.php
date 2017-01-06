@@ -28,9 +28,11 @@ class MemberDepositRecordModel extends Model {
 		$query = $this->select('DPT.*,M.nickname', 'DPT')->join('{member} AS M', 'DPT.mid = M.mid')->where($where);
 		$query->sort($_sf, $_od);
 		$query->limit(($_cp - 1) * $_lt, $_lt);
-
-		$data ['total'] = $query->count('DPT.id');
-
+		if ($_ct) {
+			$data ['total'] = $query->count('DPT.id');
+		} else {
+			$data ['total'] = '';
+		}
 		$data ['rows'] = $query->toArray();
 
 		return $data;
