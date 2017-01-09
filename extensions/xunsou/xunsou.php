@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-if (class_exists('XSTokenizer')) {
+if (interface_exists('XSTokenizer')) {
 	/**
 	 * Class XSTokenizerSss
 	 * 自定义分词器，将数字，英文，汉字分离出来.
@@ -16,16 +16,8 @@ if (class_exists('XSTokenizer')) {
 	 */
 	class XSTokenizerSss implements XSTokenizer {
 		public function getTokens($value, XSDocument $doc = null) {
-			static $dict = false;
-			if ($dict === false) {
-				$dict = TagForm::getDictFile();
-			}
 			$ret = [];
 			if (!empty($value)) {
-				$keys = get_keywords(null, $value, null, $dict, true);
-				if ($keys[0]) {
-					$ret = explode(',', $keys[0]);
-				}
 				$value = preg_replace_callback('/\d+/', function ($m) use (&$ret) {
 					$ret[] = $m[0];
 

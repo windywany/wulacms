@@ -3,38 +3,38 @@
 /**
  * kissgo framework that keep it simple and stupid, go go go ~~
  *
- * @author Windywany
+ * @author  Windywany
  * @package kissgo
- * @date 12-9-16 下午5:53
+ * @date    12-9-16 下午5:53
  * $Id$
  */
 class Response {
-	private $before_out = false;
-	private $content = '';
-	private $view = null;
-	private static $INSTANCE = null;
-	
+	private        $before_out = false;
+	private        $content    = '';
+	private        $view       = null;
+	private static $INSTANCE   = null;
+
 	/**
 	 * 初始化.
 	 */
 	private function __construct() {
-		if (! @ini_get ( 'zlib.output_compression' ) && @ob_get_status ()) {
-			$this->before_out = @ob_get_contents ();
-			@ob_end_clean ();
+		if (!@ini_get('zlib.output_compression') && @ob_get_status()) {
+			$this->before_out = @ob_get_contents();
+			@ob_end_clean();
 		}
-		@ob_start ( array ($this,'ob_out_handler' ) );
-		if (defined ( 'GZIP_ENABLED' ) && GZIP_ENABLED && extension_loaded ( "zlib" )) {
-			$gzip = @ini_get ( 'zlib.output_compression' );
-			if (! $gzip) {
-				@ini_set ( 'zlib.output_compression', 1 );
+		@ob_start(array($this, 'ob_out_handler'));
+		if (defined('GZIP_ENABLED') && GZIP_ENABLED && extension_loaded("zlib")) {
+			$gzip = @ini_get('zlib.output_compression');
+			if (!$gzip) {
+				@ini_set('zlib.output_compression', 1);
 			}
-			@ini_set ( 'zlib.output_compression_level', 9 );
+			@ini_set('zlib.output_compression_level', 9);
 		} else {
-			@ini_set ( 'zlib.output_compression', 0 );
-			@ini_set ( 'zlib.output_compression_level', - 1 );
+			@ini_set('zlib.output_compression', 0);
+			@ini_set('zlib.output_compression_level', -1);
 		}
 	}
-	
+
 	/**
 	 * 得到全局唯一Response实例.
 	 *
@@ -44,135 +44,144 @@ class Response {
 		if (self::$INSTANCE == null) {
 			self::$INSTANCE = new Response ();
 		}
+
 		return self::$INSTANCE;
 	}
-	
+
 	/**
 	 * set response view instance.
 	 *
-	 * @param View $view        	
+	 * @param View $view
 	 */
 	public function setView($view) {
 		if ($view instanceof View) {
 			$this->view = $view;
 		}
 	}
-	
+
 	/**
 	 * 禁用浏览器缓存.
 	 */
 	public static function nocache() {
-		$headers = array ('Expires' => 'Wed, 11 Jan 1984 05:00:00 GMT','Last-Modified' => gmdate ( 'D, d M Y H:i:s' ) . ' GMT','Cache-Control' => 'no-cache, must-revalidate, max-age=0','Pragma' => 'no-cache' );
-		foreach ( $headers as $header => $val ) {
-			@header ( $header . ': ' . $val );
+		$headers = array('Expires' => 'Wed, 11 Jan 1984 05:00:00 GMT', 'Last-Modified' => gmdate('D, d M Y H:i:s') . ' GMT', 'Cache-Control' => 'no-cache, must-revalidate, max-age=0', 'Pragma' => 'no-cache');
+		foreach ($headers as $header => $val) {
+			@header($header . ': ' . $val);
 		}
 	}
+
 	public static function cache() {
-		$headers = array ('Expires' => gmdate ( 'D, d M Y H:i:s', time () + 3600 ) . ' GMT','Last-Modified' => gmdate ( 'D, d M Y H:i:s' ) . ' GMT','Cache-Control' => 'cache, must-revalidate, max-age=60','Pragma' => 'cache' );
-		foreach ( $headers as $header => $val ) {
-			@header ( $header . ': ' . $val );
+		$headers = array('Expires' => gmdate('D, d M Y H:i:s', time() + 3600) . ' GMT', 'Last-Modified' => gmdate('D, d M Y H:i:s') . ' GMT', 'Cache-Control' => 'cache, must-revalidate, max-age=60', 'Pragma' => 'cache');
+		foreach ($headers as $header => $val) {
+			@header($header . ': ' . $val);
 		}
 	}
+
 	/**
 	 * 跳转.
 	 *
-	 * @param string $location
-	 *        	要转到的网址
+	 * @param string       $location
+	 *            要转到的网址
 	 * @param string|array $args
-	 *        	参数
-	 * @param int $status
-	 *        	响应代码
+	 *            参数
+	 * @param int          $status
+	 *            响应代码
 	 */
 	public static function redirect($location, $args = "", $status = 302) {
 		global $is_IIS;
-		if (! $location) {
+		if (!$location) {
 			return;
 		}
-		if (! empty ( $args ) && is_array ( $args )) {
-			$_args = array ();
-			foreach ( $args as $n => $v ) {
-				$_args [$n] = $n . '=' . urlencode ( $v );
+		if (!empty ($args) && is_array($args)) {
+			$_args = array();
+			foreach ($args as $n => $v) {
+				$_args [ $n ] = $n . '=' . urlencode($v);
 			}
-			$args = implode ( '&', $_args );
+			$args = implode('&', $_args);
 		}
-		if (! empty ( $args ) && is_string ( $args )) {
-			if (strpos ( $location, '?' ) !== false) {
+		if (!empty ($args) && is_string($args)) {
+			if (strpos($location, '?') !== false) {
 				$location .= '&' . $args;
 			} else {
 				$location .= '?' . $args;
 			}
 		}
-		if (isset ( $_SERVER ["HTTP_X_AJAX_TYPE"] )) {
-			@header ( 'X-AJAX-REDIRECT:' . $location );
+		if (isset ($_SERVER ["HTTP_X_AJAX_TYPE"])) {
+			@header('X-AJAX-REDIRECT:' . $location);
 		} else {
 			if ($is_IIS) {
-				@header ( "Refresh: 0;url=$location" );
+				@header("Refresh: 0;url=$location");
 			} else {
-				if (php_sapi_name () != 'cgi-fcgi') {
-					status_header ( $status ); // This causes problems on IIS and some
+				if (php_sapi_name() != 'cgi-fcgi') {
+					status_header($status); // This causes problems on IIS and some
 				}
-				@header ( "Location: $location", true, $status );
+				@header("Location: $location", true, $status);
 			}
 		}
 		exit ();
 	}
-	
+
 	/**
 	 * 响应对应的状态码.
 	 *
 	 * @param int $status
-	 *        	respond status code.
+	 *            respond status code.
 	 */
 	public static function respond($status = 404, $message = '') {
-		status_header ( $status );
+		status_header($status);
 		if ($status == 404) {
 			$data ['message'] = $message;
-			$view = template ( '404.tpl', $data );
-			echo $view->render ();
+			$view             = template('404.tpl', $data);
+			echo $view->render();
 		} else if ($message) {
 			echo $message;
 		}
 		exit ();
 	}
+
 	/**
 	 * 显出错信息.
 	 *
-	 * @param string $message        	
-	 * @param number $status        	
+	 * @param string $message
+	 * @param number $status
 	 */
 	public static function showErrorMsg($message, $status = 500) {
-		status_header ( $status );
-		if (isset ( $_SERVER ["HTTP_X_AJAX_TYPE"] )) {
-			@header ( 'X-AJAX-MESSAGE:1' );
-			echo is_array ( $message ) ? json_encode ( $message ) : $message;
+		status_header($status);
+		if (isset ($_SERVER ["HTTP_X_AJAX_TYPE"])) {
+			@header('X-AJAX-MESSAGE:1');
+			echo is_array($message) ? json_encode($message) : $message;
 		} else {
 			$tpl = 'error_' . $status . '.tpl';
-			if (tpl_exists ( $tpl )) {
-				$view = template ( $tpl, array ('message' => $message ) );
+			if (tpl_exists($tpl)) {
+				$view = template($tpl, array('message' => $message));
 			} else {
-				$view = template ( 'error.tpl', array ('message' => $message ) );
+				$view = template('error.tpl', array('message' => $message));
 			}
-			echo $view->render ();
+			echo $view->render();
 		}
 		exit ();
 	}
+
+	public static function showTipError($message) {
+		self::showErrorMsg($message, 200);
+	}
+
 	/**
 	 * 设置cookie.
 	 *
-	 * @param string $name
-	 *        	变量名
+	 * @param string      $name
+	 *            变量名
 	 * @param
-	 *        	null|mixed$value
-	 * @param null|int $expire        	
-	 * @param null|string $path        	
-	 * @param null|string $domain        	
-	 * @param null|bool $security        	
+	 *            null|mixed$value
+	 * @param null|int    $expire
+	 * @param null|string $path
+	 * @param null|string $domain
+	 * @param null|bool   $security
 	 */
 	public static function cookie($name, $value = null, $expire = null, $path = null, $domain = null, $security = null) {
-		$settings = KissGoSetting::getSetting ();
-		$cookie_setting = array_merge2 ( array ('expire' => 0,'path' => '/','domain' => '','security' => false ), $settings [COOKIE] );
+		$settings       = KissGoSetting::getSetting();
+		$cookie_setting = array_merge2(array('expire' => 0, 'path' => '/', 'domain' => '', 'security' => false), $settings [ COOKIE ]);
 		if ($expire == null) {
-			$expire = intval ( $cookie_setting ['expire'] );
+			$expire = intval($cookie_setting ['expire']);
 		}
 		if ($path == null) {
 			$path = $cookie_setting ['path'];
@@ -184,54 +193,56 @@ class Response {
 			$security = $cookie_setting ['security'];
 		}
 		if ($expire != 0) {
-			$expire = time () + $expire;
+			$expire = time() + $expire;
 		}
-		setcookie ( $name, $value, $expire, $path, $domain, $security );
+		setcookie($name, $value, $expire, $path, $domain, $security);
 	}
-	
+
 	/**
 	 * 输出view产品的内容.
 	 *
-	 * @param View $view        	
+	 * @param View $view
 	 */
 	public function output($view = null, $return = false) {
 		if ($view instanceof View) {
 			$this->view = $view;
-		} else if (is_string ( $view ) || is_bool ( $view ) || is_numeric ( $view )) {
-			$this->view = new SimpleView ( $view );
-		} else if (is_array ( $view )) {
-			$this->view = new JsonView ( $view );
+		} else if (is_string($view) || is_bool($view) || is_numeric($view)) {
+			$this->view = new SimpleView ($view);
+		} else if (is_array($view)) {
+			$this->view = new JsonView ($view);
 		}
 		if ($this->view instanceof View) {
-			if (! $return) {
-				$this->view->echoHeader ();
+			if (!$return) {
+				$this->view->echoHeader();
 			}
-			$content = $this->view->render ();
+			$content = $this->view->render();
 			if ($return) {
 				return $content;
 			} else {
-				$content = apply_filter ( 'before_output_content', $content );
+				$content = apply_filter('before_output_content', $content);
 				echo $content;
 			}
 		} else {
-			Response::respond ( 404 );
+			Response::respond(404);
 		}
 	}
-	
+
 	/**
 	 * 此方法不应该直接调用，用于ob_start处理output buffer中的内容。
 	 *
-	 * @param string $content        	
+	 * @param string $content
+	 *
 	 * @return string
 	 */
 	public function ob_out_handler($content) {
-		$this->content = apply_filter ( 'filter_output_content', $content );
+		$this->content = apply_filter('filter_output_content', $content);
 		if ($this->before_out && DEBUG == DEBUG_DEBUG) {
-			log_warn ( $this->before_out );
+			log_warn($this->before_out);
 		}
+
 		return $this->content;
 	}
-	
+
 	/**
 	 * 关闭响应，将内容输出的浏览器，同时触发after_content_output勾子.
 	 *
@@ -241,7 +252,7 @@ class Response {
 		if ($exit) {
 			exit ();
 		} else {
-			fire ( 'after_content_output', $this->content );
+			fire('after_content_output', $this->content);
 		}
 	}
 }

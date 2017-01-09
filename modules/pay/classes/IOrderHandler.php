@@ -25,4 +25,16 @@ interface IOrderHandler {
 	 * @param array $errors
 	 */
 	public function onFailure($data, $errors);
+
+	/**
+	 * 获取订单信息.
+	 *
+	 * @param $orderid
+	 *
+	 * @return array 需要包含以下字段
+	 *               'amount'=>'订单金额'
+	 *               'subject'=>'项目'
+	 *               'mid'=>'用户编号'
+	 */
+	public function getOrder($orderid);
 }

@@ -27,6 +27,15 @@ class DepositOrderHandler implements IOrderHandler {
 		log_error(var_export($rtn), 'deposit');
 	}
 
+	/**
+	 * @param $orderid
+	 *
+	 * @return null
+	 */
+	public function getOrder($orderid) {
+		return null;
+	}
+
 	public static function get_desposit_order_handlers($hs) {
 		$hs['deposit'] = new self();
 

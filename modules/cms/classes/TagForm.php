@@ -65,6 +65,7 @@ class TagForm extends AbstractForm {
 	}
 
 	public static function generateScwsDictFile() {
+
 		$update = true;
 		$file   = TMP_PATH . 'tag_dict.xdb';
 		$file2  = TMP_PATH . 'tag_dict.txt';
@@ -128,9 +129,6 @@ class TagForm extends AbstractForm {
 				$xdb->Close();
 				if ($words) {
 					$words = implode("\n", $words);
-					if (file_exists($file2)) {
-						$words .= "\n" . trim(file_get_contents($file2));
-					}
 					@file_put_contents($file2, $words);
 				}
 			} else {

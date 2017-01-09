@@ -9,3 +9,4 @@
  */
 
 bind('do_admin_layout', '&pay\classes\PayHookImpl', 20);
+bind('on_init_rest_server', '&pay\classes\PayRestService');

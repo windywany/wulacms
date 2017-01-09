@@ -83,3 +83,6 @@ ADD COLUMN `channel` VARCHAR(32) NULL DEFAULT '' COMMENT '推广渠道' AFTER `d
 
 $tables['2.2.0'][] = "ALTER TABLE `{prefix}member_finance_outlay` 
 DROP COLUMN `mname`";
+
+$tables['2.3.0'][] = "ALTER TABLE `{prefix}member_deposit_record` 
+ADD COLUMN `platformid` VARCHAR(32) NULL COMMENT '充值平台ID，对应PayChannel' AFTER `platform`";

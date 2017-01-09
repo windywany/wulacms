@@ -20,7 +20,8 @@ class DepositBill extends \ParameterDef {
 	public $orderid;//系统订单ID
 	public $order_confirmed;//订单处理器确认时间
 	public $amount;//充值金额
-	public $platform;//第三方平台
+	public $platform;//充值平台
+	public $platformid;//充值平台ID
 	public $transid;//第三方交易ID
 	public $account;//充值账户
 	public $confirmed;//入账时间
