@@ -6,7 +6,10 @@ namespace taoke\classes;
 use artisan\ArtisanCommand;
 use cms\classes\ChannelImporter;
 use cms\classes\ChannelImporterParam;
+use taoke\command\DeleteExpireGoodsCommand;
 use taoke\command\ImportTask;
+use taoke\command\RebuildXSIndexCommand;
+use taoke\command\UpdateSearchIndexCommand;
 
 class ImportGoodsFromExcelCommand extends ArtisanCommand {
 	public function cmd() {
@@ -110,8 +113,11 @@ class ImportGoodsFromExcelCommand extends ArtisanCommand {
 	}
 
 	public static function get_artisan_commands($commands) {
-		$commands['tbk_import']  = new self();
-		$commands['tbk_import1'] = new ImportTask();
+		$commands['tbk_import']       = new self();
+		$commands['tbk_import1']      = new ImportTask();
+		$commands['del-goods']        = new DeleteExpireGoodsCommand();
+		$commands['update-searchidx'] = new UpdateSearchIndexCommand();
+		$commands['rebuild-taokeidx'] = new RebuildXSIndexCommand();
 
 		return $commands;
 	}

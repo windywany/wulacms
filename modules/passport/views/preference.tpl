@@ -28,7 +28,7 @@
                      <ul class="nav nav-tabs pull-right in">
                      	{foreach $groups as $key => $g}
 						<li {if $key == $_g}class="active"{/if}>
-							<a href="{'passport/preference'|app}?_g={$key}" target="tag" data-tag="#content">
+							<a href="#{'passport/preference'|app:0}?_g={$key}">
 								<i class="fa fa-fw fa-cog"></i> 
 								<span class="hidden-mobile hidden-tablet">{$g}</span>
 							</a>

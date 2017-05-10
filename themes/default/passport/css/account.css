@@ -13,7 +13,7 @@ body{
 .text-input{float:left;position:relative;height:42px;border:1px solid #e2e2e2;line-height:42px;font-size:14px;padding-left:10px;z-index:2;background:none;_zoom:1}
 .input_300{width:288px}
 .input_190{width:178px}
-.input_140{width:128px}
+.input_140{width:178px}
 
 .input-placeholder{float:left;display:block;height:42px;margin-top:1px;line-height:42px;position:relative;z-index:1;font-size:14px;text-align:left;color:#c6c6c6;_zoom:1}
 .placeholder_300{margin-left:-288px}
@@ -26,19 +26,22 @@ body{
 .btn-orange{background:#fb8526}
 .btn-orange:hover{background:#f17d20}
 
-.account-main{display:none;position: absolute;z-index: 3}
+.dl_left{ width:500px; height:100px; background:#D0D0D0; float:left;}
+
+.account-main{ width:905px; margin:auto; margin-top:150px; overflow:hidden;}
+.denglu{border:2px solid #ff7200; overflow:hidden; margin-top:20px;}
 .account-logo{width:160px;height:35px;background:url(../img/logo_white.png) no-repeat;_background:url(../img/png8/logo_white.png) no-repeat}
 .account-logo a{display: block;width:100%;height:100%;line-height:35px;overflow: hidden;text-indent: 99999px}
 
-.account{position:relative;width:400px;height:auto;padding-bottom:12px;margin-top:20px;border:1px solid #e8e8e8;border-radius:2px;background:#fff;box-shadow:0 0 20px #666}
-.account .account-title{width:400px;height:40px;line-height:40px;font-size:16px;text-align:center;border-bottom:1px solid #f0f0f0;background:#f7f7f7}
+.account{position:relative;width:400px;height:auto;padding-bottom:12px;border-radius:2px;background:#fff;float:left; border-left:1px dashed #e8e8e8;}
+.account .account-title{width:400px;height:50px;line-height:50px;font-size:18px;text-align:left; text-indent:2.7em;}
 .account .message{height:20px;margin-top:20px;line-height:20px;text-indent:50px;color:#f5272e;overflow:hidden}
 .account .message span{display:block;height:20px;line-height:20px}
 .account .message span.valid{display:none;}
 .account ul{width:300px;height:auto;margin:10px auto 0;padding-bottom:10px}
 .account li{width:100%;margin-top:20px;overflow:hidden}
 .account li.no-margin{margin-top:0}
-.account li .account-captcha{float:left;width:150px;height:44px;margin-right:10px;line-height:44px;text-align:center;font-size:16px;color:#fff;background:#a0d468}
+.account li .account-captcha{float:left;width:100px;height:44px;margin-right:10px;line-height:44px;text-align:center;font-size:16px;color:#fff;background:#a0d468}
 .account li .account-captcha:hover{background:#95c85d}
 .account li .account-captcha-disabled{display:none;float:left;width:150px;height:44px;margin-right:10px;line-height:44px;text-align:center;font-size:16px;color:#fff;background:#bcbcbd;}
 .account li p{height:14px;margin-bottom:14px;line-height:14px}
@@ -77,4 +80,4 @@ body{
 .account-bg{position: absolute;z-index: 1;top:0;left:0;overflow:hidden}
 .account-bg img{width:100%}
 /*底部版权*/
-.account-footer{position: absolute;z-index: 2;width:100%;bottom:10px;left:0;text-align:center;font-size:12px;color:#fff;height:20px;line-height:20px;}
+.account-footer{width:100%;text-align:center;font-size:12px;color:#666;height:50px;line-height:50px;}

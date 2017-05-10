@@ -8,7 +8,7 @@ class RegCodeTemplate extends SMSTemplate {
 	private $code = null;
 
 	public static function get_sms_templates($tpls) {
-		$tpls ['reg_verify'] = new RegCodeTemplate ();
+		$tpls ['regcode'] = new RegCodeTemplate ();
 
 		return $tpls;
 	}
@@ -49,12 +49,18 @@ class RegCodeTemplate extends SMSTemplate {
 		$code1 = sess_get('reg_verify_code');
 		$time1 = sess_get('reg_verify_expire', 0);
 		if ($time1 > time()) {
-			return $code && strtolower($code1) == strtolower($code);
+			if ($code && strtolower($code1) == strtolower($code)) {
+				sess_del('reg_verify_expire');
+				sess_del('reg_verify_code');
+
+				return true;
+			}
 		} else {
 			sess_del('reg_verify_expire');
 			sess_del('reg_verify_code');
 
-			return false;
 		}
+
+		return false;
 	}
 }

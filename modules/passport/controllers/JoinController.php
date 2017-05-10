@@ -157,7 +157,18 @@ class JoinController extends Controller {
 	 */
 	private function registerMember($user, $model) {
 		$role_id = intval(cfg('default_role@passport', 0));
-		$user    = apply_filter('before_member_created', $user);
+		$expire  = cfg('expire@passport', '0d');
+		if (preg_match('/^(0|[1-9]\d*)(m|d)$/', $expire, $ms) && $ms[1] > 0) {
+			if ($ms[2] == 'm') {
+				$user['group_expire'] = strtotime(date('Y-m-d') . ' 23:59:59 +' . $ms[1] . ' months -1 day');
+			} else {
+				$user['group_expire'] = strtotime(date('Y-m-d') . ' 23:59:59 +' . $ms[1] . ' days');
+			}
+		}
+		$user = apply_filter('before_member_created', $user);
+		if (!$user) {
+			return 0;
+		}
 		$model->removeValidateRule('captcha');
 		if (isset($user['invite_code'])) {
 			$invite_code = $user['invite_code'];

@@ -40,7 +40,7 @@ function rest_remote_data_provider($con, $tplvars = [], $dialect = null) {
 		return new CtsData();
 	}
 	$appcfg = $apps[ $app ];
-	unset($con['remote'], $con['app']);
+	unset($con['remote'], $con['app'], $con['nocache']);
 
 	$rest = new RestClient($appcfg[0], $appcfg[1], $appcfg[2], '1', 5);
 

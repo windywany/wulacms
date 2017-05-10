@@ -13,7 +13,7 @@ class RestSevice {
 	 *
 	 * @param array $param
 	 *
-	 * @return multitype:string
+	 * @return array
 	 */
 	public function rest_get_get_app($param, $key, $secret) {
 		if (isset ($param ['appID']) && $param ['appID']) {
@@ -30,25 +30,25 @@ class RestSevice {
 	}
 
 	public function rest_start_session($param, $key, $secret) {
-		$sname = cfg('session_name@rest');
+		$sname = cfg('session_name@rest', 'session');
 		if ($sname) {
 			$sid = isset ($param [ $sname ]) ? $param [ $sname ] : null;
 			$sid = Request::getInstance()->startSession($sid);
 
 			return ['error' => 0, 'data' => ['sid' => $sid, 'sname' => $sname]];
 		} else {
-			return ['error' => 400, 'msg' => '无法开启SESSION'];
+			return ['error' => 400, 'message' => '无法开启SESSION'];
 		}
 	}
 
 	/**
 	 * 当前可以提供的服务.
 	 *
-	 * @param array   $param
-	 * @param unknown $key
-	 * @param unknown $secret
+	 * @param array  $param
+	 * @param string $key
+	 * @param string $secret
 	 *
-	 * @return multitype:number string unknown
+	 * @return array
 	 */
 	public function rest_get_services($param, $key, $secret) {
 		$services = array();
@@ -69,8 +69,11 @@ class RestSevice {
 	/**
 	 * 作为应用中心时为接入的应用提供服务查询。
 	 *
-	 * @param array   $param (api,version)
-	 * @param unknown $secret
+	 * @param array  $param (api,version)
+	 * @param string $key
+	 * @param string $secret
+	 *
+	 * @return array
 	 */
 	public function rest_get_lookup($param, $key, $secret) {
 		$rtn = array();
@@ -118,4 +121,9 @@ class RestSevice {
 
 		return ['error' => 0, 'data' => $data, 'count' => $count];
 	}
+
+	public function rest_get_echostr($param, $key, $secret) {
+		return ['error' => 0, 'data' => $param['data']];
+	}
+
 }

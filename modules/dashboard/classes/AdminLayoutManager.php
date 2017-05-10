@@ -6,8 +6,6 @@
  */
 class AdminLayoutManager {
 	private $menus = array ();
-	private $scripts = array ();
-	private $styles = array ();
 	private $linkes = array ();
 	private $linkesGroup = array ();
 	/**

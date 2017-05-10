@@ -73,8 +73,12 @@ $(function () {
 			alert('请填写手机号');
 			return false;
 		}
+		if($('#phone').hasClass('invalid')){
+			alert('手机号不可用');
+			return false;
+		}
 		if ($('#captcha_wrapper:visible').length > 0) {
-			param.captcha = $('#captcha').val();
+			param.captcha = $('input[name="captcha"]').val();
 			if (!param.captcha) {
 				alert('请填写图片验证码');
 				return false;
@@ -101,7 +105,7 @@ $(function () {
 					}
 				}, 1000);
 			} else {
-				$this.removeAttr('disabled').removeClass('disabled').html('免费获取验证码');
+				$this.removeAttr('disabled').html('系统无法发送短信');
 			}
 		});
 		return false;

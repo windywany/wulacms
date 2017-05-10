@@ -305,7 +305,7 @@ class Request implements ArrayAccess {
 			$this->postData = array_merge(array(), $_POST);
 			$_GET           = $this->_clean_input_data($_GET);
 			$_POST          = $this->_clean_input_data($_POST);
-			$_REQUEST       = $this->_clean_input_data($_REQUEST);
+			//$_REQUEST       = $this->_clean_input_data($_REQUEST);
 			unset ($_COOKIE ['$Version']);
 			unset ($_COOKIE ['$Path']);
 			unset ($_COOKIE ['$Domain']);

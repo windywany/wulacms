@@ -125,9 +125,10 @@ class RestController extends NonSessionController {
 
 	private function handle($args, $method, $ver, $api = false) {
 		unset ($args ['_url']);
-		$sname = cfg('session_name@rest');
+		$sname = cfg('session_name@rest', 'session');
 		if ($sname && isset ($args [ $sname ]) && $args [ $sname ]) {
 			Request::getInstance()->startSession($args [ $sname ]);
+			define('REST_SESSION_ID', $args [ $sname ]);
 		}
 		$return = $this->server->handle($args, $method, $ver, $api);
 

@@ -6,6 +6,8 @@ namespace taoke\command;
 use artisan\ArtisanDaemonTask;
 use cms\classes\ChannelImporter;
 use cms\classes\ChannelImporterParam;
+use taoke\classes\TaokeXSConfigure;
+use xunsou\XSFactory;
 
 class ImportTask extends ArtisanDaemonTask {
 	/**
@@ -15,6 +17,7 @@ class ImportTask extends ArtisanDaemonTask {
 	private $importer;
 	private $defs = ['title' => 'B', 'image' => 'C', 'goods_id' => 'A', 'channel' => 'E', 'goods_url' => 'D', 'tbk_url' => 'F', 'price' => 'G', 'sale_count' => 'H', 'rate' => 'I', 'comission' => 'J', 'wangwang' => 'K', 'wangwangid' => 'L', 'shopname' => 'M', 'platform' => 'N', 'coupon_count' => 'P', 'coupon_remain' => 'Q', 'coupon_price' => 'R', 'coupon_start' => 'S', 'coupon_stop' => 'T', 'coupon_url' => 'V'];
 	private $time;
+	private $num  = 1000;
 
 	public function cmd() {
 		return 'tbk_import1';
@@ -25,10 +28,12 @@ class ImportTask extends ArtisanDaemonTask {
 	}
 
 	protected function execute($options) {
+		$xs = XSFactory::getXS(new TaokeXSConfigure());
+		$xs->index->openBuffer(4);
 		$date    = date('Y-m-d');
-		$i       = $this->taskId * 1000 + 2;
+		$i       = $this->taskId * $this->num + 2;
 		$request = \Request::getInstance();
-		for ($j = 0; $j <= 1000; $j++) {
+		for ($j = 0; $j < $this->num; $j++) {
 			$data = $this->getData($this->sheet, $i + $j);
 			if ($data['coupon_stop'] < $date) {
 				continue;
@@ -36,12 +41,21 @@ class ImportTask extends ArtisanDaemonTask {
 			if (empty($data['goods_id'])) {
 				break;
 			}
-			$channel = $this->importer->importByNames($data['channel']);
+			$parentch = explode('/', $data['channel']);
+			$parentch = $parentch[0];
+			$channel  = $this->importer->importByNames($data['channel']);
 			if ($channel) {
 				$data['channel'] = $channel;
+			} else {
+				continue;
 			}
-			$data['model']     = 'taoke';
-			$data['type']      = 'page';
+			$data['model'] = 'taoke';
+			$data['type']  = 'page';
+			$page_id       = dbselect()->from('{tbk_goods}')->where(['goods_id' => $data['goods_id'], 'coupon_price' => $data['coupon_price']])->get('page_id');
+			if ($page_id) {
+				$data['id']          = $page_id;
+				$data['need_update'] = true;
+			}
 			$coupon_price      = $data['coupon_price'];
 			$data['use_price'] = 0;
 			if (preg_match('#.+?(\d+).+?(\d+)#', $coupon_price, $ms)) {
@@ -53,18 +67,34 @@ class ImportTask extends ArtisanDaemonTask {
 				$data['discount'] = 0;
 			}
 			if (floatval($data['use_price']) <= floatval($data['price'])) {
-				$data['real_price'] = number_format(floatval($data['price']) - floatval($data['discount']), 2);
+				$data['real_price'] = number_format(floatval($data['price']) - floatval($data['discount']), 2, '.', '');
+				if ($data['real_price'] < 0) {
+					$data['real_price'] = 0;
+					//怎么可能有不要钱的产品
+				}
 			} else {
 				$data['real_price'] = $data['price'];
 			}
+
 			$request->addUserData($data, true);
 			$id = \CmsPage::save('page', 'taoke', null, false);
 			if ($id) {
 				$this->log('imported - ' . $id . ': ' . $data['price'] . ' - ' . $data['discount'] . ' = ' . $data['real_price']);
+				$doc['id']    = $id;
+				$doc['ch']    = $parentch;
+				$doc['title'] = $data['title'];
+				$doc['ctime'] = time();
+				$d            = new \XSDocument($doc);
+				if ($page_id) {
+					$xs->index->update($d);
+				} else {
+					$xs->index->add($d);
+				}
 			} else {
 				$this->log('cannot import :' . $data['goods_id']);
 			}
 		}
+		$xs->index->closeBuffer();
 	}
 
 	protected function getOpts() {
@@ -80,14 +110,23 @@ class ImportTask extends ArtisanDaemonTask {
 		if (is_file($file)) {
 			rename($file, $file . '.bak');
 		}
+		$xs = XSFactory::getXS(new TaokeXSConfigure());
+		$xs->index->flushIndex();
+		//自动清空缓存
+		$prefix                    = rand_str(3);
+		$settings                  = \KissGoSetting::getSetting();
+		$settings ['cache_prefix'] = $prefix;
+		$settings->saveSettingToFile(APPDATA_PATH . 'settings.php');
+		\RtCache::delete('system_preferences');
 	}
 
 	protected function setUp(&$options) {
-
 		$this->setMaxMemory('512M');
-
-		$this->workerCount = 10;
-
+		$this->workerCount = icfg('workerNum@taoke', 2);
+		if ($this->workerCount <= 0) {
+			$this->workerCount = 2;
+		}
+		$this->num = 10000 / $this->workerCount;
 		if (isset($options['file'])) {
 			$file = $options['file'];
 		} else {

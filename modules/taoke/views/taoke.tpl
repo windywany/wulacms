@@ -3,19 +3,9 @@
         <h1 class="txt-color-blueDark">
             <i class="fa fa-fw fa-picture-o"></i> 淘宝客商品 </h1>
     </div>
+    {if $canEditPage}
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
         <div class="pull-right margin-top-5 margin-bottom-5">
-            {if $canAddPage}
-                <a class="btn btn-success" href="#{'cms/page/add/page/taoke'|app:0}">
-                    <i class="glyphicon glyphicon-plus"></i> 新增
-                </a>
-            {/if}
-            {if $canDelPage}
-                <button type="button" class="btn btn-danger" data-url="{'cms/page/del'|app}" target="ajax"
-                        data-grp="#tbkGoodsTable tbody input.grp:checked" data-arg="ids" data-warn="请选择要删除的相册!"
-                        data-confirm="你真的要删除选中的相册吗?"><i class="glyphicon glyphicon-trash"></i> 删除
-                </button>
-            {/if}
             <button type="button" class="btn btn-warning" data-url="{'taoke/changec'|app}" target="ajax"
                     data-grp="#tbkGoodsTable tbody input.grp:checked" data-arg="ids" data-warn="请选择要推荐的文章!"
                     data-confirm="你真的要推荐选中的文章吗?"><i class="fa fa-thumbs-up"></i> 推荐
@@ -29,11 +19,12 @@
                     data-confirm="你真的要特荐选中的文章吗?"><i class="fa fa-thumbs-o-up"></i> 热门
             </button>
             <button disabled="disabled" type="button" id="import_excel" class="btn btn-primary"
-                    href="{'taoke/import/index'|app}" target="ajax" data-confirm="开始之前请确保最新的EXCEL文件已经上传?">
+                    href="{'taoke/import'|app}?file=$#image$" target="ajax" data-confirm="开始之前请确保最新的EXCEL文件已经上传?">
                 <i class="fa fa-cloud-upload"></i>导入
             </button>
         </div>
     </div>
+    {/if}
 </div>
 <section id="widget-grid" class="hasr">
     <span class="barhr">
@@ -41,15 +32,33 @@
     </span>
     <div class="rightbar">
         <div class="panel panel-default">
-            <div class="panel-heading">搜索</div>
             <div class="panel-body">
                 <form data-widget="nuiSearchForm" data-for="#tbkGoodsTable" class="smart-form">
+                    {if $canEditPage}
+                    <fieldset>
+                        <section>
+                            <label class="label">优惠券文件</label>
+                            <label class="input input-file" for="image">
+                                <span class="button" id="uploadImg" data-max-file-size="100mb" data-extensions="xls" data-widget="nuiAjaxUploader" for="#image"  data-water="0">
+                                    <i class="fa fa-lg fa-cloud-upload"></i>
+                                </span>
+                                <a for="image" class="button" href="javascript:;" style="display:none"><i class="fa fa-lg fa-eye txt-color-blue"></i></a>
+                                <input type="text" name="image" id="image" value=""/>
+                            </label>
+                        </section>
+                    </fieldset>
+                    {/if}
                     <fieldset>
                             <section>
                                 <label class="input">
                                     <input type="text" placeholder="商品名" name="title"/>
                                 </label>
                             </section>
+                        <section>
+                            <label class="input">
+                                <input type="text" placeholder="店铺名称" name="shopname"/>
+                            </label>
+                        </section>
                             <section>
                                 <label class="select">
                                     <select name="status" id="status">
@@ -91,12 +100,9 @@
                     <tr>
                         <th width="25"></th>
                         <th width="30"><input type="checkbox" class="grp"/></th>
-                        <th>商品</th>
-                        <th width="120" data-sort="tbk.comission,a">价格/佣金</th>
-                        <th width="100" data-sort="tbk.coupon_price,a">优惠券价格</th>
-                        <th width="90" data-sort="tbk.real_price,a">折后价格</th>
+                        <th data-sort="cp.id,d">商品</th>
                         {'tbkGoodsTable'|tablehead}
-                        <th width="80" class="text-align-right">
+                        <th width="40" class="text-align-right">
                             {'tbkGoodsTable'|tableset}
                         </th>
                     </tr>
@@ -134,17 +140,21 @@
 
 	nUI.ajaxCallbacks.setTbkToken = function (arg) {
 		var id = arg.id;
-		$('#gbtn-' + id).remove();
-		$('#tid-' + id).html('淘口令:' + arg.token);
+		$('#gbtn-' + id).parents('td').html(arg.token);
 	};
 
     nUI.ajaxCallbacks.setTbkShare = function (arg) {
         var id = arg.id;
         var token = arg.token;
         if(token){
-            $('#gbtn-' + id).remove();
-            $('#tid-' + id).html('淘口令:' + arg.token);
+			$('#gbtn-' + id).parents('td').html(arg.token);
         }
+        $('#reason-'+id).val(arg.word);
+        $('#submit-'+id).attr('disabled',true);
+		var hd = $('#submit-'+id).parents('tr').find('.tt-folder');
+		if(!hd.hasClass('node-open')){
+			hd.click();
+		}
        Copy(arg.word);
     };
 
@@ -167,5 +177,5 @@
 
 	$(window).unbind('unload-container', window.taobaokeEvent);
 	$(window).on('unload-container', window.taobaokeEvent);
-	window.taobaokeTimer = setInterval(window.taobaokeCk, 5000);
+	window.taobaokeTimer = setInterval(window.taobaokeCk, 1000);
 </script>

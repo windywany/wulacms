@@ -9,6 +9,11 @@ bind('on_save_user_passport_vip', '&PassportPluginImpl', 1, 2);
 bind('get_sms_templates', '&\passport\classes\BindMobileSms');
 bind('get_sms_templates', '&\passport\classes\ResetPasswdSms');
 bind('get_sms_templates', '&passport\classes\RegCodeTemplate');
+bind('on_init_rest_server', function (RestServer $server) {
+	$server->registerClass(new \passport\classes\PassportResetService(), '1.0', 'user');
+
+	return $server;
+});
 bind('get_columns_of_member-table', function ($cols) {
 
 	$cols['group_id'] = ['name' => '会员组', 'show' => true, 'width' => 110, 'sort' => 'M.group_id,d', 'order' => 10, 'render' => function ($v, $data, $groups) {

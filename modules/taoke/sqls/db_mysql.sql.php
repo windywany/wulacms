@@ -35,7 +35,7 @@ $tables ['1.0.0'] [] = "CREATE TABLE IF NOT EXISTS `{prefix}tbk_goods` (
 $tables['1.0.0'][] = "CREATE TABLE `tbk_token` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '淘宝客logo',
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT 'url地址',
+  `url` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT 'url地址',
   `user_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '淘宝客user_id',
   `content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '内容',
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '淘口令',

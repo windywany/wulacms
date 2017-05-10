@@ -5,58 +5,47 @@
         <td><input type="checkbox" value="{$c.cid}" class="grp"/></td>
     <td>
         <p>
-           <a href="/tbk/{$c.cid}.html" target="_blank"> <img src="{$c.image|media}" width="80" height="80" style="float: left;margin-right: 5px;">{$c.title}</a>
+           <a href="{$c|url}" target="_blank"> <img src="{$c.image|media}" width="80" height="80" style="float: left;margin-right: 5px;">{$c.title}</a>
             {if $c.flag_c}<span class="label bg-color-orange">推荐</span>&nbsp;{/if}
             {if $c.flag_a}<span class="label bg-color-teal">特荐</span>&nbsp;{/if}
             {if $c.flag_h}<span class="label bg-color-red">热门</span>&nbsp;{/if}
         </p>
-        <p><span id="tid-{$c.cid}" class="label label-primary">{if $c.token}淘口令:{$c.token}{/if}</span>
-                {if !$c.token}<a id="gbtn-{$c.cid}" title="淘口令" class="btn btn-xs btn-primary"
-                                                 href="{'taoke/createtoken/'|app}{$c.cid}" target="ajax"
-                                                 data-confirm="你确定要生成淘口令吗?">
-                <i class="fa fa-pencil-square-o"></i>生成淘口令</a>
-                {/if}
-        </p>
     </td>
-    <td>{$c.price}/{$c.comission}</td>
-    <td>{$c.coupon_price}</td>
-    <td>{$c.real_price}</td>
     {'tbkGoodsTable'|tablerow:$c}
     <td class="text-align-right">
-        <div class="btn-group">
-        <a href="#{'cms/page/edit/page/'|app:0}{$c.cid}" class="btn btn-xs btn-primary">
-            <i class="fa fa-pencil-square-o"></i></a>
-        <a title="删除" class="btn btn-xs btn-danger"
-           href="{'cms/page/del'|app}{$c.cid}" target="ajax"
-           data-confirm="你确定要删除这个文章吗?">
-            <i class="glyphicon glyphicon-trash"></i></a>
-        </div>
+        <a href="{'taoke/share'|app}{$c.cid}" target="ajax" class="btn btn-xs btn-success"><i class="fa fa-share"></i></a>
     </td>
     </tr>
     <tr parent="{$c.cid}">
         <td colspan="2"></td>
-        <td colspan="{'tbkGoodsTable'|tablespan:5}">
-            <label class="form-inline">
-                <form target="ajax" id="apply-form" method="post" action="{'taoke/taoke/saveReason'|app}" data-widget="nuiValidate" name="ApplyForm" class="smart-form">
-                    <label class="form-inline"><input type="hidden" class="form-control" name="page_id" value="{$c.cid}"/></label>
-                    <label class="form-inline">推荐理由：<input type="text" class="form-control" name="reason" value="{$c.reason}" style="width: 350px;"/></label>
-                    <label class="form-inline">推荐<input type="checkbox" name="checkbox[]" class="form-control" value="1" {if $c.flag_c} checked {/if}/></label>
-                    <label class="form-inline">特荐<input type="checkbox" name="checkbox[]" class="form-control" value="2" {if $c.flag_a} checked {/if}/></label>
-                    <label class="form-inline"><button id="submit" class="btn btn-xs btn-primary" type="submit">保存</button></label>
+        <td colspan="{'tbkGoodsTable'|tablespan:2}">
+                <form target="ajax" id="apply-form-{$c.cid}" method="post" action="{'taoke/saveReason'|app}" data-widget="nuiValidate" name="ApplyForm" class="smart-form">
+                    <input type="hidden" class="form-control" name="page_id" value="{$c.cid}"/>
+                        <div class="row">
+                        <section class="col col-8">
+                            <label for="reason" class="textarea"><textarea name="reason" placeholder="推荐语" id="reason-{$c.cid}"  rows="3">{$c.reason}</textarea></label>
+                        </section>
+                        <section class="col col-2">
+                            <div class="inline-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="checkbox[]" value="1" {if $c.flag_c} checked {/if}/><i></i>推荐
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="checkbox[]" value="2" {if $c.flag_a} checked {/if}/><i></i>特荐
+                                </label>
+                            </div>
+                        </section>
+                        <section class="col col-2 text-align-right">
+                            <button id="submit-{$c.cid}" class="btn btn-xs btn-primary" type="submit"><i class="fa fa-save"></i></button>
+                            <a href="{'taoke/share'|app}{$c.cid}" target="ajax" class="btn btn-xs btn-success"><i class="fa fa-share"></i></a>
+                        </section>
+                        </div>
                 </form>
-         </label>
-            <label class="form-inline">
-                <form target="ajax" id="apply-form" method="post" action="{'taoke/taoke/share'|app}" data-widget="nuiValidate" name="ApplyForm" class="smart-form">
-                    <label class="form-inline"><input type="hidden" class="form-control" name="page_id" value="{$c.cid}"/></label>
-                    <label class="form-inline"><input type="hidden" class="form-control" name="share_word" value="" style="width: 350px;"/></label>
-                    <label class="form-inline"><button id="submit" class="btn btn-xs btn-warning" type="submit">生成推广语</button></label>
-                </form>
-          </label>
         </td>
     </tr>
   {foreachelse}
     <tr class="text-center">
-        <td colspan="{'tbkGoodsTable'|tablespan:7}">
+        <td colspan="{'tbkGoodsTable'|tablespan:4}">
             暂无数据
         </td>
     </tr>

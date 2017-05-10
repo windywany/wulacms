@@ -27,12 +27,16 @@ class TaokeContentModel extends \DefaultContentModel {
 	 * (non-PHPdoc) @see DefaultContentModel::save()
 	 */
 	public function save($page, $form) {
-		$id = $page['id'];
-
+		$id                   = $page['id'];
 		$goods                = $form->toArray();
 		$goods['page_id']     = $id;
 		$goods['update_time'] = $page['update_time'];
-		dbsave($goods, ['page_id' => $id,'coupon_price'=>$goods['coupon_price']], 'id')->into('{tbk_goods}')->save();
+		$update               = rqst('need_update', false);
+		if ($update) {
+			dbupdate('{tbk_goods}')->set($goods)->where(['page_id' => $id])->exec();
+		} else {
+			dbinsert($goods)->into('{tbk_goods}')->exec();
+		}
 	}
 
 	/*

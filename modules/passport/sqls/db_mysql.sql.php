@@ -89,7 +89,7 @@ $tables ['2.1.3'] [] = "CREATE TABLE `{prefix}member_oauth` (
   `nickname` varchar(256) DEFAULT NULL COMMENT '用户在第三方平台的名字',
   `rec_code` varchar(32) DEFAULT NULL COMMENT '推荐码',
   `channel` varchar(32) DEFAULT NULL COMMENT '来源渠道',
-  `device` SMALLINT(5) UNSIGNED DEFAULT 0 COMMENT '设备',
+  `device` SMALLINT(5) UNSIGNED DEFAULT 0 COMMENT '设备,0未知；1安卓；2苹果；3WEB；4安卓平板；5IPAD；6其它',
   `deviceId` VARCHAR(64) DEFAULT NULL COMMENT '设备ID',
   `ip` VARCHAR(64) DEFAULT NULL COMMENT 'IP',
   `mid` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '绑定到用户ID',
@@ -118,3 +118,6 @@ $tables['2.3.0'][] = "ALTER TABLE `{prefix}member`
 ADD COLUMN `lastip` VARCHAR(64) NULL COMMENT '最后登录IP' AFTER `ip`";
 $tables['2.3.0'][] = "ALTER TABLE `{prefix}member` 
 ADD COLUMN `lastlogin` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后登录时间' AFTER `lastip`";
+
+$tables['2.4.0'][] = "ALTER TABLE `{prefix}member_meta` 
+ADD COLUMN `app` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否是APP设置的' AFTER `value`";

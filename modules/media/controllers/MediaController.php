@@ -140,12 +140,8 @@ class MediaController extends Controller {
 			status_header(422);
 			die ('{"jsonrpc" : "2.0", "error" : {"code": 200, "message": "无法完成上传."}, "id" : "id"}');
 		}
-		$name     = thefilename($name);
-		$fileName = preg_replace('/[^\w\._]+/', rand_str(5, 'a-z'), $name);
+		$fileName = thefilename($name);
 		$filext   = strtolower(strrchr($fileName, '.'));
-
-		$pathinfo = pathinfo($name);
-		$name     = $pathinfo ['filename'];
 
 		if ($locale === 2) {
 			$uploader = new FileUploader ();
@@ -179,7 +175,7 @@ class MediaController extends Controller {
 			status_header(422);
 			die ('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "无法打开临时目录。"}, "id" : "id"}');
 		}
-
+		$contentType = '';
 		// Look for the content type header
 		if (isset ($_SERVER ["HTTP_CONTENT_TYPE"])) {
 			$contentType = $_SERVER ["HTTP_CONTENT_TYPE"];

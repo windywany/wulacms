@@ -7,19 +7,20 @@
  */
 class DiggRestService {
 	public function rest_digg($param, $key = '', $secret = '') {
-		if (isset ($param ['id']) && isset ($param ['digg']) && isset ($param ['uuid'])) {
+		if (isset ($param ['id']) && isset ($param ['digg']) && isset ($param ['token'])) {
 			$page_id = intval($param ['id']);
 			$digg    = intval($param ['digg']);
-			$uuid    = $param ['uuid'];
+			$uuid    = $param ['token'];
 			$rst     = DiggRestService::digg($uuid, $page_id, $digg);
-			if (true === $rst) {
-				return array('error' => 0);
+			if (is_array($rst)) {
+
+				return array('error' => 0, 'data' => $rst);
 			} else {
-				return array('error' => 2, 'message' => $rst);
+				return array('error' => 401, 'message' => $rst);
 			}
 		}
 
-		return array('error' => 1, 'message' => '参数不正确，参数必须包括id,digg和用户的uuid');
+		return array('error' => 400, 'message' => '参数不正确，参数必须包括id,digg和用户的token');
 	}
 
 	/**
@@ -36,7 +37,10 @@ class DiggRestService {
 	 */
 	public static function digg($uuid, $page_id, $digg) {
 		$r_digg = abs($digg);
-		if ($r_digg >= 0 && $r_digg < 10 && bcfg('digg' . $r_digg . '_enabled@digg')) {
+		if (!bcfg('digg' . $r_digg . '_enabled@digg')) {
+			return '不可用';
+		}
+		if ($r_digg >= 0 && $r_digg < 10) {
 			$log ['page_id'] = $page_id;
 			$log ['uuid']    = $uuid;
 			$log ['digg']    = strval($r_digg);

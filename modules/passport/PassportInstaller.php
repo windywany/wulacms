@@ -37,6 +37,7 @@ class PassportInstaller extends AppInstaller {
 		$versions ['2.1.3'] = '20160902001'; // 关注用户
 		$versions ['2.2.0'] = '20161220002'; // 添加会员组过期时间
 		$versions ['2.3.0'] = '20170105003'; // 最后登录IP与时间
+		$versions ['2.4.0'] = '20170320004'; // 添加app字段以表示此字段用于app加载
 
 		return $versions;
 	}

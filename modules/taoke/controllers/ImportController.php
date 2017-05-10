@@ -10,7 +10,17 @@ namespace taoke\controllers;
 class ImportController extends \Controller {
 	protected $checkUser = true;
 
-	public function index() {
+	public function index($file = '') {
+		$rst = true;
+		if ($file) {
+			$file = WEB_ROOT . $file;
+			if (is_file($file)) {
+				$rst = @rename($file, WEB_ROOT . 'excel' . DS . date('Y-m-d') . '.xls');
+			}
+		}
+		if (!$rst) {
+			return \NuiAjaxView::error('移动优惠券文件失败.');
+		}
 		$client = null;
 		try {
 			$client = new \GearmanClient();

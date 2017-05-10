@@ -19,6 +19,7 @@ class PassportPreferenceForm extends AbstractForm {
 	private $default_group   = array('group' => '2', 'col' => '3', 'label' => '默认用户组', 'widget' => 'auto', 'defaults' => 'user_group,group_id,group_name,pst:system/preference,,passport', 'note' => '用户注册时将用户添加到该组。');
 	private $default_role    = array('group' => '2', 'col' => '3', 'label' => '默认角色', 'widget' => 'auto', 'defaults' => 'user_role,role_id,role_name,pst:system/preference,,passport', 'note' => '用户注册后用户拥有该角色。');
 	private $join_url        = array('group' => '2', 'col' => '6', 'label' => '注册成功后默认跳转到页面', 'rules' => array('url' => '请填写正确的URL。'));
+	private $expire          = array('group' => '3', 'col' => '3', 'label' => '会员组赠送时长', 'note' => '格式：1m表示一个月，1d表示一天', 'default' => '0d', 'rules' => array('regexp(/^(0|[1-9]\d*)(m|d)$/)' => '请正确填写时长(以m或d结尾)'));
 	private $agree           = array('label' => '服务条款', 'widget' => 'textarea', 'note' => '允许HTML代码.');
 
 	public function formatDefault_roleValue($value) {

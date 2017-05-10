@@ -8,7 +8,6 @@ namespace sms\classes;
  *
  */
 class Sms {
-
 	/**
 	 * 发送短信.
 	 *
@@ -63,7 +62,7 @@ class Sms {
 		$last_sent   = sess_get('sms_' . $tid . '_sent', 0);
 		if (($last_sent + $cfg['exp']) > time()) {
 			log_error('模板' . $tid . '发送太快', 'sms');
-			$args['errorMsg'] = '模板' . $tid . '发送太快';
+			$args['errorMsg'] = '发送太快';
 
 			return false;
 		}

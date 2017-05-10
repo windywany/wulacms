@@ -8,7 +8,7 @@ class PreferenceController extends \DefaultPreferencePage {
 	protected $acls      = array('index' => 'pst:system/preference', 'index_post' => 'pst:system/preference');
 
 	protected function getCurrentURL() {
-		return 'passport/preference';
+		return tourl('passport/preference');
 	}
 
 	protected function getForm($type, $data = array()) {

@@ -15,6 +15,7 @@ class RestServer {
 	 * 使用$restAccessCheck创建一个RESTful Server实例。
 	 *
 	 * @param IRestAccessCheck $restAccessCheck
+	 * @param bool             $debug
 	 */
 	public function __construct($restAccessCheck, $debug = false) {
 		$this->accessCheck = $restAccessCheck;
@@ -23,17 +24,24 @@ class RestServer {
 
 	/**
 	 * 处理RESTful请求.
+	 *
+	 * @param array  $args
+	 * @param string $method
+	 * @param mixed  $ver
+	 * @param mixed  $api
+	 *
+	 * @return array
 	 */
 	public function handle($args, $method = 'get', $ver = false, $api = false) {
 		if (!isset ($this->apis [ $method ]) && !$this->debug) {
 			return array('error' => '100', 'message' => __('Not support method: %s', $method));
 		}
+		$appSecret = $this->accessCheck->getAppSecret($args ['appkey']);
 		if (!$this->debug) {
 			if (!isset ($args ['crc']) || !isset ($args ['appkey']) || (!isset ($args ['api']) && !$api) || (!isset ($args ['ver']) && !$ver)) {
 				return array('error' => '101', 'message' => __('Bad request parameters.'));
 			}
 
-			$appSecret = $this->accessCheck->getAppSecret($args ['appkey']);
 			if (empty ($appSecret)) {
 				return array('error' => '102', 'message' => __('Unkown application key.'));
 			}

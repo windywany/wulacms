@@ -10,6 +10,27 @@
 
 namespace taoke\classes;
 
-class TaokeXSConfigure {
+use xunsou\XSConfigure;
 
+class TaokeXSConfigure extends XSConfigure {
+	public function getIniData() {
+		return "project.name = taoke
+				[id]
+				type = id
+				[ch]
+				index = self
+				[ctime]
+				type = numeric
+				[title]
+				tokenizer = sss
+				type = title";
+	}
+
+	public function getScwsMulti() {
+		return 15;
+	}
+
+	public function getCustomDictFile() {
+		return TMP_PATH . 'tag_dict.txt';
+	}
 }
