@@ -44,6 +44,10 @@ class TaokeHookImpl {
 			if (strpos($sortby, 'TBKG') !== false) {
 				$query->join('{tbk_goods} AS TBKG', 'TBKG.page_id = CP.id');
 			}
+			$abc = get_condition_value('abc',$con);
+			if($abc){
+				$query->where(['TBKG.abc'=>$abc]);
+			}
 		}
 
 		return $query;

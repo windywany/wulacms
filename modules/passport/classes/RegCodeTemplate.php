@@ -1,4 +1,5 @@
 <?php
+
 namespace passport\classes;
 
 use sms\classes\SMSTemplate;
@@ -8,7 +9,8 @@ class RegCodeTemplate extends SMSTemplate {
 	private $code = null;
 
 	public static function get_sms_templates($tpls) {
-		$tpls ['regcode'] = new RegCodeTemplate ();
+		$tpls ['regcode']    = new RegCodeTemplate ();
+		$tpls ['reg_verify'] = $tpls ['regcode'];
 
 		return $tpls;
 	}

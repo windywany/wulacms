@@ -203,7 +203,7 @@ class ImageUtil {
 	/**
 	 * 下载远程图片到本地.
 	 *
-	 * @param string    $imgUrls
+	 * @param string|array    $imgUrls
 	 *            要下载的图片地址数组或地址.
 	 * @param IUploader $uploader
 	 *            图片上传器.
