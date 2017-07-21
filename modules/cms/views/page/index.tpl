@@ -62,6 +62,22 @@
             <div class="panel-body no-padding">
                 <form data-widget="nuiSearchForm" data-for="#page-table" class="smart-form">
                     <fieldset>
+						<section>
+							<label class="input">
+								<i class="icon-append fa fa-calendar"></i>
+								<input id="log-from-date" data-widget="nuiDatepicker"
+									   data-range-to ="log-to-date" value="{$weekago}"
+									   type="text" placeholder="开始时间" name="bd"/>
+							</label>
+						</section>
+						<section>
+							<label class="input">
+								<i class="icon-append fa fa-calendar"></i>
+								<input id="log-to-date" data-widget="nuiDatepicker"
+									   data-range-from ="log-from-date" value="{$today}"
+									   type="text" placeholder="结束时间" name="sd"/>
+							</label>
+						</section>
                             <section>
                                 <label class="input">
                                     <input type="text" placeholder="ID" name="pid"/>
@@ -83,6 +99,15 @@
                                     </label>
                                 </section>
                             {/if}
+							<section>
+								<label class="input" for="upname">
+									<input type="hidden"
+										   data-widget="nuiCombox"
+										   style="width:100%"
+										   placeholder="编辑"
+										   data-source="{'system/ajax/autocomplete/user/user_id/nickname/r:cms'|app}" name="upname" id="upname"/>
+								</label>
+							</section>
                             <section>
                                 {channel_tree name=channel type=$is_topic id=channel value=$channel multi=1 placeholder="请选择栏目"}
                             </section>
@@ -155,7 +180,7 @@
 							{if $disable_approving}
 							<th width="100" data-sort="CP.status,d" class="hidden-xs hidden-sm">状态</th>
 							{/if}
-							<th width="120" data-sort="CP.create_time,d" class="hidden-xs hidden-sm">作者</th>
+							<th width="200" data-sort="CP.create_time,d" class="hidden-xs hidden-sm">作者/编辑</th>
 							<th width="120" data-sort="CP.update_time,d" class="hidden-xs hidden-sm">最后更新</th>
 							{if $canEditPage}
 							<th width="60" data-sort="display_sort" class="hidden-xs hidden-sm">排序</th>	

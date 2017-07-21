@@ -12,7 +12,20 @@ defined('KISSGO') or exit ('No direct script access allowed');
 class PageController extends Controller {
 	private   $status;
 	protected $checkUser = true;
-	protected $acls      = array('data' => 'r:cms/page', 'index' => 'r:cms/page', 'csort' => 'u:cms/page', 'add' => 'c:cms/page', 'move' => 'u:cms/page', 'flags' => 'u:cms/page', 'edit' => 'u:cms/page', 'save' => 'id|u:cms/page;c:cms/page', 'del' => 'd:cms/page', 'auto_author' => 'r:cms/page', 'auto_source' => 'r:cms/page', 'auto_topic' => 'r:cms/page');
+	protected $acls      = [
+		'data'        => 'r:cms/page',
+		'index'       => 'r:cms/page',
+		'csort'       => 'u:cms/page',
+		'add'         => 'c:cms/page',
+		'move'        => 'u:cms/page',
+		'flags'       => 'u:cms/page',
+		'edit'        => 'u:cms/page',
+		'save'        => 'id|u:cms/page;c:cms/page',
+		'del'         => 'd:cms/page',
+		'auto_author' => 'r:cms/page',
+		'auto_source' => 'r:cms/page',
+		'auto_topic'  => 'r:cms/page'
+	];
 
 	public function preRun($method) {
 		parent::preRun($method);
@@ -21,8 +34,8 @@ class PageController extends Controller {
 
 	public function index($my = 'all', $type = 'page', $channel = '', $status = '') {
 		$my                         = $my == 'all' ? 'all' : 'my';
-		$listTypes                  = array('my' => '我的', 'all' => '所有');
-		$pageTypes                  = array('page' => '文章', 'topic' => '专题');
+		$listTypes                  = ['my' => '我的', 'all' => '所有'];
+		$pageTypes                  = ['page' => '文章', 'topic' => '专题'];
 		$data ['type']              = in_array($type, array_keys($pageTypes)) ? $type : 'page';
 		$data ['my']                = in_array($my, array_keys($listTypes)) ? $my : 'my';
 		$data ['channels']          = ChannelForm::getChannelTree(null, $data ['type'] == 'topic', true);
@@ -31,15 +44,20 @@ class PageController extends Controller {
 		$data ['pageTypeName']      = $data ['type'] == 'topic' ? '专题' : '内容';
 		$data ['status']            = $this->status;
 		$data ['disable_approving'] = bcfg('disable_approving@cms', false);
-		$data ['models']            = array('' => '全部内容');
-		dbselect()->from('{cms_model}')->treeWhere(array('deleted' => 0, 'hidden' => 0, 'is_delegated' => 1, 'is_topic_model' => $data ['type'] == 'topic' ? 1 : 0))->treeKey('refid')->treeOption($data ['models']);
+		$data ['models']            = ['' => '全部内容'];
+		dbselect()->from('{cms_model}')->treeWhere([
+			'deleted'        => 0,
+			'hidden'         => 0,
+			'is_delegated'   => 1,
+			'is_topic_model' => $data ['type'] == 'topic' ? 1 : 0
+		])->treeKey('refid')->treeOption($data ['models']);
 		$data ['canDelPage']    = icando('d:cms/page');
 		$data ['canEditPage']   = icando('u:cms/page');
 		$data ['canEditTag']    = icando('u:cms/tag');
 		$data ['canSubmitPage'] = icando('submit:cms');
 		$data ['channel']       = $channel;
 		$data ['pstatus']       = $status;
-		$fields                 = apply_filter('get_customer_cms_search_field', array(), $type);
+		$fields                 = apply_filter('get_customer_cms_search_field', [], $type);
 		if ($fields) {
 			$csearchForm = new DynamicForm ('CustomerPageSearchForm');
 			foreach ($fields as $n => $f) {
@@ -47,8 +65,10 @@ class PageController extends Controller {
 				$f['col']    = null;
 				$csearchForm->addField($n, $f);
 			}
-			$data ['widgets'] = new DefaultFormRender ($csearchForm->buildWidgets(array()));
+			$data ['widgets'] = new DefaultFormRender ($csearchForm->buildWidgets([]));
 		}
+		$data['today']   = date('Y-m-d');
+		$data['weekago'] = date('Y-m-d', strtotime('-7 days'));
 
 		return view('page/index.tpl', $data);
 	}
@@ -57,7 +77,7 @@ class PageController extends Controller {
 		$id   = intval($id);
 		$sort = intval($sort);
 		if (!empty ($id)) {
-			dbupdate('{cms_page}')->set(array('display_sort' => $sort))->where(array('id' => $id))->exec();
+			dbupdate('{cms_page}')->set(['display_sort' => $sort])->where(['id' => $id])->exec();
 		}
 
 		return NuiAjaxView::reload('#page-table');
@@ -72,7 +92,11 @@ class PageController extends Controller {
 	 *            content model.
 	 */
 	public function add($type, $model, $channel = '') {
-		$cModel = dbselect('*')->from('{cms_model}')->where(array('refid' => $model, 'deleted' => 0, 'creatable' => 1))->get();
+		$cModel = dbselect('*')->from('{cms_model}')->where([
+			'refid'     => $model,
+			'deleted'   => 0,
+			'creatable' => 1
+		])->get();
 		if (!$cModel) {
 			Response::showErrorMsg('内容模型“' . $model . '”不存在。', 404);
 		}
@@ -102,7 +126,7 @@ class PageController extends Controller {
 			$data ['cwidgets'] = new DefaultFormRender ($cform->buildWidgets($cform->toArray()));
 		}
 		$data ['rules'] = $form->rules($cform);
-		$plgs           = apply_filter('get_editor_plugins', array());
+		$plgs           = apply_filter('get_editor_plugins', []);
 		if ($plgs) {
 			$data ['editor_plugins'] = ",'" . implode("','", $plgs) . "','|'";
 		}
@@ -122,10 +146,14 @@ class PageController extends Controller {
 	}
 
 	public function edit($type, $id, $copy = '') {
-		$page = dbselect('*')->from('{cms_page}')->where(array('id' => $id))->get();
+		$page = dbselect('*')->from('{cms_page}')->where(['id' => $id])->get();
 		if ($page) {
 			$model  = $page ['model'];
-			$cModel = dbselect('*')->from('{cms_model}')->where(array('refid' => $model, 'deleted' => 0, 'creatable' => 1))->get();
+			$cModel = dbselect('*')->from('{cms_model}')->where([
+				'refid'     => $model,
+				'deleted'   => 0,
+				'creatable' => 1
+			])->get();
 			if (!$cModel) {
 				Response::showErrorMsg('内容模型“' . $model . '”不存在。', 404);
 			}
@@ -136,7 +164,7 @@ class PageController extends Controller {
 			$page ['pageTypeName'] = $type == 'topic' ? '专题' : '内容';
 			$page ['modelName']    = $cModel ['name'];
 			if ($page ['chunk']) {
-				$chunk = dbselect('name')->from('{cms_chunk}')->where(array('id' => $page ['chunk']))->get();
+				$chunk = dbselect('name')->from('{cms_chunk}')->where(['id' => $page ['chunk']])->get();
 				if ($chunk) {
 					$page ['chunk'] = $page ['chunk'] . ':' . $chunk ['name'];
 				} else {
@@ -146,7 +174,7 @@ class PageController extends Controller {
 				$page ['chunk'] = '';
 			}
 			if ($page ['topic']) {
-				$topic = dbselect('title2')->from('{cms_page}')->where(array('id' => $page ['topic']))->get();
+				$topic = dbselect('title2')->from('{cms_page}')->where(['id' => $page ['topic']])->get();
 				if ($topic) {
 					$page ['topic'] = $page ['topic'] . ':' . $topic ['title2'];
 				} else {
@@ -163,7 +191,7 @@ class PageController extends Controller {
 			$formName = ucfirst($type) . 'Form';
 			$form     = new DynamicForm ($formName, $page, true);
 			$widgets  = ModelFieldForm::loadCustomerFields($form, $model);
-			$cdatas   = CmsPage::loadCustomerFieldValues($id, array(), $model);
+			$cdatas   = CmsPage::loadCustomerFieldValues($id, [], $model);
 			if ($cdatas) {
 				$page = array_merge($page, $cdatas);
 			}
@@ -187,7 +215,7 @@ class PageController extends Controller {
 				unset ($page ['id'], $page ['url'], $page ['url_key'], $page ['create_time']);
 				$page ['title'] = '复制的-' . $page ['title'];
 			}
-			$plgs = apply_filter('get_editor_plugins', array());
+			$plgs = apply_filter('get_editor_plugins', []);
 			if ($plgs) {
 				$page ['editor_plugins'] = ",'" . implode("','", $plgs) . "','|'";
 			}
@@ -209,7 +237,7 @@ class PageController extends Controller {
 			$data ['deleted']     = 1;
 			$data ['update_time'] = time();
 			$data ['update_uid']  = $this->user->getUid();
-			if (dbupdate('{cms_page}')->set($data)->where(array('id IN' => $ids))->exec()) {
+			if (dbupdate('{cms_page}')->set($data)->where(['id IN' => $ids])->exec()) {
 				fire('on_recycle_page', $ids);
 				$recycle = new DefaultRecycle ($ids, 'Page', 'cms_page', 'ID:{id};标题:{title};模型:{model}');
 				RecycleHelper::recycle($recycle);
@@ -226,9 +254,9 @@ class PageController extends Controller {
 	public function move($ids, $ch, $upurl = '', $approve = '') {
 		$ids = safe_ids($ids, ',', true);
 		if (!empty ($ids)) {
-			$model = dbselect('default_model')->from('{cms_channel}')->where(array('refid' => $ch))->get('default_model');
+			$model = dbselect('default_model')->from('{cms_channel}')->where(['refid' => $ch])->get('default_model');
 			if ($model) {
-				$pages = dbselect('id')->from('{cms_page}')->where(array('id IN' => $ids, 'model' => $model))->toArray('id');
+				$pages = dbselect('id')->from('{cms_page}')->where(['id IN' => $ids, 'model' => $model])->toArray('id');
 			}
 			if ($pages) {
 				$data ['update_time'] = time();
@@ -237,9 +265,9 @@ class PageController extends Controller {
 				if ($approve) {
 					$data ['status'] = 1;
 				}
-				if (dbupdate('{cms_page}')->set($data)->where(array('id IN' => $pages))->exec()) {
+				if (dbupdate('{cms_page}')->set($data)->where(['id IN' => $pages])->exec()) {
 					$msg = count($ids) == count($pages) ? '所选文章已经移动到指定栏目.' : '部分文章已经移动到指定栏目.';
-					$w   = array('id IN' => $pages);
+					$w   = ['id IN' => $pages];
 					if (empty ($upurl)) {
 						$w ['url'] = '';
 					}
@@ -274,7 +302,7 @@ class PageController extends Controller {
 			$flags           = explode(',', $flags);
 			if ($flags) {
 				foreach ($flags as $f) {
-					if (in_array($f, array('a', 'b', 'c', 'h', 'j'))) {
+					if (in_array($f, ['a', 'b', 'c', 'h', 'j'])) {
 						$data [ 'flag_' . $f ] = 1;
 					}
 				}
@@ -282,7 +310,7 @@ class PageController extends Controller {
 			$data ['update_time'] = time();
 			$data ['update_uid']  = $this->user->getUid();
 
-			if (dbupdate('{cms_page}')->set($data)->where(array('id IN' => $ids))->exec()) {
+			if (dbupdate('{cms_page}')->set($data)->where(['id IN' => $ids])->exec()) {
 				return NuiAjaxView::reload('#page-table', '文章属性修改成功.');
 			} else {
 				return NuiAjaxView::error('数据库操作失败.');
@@ -303,8 +331,7 @@ class PageController extends Controller {
 
 	public function data($my, $type, $_cp = 1, $_lt = 20, $_sf = 'CP.id', $_od = 'd', $_ct = 0) {
 		$rows = dbselect('CP.id,CP.flag_h,CP.flag_c,CP.flag_a,CP.flag_b,CP.flag_j,CP.title,CP.title2,CP.status,CP.update_time,CP.create_time,CP.image,
-				CP.publish_time,CP.keywords,CP.url,CP.display_sort,CH.root,CH.name as channelName,CM.name AS modelName,CU.nickname as cuname')->from('{cms_page} AS CP');
-		$rows->field('UU.nickname AS uuname');
+				CP.publish_time,CP.keywords,CP.url,CP.display_sort,CH.root,CH.name as channelName,CM.name AS modelName,CU.nickname as cuname,UU.nickname AS uuname')->from('{cms_page} AS CP');
 		$rows->join('{cms_channel} AS CH', 'CP.channel = CH.refid');
 		$rows->join('{cms_model} AS CM', 'CP.model = CM.refid');
 		$rows->join('{user} AS CU', 'CP.create_uid = CU.user_id');
@@ -318,7 +345,7 @@ class PageController extends Controller {
 			if ($my == 'my') {
 				$where ['CP.create_uid'] = $uid;
 			} else if (bcfg('enable_group_bind@cms') && $uid != 1) {
-				$where ['CH.gid IN'] = $this->user->getAttr('subgroups', array());
+				$where ['CH.gid IN'] = $this->user->getAttr('subgroups', []);
 			}
 		}
 		if ($type == 'topic') {
@@ -351,10 +378,28 @@ class PageController extends Controller {
 			if ($flag_j == 'on') {
 				$where ['CP.flag_j'] = 1;
 			}
+			$bd = rqst('bd', date('Y-m-d', strtotime('-7 days')));
+			$sd = rqst('sd', date('Y-m-d'));
+			$bd = strtotime($bd . ' 00:00:00');
+			$sd = strtotime($sd . ' 23:59:59');
+			if (!$bd) {
+				$bd = strtotime('-7 days', $sd);
+			}
 
 			$uuname = irqst('uuname');
 			if ($uuname) {
-				$where ['CP.create_uid'] = $uuname;
+				$where ['CP.create_uid']         = $uuname;
+				$where['CP.create_time BETWEEN'] = [$bd, $sd];
+			}
+
+			$upname = irqst('upname');
+			if ($upname) {
+				$where ['CP.update_uid']         = $upname;
+				$where['CP.update_time BETWEEN'] = [$bd, $sd];
+			}
+
+			if (!$upname && !$uuname) {
+				$where['CP.update_time BETWEEN'] = [$bd, $sd];
 			}
 
 			$channel = rqst('channel');
@@ -382,14 +427,14 @@ class PageController extends Controller {
 				} else {
 					$t        = '%' . $keywords . '%';
 					$keywords = convert_search_keywords($keywords);
-					$where [] = array('search_index MATCH' => $keywords, '||CP.title LIKE' => $t, '||CP.title2 LIKE' => $t);
+					$where [] = ['search_index MATCH' => $keywords, '||CP.title LIKE' => $t, '||CP.title2 LIKE' => $t];
 				}
 			}
 		}
 		$rows->where($where);
 		$rows->sort($_sf, $_od);
 		$rows->limit(($_cp - 1) * $_lt, $_lt);
-		$data           = array();
+		$data           = [];
 		$data ['total'] = '';
 		if ($_ct) {
 			$data ['total'] = $rows->count('CP.id');
@@ -424,7 +469,7 @@ class PageController extends Controller {
 			$where ['title2 LIKE'] = $q;
 		}
 		$topics->where($where);
-		$data ['results'] = $topics->toArray(array(array('id' => 0, 'text' => '-不绑定-')));
+		$data ['results'] = $topics->toArray([['id' => 0, 'text' => '-不绑定-']]);
 
 		return new JsonView ($data);
 	}
@@ -441,7 +486,7 @@ class PageController extends Controller {
 			$where ['title2 LIKE'] = $q;
 		}
 		$topics->where($where);
-		$data ['results'] = $topics->toArray(array(array('id' => 0, 'text' => '-请选择-')));
+		$data ['results'] = $topics->toArray([['id' => 0, 'text' => '-请选择-']]);
 
 		return new JsonView ($data);
 	}
@@ -451,10 +496,10 @@ class PageController extends Controller {
 		$items             = dbselect('val as id,val as text')->from('{cms_variables}')->limit(($_cp - 1) * 15, 15);
 		$where ['deleted'] = 0;
 		$where ['type']    = 'author';
-		$results []        = array('id' => '', 'text' => '-无-');
+		$results []        = ['id' => '', 'text' => '-无-'];
 		if ($q) {
 			$where ['val LIKE'] = $q;
-			$results []         = array('id' => $q, 'text' => $q);
+			$results []         = ['id' => $q, 'text' => $q];
 		}
 		$items->where($where);
 		$data ['results'] = $items->toArray($results);
@@ -467,10 +512,10 @@ class PageController extends Controller {
 		$items             = dbselect('val as id,val as text')->from('{cms_variables}')->limit(($_cp - 1) * 15, 15);
 		$where ['deleted'] = 0;
 		$where ['type']    = 'source';
-		$results []        = array('id' => '', 'text' => '-无-');
+		$results []        = ['id' => '', 'text' => '-无-'];
 		if ($q) {
 			$where ['val LIKE'] = $q;
-			$results []         = array('id' => $q, 'text' => $q);
+			$results []         = ['id' => $q, 'text' => $q];
 		}
 		$items->where($where);
 
@@ -480,8 +525,8 @@ class PageController extends Controller {
 	}
 
 	public function browsedialog($ss = '', $model = '') {
-		$data ['models'] = array('' => '请选择内容模型');
-		dbselect()->from('{cms_model}')->treeWhere(array('deleted' => 0))->treeKey('refid')->treeOption($data ['models']);
+		$data ['models'] = ['' => '请选择内容模型'];
+		dbselect()->from('{cms_model}')->treeWhere(['deleted' => 0])->treeKey('refid')->treeOption($data ['models']);
 		$data ['ss']    = $ss;
 		$data ['model'] = $model;
 
@@ -498,7 +543,7 @@ class PageController extends Controller {
 		if ($keywords) {
 			$t        = '%' . $keywords . '%';
 			$keywords = convert_search_keywords($keywords);
-			$where [] = array('search_index MATCH' => $keywords, '||PG.title LIKE' => $t, '||PG.title2 LIKE' => $t);
+			$where [] = ['search_index MATCH' => $keywords, '||PG.title LIKE' => $t, '||PG.title2 LIKE' => $t];
 		}
 		if ($model) {
 			$where ['model'] = $model;
@@ -506,7 +551,7 @@ class PageController extends Controller {
 		$rows->where($where);
 		$rows->sort($_sf, $_od);
 		$rows->limit(($_cp - 1) * $_lt, $_lt);
-		$data           = array();
+		$data           = [];
 		$data ['total'] = '';
 		if ($_ct) {
 			$data ['total'] = $rows->count('PG.id');

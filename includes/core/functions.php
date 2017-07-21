@@ -129,11 +129,11 @@ function cfg($name, $default = '', $reset = false) {
 		$cfgs = RtCache::get('system_preferences');
 	}
 	if (empty ($cfgs)) {
-		$cfgs = array();
+		$cfgs = [];
 		if (!$_kissgo_processing_installation) {
 			$cpt       = dbselect('*')->from('{preferences}');
-			$cfields   = dbselect('value,preference_group as pg')->from('{preferences}')->where(array('name' => 'custom_fields'));
-			$cfieldsds = array();
+			$cfields   = dbselect('value,preference_group as pg')->from('{preferences}')->where(['name' => 'custom_fields']);
+			$cfieldsds = [];
 			foreach ($cfields as $fs) {
 				if ($fs ['value']) {
 					$ds = @unserialize($fs ['value']);
@@ -200,7 +200,7 @@ function set_cfg($name, $value, $group) {
 			}
 		}
 	}
-	$cfgs = RtCache::get('system_preferences', array());
+	$cfgs = RtCache::get('system_preferences', []);
 	$key  = $name . '@' . $group;
 	if (is_null($value)) {
 		unset ($cfgs [ $key ]);
@@ -241,7 +241,25 @@ function icfg($name, $default = 0) {
  * @return string
  */
 function parse_page_url($pattern, $data) {
-	static $ps = array('{aid}', '{Y}', '{M}', '{D}', '{timestamp}', '{pinyin}', '{py}', '{typedir}', '{cc}', '{page}', '{tid}', '{trid}', '{mid}', '{path}', '{rpath}', '{title}', '{title2}');
+	static $ps = [
+		'{aid}',
+		'{Y}',
+		'{M}',
+		'{D}',
+		'{timestamp}',
+		'{pinyin}',
+		'{py}',
+		'{typedir}',
+		'{cc}',
+		'{page}',
+		'{tid}',
+		'{trid}',
+		'{mid}',
+		'{path}',
+		'{rpath}',
+		'{title}',
+		'{title2}'
+	];
 
 	$r [0] = isset ($data ['aid']) ? $data ['aid'] : 0;
 
@@ -300,7 +318,15 @@ function parse_page_url($pattern, $data) {
 function get_keywords($keywords, $string = '', $count = null, $dict = null, $add = false) {
 	static $scwss = [], $dicts = [];
 	if ($keywords) {
-		$keywords = preg_split('#,+#', trim(trim(str_replace(array('，', ' ', '　', '-', ';', '；', '－'), ',', $keywords)), ','));
+		$keywords = preg_split('#,+#', trim(trim(str_replace([
+			'，',
+			' ',
+			'　',
+			'-',
+			';',
+			'；',
+			'－'
+		], ',', $keywords)), ','));
 		$keywords = implode(' ', $keywords);
 	} else if (extension_loaded('scws') && $string) {
 		$pid = defined('KISS_CLI_PID') ? KISS_CLI_PID : 0;
@@ -343,7 +369,7 @@ function get_keywords($keywords, $string = '', $count = null, $dict = null, $add
 			$tmp = $scws->get_tops($count, $attr);
 		}
 		if ($tmp) {
-			$keywords = array();
+			$keywords = [];
 			foreach ($tmp as $keyword) {
 				$keywords [] = $keyword ['word'];
 			}
@@ -351,9 +377,9 @@ function get_keywords($keywords, $string = '', $count = null, $dict = null, $add
 		}
 	}
 	if (!empty ($keywords)) {
-		return array(str_replace(' ', ',', $keywords), convert_search_keywords($keywords));
+		return [str_replace(' ', ',', $keywords), convert_search_keywords($keywords)];
 	} else {
-		return array('', '');
+		return ['', ''];
 	}
 }
 
@@ -366,7 +392,7 @@ function get_keywords($keywords, $string = '', $count = null, $dict = null, $add
  */
 function pure_comman_string($string) {
 	if ($string) {
-		return trim(trim(str_replace(array('，', ' ', '　', '-', ';', '；', '－'), ',', $string)), ',');
+		return trim(trim(str_replace(['，', ' ', '　', '-', ';', '；', '－'], ',', $string)), ',');
 	}
 
 	return '';
@@ -466,7 +492,7 @@ function is_subclass_of2($object, $class_name) {
  *
  * @return boolean true发送成功,如果失败false
  */
-function sendmail($to, $subject, $message, $attachments = array(), $type = 'html') {
+function sendmail($to, $subject, $message, $attachments = [], $type = 'html') {
 	global $__mailer;
 	if ($__mailer == null) {
 		$__mailer = new DefaultMailer ();
@@ -522,15 +548,63 @@ function get_status_header_desc($code) {
 	$code = abs(intval($code));
 
 	if (!isset ($output_header_to_desc)) {
-		$output_header_to_desc = array(100 => 'Continue', 101 => 'Switching Protocols', 102 => 'Processing',
+		$output_header_to_desc = [
+			100 => 'Continue',
+			101 => 'Switching Protocols',
+			102 => 'Processing',
 
-		                               200 => 'OK', 201 => 'Created', 202 => 'Accepted', 203 => 'Non-Authoritative Information', 204 => 'No Content', 205 => 'Reset Content', 206 => 'Partial Content', 207 => 'Multi-Status', 226 => 'IM Used',
+			200 => 'OK',
+			201 => 'Created',
+			202 => 'Accepted',
+			203 => 'Non-Authoritative Information',
+			204 => 'No Content',
+			205 => 'Reset Content',
+			206 => 'Partial Content',
+			207 => 'Multi-Status',
+			226 => 'IM Used',
 
-		                               300 => 'Multiple Choices', 301 => 'Moved Permanently', 302 => 'Found', 303 => 'See Other', 304 => 'Not Modified', 305 => 'Use Proxy', 306 => 'Reserved', 307 => 'Temporary Redirect',
+			300 => 'Multiple Choices',
+			301 => 'Moved Permanently',
+			302 => 'Found',
+			303 => 'See Other',
+			304 => 'Not Modified',
+			305 => 'Use Proxy',
+			306 => 'Reserved',
+			307 => 'Temporary Redirect',
 
-		                               400 => 'Bad Request', 401 => 'Unauthorized', 402 => 'Payment Required', 403 => 'Forbidden', 404 => 'Not Found', 405 => 'Method Not Allowed', 406 => 'Not Acceptable', 407 => 'Proxy Authentication Required', 408 => 'Request Timeout', 409 => 'Conflict', 410 => 'Gone', 411 => 'Length Required', 412 => 'Precondition Failed', 413 => 'Request Entity Too Large', 414 => 'Request-URI Too Long', 415 => 'Unsupported Media Type', 416 => 'Requested Range Not Satisfiable', 417 => 'Expectation Failed', 422 => 'Unprocessable Entity', 423 => 'Locked', 424 => 'Failed Dependency', 426 => 'Upgrade Required',
+			400 => 'Bad Request',
+			401 => 'Unauthorized',
+			402 => 'Payment Required',
+			403 => 'Forbidden',
+			404 => 'Not Found',
+			405 => 'Method Not Allowed',
+			406 => 'Not Acceptable',
+			407 => 'Proxy Authentication Required',
+			408 => 'Request Timeout',
+			409 => 'Conflict',
+			410 => 'Gone',
+			411 => 'Length Required',
+			412 => 'Precondition Failed',
+			413 => 'Request Entity Too Large',
+			414 => 'Request-URI Too Long',
+			415 => 'Unsupported Media Type',
+			416 => 'Requested Range Not Satisfiable',
+			417 => 'Expectation Failed',
+			422 => 'Unprocessable Entity',
+			423 => 'Locked',
+			424 => 'Failed Dependency',
+			426 => 'Upgrade Required',
 
-		                               500 => 'Internal Server Error', 501 => 'Not Implemented', 502 => 'Bad Gateway', 503 => 'Service Unavailable', 504 => 'Gateway Timeout', 505 => 'HTTP Version Not Supported', 506 => 'Variant Also Negotiates', 507 => 'Insufficient Storage', 510 => 'Not Extended');
+			500 => 'Internal Server Error',
+			501 => 'Not Implemented',
+			502 => 'Bad Gateway',
+			503 => 'Service Unavailable',
+			504 => 'Gateway Timeout',
+			505 => 'HTTP Version Not Supported',
+			506 => 'Variant Also Negotiates',
+			507 => 'Insufficient Storage',
+			510 => 'Not Extended'
+		];
 	}
 
 	if (isset ($output_header_to_desc [ $code ])) {
@@ -593,7 +667,34 @@ function untrailingslashit($string) {
  * @return string The sanitized filename
  */
 function sanitize_file_name($filename) {
-	$special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}", chr(0));
+	$special_chars = [
+		"?",
+		"[",
+		"]",
+		"/",
+		"\\",
+		"=",
+		"<",
+		">",
+		":",
+		";",
+		",",
+		"'",
+		"\"",
+		"&",
+		"$",
+		"#",
+		"*",
+		"(",
+		")",
+		"|",
+		"~",
+		"`",
+		"!",
+		"{",
+		"}",
+		chr(0)
+	];
 	$filename      = str_replace($special_chars, '', $filename);
 	$filename      = preg_replace('/[\s-]+/', '-', $filename);
 	$filename      = trim($filename, '.-_');
@@ -606,7 +707,7 @@ function sanitize_file_name($filename) {
 	$filename  = array_shift($parts);
 	$extension = array_pop($parts);
 
-	$mimes = array('tmp', 'txt', 'jpg', 'gif', 'png', 'rar', 'zip', 'gzip', 'ppt');
+	$mimes = ['tmp', 'txt', 'jpg', 'gif', 'png', 'rar', 'zip', 'gzip', 'ppt'];
 
 	// Loop over any intermediate extensions. Munge them with a trailing
 	// underscore if they are a 2 - 5 character
@@ -700,14 +801,14 @@ function unique_filename($dir, $filename, $unique_filename_callback = null) {
  *
  * @return array 查找到的文件
  */
-function find_files($dir = '.', $pattern = '', $excludes = array(), $recursive = 0, $stop = 0) {
-	$files = array();
+function find_files($dir = '.', $pattern = '', $excludes = [], $recursive = 0, $stop = 0) {
+	$files = [];
 	$dir   = trailingslashit($dir);
 	if (is_dir($dir)) {
 		$fhd = @opendir($dir);
 		if ($fhd) {
-			$excludes  = is_array($excludes) ? $excludes : array();
-			$_excludes = array_merge($excludes, array('.', '..'));
+			$excludes  = is_array($excludes) ? $excludes : [];
+			$_excludes = array_merge($excludes, ['.', '..']);
 			while (($file = readdir($fhd)) !== false) {
 				if ($recursive && is_dir($dir . $file) && !in_array($file, $_excludes)) {
 					if ($stop == 0 || $recursive <= $stop) {
@@ -763,12 +864,12 @@ function rmdirs($dir, $keep = true) {
  *
  * @return string
  */
-function keepargs($url, $include = array()) {
+function keepargs($url, $include = []) {
 	$urls = explode('?', $url);
 	if (count($urls) < 2) {
 		return $url;
 	}
-	$kargs = array();
+	$kargs = [];
 	foreach ($include as $arg) {
 		if (preg_match('/' . $arg . '=([^&]+)/', $urls [1], $m)) {
 			$kargs [] = $m [0];
@@ -793,11 +894,11 @@ function keepargs($url, $include = array()) {
  *
  * @return string
  */
-function unkeepargs($url, $exclude = array()) {
-	$regex = array();
-	$rpm   = array();
+function unkeepargs($url, $exclude = []) {
+	$regex = [];
+	$rpm   = [];
 	if (is_string($exclude)) {
-		$exclude = array($exclude);
+		$exclude = [$exclude];
 	}
 	foreach ($exclude as $ex) {
 		$regex [] = '/&?' . $ex . '=[^&]*/';
@@ -897,10 +998,10 @@ function frqst($name, $default = 0) {
  */
 function safe_ids($ids, $sp = ',', $array = false) {
 	if (empty ($ids)) {
-		return $array ? array() : '';
+		return $array ? [] : '';
 	}
 	$_ids = explode($sp, $ids);
-	$ids  = array();
+	$ids  = [];
 	foreach ($_ids as $id) {
 		if (preg_match('/^[1-9]\d*$/', $id)) {
 			$ids [] = intval($id);
@@ -909,7 +1010,7 @@ function safe_ids($ids, $sp = ',', $array = false) {
 	if ($array === false) {
 		return empty ($ids) ? '' : implode($sp, $ids);
 	} else {
-		return empty ($ids) ? array() : $ids;
+		return empty ($ids) ? [] : $ids;
 	}
 }
 
@@ -960,7 +1061,7 @@ function readable_num($size) {
 	}
 }
 
-function readable_date($sec, $text = array('s' => '秒', 'm' => '分', 'h' => '小时', 'd' => '天')) {
+function readable_date($sec, $text = ['s' => '秒', 'm' => '分', 'h' => '小时', 'd' => '天']) {
 	$size = intval($sec);
 	if ($size == 0) {
 		return '';
@@ -1042,7 +1143,7 @@ function safe_url($node, $inherit = false) {
 			}
 		}
 		$url  = $node;
-		$node = array();
+		$node = [];
 	} else if (isset ($node ['url'])) {
 		$mobi_domain = cfg('mobi_domain');
 		if ($mobi_domain && $mobi_domain == REAL_HTTP_HOST) {
@@ -1118,7 +1219,7 @@ function channel_url($page, $inherit = false) {
 		return safe_url($page, $inherit);
 	}
 	if (is_array($page)) {
-		$ch = array();
+		$ch = [];
 		if (isset ($page ['root'])) {
 			$ch ['root'] = $page ['root'];
 		}
@@ -1233,7 +1334,7 @@ function html_tag_properties($properties) {
 	if (empty ($properties)) {
 		return '';
 	}
-	$tmp_ary = array();
+	$tmp_ary = [];
 	foreach ($properties as $name => $val) {
 		$name       = trim($name);
 		$tmp_ary [] = $name . '="' . $val . '"';
@@ -1303,6 +1404,12 @@ function get_theme() {
 	return $theme;
 }
 
+function last_log_msg() {
+	global $_kiss_last_msg;
+
+	return $_kiss_last_msg;
+}
+
 /**
  * log.
  *
@@ -1312,8 +1419,10 @@ function get_theme() {
  * @param string $origin
  */
 function log_message($message, $trace_info, $level, $origin = null, $file = '') {
+	global $_kiss_last_msg;
 	static $fb = false;
-	static $log_name = array(DEBUG_INFO => 'INFO', DEBUG_WARN => 'WARN', DEBUG_DEBUG => 'DEBUG', DEBUG_ERROR => 'ERROR');
+	static $log_name = [DEBUG_INFO => 'INFO', DEBUG_WARN => 'WARN', DEBUG_DEBUG => 'DEBUG', DEBUG_ERROR => 'ERROR'];
+	$_kiss_last_msg = $message;
 	if (empty ($trace_info)) {
 		return;
 	}
@@ -1327,8 +1436,8 @@ function log_message($message, $trace_info, $level, $origin = null, $file = '') 
 				$msg .= "\t\t\t{$trace_info[2]['file']} at line {$trace_info[2]['line']}\n";
 			}
 		}
-		$msg .= "\tscript: " . $_SERVER ['SCRIPT_NAME'] . "\n";
-		$msg .= "\turi: " . $_SERVER ['REQUEST_URI'] . "\n";
+		$msg       .= "\tscript: " . $_SERVER ['SCRIPT_NAME'] . "\n";
+		$msg       .= "\turi: " . $_SERVER ['REQUEST_URI'] . "\n";
 		$dest_file = $file ? 'kissgo_' . $file . '.log' : 'kissgo.log';
 		@error_log($msg, 3, APPDATA_PATH . 'logs/' . $dest_file);
 
@@ -1378,7 +1487,7 @@ function rand_str($len = 8, $chars = "a-z,0-9,$,_,!,@,#,=,~,$,%,^,&,*,(,),+,?,:,
 
 	// 生成随机字符串
 	mt_srand(( double )microtime() * 1000000);
-	$code  = array();
+	$code  = [];
 	$index = 0;
 	$i     = 0;
 	while ($i < $len) {
@@ -1421,7 +1530,7 @@ function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
 	$result = '';
 	$box    = range(0, 255);
 
-	$rndkey = array();
+	$rndkey = [];
 	for ($i = 0; $i <= 255; $i++) {
 		$rndkey [ $i ] = ord($cryptkey [ $i % $key_length ]);
 	}
@@ -1439,7 +1548,7 @@ function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
 		$tmp        = $box [ $a ];
 		$box [ $a ] = $box [ $j ];
 		$box [ $j ] = $tmp;
-		$result .= chr(ord($string [ $i ]) ^ ($box [ ($box [ $a ] + $box [ $j ]) % 256 ]));
+		$result     .= chr(ord($string [ $i ]) ^ ($box [ ($box [ $a ] + $box [ $j ]) % 256 ]));
 	}
 
 	if ($operation == 'DECODE') {
@@ -1492,7 +1601,7 @@ function combinate_resources($content, $type) {
 			$base_url = KissGoSetting::detectBaseUrl();
 			$cm       = new CSSmin ();
 			$res      = $ms [1];
-			$cnts     = array();
+			$cnts     = [];
 			foreach ($res as $file) {
 				$rfile = preg_replace('#^' . $base_url . '#i', WEB_ROOT, $file);
 				$cnt   = @file_get_contents($rfile);
@@ -1536,7 +1645,20 @@ function combinate_resources($content, $type) {
 function convert_search_keywords($keywords) {
 	$keywords = json_encode($keywords);
 
-	return str_replace(array('\u', '"', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'), array('uu', '', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'), $keywords);
+	return str_replace(['\u', '"', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], [
+		'uu',
+		'',
+		'A',
+		'B',
+		'C',
+		'D',
+		'E',
+		'F',
+		'G',
+		'H',
+		'I',
+		'J'
+	], $keywords);
 }
 
 /**
@@ -1621,7 +1743,7 @@ function the_media_src($src) {
  * @return array array(min,minop,max,maxop)
  */
 function parse_version_pair($versions) {
-	$rst = array(false, '', false, '');
+	$rst = [false, '', false, ''];
 	if (preg_match('#^([\[\(])(.*?),(.*?)([\]\)])$#', $versions, $m)) {
 		if ($m [2]) {
 			$rst [0] = $m [2];
@@ -1651,7 +1773,7 @@ function parse_version_pair($versions) {
  */
 function get_theme_list() {
 	$hd     = opendir(THEME_PATH . THEME_DIR);
-	$themes = array();
+	$themes = [];
 	if ($hd) {
 		while (($f = readdir($hd)) != false) {
 			if ($f != '.' && $f != '..' && is_dir(THEME_PATH . THEME_DIR . DS . $f)) {
@@ -1685,7 +1807,7 @@ function caiwu_menoy_format($menoy, $unit = 1000, $p = 3, $d = ',') {
  *
  * @return NamedArray.
  */
-function nary($array = array()) {
+function nary($array = []) {
 	return new NamedArray ($array);
 }
 
@@ -1698,7 +1820,7 @@ function nary($array = array()) {
  * @since 1.0.3
  */
 function get_then_unset(&$ary) {
-	$rtnAry = array();
+	$rtnAry = [];
 	$cnt    = func_num_args();
 	if (is_array($ary) && $ary && $cnt > 1) {
 		for ($i = 1; $i < $cnt; $i++) {
@@ -1784,7 +1906,14 @@ function html_escape($string, $esc_type = 'html', $char_set = null, $double_enco
 
 		case 'javascript' :
 			// escape quotes and backslashes, newlines, etc.
-			return strtr($string, array('\\' => '\\\\', "'" => "\\'", '"' => '\\"', "\r" => '\\r', "\n" => '\\n', '</' => '<\/'));
+			return strtr($string, [
+				'\\' => '\\\\',
+				"'"  => "\\'",
+				'"'  => '\\"',
+				"\r" => '\\r',
+				"\n" => '\\n',
+				'</' => '<\/'
+			]);
 
 		default :
 			return $string;
