@@ -55,7 +55,7 @@ class RestClient {
 	 */
 	public static function chucksum($args, $appSecret, $type = 'sha1') {
 		RestClient::sortArgs($args);
-		$sign = array();
+		$sign = [];
 		foreach ($args as $key => $v) {
 			if (is_array($v)) {
 				foreach ($v as $k => $v1) {
@@ -67,7 +67,7 @@ class RestClient {
 				$sign [] = $key . "=";
 			}
 		}
-		$str = implode('&', $sign) . $appSecret;
+		$str = str_replace(["\n", "\r"], '', implode('&', $sign) . $appSecret);
 		if ($type == 'sha1') {
 			return sha1($str);
 		} else {
@@ -85,10 +85,10 @@ class RestClient {
 	public static function execute($clients) {
 		if ($clients) {
 			$mh      = curl_multi_init();
-			$handles = array();
+			$handles = [];
 			foreach ($clients as $i => $curl) {
 				$ch             = $curl->getHandle();
-				$handles [ $i ] = array('h' => $ch, 'c' => $curl);
+				$handles [ $i ] = ['h' => $ch, 'c' => $curl];
 				curl_multi_add_handle($mh, $ch);
 			}
 			$active = null;
@@ -98,7 +98,7 @@ class RestClient {
 					usleep(50);
 				}
 			} while ($active > 0);
-			$rsts = array();
+			$rsts = [];
 			foreach ($handles as $i => $h) {
 				$rsts [ $i ] = $h ['c']->getReturn(curl_multi_getcontent($h ['h']));
 				curl_multi_remove_handle($mh, $h ['h']);
@@ -108,7 +108,7 @@ class RestClient {
 			return $rsts;
 		}
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -124,7 +124,7 @@ class RestClient {
 	 *
 	 * @return array 接口的返回值.
 	 */
-	public function get($api, $params = array(), $timeout = null, $execute = true) {
+	public function get($api, $params = [], $timeout = null, $execute = true) {
 		$this->prepare($params, $api);
 		curl_setopt($this->curl, CURLOPT_URL, $this->url . '?' . http_build_query($params));
 		curl_setopt($this->curl, CURLOPT_HTTPGET, 1);
@@ -158,7 +158,7 @@ class RestClient {
 	 *
 	 * @return array 接口的返回值.
 	 */
-	public function post($api, $params = array(), $timeout = null, $execute = true) {
+	public function post($api, $params = [], $timeout = null, $execute = true) {
 		$this->prepare($params, $api);
 		curl_setopt($this->curl, CURLOPT_URL, $this->url);
 		if (class_exists('CURLFile')) {
@@ -215,13 +215,13 @@ class RestClient {
 	 */
 	public function getReturn($rst) {
 		if (empty ($rst)) {
-			return array('error' => 106, 'message' => __('Internal error.'));
+			return ['error' => 106, 'message' => __('Internal error.')];
 		} else {
 			$json = json_decode($rst, true);
 			if ($json) {
 				return $json;
 			} else {
-				return array('error' => 107, 'message' => __('Not supported response format.'), 'data' => $rst);
+				return ['error' => 107, 'message' => __('Not supported response format.'), 'data' => $rst];
 			}
 		}
 	}
@@ -244,7 +244,7 @@ class RestClient {
 		curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->curl, CURLOPT_TIMEOUT, $this->timeout);
-		curl_setopt($this->curl, CURLOPT_POSTFIELDS, array());
+		curl_setopt($this->curl, CURLOPT_POSTFIELDS, []);
 	}
 
 	/**

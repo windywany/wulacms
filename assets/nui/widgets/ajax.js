@@ -68,7 +68,7 @@
                     ids.push($(n).val());
                 });
                 if (ids.length == 0) {
-                    var warn = elm.attr('data-warn')p
+                    var warn = elm.attr('data-warn');
                     if (!warn) {
                         warn = 'please select some records!';
                     }

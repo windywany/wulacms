@@ -49,6 +49,7 @@
                           	<input type="hidden" id="okeywords" name="okeywords" value="{$keywords}"/>
                           	<input type="hidden" name="title_color" id="title_color" value="{$title_color}"/>
                           	<input type="hidden" name="url_key" id="url_key" value="{$url_key}"/>
+							  <input type="hidden" name="pubnow" id="pubnow" value="0">
 							<fieldset>												
 								<div class="row">
 									<section class="col col-8">
@@ -285,15 +286,20 @@
 								</div>								
 							</fieldset>
 							
-							<footer>								
-								<button type="submit" class="btn btn-primary">
-									保存
-								</button>
+							<footer>
 								{if !$id}
 								<a style="display:none" class="btn btn-success" href="{'cms/page/add/page'|app}{$model}/$channel$" target="tag" data-tag="#content" id="btn-c-add">
 									再建一篇
 								</a>
 								{/if}
+                                {if $canApprove}
+									<a class="btn btn-success" href="#" onclick="return pubnow()">
+										保存并发布
+									</a>
+                                {/if}
+								<button type="submit" class="btn btn-primary">
+									保存
+								</button>
 								<a class="btn btn-default" href="#{'cms/page/my'|app:0}">
 									返回
 								</a>
@@ -336,6 +342,11 @@
 				}
 				$('#btn-c-add').show();
 			};
+			function pubnow() {
+				$('#pubnow').val(1);
+				$('button[type="submit"]').click();
+				return false;
+			}
 			window.add_next_page = function(){
 				nUI.closeAjaxDialog();
 				$('#btn-c-add').click();

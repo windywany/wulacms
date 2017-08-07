@@ -162,6 +162,7 @@
 	<div class="row">
 		<article class="col col-sm-12">
 			<div class="panel panel-default">
+				<div class="table-responsive">
 				<table 
 					id="page-table"
 					data-widget="nuiTable"		
@@ -169,7 +170,9 @@
 					data-source="{'cms/page/data'|app}{$my}/{$type}"
 					data-sort="CP.id,d"	
 					data-tfoot="true"
-					data-tree="true">
+					data-tree="true"
+					style="min-width: 900px"
+				>
 					<thead>
 						<tr>
 							<th width="20" class="hidden-xs hidden-sm"></th>
@@ -189,6 +192,7 @@
 						</tr>
 					</thead>
 				</table>
+				</div>
 				<div class="panel-footer">
 					<div data-widget="nuiPager" data-for="#page-table" data-limit="20"></div>
 				</div>			

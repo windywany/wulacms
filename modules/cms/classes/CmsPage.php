@@ -42,8 +42,8 @@ class CmsPage implements ArrayAccess, ICtsPage {
 					CC.name AS channel_name,
 					CM.name AS model_name';
 	private static $sfields     = '*';
-	public static  $PAGE_STATUS = array('' => '请选择状态', 0 => '审核未通过', 1 => '待审核', '4' => '待发布', '2' => '已发布', '3' => '草稿');
-	private        $fields      = array();
+	public static  $PAGE_STATUS = ['' => '请选择状态', 0 => '审核未通过', 1 => '待审核', '4' => '待发布', '2' => '已发布', '3' => '草稿'];
+	private        $fields      = [];
 
 	/**
 	 * 构建一个页面数据.
@@ -147,10 +147,10 @@ class CmsPage implements ArrayAccess, ICtsPage {
 			$this->fields ['content']     = preg_replace('#<p>\s*<br\s*/?>\s*</p>#i', '', $this->fields ['content']);
 			$this->fields ['content']     = apply_filter('before_render_content', $this->fields ['content'], $this->fields);
 			$this->fields ['total_pages'] = $total;
-			$this->fields ['__this_data'] = new CtsData (array(), $total);
+			$this->fields ['__this_data'] = new CtsData ([], $total);
 			$this->fields ['url']         = safe_url($this->fields);
 		} else {
-			$this->fields ['__this_data'] = new CtsData (array(), 0);
+			$this->fields ['__this_data'] = new CtsData ([], 0);
 		}
 		$this->fields = apply_filter('after_load_page_fields', $this->fields);
 	}
@@ -161,7 +161,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 
 	public function setFields($fields) {
 		$this->fields                 = $fields;
-		$this->fields ['__this_data'] = new CtsData (array(), isset ($fields ['total_pages']) ? $fields ['total_pages'] : 0);
+		$this->fields ['__this_data'] = new CtsData ([], isset ($fields ['total_pages']) ? $fields ['total_pages'] : 0);
 	}
 
 	/**
@@ -170,7 +170,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 	private function loadChannelInfo() {
 		$channel = dbselect('CM.is_list_model,CH.url,CH.list_page_url,CH.name,CH.default_template,CH.default_model,CH.upid,CH.id,CH.root,CH.parents,CH.page_cache,CH.list_cache,CH.default_cache,CH.list_page,CH.index_page,CH.default_page')->from('{cms_channel} AS CH');
 		$channel->join('{cms_model} AS CM', 'CH.default_model = CM.refid');
-		$channel = $channel->where(array('CH.deleted' => 0, 'CH.refid' => $this->fields ['channel']))->get();
+		$channel = $channel->where(['CH.deleted' => 0, 'CH.refid' => $this->fields ['channel']])->get();
 		if ($channel) {
 			$this->fields ['channel_index_url']    = $channel ['url'];
 			$this->fields ['channel_list_url']     = $channel ['list_page_url'];
@@ -187,7 +187,10 @@ class CmsPage implements ArrayAccess, ICtsPage {
 			$this->fields ['list_cache']           = $channel ['list_cache'];
 			$this->fields ['default_cache']        = $channel ['default_cache'];
 			$this->fields ['channel_url']          = $channel ['default_page'] ? $channel ['list_page_url'] : $channel ['url'];
-			$this->fields ['channel_page']         = array('root' => $channel ['root'], 'url' => $this->fields ['channel_url']);
+			$this->fields ['channel_page']         = [
+				'root' => $channel ['root'],
+				'url'  => $this->fields ['channel_url']
+			];
 			if (empty ($this->fields ['template_file'])) {
 				$this->fields ['template_file'] = $channel ['default_template'];
 			}
@@ -198,13 +201,25 @@ class CmsPage implements ArrayAccess, ICtsPage {
 	}
 
 	private function loadBreadcrumb() {
-		$crumbs = array();
+		$crumbs = [];
 		if (isset ($this->fields ['channel_upid'])) {
-			$crumbs [] = array('is_current' => true, 'page_cache' => $this->fields ['page_cache'], 'list_cache' => $this->fields ['list_cache'], 'default_cache' => $this->fields ['default_cache'], 'root' => $this->fields ['root'], 'name' => $this->fields ['channel_name'], 'id' => $this->fields ['channel_id'], 'upid' => $this->fields ['channel_upid'], 'channel' => $this->fields ['channel'], 'url' => $this->fields ['channel_url'], 'list_url' => $this->fields ['channel_list_url']);
+			$crumbs [] = [
+				'is_current'    => true,
+				'page_cache'    => $this->fields ['page_cache'],
+				'list_cache'    => $this->fields ['list_cache'],
+				'default_cache' => $this->fields ['default_cache'],
+				'root'          => $this->fields ['root'],
+				'name'          => $this->fields ['channel_name'],
+				'id'            => $this->fields ['channel_id'],
+				'upid'          => $this->fields ['channel_upid'],
+				'channel'       => $this->fields ['channel'],
+				'url'           => $this->fields ['channel_url'],
+				'list_url'      => $this->fields ['channel_list_url']
+			];
 			dbselect('id,name,list_page_url as list_url,url,upid,refid as channel,root,page_cache,list_cache,default_cache,index_page,list_page,default_page')->from('{cms_channel}')->recurse($crumbs, 'id', 'upid');
 		}
 
-		$channels = array();
+		$channels = [];
 		foreach ($crumbs as $key => $cr) {
 			$channels [] = $cr ['channel'];
 			if (!isset ($cr ['is_current'])) {
@@ -234,7 +249,10 @@ class CmsPage implements ArrayAccess, ICtsPage {
 	private function loadRelatedPages() {
 		if (!empty ($this->fields ['related_pages'])) {
 			$pages = CmsPage::query();
-			$pages->where(array('CP.deleted' => 0, 'CP.id IN' => explode(',', $this->fields ['related_pages'])))->limit(0, 50);
+			$pages->where([
+				'CP.deleted' => 0,
+				'CP.id IN'   => explode(',', $this->fields ['related_pages'])
+			])->limit(0, 50);
 			$this->fields ['related_pages'] = $pages;
 		}
 	}
@@ -243,7 +261,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		$root    = $this->fields ['root'];
 		$channel = $this->fields ['channel'];
 		$id      = $this->fields ['id'];
-		$where   = array('channel' => $channel, 'deleted' => 0, 'hidden' => 0, 'id >' => $id);
+		$where   = ['channel' => $channel, 'deleted' => 0, 'hidden' => 0, 'id >' => $id];
 		if (bcfg('disable_approving@cms', false)) {
 			$where ['status'] = 2;
 		}
@@ -285,7 +303,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		}
 		if (isset ($where ['status']) && bcfg('view_in_time@cms')) {
 			unset ($where ['status']);
-			$where ['status IN'] = array(2, 4);
+			$where ['status IN'] = [2, 4];
 		}
 		$page = dbselect(self::$sfields)->from('{cms_page}')->where($where)->get();
 		if ($page) {
@@ -300,7 +318,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 	 * 加载模板页.
 	 */
 	public static final function loadTplPage($url) {
-		$tpls = dbselect('url,url_handler')->from('{cms_page}')->where(array('channel' => '_t', 'deleted' => 0));
+		$tpls = dbselect('url,url_handler')->from('{cms_page}')->where(['channel' => '_t', 'deleted' => 0]);
 		$ms   = null;
 		$max  = 0;
 		$url  = urldecode($url);
@@ -322,7 +340,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		}
 		if ($ms) {
 			if ($ms ['url_handler']) {
-				$handlers = apply_filter('get_cms_url_handlers', array());
+				$handlers = apply_filter('get_cms_url_handlers', []);
 				if (isset ($handlers [ $ms ['url_handler'] ])) {
 					$cp      = Router::getRouter()->getCurrentPageNo();
 					$handler = $handlers [ $ms ['url_handler'] ];
@@ -350,7 +368,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 
 	public static function trimPtag($content) {
 		// 去除空格
-		$content = str_replace(array("\r\n", "\n", "\r"), '', trim($content));
+		$content = str_replace(["\r\n", "\n", "\r"], '', trim($content));
 		$content = preg_replace('#<br\s*/?\s*>#i', '', $content);
 		$content = preg_replace('#<p[^>]*>\s*(&nbsp;\s*)*\s*</p>#i', '', $content);
 		$content = preg_replace('#<span></span>\s*#i', '', $content);
@@ -381,7 +399,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		// <p>...........
 		if ($pss2 === false && $ps2 !== false) {
 			$content .= '</p>';
-			$pss2 = 0;
+			$pss2    = 0;
 		}
 		if ($ps2 !== false && $ps2 && $ps2 > $pss2) {
 			$content1 = substr($content, $ps2);
@@ -407,19 +425,19 @@ class CmsPage implements ArrayAccess, ICtsPage {
 	 *
 	 * @return Query
 	 */
-	public static function query($where = array()) {
+	public static function query($where = []) {
 		$pages = dbselect(CmsPage::$PAGE_FIELDS)->from('{cms_page} AS CP');
 		$pages->join('{cms_channel} AS CC', 'CP.channel = CC.refid');
 		$pages->join('{cms_model} AS CM', 'CP.model = CM.refid');
 
 		if (bcfg('disable_approving@cms', false)) {
 			if (isset ($where ['cts_no_will_publish'])) {
-				$pages->where(array('CP.status' => 2));
+				$pages->where(['CP.status' => 2]);
 			} else {
 				if (bcfg('view_in_time@cms')) {
-					$pages->where(array('CP.status IN' => array(2, 4)));
+					$pages->where(['CP.status IN' => [2, 4]]);
 				} else {
-					$pages->where(array('CP.status' => 2));
+					$pages->where(['CP.status' => 2]);
 				}
 			}
 		}
@@ -437,8 +455,13 @@ class CmsPage implements ArrayAccess, ICtsPage {
 	 *
 	 * @return array
 	 */
-	public static function loadCustomerFieldValues($id, $data = array(), $model = null) {
-		$values = dbselect('val,name,type')->from('{cms_page_field} AS CPF')->where(array('page_id' => $id, 'CPF.deleted' => 0, 'CMF.deleted' => 0, 'CMF.cstore' => 0));
+	public static function loadCustomerFieldValues($id, $data = [], $model = null) {
+		$values = dbselect('val,name,type')->from('{cms_page_field} AS CPF')->where([
+			'page_id'     => $id,
+			'CPF.deleted' => 0,
+			'CMF.deleted' => 0,
+			'CMF.cstore'  => 0
+		]);
 		$values->join('{cms_model_field} AS CMF', 'CPF.field_id = CMF.id')->limit(0, 100);
 		foreach ($values as $v) {
 			$data [ $v ['name'] ] = apply_filter('parse_' . $v ['type'] . '_field_value', $v ['val']);
@@ -471,21 +494,25 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		$user   = whoami();
 		$uid    = $user->getUid();
 		$time   = time();
-		$datas  = array();
+		$datas  = [];
 		$id     = intval($id);
-		$fields = dbselect('CMF.id,name,type,CPF.val as val,CPF.id as pid,CMF.default_value AS `default`')->from('{cms_model_field} AS CMF')->where(array('CMF.deleted' => 0, 'CMF.cstore' => 0, 'CMF.model' => $model));
+		$fields = dbselect('CMF.id,name,type,CPF.val as val,CPF.id as pid,CMF.default_value AS `default`')->from('{cms_model_field} AS CMF')->where([
+			'CMF.deleted' => 0,
+			'CMF.cstore'  => 0,
+			'CMF.model'   => $model
+		]);
 		$fields->join('{cms_page_field} AS CPF', 'CMF.id = CPF.field_id AND CPF.page_id = ' . $id)->limit(0, 100);
 		$data ['update_time'] = $time;
 		$data ['update_uid']  = $uid;
 		$data ['page_id']     = $id;
 		$data ['deleted']     = 0;
-		$hasFields            = array();
+		$hasFields            = [];
 		foreach ($fields as $field) {
 			$val                      = apply_filter('alter_' . $field ['type'] . '_field_value', rqst($field ['name'], $field ['default']), $field ['name']);
 			$data ['val']             = is_array($val) ? implode(',', $val) : $val;
 			$page [ $field ['name'] ] = $val;
 			if ($field ['pid'] && ($val != $field ['val'])) {
-				dbupdate('{cms_page_field}')->set($data)->where(array('id' => $field ['pid']))->exec();
+				dbupdate('{cms_page_field}')->set($data)->where(['id' => $field ['pid']])->exec();
 			} else if (!$field ['pid']) {
 				$data ['create_time'] = $time;
 				$data ['create_uid']  = $uid;
@@ -499,7 +526,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 			dbinsert($datas, true)->into('{cms_page_field}')->exec();
 		}
 		if (!empty ($hasFields)) {
-			dbdelete()->from('{cms_page_field}')->where(array('page_id' => $id, 'field_id !IN' => $hasFields))->exec();
+			dbdelete()->from('{cms_page_field}')->where(['page_id' => $id, 'field_id !IN' => $hasFields])->exec();
 		}
 		$contentModel = get_page_content_model($model);
 		if ($contentModel) {
@@ -547,8 +574,8 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		$page ['publish_time'] = time();
 		$page ['deleted']      = 0;
 
-		$chData            = array();
-		$index_page_exists = $index_page && dbselect('id')->from('{cms_page}')->where(array('id' => $index_page))->count('id') > 0;
+		$chData            = [];
+		$index_page_exists = $index_page && dbselect('id')->from('{cms_page}')->where(['id' => $index_page])->count('id') > 0;
 		if (!$index_page_exists) { // 新增栏目封面页
 			if ($index_page > 0) {
 				$page ['id'] = $index_page;
@@ -569,10 +596,10 @@ class CmsPage implements ArrayAccess, ICtsPage {
 			$page ['template_file'] = $index_page_tpl;
 			$page ['url']           = $channel ['url'];
 			$page ['url_key']       = md5($page ['url']);
-			$rst                    = dbupdate('{cms_page}')->set($page)->where(array('id' => $index_page))->exec();
+			$rst                    = dbupdate('{cms_page}')->set($page)->where(['id' => $index_page])->exec();
 		}
 		unset ($page ['create_time'], $page ['create_uid'], $page ['gid']);
-		$list_page_exists = $list_page && dbselect('id')->from('{cms_page}')->where(array('id' => $list_page))->count('id') > 0;
+		$list_page_exists = $list_page && dbselect('id')->from('{cms_page}')->where(['id' => $list_page])->count('id') > 0;
 		if (!$list_page_exists) {
 			if ($list_page > 0) {
 				$page ['id'] = $list_page;
@@ -596,10 +623,10 @@ class CmsPage implements ArrayAccess, ICtsPage {
 			$page ['url_pattern']   = $list_page_name;
 			$page ['url']           = $channel ['list_page_url'];
 			$page ['url_key']       = md5($page ['url']);
-			$rst                    = dbupdate('{cms_page}')->set($page)->where(array('id' => $list_page))->exec();
+			$rst                    = dbupdate('{cms_page}')->set($page)->where(['id' => $list_page])->exec();
 		}
 		if (!empty ($chData)) {
-			dbupdate('{cms_channel}')->set($chData)->where(array('id' => $channel ['id']))->exec();
+			dbupdate('{cms_channel}')->set($chData)->where(['id' => $channel ['id']])->exec();
 		}
 	}
 
@@ -607,8 +634,20 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		$rtn         = false;
 		$url_changed = false;
 		if (empty ($page ['url']) || strpos($page ['url'], '}')) {
-			$channel = dbselect('id,default_url_pattern,path,basedir')->from('{cms_channel}')->where(array('refid' => $page ['channel']))->get();
-			$arg     = array('aid' => $id, 'tid' => $channel ['id'], 'trid' => $page ['channel'], 'model' => $page ['model'], 'create_time' => $page ['create_time'], 'name' => $page ['title'], 'path' => $channel ['path'], 'basedir' => $channel ['basedir'], 'page' => 1, 'title' => $page ['title'], 'title2' => $page ['title2']);
+			$channel = dbselect('id,default_url_pattern,path,basedir')->from('{cms_channel}')->where(['refid' => $page ['channel']])->get();
+			$arg     = [
+				'aid'         => $id,
+				'tid'         => $channel ['id'],
+				'trid'        => $page ['channel'],
+				'model'       => $page ['model'],
+				'create_time' => $page ['create_time'],
+				'name'        => $page ['title'],
+				'path'        => $channel ['path'],
+				'basedir'     => $channel ['basedir'],
+				'page'        => 1,
+				'title'       => $page ['title'],
+				'title2'      => $page ['title2']
+			];
 			if (strpos($page ['url'], '}')) {
 				$channel ['default_url_pattern'] = $page ['url'];
 			}
@@ -616,9 +655,9 @@ class CmsPage implements ArrayAccess, ICtsPage {
 				$url              = parse_page_url($channel ['default_url_pattern'], $arg);
 				$page ['url']     = $data ['url'] = $url;
 				$data ['url_key'] = md5($url);
-				$rst              = PageForm::checkURL($url, array('id' => $id), false);
+				$rst              = PageForm::checkURL($url, ['id' => $id], false);
 				if ($rst) {
-					dbupdate('{cms_page}')->set($data)->where(array('id' => $id))->exec();
+					dbupdate('{cms_page}')->set($data)->where(['id' => $id])->exec();
 					$page ['url_key'] = $data ['url_key'];
 					$rtn              = true;
 					$url_changed      = true;
@@ -628,9 +667,9 @@ class CmsPage implements ArrayAccess, ICtsPage {
 			$rtn              = true;
 			$data ['url_key'] = md5($page ['url']);
 			if ($data ['url_key'] != $page ['url_key']) {
-				$rst = PageForm::checkURL($page ['url'], array('id' => $id), false);
+				$rst = PageForm::checkURL($page ['url'], ['id' => $id], false);
 				if ($rst) {
-					dbupdate('{cms_page}')->set($data)->where(array('id' => $id))->exec();
+					dbupdate('{cms_page}')->set($data)->where(['id' => $id])->exec();
 					$page ['url_key'] = $data ['url_key'];
 					$url_changed      = true;
 				} else {
@@ -642,9 +681,9 @@ class CmsPage implements ArrayAccess, ICtsPage {
 			$url              = uniqid('page_') . '.' . cfg('default_suffix@cms');
 			$page ['url']     = $data ['url'] = $url;
 			$data ['url_key'] = md5($url);
-			$rst              = PageForm::checkURL($url, array('id' => $id), false);
+			$rst              = PageForm::checkURL($url, ['id' => $id], false);
 			if ($rst) {
-				dbupdate('{cms_page}')->set($data)->where(array('id' => $id))->exec();
+				dbupdate('{cms_page}')->set($data)->where(['id' => $id])->exec();
 				$page ['url_key'] = $data ['url_key'];
 				$url_changed      = true;
 				$rtn              = true;
@@ -664,7 +703,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		if (!empty ($page ['keywords']) && $page ['keywords'] == $okeywords) {
 			return;
 		}
-		$keywords = array(false, false);
+		$keywords = [false, false];
 		if (!empty ($page ['keywords'])) {
 			$keywords = get_keywords($page ['keywords']);
 		} else if ($gkeywords == 'on') {
@@ -684,12 +723,15 @@ class CmsPage implements ArrayAccess, ICtsPage {
 			$data ['search_index'] = '';
 		}
 		if (isset ($data)) {
-			dbupdate('{cms_page}')->set($data)->where(array('id' => $id))->exec();
+			dbupdate('{cms_page}')->set($data)->where(['id' => $id])->exec();
 		}
 	}
 
 	public static function updateVariables($variable, $type) {
-		$r                    = dbselect('id,deleted')->from('{cms_variables}')->where(array('type' => $type, 'val' => $variable))->limit(0, 1)->get();
+		$r                    = dbselect('id,deleted')->from('{cms_variables}')->where([
+			'type' => $type,
+			'val'  => $variable
+		])->limit(0, 1)->get();
 		$user                 = whoami();
 		$uid                  = $user->getUid();
 		$time                 = time();
@@ -697,7 +739,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 		$data ['update_uid']  = $uid;
 		if ($r && $r ['deleted']) {
 			$data ['deleted'] = 0;
-			dbupdate('{cms_variables}')->set($data)->where(array('id' => $r ['id']))->exec();
+			dbupdate('{cms_variables}')->set($data)->where(['id' => $r ['id']])->exec();
 		} else if (!$r) {
 			$data ['type']        = $type;
 			$data ['val']         = $variable;
@@ -728,7 +770,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 				}
 			}
 
-			return dbselect()->from('{cms_channel}')->where(array('refid' => $chanenl, 'gid IN' => $groups))->exist('id');
+			return dbselect()->from('{cms_channel}')->where(['refid' => $chanenl, 'gid IN' => $groups])->exist('id');
 		}
 
 		return true;
@@ -796,7 +838,10 @@ class CmsPage implements ArrayAccess, ICtsPage {
 					if ($w > 0 && $h > 0) {
 						$uploader = MediaUploadHelper::getUploader(0);
 						$img_url  = the_media_src($page ['image']);
-						$rst      = ImageUtil::downloadRemotePic(array($img_url), $uploader, cfg('timeout@media', 30), false, array($w, $h));
+						$rst      = ImageUtil::downloadRemotePic([$img_url], $uploader, cfg('timeout@media', 30), false, [
+							$w,
+							$h
+						]);
 						if ($rst) {
 							$page ['image'] = $rst [ $img_url ] [0];
 						}
@@ -817,9 +862,13 @@ class CmsPage implements ArrayAccess, ICtsPage {
 				$page ['create_time'] = $time;
 				$page ['create_uid']  = $uid;
 				$page ['gid']         = $gid;
-				$page ['status']      = icfg('page_new_status@cms', 3);
+				if (1 == irqst('pubnow')) {
+					$page ['status'] = 2;
+				} else {
+					$page ['status'] = icfg('page_update_status@cms', 3);
+				}
 				// 发布或待发布且发布时间为空,则使用当前时间做为发布时间.
-				if (in_array($page ['status'], array(2, 4)) && !isset ($page ['publish_time'])) {
+				if (in_array($page ['status'], [2, 4]) && !isset ($page ['publish_time'])) {
 					$page ['publish_time'] = time();
 				}
 				$rst = dbinsert($page)->into('{cms_page}')->exec();
@@ -828,11 +877,15 @@ class CmsPage implements ArrayAccess, ICtsPage {
 					$id              = $rst [0];
 				}
 			} else {
-				$page ['status'] = icfg('page_update_status@cms', 1);
-				if (in_array($page ['status'], array(2, 4)) && !isset ($page ['publish_time'])) {
+				if (1 == irqst('pubnow')) {
+					$page ['status'] = 2;
+				} else {
+					$page ['status'] = icfg('page_new_status@cms', 1);
+				}
+				if (in_array($page ['status'], [2, 4]) && !isset ($page ['publish_time'])) {
 					$page ['publish_time'] = time();
 				}
-				$rst                  = dbupdate('{cms_page}')->set($page)->where(array('id' => $id))->exec();
+				$rst                  = dbupdate('{cms_page}')->set($page)->where(['id' => $id])->exec();
 				$page ['create_time'] = irqst('create_time', time());
 				if (!$rst) {
 					$id = 0;
@@ -861,7 +914,7 @@ class CmsPage implements ArrayAccess, ICtsPage {
 				$html [] = '[<a href="javascript:void(0);" onclick="return modify_current_page();">修改</a>]';
 
 				$url = dbselect('CP.channel,CP.url,CC.root')->from('{cms_page} AS CP')->join('{cms_channel} AS CC', 'CP.channel = CC.refid');
-				$url->where(array('CP.id' => $id));
+				$url->where(['CP.id' => $id]);
 				$url              = $url->get(0);
 				$page ['root']    = $url ['root'];
 				$page ['channel'] = $url ['channel'];
@@ -875,7 +928,12 @@ class CmsPage implements ArrayAccess, ICtsPage {
 					$html [] = '[<a href="' . $url . '?preview=_c2c_" target="_blank">预览并清空缓存</a>]';
 				}
 
-				return $ajax ? NuiAjaxView::dialog('<p class="text-left">请选择你的后续操作：</p><p class="text-left">' . implode('&nbsp;', $html) . '</p>', '保存完成!', array('model' => true, 'height' => 'auto', 'func' => 'pageSaved', 'page' => $page)) : $id;
+				return $ajax ? NuiAjaxView::dialog('<p class="text-left">请选择你的后续操作：</p><p class="text-left">' . implode('&nbsp;', $html) . '</p>', '保存完成!', [
+					'model'  => true,
+					'height' => 'auto',
+					'func'   => 'pageSaved',
+					'page'   => $page
+				]) : $id;
 			} else {
 				log_warn('无法保存页面:无法保存，数据库出错.');
 

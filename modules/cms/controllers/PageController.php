@@ -134,10 +134,10 @@ class PageController extends Controller {
 		$data ['editor_css']    = apply_filter('on_load_editor_css', 'body { margin:10px;} body, td { font-size:16px; } p {margin: 10px 0; color: #666; line-height: 110%;} ');
 
 		// 允许第三方设置预置标题.
-		$data ['title']    = sess_del('cms_page_set_title');
-		$data ['content']  = sess_del('cms_page_set_content');
-		$data ['keywords'] = sess_del('cms_page_set_keywords');
-
+		$data ['title']      = sess_del('cms_page_set_title');
+		$data ['content']    = sess_del('cms_page_set_content');
+		$data ['keywords']   = sess_del('cms_page_set_keywords');
+		$data ['canApprove'] = bcfg('disable_approving@cms', false) && icando('approve:cms');
 		if ($template{0} == '@') {
 			return view($template, $data);
 		} else {
@@ -221,6 +221,9 @@ class PageController extends Controller {
 			}
 			$page ['editor_layout'] = apply_filter('get_editor_layout', '<div class="container"><div class="toolbar"></div><div class="edit"></div><div class="statusbar"></div></div>');
 			$page ['editor_css']    = apply_filter('on_load_editor_css', 'body { margin:10px;} body, td { font-size:16px; } p {margin: 10px 0; color: #666; line-height: 110%;} ');
+
+			$page['canApprove'] = bcfg('disable_approving@cms', false) && icando('approve:cms');
+
 			if ($template{0} == '@') {
 				return view($template, $page);
 			} else {
